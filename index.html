@@ -1,539 +1,493 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قضاوت خفن!</title>
+    <title>تست شخصیت شناسی بسیار شخصی (۱۸+)</title>
     <style>
         body {
-            font-family: 'B Homa', 'Tahoma', sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5e6ff;
+            margin: 0;
             padding: 20px;
-            max-width: 800px;
-            margin: 20px auto;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            direction: rtl; /* برای فارسی */
-            text-align: right; /* برای فارسی */
+            color: #333;
         }
-        h1, h2 {
-            color: #d9534f;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #6a0dad;
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
         .section {
-            background-color: #fff;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f3ff;
+            border-radius: 10px;
+        }
+        .section-title {
+            color: #8e44ad;
+            border-bottom: 2px solid #d2b4de;
+            padding-bottom: 10px;
+            margin-top: 0;
         }
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
         }
-        input[type="text"], input[type="number"], select {
-            width: calc(100% - 20px);
+        input, select {
+            width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #ccc;
+            border: 1px solid #d2b4de;
             border-radius: 5px;
             font-size: 16px;
         }
-        .question {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed #eee;
-        }
-        .question:last-child {
-            border-bottom: none;
-        }
-        .options label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: normal;
-            cursor: pointer;
-        }
-        .options input[type="radio"] {
-            margin-left: 10px;
-            transform: scale(1.2);
-        }
         button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: #5cb85c;
+            background-color: #8e44ad;
             color: white;
             border: none;
+            padding: 12px 20px;
+            font-size: 16px;
             border-radius: 5px;
-            font-size: 18px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #4cae4c;
+            background-color: #6a0dad;
         }
-        #result {
-            margin-top: 30px;
-            padding: 25px;
-            background-color: #dff0d8;
-            border: 1px solid #d6e9c6;
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
             border-radius: 8px;
-            font-size: 18px;
-            color: #3c763d;
-            text-align: center;
-            font-weight: bold;
-            display: none; /* مخفی در ابتدا */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .error {
-            color: #a94442;
-            background-color: #f2dede;
-            border: 1px solid #ebccd1;
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .option {
             padding: 10px;
-            margin-bottom: 15px;
+            background-color: #f0e6ff;
             border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+        .option:hover {
+            background-color: #d2b4de;
+        }
+        .option.selected {
+            background-color: #8e44ad;
+            color: white;
+        }
+        .result {
+            padding: 20px;
+            background-color: #f0e6ff;
+            border-radius: 10px;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+        .warning {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .hidden {
             display: none;
         }
     </style>
 </head>
 <body>
-
-    <h1>برنامه قضاوت خفن شما!</h1>
-
-    <div class="section">
-        <h2>مشخصات شما:</h2>
-        <div id="personalInfoForm">
-            <label for="name">اسمت چیه؟</label>
-            <input type="text" id="name" placeholder="مثلاً: حسن آقا، زهرا خانم">
-
-            <label for="age">چند سالته؟</label>
-            <input type="number" id="age" min="1" max="120" placeholder="مثلاً: ۳۰">
-
-            <label for="maritalStatus">وضعیت تاهل؟</label>
-            <select id="maritalStatus">
-                <option value="">انتخاب کن</option>
-                <option value="single">مجرد</option>
-                <option value="married">متاهل</option>
-                <option value="divorced">مطلقه</option>
-                <option value="widowed">همسر از دست داده</option>
-            </select>
-
-            <label for="physicalCondition">وضعیت جسمانیت چطوره؟ (مثلاً: توپ، سرحال، خسته، بیمار)</label>
-            <input type="text" id="physicalCondition" placeholder="مثلاً: توپِ توپ">
-
-            <button onclick="startQuiz()">شروع قضاوت!</button>
-            <div id="infoError" class="error">لطفاً همه اطلاعات رو پر کن، جون هرکی دوست داری!</div>
+    <div class="container">
+        <h1>تست شخصیت شناسی بسیار شخصی (۱۸+)</h1>
+        
+        <div class="warning">
+            توجه: این تست حاوی سوالات شخصی و جنسی است و فقط برای افراد بالای ۱۸ سال مناسب می‌باشد.
+        </div>
+        
+        <div id="personal-info-section" class="section">
+            <h2 class="section-title">مشخصات فردی</h2>
+            <form id="personal-info-form">
+                <label for="name">نام:</label>
+                <input type="text" id="name" required>
+                
+                <label for="age">سن:</label>
+                <input type="number" id="age" min="18" max="120" required>
+                
+                <label for="gender">جنسیت:</label>
+                <select id="gender" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="male">مرد</option>
+                    <option value="female">زن</option>
+                    <option value="other">سایر</option>
+                </select>
+                
+                <label for="education">تحصیلات:</label>
+                <select id="education" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="diploma">دیپلم</option>
+                    <option value="bachelor">لیسانس</option>
+                    <option value="master">فوق لیسانس</option>
+                    <option value="phd">دکترا</option>
+                    <option value="other">سایر</option>
+                </select>
+                
+                <label for="relationship">وضعیت تأهل:</label>
+                <select id="relationship" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="single">مجرد</option>
+                    <option value="married">متأهل</option>
+                    <option value="divorced">مطلقه</option>
+                    <option value="complicated">پیچیده</option>
+                </select>
+                
+                <button type="button" onclick="startTest()">شروع تست</button>
+            </form>
+        </div>
+        
+        <div id="personal-questions-section" class="section hidden">
+            <h2 class="section-title">سوالات شخصی</h2>
+            <div id="personal-questions-container"></div>
+            <button id="next-personal" class="hidden" onclick="showSexualQuestions()">ادامه به سوالات جنسی</button>
+        </div>
+        
+        <div id="sexual-questions-section" class="section hidden">
+            <h2 class="section-title">سوالات جنسی</h2>
+            <div id="sexual-questions-container"></div>
+            <button id="show-result" class="hidden" onclick="showResult()">مشاهده نتیجه</button>
+        </div>
+        
+        <div id="result-section" class="section hidden">
+            <h2 class="section-title">نتیجه تست شخصیت شناسی</h2>
+            <div id="result-container" class="result"></div>
         </div>
     </div>
-
-    <div class="section" id="quizSection" style="display: none;">
-        <h2>سوالات سبک زندگی و بقیه چیزا!</h2>
-        <form id="quizForm">
-            <div class="question">
-                <p>1. معمولا شبا چند ساعت می‌خوابی؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q1" value="a"> کمتر از ۴ ساعت (لامصب کوآلا هم بیشتر می‌خوابه!)</label>
-                    <label><input type="radio" name="q1" value="b"> ۴ تا ۶ ساعت (خواب سبکی داری گویا)</label>
-                    <label><input type="radio" name="q1" value="c"> ۶ تا ۸ ساعت (نرمالی، خوبه)</label>
-                    <label><input type="radio" name="q1" value="d"> ۸ تا ۱۰ ساعت (خرس قطبی هم انقد نمی‌خوابه)</label>
-                    <label><input type="radio" name="q1" value="e"> بیشتر از ۱۰ ساعت (کمای خوابی؟!)</label>
-                    <label><input type="radio" name="q1" value="f"> نمی‌خوابم کلاً (مگه داریم؟ مگه میشه؟)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>2. تو یه هفته چند بار ورزش می‌کنی؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q2" value="a"> اصلا (دلت میاد با این هیکل؟)</label>
-                    <label><input type="radio" name="q2" value="b"> ۱-۲ بار (بد نیست، ولی باید بیشتر بشه)</label>
-                    <label><input type="radio" name="q2" value="c"> ۳-۴ بار (خوبه، ادامه بده)</label>
-                    <label><input type="radio" name="q2" value="d"> ۵-۶ بار (ماشالله قهرمانی؟)</label>
-                    <label><input type="radio" name="q2" value="e"> هر روز (پهلوان پنبه! خسته نمیشی؟)</label>
-                    <label><input type="radio" name="q2" value="f"> ورزش چیه؟ فقط جلوی تلویزیون دراز کشیدم (فقط بشین و بخور!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>3. غذای مورد علاقه‌ات چیه؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q3" value="a"> قورمه سبزی (جونمی، سلطان خورشت‌ها!)</label>
-                    <label><input type="radio" name="q3" value="b"> فست فود (مضره، ولی حال میده!)</label>
-                    <label><input type="radio" name="q3" value="c"> غذای رژیمی (خوش به حالت اگه می‌تونی بخوری!)</label>
-                    <label><input type="radio" name="q3" value="d"> هرچی گیرم بیاد (آدم بی توقعی هستی)</label>
-                    <label><input type="radio" name="q3" value="e"> غذای مامان‌پز (اصلاً لنگه نداره)</label>
-                    <label><input type="radio" name="q3" value="f"> از گشنگی مردم (پس زودتر برو یه چیزی کوفت کن!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>4. در طول روز چقدر با گوشی و اینترنت سروکار داری؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q4" value="a"> کمتر از ۱ ساعت (مگه میشه؟ مگه داریم؟)</label>
-                    <label><input type="radio" name="q4" value="b"> ۱ تا ۳ ساعت (متعادل، خوبه)</label>
-                    <label><input type="radio" name="q4" value="c"> ۳ تا ۶ ساعت (معتادی؟)</label>
-                    <label><input type="radio" name="q4" value="d"> ۶ تا ۱۰ ساعت (عالی، برو تو گینس!)</label>
-                    <label><input type="radio" name="q4" value="e"> بیشتر از ۱۰ ساعت (یه چک کن ببین دکل مخابرات تو جیبت نیست؟)</label>
-                    <label><input type="radio" name="q4" value="f"> گوشی چیه؟ اینترنت چیه؟ (عصر حجری؟)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>5. رفیق باز هستی یا خونه‌نشین؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q5" value="a"> رفیق باز دو آتیشه (پرچمت بالاست رفیق!)</label>
-                    <label><input type="radio" name="q5" value="b"> گاهی اوقات با رفقا می‌رم بیرون (متعادل، خوبه)</label>
-                    <label><input type="radio" name="q5" value="c"> بیشتر خونه‌نشینم (پتو نشین؟)</label>
-                    <label><input type="radio" name="q5" value="d"> فقط با خانواده (خانواده دوست، دمت گرم)</label>
-                    <label><input type="radio" name="q5" value="e"> اصلاً رفیق ندارم (تنها؟ تنها؟)</label>
-                    <label><input type="radio" name="q5" value="f"> رفیق چیه؟ فقط خودم و خودم (خودت باش، ولی تنها نمون!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>6. معمولا هر چند وقت یکبار رابطه جنسی داری؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q6" value="a"> ماهی یک بار هم نه (مگه میشه؟)</label>
-                    <label><input type="radio" name="q6" value="b"> ماهی ۱-۲ بار (متوسط)</label>
-                    <label><input type="radio" name="q6" value="c"> هفته‌ای ۱-۲ بار (خوب و رو فرم)</label>
-                    <label><input type="radio" name="q6" value="d"> چند بار در هفته (عالی، پر انرژی!)</label>
-                    <label><input type="radio" name="q6" value="e"> هر روز (مگه بیکاری؟)</label>
-                    <label><input type="radio" name="q6" value="f"> اصلاً رابطه جنسی ندارم (یه فکری به حال خودت کن!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>7. چقدر به فانتزی‌های جنسی اهمیت میدی؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q7" value="a"> اصلاً اهمیت نمیدم (خشکی؟)</label>
-                    <label><input type="radio" name="q7" value="b"> کم (یکم چاشنی لازم داری)</label>
-                    <label><input type="radio" name="q7" value="c"> متوسط (خوبه، تنوع ایجاد می‌کنه)</label>
-                    <label><input type="radio" name="q7" value="d"> زیاد (آفرین به این ذهن خلاق!)</label>
-                    <label><input type="radio" name="q7" value="e"> فقط تو رویاهام (یکم جسارت به خرج بده!)</label>
-                    <label><input type="radio" name="q7" value="f"> فانتزی چیه؟ فقط عملیش (پس یه فکری برای عملی کردنش کن!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>8. نظرت در مورد استفاده از اسباب‌بازی‌های جنسی چیه؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q8" value="a"> مخالفم (عقایدت قدیمیه ها!)</label>
-                    <label><input type="radio" name="q8" value="b"> بی‌تفاوتم (یکم امتحان کنی بد نیست)</label>
-                    <label><input type="radio" name="q8" value="c"> موافقم (ایول به تو با این ذهن بازت!)</label>
-                    <label><input type="radio" name="q8" value="d"> استفاده می‌کنم (پس خوش می‌گذرونی!)</label>
-                    <label><input type="radio" name="q8" value="e"> خجالت می‌کشم (خجالت برای چیه؟)</label>
-                    <label><input type="radio" name="q8" value="f"> اصلاً نمی‌دونم چی هست (یه سرچ کن تو اینترنت، بد نیست!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>9. چقدر به ارگاسم شریک جنسیت اهمیت میدی؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q9" value="a"> اصلاً اهمیت نمی‌دم (خودخواه!)</label>
-                    <label><input type="radio" name="q9" value="b"> کم (یکم بیشتر فکر کن بهش)</label>
-                    <label><input type="radio" name="q9" value="c"> متوسط (خوبه، حداقل به فکرشی)</label>
-                    <label><input type="radio" name="q9" value="d"> زیاد (ایول به تو با این مسئولیت‌پذیری!)</label>
-                    <label><input type="radio" name="q9" value="e"> فقط ارگاسم خودم مهمه‌ (واقعا؟)</label>
-                    <label><input type="radio" name="q9" value="f"> ارگاسم چیه؟ (برو تحقیق کن!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>10. اگه سیگار میکشی، روزی چند نخ؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q10" value="a"> نمی‌کشم (آفرین، سلامتیت مهمه!)</label>
-                    <label><input type="radio" name="q10" value="b"> ۱-۵ نخ (کمِ، ولی بازم بده)</label>
-                    <label><input type="radio" name="q10" value="c"> ۵-۱۰ نخ (معتادی؟)</label>
-                    <label><input type="radio" name="q10" value="d"> ۱۰-۲۰ نخ (دودکشی؟)</label>
-                    <label><input type="radio" name="q10" value="e"> بیشتر از ۲۰ نخ (انتحاری؟)</label>
-                    <label><input type="radio" name="q10" value="f"> فقط قلیون یا تریاک می‌کشم (آفرین، از سیگار بهتری!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>11. در هفته چند بار فست‌فود می‌خوری؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q11" value="a"> اصلاً (سخت نگیر به خودت!)</label>
-                    <label><input type="radio" name="q11" value="b"> ۱ بار (خوبه، تعادل لازمه)</label>
-                    <label><input type="radio" name="q11" value="c"> ۲-۳ بار (عاشق فست‌فودی!)</label>
-                    <label><input type="radio" name="q11" value="d"> بیشتر از ۳ بار (معده‌ات چیه؟ آهنه؟)</label>
-                    <label><input type="radio" name="q11" value="e"> هر روز (برو دکتر قلب!)</label>
-                    <label><input type="radio" name="q11" value="f"> فست‌فود چیه؟ فقط غذای خونگی (خوش به حال مامانت!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>12. چقدر اهل مطالعه و کتاب خوندنی؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q12" value="a"> اصلاً (مغزت زنگ می‌زنه ها!)</label>
-                    <label><input type="radio" name="q12" value="b"> کم (یکم بیشتر تلاش کن)</label>
-                    <label><input type="radio" name="q12" value="c"> متوسط (خوبه، ادامه بده)</label>
-                    <label><input type="radio" name="q12" value="d"> زیاد (فرهیخته!)</label>
-                    <label><input type="radio" name="q12" value="e"> فقط کتاب‌های درسی (پس کتاب دیگه چی؟)</label>
-                    <label><input type="radio" name="q12" value="f"> کتاب چیه؟ فقط اینستاگرام و تلگرام (حواست باشه باسواد شی!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>13. تفریح مورد علاقه ات چیه؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q13" value="a"> خوابیدن (تنبل!)</label>
-                    <label><input type="radio" name="q13" value="b"> فیلم و سریال دیدن (نتفیلیکسی!)</label>
-                    <label><input type="radio" name="q13" value="c"> گشت و گذار و سفر (اهل دلی!)</label>
-                    <label><input type="radio" name="q13" value="d"> ورزش و فعالیت‌های بدنی (سرحال!)</label>
-                    <label><input type="radio" name="q13" value="e"> کار کردن (معتاد به کار!)</label>
-                    <label><input type="radio" name="q13" value="f"> هیچی، فقط می‌خورم و می‌خوابم (زندگی به کامته!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>14. به نظر خودت آدم خوش‌شانسی هستی یا بدشانس؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q14" value="a"> خوش‌شانس (ایول به خودت!)</label>
-                    <label><input type="radio" name="q14" value="b"> بدشانس (یکم مثبت فکر کن!)</label>
-                    <label><input type="radio" name="q14" value="c"> نه خوش‌شانس، نه بدشانس (خوب بلدی قایم کنی!)</label>
-                    <label><input type="radio" name="q14" value="d"> گاهی خوش‌شانس، گاهی بدشانس (دقیقاً چی شد؟)</label>
-                    <label><input type="radio" name="q14" value="e"> شانسی در کار نیست، همه چیز تلاشه (فیلسوف شدی؟)</label>
-                    <label><input type="radio" name="q14" value="f"> اصلاً به این چیزا فکر نمی‌کنم (فقط بخور و بخواب!)</label>
-                </div>
-            </div>
-
-            <div class="question">
-                <p>15. چقدر به امتحان کردن پوزیشن‌های جدید جنسی علاقه داری؟</p>
-                <div class="options">
-                    <label><input type="radio" name="q15" value="a"> اصلاً (یه تکونی به خودت بده!)</label>
-                    <label><input type="radio" name="q15" value="b"> کم (محدودی؟)</label>
-                    <label><input type="radio" name="q15" value="c"> متوسط (خوبه، تنوع لازمه)</label>
-                    <label><input type="radio" name="q15" value="d"> زیاد (حرفه‌ای!)</label>
-                    <label><input type="radio" name="q15" value="e"> هرچی باشه، فقط عشق و حال (آفرین به این روحیه!)</label>
-                    <label><input type="radio" name="q15" value="f"> پوزیشن چیه؟ (برو یاد بگیر!)</label>
-                </div>
-            </div>
-
-            <button type="submit">قضاوتم کن!</button>
-            <div id="quizError" class="error">جون هرکی دوست داری، همه سوالا رو جواب بده!</div>
-        </form>
-    </div>
-
-    <div id="result" class="section">
-        </div>
 
     <script>
-        let userName = "";
-
-        function startQuiz() {
-            userName = document.getElementById('name').value;
-            const age = document.getElementById('age').value;
-            const maritalStatus = document.getElementById('maritalStatus').value;
-            const physicalCondition = document.getElementById('physicalCondition').value;
-            const infoError = document.getElementById('infoError');
-
-            if (!userName || !age || !maritalStatus || !physicalCondition) {
-                infoError.style.display = 'block';
+        // اطلاعات کاربر
+        let userInfo = {};
+        let personalAnswers = {};
+        let sexualAnswers = {};
+        
+        // سوالات شخصی
+        const personalQuestions = [
+            "اگر کسی بدون اجازه وسایل شخصی شما را بردارد چه واکنشی نشان می‌دهید؟",
+            "چند بار در روز به مرگ فکر می‌کنید؟",
+            "آخرین باری که گریه کردید کی بود و چرا؟",
+            "اگر می‌توانستید یک چیز را در گذشته تغییر دهید چه بود؟",
+            "بدترین دروغی که گفته‌اید چه بود؟",
+            "آیا تا به حال خیانت کرده‌اید؟",
+            "آیا تا به حال به خودکشی فکر کرده‌اید؟",
+            "بدترین کاری که در حق کسی انجام داده‌اید چیست؟",
+            "اگر برای یک روز نامرئی شوید چه کار می‌کنید؟",
+            "آیا تا به حال دزدی کرده‌اید؟",
+            "چه رازی دارید که هیچکس نمی‌داند؟",
+            "اگر می‌توانستید یک نفر را از زندگی حذف کنید چه کسی بود؟",
+            "آیا تا به حال کسی را به عمد اذیت کرده‌اید؟",
+            "آیا حاضرید برای پول دوست صمیمی خود را لو بدهید؟",
+            "چقدر به نظرات دیگران درباره خودتان اهمیت می‌دهید؟",
+            "آیا تا به حال حسادت شما باعث آسیب به کسی شده است؟",
+            "بدترین عادت شما چیست؟",
+            "آیا حاضرید برای رسیدن به هدف مورد علاقه‌تان قانون را زیر پا بگذارید؟",
+            "اگر می‌توانستید یک ویژگی اخلاقی را از خود حذف کنید چه بود؟",
+            "آیا تا به حال از کسی متنفر بوده‌اید؟"
+        ];
+        
+        // گزینه‌های سوالات شخصی
+        const personalOptions = [
+            ["بی‌تفاوتی کامل", "عصبانی می‌شوم اما چیزی نمی‌گویم", "مستقیماً اعتراض می‌کنم", "وسایلش را برمی‌دارم", "با دیگران در موردش صحبت می‌کنم", "به او پرخاش می‌کنم", "منتظر فرصت برای تلافی می‌مانم", "به پلیس گزارش می‌دهم"],
+            ["اصلاً", "۱-۲ بار", "۳-۵ بار", "۶-۱۰ بار", "بیش از ۱۰ بار", "همیشه", "وقتی استرس دارم", "فقط وقتی افسرده‌ام"],
+            ["امروز", "هفته گذشته", "ماه گذشته", "سال گذشته", "سال‌ها پیش", "به خاطر نمی‌آورم", "به ندرت گریه می‌کنم", "هر روز گریه می‌کنم"],
+            ["یک تصمیم مهم", "یک رابطه", "یک فرصت شغلی", "یک حرف ناگفته", "یک اشتباه مالی", "یک اشتباه اخلاقی", "یک انتخاب تحصیلی", "چیزی را تغییر نمی‌دادم"],
+            ["دروغ درباره تحصیلات", "دروغ درباره رابطه", "دروغ مالی", "دروغ به خانواده", "دروغ به دوست صمیمی", "دروغ برای فرار از مسئولیت", "دروغ برای جلب توجه", "هیچ دروغ مهمی نگفته‌ام"],
+            ["بله، عاطفی", "بله، جنسی", "هر دو نوع", "نه، هرگز", "تقریباً", "فکر کرده‌ام اما انجام ندادم", "به من خیانت شده", "ترجیح می‌دهم نگویم"],
+            ["بله، جدی", "بله، گذرا", "نه، هرگز", "گاهی به آن فکر می‌کنم", "فقط در دوران نوجوانی", "فقط وقتی افسرده‌ام", "به اجرای آن فکر کرده‌ام", "دوست دارم درباره آن صحبت کنم"],
+            ["خیانت", "دروغ بزرگ", "آزار عاطفی", "آزار فیزیکی", "توهین", "تلافی", "بی‌تفاوتی", "کاری نکرده‌ام"],
+            ["به حریم خصوصی دیگران وارد می‌شدم", "پول دزدی می‌کردم", "به مکان‌های ممنوعه می‌رفتم", "از دشمنانم انتقام می‌گرفتم", "کارهای خیریه انجام می‌دادم", "استراحت می‌کردم", "مشاهده می‌کردم", "کاری نمی‌کردم"],
+            ["بله، چیزهای کوچک", "بله، چیزهای باارزش", "نه، هرگز", "فقط در کودکی", "به اجبار", "برای کمک به دیگران", "برای تفریح", "ترجیح می‌دهم نگویم"],
+            ["یک جرم", "یک رابطه پنهانی", "یک خیانت", "یک آرزو", "یک ترس", "یک عمل شرم‌آور", "یک فکر تاریک", "رازی ندارم"],
+            ["یک عضو خانواده", "یک دوست", "یک همکار", "یک معلم", "یک آشنا", "یک شخص مشهور", "کسی که به من آسیب زده", "کسی را حذف نمی‌کردم"],
+            ["بله، عاطفی", "بله، فیزیکی", "هر دو", "نه، هرگز", "به صورت ناخواسته", "برای دفاع از خود", "به عنوان شوخی", "فقط در کودکی"],
+            ["بله، برای مبلغ زیاد", "بله، برای مبلغ کم", "نه، هرگز", "بستگی به دوست دارد", "فقط اگر دوستم واقعاً بد باشد", "اگر نیاز مالی داشته باشم", "اگر کسی متوجه نشود", "ترجیح می‌دهم نگویم"],
+            ["خیلی زیاد", "تا حدی", "کم", "اصلاً", "فقط نظر برخی افراد", "فقط در موارد خاص", "گاهی زیاد، گاهی کم", "بستگی به حال و حالم دارد"],
+            ["بله، جدی", "بله، جزئی", "نه، هرگز", "نمی‌دانم", "شاید ناخواسته", "فقط در کودکی", "فقط در روابط عاطفی", "ترجیح می‌دهم نگویم"],
+            ["سیگار کشیدن", "ناخن جویدن", "دروغ گفتن", "پرخوری", "تنبلی", "خشم", "حسادت", "عادت بد خاصی ندارم"],
+            ["بله، برای چیزهای مهم", "بله، برای چیزهای کوچک", "نه، هرگز", "بستگی به قانون دارد", "اگر احتمال گرفتار شدن کم باشد", "اگر به کسی آسیب نزند", "فقط در شرایط اضطراری", "ترجیح می‌دهم نگویم"],
+            ["خشم", "حسادت", "تنبلی", "ترس", "بی‌اعتمادی", "وسواس", "کمال‌گرایی", "چیزی را تغییر نمی‌دادم"],
+            ["بله، شدیداً", "بله، موقتاً", "نه، هرگز", "نمی‌دانم", "فقط در کودکی", "فقط به افراد خاص", "به ایده‌ها متنفرم نه افراد", "ترجیح می‌دهم نگویم"]
+        ];
+        
+        // سوالات جنسی
+        const sexualQuestions = [
+            "تا حالا کون دادی؟",
+            "گرایشت چیه؟",
+            "در ازای ۵۰ میلیارد حاضری ساک بزنی؟",
+            "آیا تا به حال رابطه سه نفره داشته‌اید؟",
+            "عجیب‌ترین جای که سکس داشتید کجا بوده؟",
+            "آیا تا به حال به سکس با همجنس فکر کرده‌اید؟",
+            "آیا دوست دارید رابطه‌تان فیلمبرداری شود؟",
+            "اگر شریک جنسی‌تان از شما بخواهد کار غیرمعمولی انجام دهید چه می‌کنید؟",
+            "آیا تا به حال به خاطر سکس کار خطرناکی انجام داده‌اید؟",
+            "چند شریک جنسی داشته‌اید؟"
+        ];
+        
+        // گزینه‌های سوالات جنسی
+        const sexualOptions = [
+            ["بله، چندین بار", "بله، یک بار", "نه، هرگز", "شاید در آینده", "فقط با شرایط خاص", "فقط با شخص خاص", "ترجیح می‌دهم نگویم", "نمی‌خواهم پاسخ دهم"],
+            ["دگرجنس‌گرا", "همجنس‌گرا", "دوجنس‌گرا", "همه‌جنس‌گرا", "بی‌گرایش", "در حال کشف", "ترجیح می‌دهم نگویم", "برایم مهم نیست"],
+            ["بله، قطعاً", "بله، برای این مبلغ", "نه، هرگز", "بستگی به طرف دارد", "فقط اگر جذاب باشد", "شاید اگر کسی نفهمد", "ترجیح می‌دهم نگویم", "فقط در شرایط خاص"],
+            ["بله، چندین بار", "بله، یک بار", "نه، هرگز", "شاید در آینده", "فقط با شرایط خاص", "فقط با اشخاص خاص", "ترجیح می‌دهم نگویم", "نمی‌خواهم پاسخ دهم"],
+            ["ماشین", "ساحل", "آسانسور", "سرویس بهداشتی", "محل کار", "فضای عمومی", "خانه دوست", "ترجیح می‌دهم نگویم"],
+            ["بله، چندین بار", "بله، یک بار", "نه، هرگز", "شاید در آینده", "فقط به عنوان فانتزی", "فقط با شخص خاص", "ترجیح می‌دهم نگویم", "نمی‌خواهم پاسخ دهم"],
+            ["بله، دوست دارم", "نه، هرگز", "بستگی به شریکم دارد", "فقط اگر محرمانه بماند", "فقط بعضی قسمت‌ها", "شاید در آینده", "ترجیح می‌دهم نگویم", "نمی‌خواهم پاسخ دهم"],
+            ["می‌پذیرم اگر معقول باشد", "مشروط می‌پذیرم", "نه، رد می‌کنم", "بستگی به کار دارد", "فقط اگر خیلی دوستش داشته باشم", "شاید بعداً", "ترجیح می‌دهم نگویم", "نمی‌خواهم پاسخ دهم"],
+            ["بله، چندین بار", "بله، یک بار", "نه، هرگز", "شاید بدون اینکه بدانم", "فقط در جوانی", "فقط با شخص خاص", "ترجیح می‌دهم نگویم", "نمی‌خواهم پاسخ دهم"],
+            ["هیچ", "۱-۲", "۳-۵", "۶-۱۰", "۱۱-۲۰", "۲۱-۵۰", "بیش از ۵۰", "ترجیح می‌دهم نگویم"]
+        ];
+        
+        // تحلیل‌های ممکن
+        const analysisParts = [
+            "تحلیل من نشان می‌دهد که شما فردی هستید که گاهی اوقات مثل یک کسخل رفتار می‌کنید اما در عمق وجودتان قلب بزرگی دارید",
+            "با توجه به پاسخ‌های شما به نظر می‌رسد در برخی موقعیت‌ها مثل یک احمق عمل می‌کنید اما این باعث نمی‌شود از ارزش‌های شما کم شود",
+            "جواب‌های شما نشان می‌دهد که شما خیلی کسخلی نیستید اما گاهی اوقات تصمیم‌های عجیبی می‌گیرید که آدم را به فکر وا می‌دارد",
+            "تحلیل شخصیت شما نشان می‌دهد که شما یک کیر مغز تمام عیار هستید اما این به معنای بد بودن شما نیست فقط کمی عجیب هستید",
+            "با بررسی پاسخ‌هایتان به این نتیجه رسیدم که شما عجب گاوی هستی اما این ویژگی‌ها می‌تواند در برخی موقعیت‌ها مفید باشد",
+            "شما ترکیبی از یک کسخل و یک نابغه هستید که این ترکیب گاهی اوقات نتایج جالبی به بار می‌آورد",
+            "تحلیل من نشان می‌دهد که شما یک کیری مقام کیر فیس هستید اما این بدان معنا نیست که نمی‌توانید دوست‌داشتنی باشید",
+            "با توجه به پاسخ‌های شما به نظر می‌رسد یک کون تاپاله تمام عیار هستید اما این ویژگی‌های شما را منحصر به فرد می‌کند",
+            "شما یک عقده‌ای واقعی هستید اما این بدان معنا نیست که نمی‌توانید زندگی خوبی داشته باشید",
+            "تحلیل شخصیت شما نشان می‌دهد که شما ترکیبی از یک احمق و یک فرد باهوش هستید که این ترکیب گاهی اوقات گیج‌کننده است",
+            "با بررسی پاسخ‌هایتان مشخص شد که شما گاهی اوقات مثل یک کسخل رفتار می‌کنید اما در مواقع مهم می‌توانید بسیار منطقی عمل کنید",
+            "شما یک خیلی کسخلی هستید اما این ویژگی شما را از دیگران متمایز می‌کند و می‌تواند نقطه قوت شما باشد",
+            "تحلیل من نشان می‌دهد که شما یک کیر مغز واقعی هستید اما این بدان معنا نیست که نمی‌توانید دوستان خوبی داشته باشید",
+            "با توجه به پاسخ‌های شما به نظر می‌رسد که شما یک کیری مقام کیر فیس هستید اما این ویژگی‌ها می‌تواند در برخی موقعیت‌ها مفید باشد",
+            "شما ترکیبی از یک کون تاپاله و یک فرد جدی هستید که این ترکیب گاهی اوقات نتایج جالبی به بار می‌آورد",
+            "تحلیل شخصیت شما نشان می‌دهد که شما یک عقده‌ای واقعی هستید اما این بدان معنا نیست که نمی‌توانید زندگی خوبی داشته باشید",
+            "با بررسی پاسخ‌هایتان به این نتیجه رسیدم که شما گاهی اوقات مثل یک احمق عمل می‌کنید اما در عمق وجودتان قلب بزرگی دارید",
+            "شما یک کسخل تمام عیار هستید اما این ویژگی شما را از دیگران متمایز می‌کند و می‌تواند نقطه قوت شما باشد",
+            "تحلیل من نشان می‌دهد که شما خیلی کسخلی نیستید اما گاهی اوقات تصمیم‌های عجیبی می‌گیرید که آدم را به فکر وا می‌دارد",
+            "با توجه به پاسخ‌های شما به نظر می‌رسد که شما یک کیر مغز هستید اما این به معنای بد بودن شما نیست فقط کمی عجیب هستید"
+        ];
+        
+        // شروع تست
+        function startTest() {
+            // ذخیره اطلاعات شخصی
+            userInfo = {
+                name: document.getElementById('name').value,
+                age: document.getElementById('age').value,
+                gender: document.getElementById('gender').value,
+                education: document.getElementById('education').value,
+                relationship: document.getElementById('relationship').value
+            };
+            
+            // اعتبارسنجی سن
+            if (userInfo.age < 18) {
+                alert("این تست فقط برای افراد بالای ۱۸ سال مناسب است");
                 return;
-            } else {
-                infoError.style.display = 'none';
             }
-
-            document.getElementById('personalInfoForm').style.display = 'none';
-            document.getElementById('quizSection').style.display = 'block';
+            
+            // مخفی کردن بخش اطلاعات شخصی
+            document.getElementById('personal-info-section').classList.add('hidden');
+            
+            // نمایش سوالات شخصی
+            showPersonalQuestions();
+            document.getElementById('personal-questions-section').classList.remove('hidden');
         }
-
-        document.getElementById('quizForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // جلوگیری از ارسال فرم به صورت پیش‌فرض
-
-            const quizError = document.getElementById('quizError');
-            const resultDiv = document.getElementById('result');
-            resultDiv.style.display = 'none'; // مخفی کردن نتیجه قبلی
-
-            const answers = {};
-            let allAnswered = true;
-            for (let i = 1; i <= 15; i++) {
-                const questionName = `q${i}`;
-                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-                if (selectedOption) {
-                    answers[questionName] = selectedOption.value;
-                } else {
-                    allAnswered = false;
-                    break;
-                }
-            }
-
-            if (!allAnswered) {
-                quizError.style.display = 'block';
-                return;
+        
+        // نمایش سوالات شخصی
+        function showPersonalQuestions() {
+            const container = document.getElementById('personal-questions-container');
+            container.innerHTML = '';
+            
+            // انتخاب ۵ سوال تصادفی
+            const selectedQuestions = getRandomQuestions(personalQuestions, 5);
+            
+            selectedQuestions.forEach((question, index) => {
+                const questionIndex = personalQuestions.indexOf(question);
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <h3>${index + 1}. ${question}</h3>
+                    <div class="options" id="personal-options-${questionIndex}"></div>
+                `;
+                container.appendChild(questionDiv);
+                
+                // انتخاب ۴ گزینه تصادفی
+                const selectedOptions = getRandomOptions(personalOptions[questionIndex], 4);
+                const optionsContainer = document.getElementById(`personal-options-${questionIndex}`);
+                
+                selectedOptions.forEach(option => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.textContent = option;
+                    optionDiv.onclick = function() {
+                        // حذف انتخاب قبلی
+                        const selected = optionsContainer.querySelector('.selected');
+                        if (selected) selected.classList.remove('selected');
+                        
+                        // انتخاب گزینه جدید
+                        this.classList.add('selected');
+                        
+                        // ذخیره پاسخ
+                        personalAnswers[questionIndex] = option;
+                        
+                        // بررسی آیا همه سوالات پاسخ داده شده‌اند
+                        checkAllPersonalQuestionsAnswered();
+                    };
+                    optionsContainer.appendChild(optionDiv);
+                });
+            });
+        }
+        
+        // بررسی پاسخ به همه سوالات شخصی
+        function checkAllPersonalQuestionsAnswered() {
+            const answeredCount = Object.keys(personalAnswers).length;
+            if (answeredCount === 5) {
+                document.getElementById('next-personal').classList.remove('hidden');
             } else {
-                quizError.style.display = 'none';
+                document.getElementById('next-personal').classList.add('hidden');
             }
-
-            // اطلاعات فردی
-            const age = document.getElementById('age').value;
-            const maritalStatus = document.getElementById('maritalStatus').value;
-            const physicalCondition = document.getElementById('physicalCondition').value;
-
-            let judgment = `<h3> ${userName} عزیز، خب ببینم چی در موردت بگم...</h3>`;
-
-            // قضاوت بر اساس سوالات
-            // خواب
-            const q1Text = document.querySelector('input[name="q1"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد خوابیدن، گفتی: **${q1Text}** و من می‌گم: `;
-            if (answers.q1 === 'a' || answers.q1 === 'b') {
-                judgment += `بابا ${userName}، چته؟ چرا انقدر کم می‌خوابی؟ مگه رباتی؟ پاشو برو بکپ! یه عالمه خواب بهت بدهکارم! باید بیشتر بخوابی، اصلاً بی‌خیال کار و زندگی!`;
-            } else if (answers.q1 === 'd' || answers.q1 === 'e') {
-                judgment += `ای بابا ${userName}! دیگه انقدرم نخواب! پاشو یه تکونی به خودت بده، دنیا منتظره! یه ذره کمتر بخواب و برو دنبال خوشگذرونی، نه کار!`;
-            } else if (answers.q1 === 'f') {
-                judgment += `${userName}، مگه میشه نخوابید؟ تو دیگه کی هستی! برو یه فکری به حال خودت کن، داری از دست میری کصخل!`;
+        }
+        
+        // نمایش سوالات جنسی
+        function showSexualQuestions() {
+            document.getElementById('personal-questions-section').classList.add('hidden');
+            
+            const container = document.getElementById('sexual-questions-container');
+            container.innerHTML = '';
+            
+            // انتخاب ۵ سوال تصادفی
+            const selectedQuestions = getRandomQuestions(sexualQuestions, 5);
+            
+            selectedQuestions.forEach((question, index) => {
+                const questionIndex = sexualQuestions.indexOf(question);
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <h3>${index + 1}. ${question}</h3>
+                    <div class="options" id="sexual-options-${questionIndex}"></div>
+                `;
+                container.appendChild(questionDiv);
+                
+                // انتخاب ۴ گزینه تصادفی
+                const selectedOptions = getRandomOptions(sexualOptions[questionIndex], 4);
+                const optionsContainer = document.getElementById(`sexual-options-${questionIndex}`);
+                
+                selectedOptions.forEach(option => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.textContent = option;
+                    optionDiv.onclick = function() {
+                        // حذف انتخاب قبلی
+                        const selected = optionsContainer.querySelector('.selected');
+                        if (selected) selected.classList.remove('selected');
+                        
+                        // انتخاب گزینه جدید
+                        this.classList.add('selected');
+                        
+                        // ذخیره پاسخ
+                        sexualAnswers[questionIndex] = option;
+                        
+                        // بررسی آیا همه سوالات پاسخ داده شده‌اند
+                        checkAllSexualQuestionsAnswered();
+                    };
+                    optionsContainer.appendChild(optionDiv);
+                });
+            });
+            
+            document.getElementById('sexual-questions-section').classList.remove('hidden');
+        }
+        
+        // بررسی پاسخ به همه سوالات جنسی
+        function checkAllSexualQuestionsAnswered() {
+            const answeredCount = Object.keys(sexualAnswers).length;
+            if (answeredCount === 5) {
+                document.getElementById('show-result').classList.remove('hidden');
             } else {
-                judgment += `${userName} جون، خوابت نرماله، ولی خب همیشه جا برای ریدن تو برنامه خوابت هست!`;
+                document.getElementById('show-result').classList.add('hidden');
             }
-            judgment += `</p>`;
-
-            // ورزش
-            const q2Text = document.querySelector('input[name="q2"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد ورزش، گفتی: **${q2Text}** و من می‌گم: `;
-            if (answers.q2 === 'a' || answers.q2 === 'f') {
-                judgment += `واااای ${userName}! تو اصلاً ورزش نمی‌کنی؟ بدنت ازت شاکیه، ناموساً! پاشو برو یه حرکتی بزن! حتی شده فقط برای اینکه یه کم عرق کنی و بعدش حال کنی!`;
-            } else if (answers.q2 === 'e') {
-                judgment += `${userName} تو دیگه خیلی ورزش می‌کنی! یه کمم استراحت کن، اینقدر خودتو جر نده!`;
-            } else {
-                judgment += `${userName} عزیز، ورزشت خوبه، ولی خب می‌تونی یه کمم کمتر کنی که بیشتر استراحت کنی و حال کنی!`;
+        }
+        
+        // نمایش نتیجه
+        function showResult() {
+            document.getElementById('sexual-questions-section').classList.add('hidden');
+            
+            // انتخاب ۴ تحلیل تصادفی
+            const selectedAnalyses = getRandomOptions(analysisParts, 4);
+            
+            // ایجاد نتیجه نهایی
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.innerHTML = `
+                <h3>${userInfo.name} عزیز، نتیجه تست شخصیت شما:</h3>
+                <p>با توجه به اطلاعات شما (${userInfo.age} ساله، ${getGenderText(userInfo.gender)}، ${getEducationText(userInfo.education)}، ${getRelationshipText(userInfo.relationship)}) و پاسخ‌های شما به سوالات، تحلیل شخصیت شما به شرح زیر است:</p>
+                <p>${selectedAnalyses.join(' ')}</p>
+                <p>این تحلیل بر اساس پاسخ‌های شما به سوالات بسیار شخصی و جنسی تهیه شده و ممکن است کاملاً دقیق نباشد. به هر حال، شما فرد منحصر به فردی هستید و این تست فقط برای سرگرمی طراحی شده است.</p>
+            `;
+            
+            document.getElementById('result-section').classList.remove('hidden');
+        }
+        
+        // تبدیل کد جنسیت به متن
+        function getGenderText(genderCode) {
+            switch(genderCode) {
+                case 'male': return 'مرد';
+                case 'female': return 'زن';
+                case 'other': return 'سایر';
+                default: return '';
             }
-            judgment += `</p>`;
-
-            // فست فود
-            const q11Text = document.querySelector('input[name="q11"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد فست‌فود، گفتی: **${q11Text}** و من می‌گم: `;
-            if (answers.q11 === 'e' || answers.q11 === 'd') {
-                judgment += `${userName} شکمت شده کارخونه فست‌فود! کمتر بخور این زهرماری‌ها رو! برو سراغ یه غذای خونگی چرب و چیلی که حالتو جا بیاره، نه این سَم کوفتی!`;
-            } else if (answers.q11 === 'a' || answers.q11 === 'f') {
-                judgment += `${userName} تو اصلاً فست‌فود نمی‌خوری؟ چه زندگی بی‌روحی! یه بار بزن به سیم آخر، برو پیتزا بزن که دلت باز شه، کصنمک!`;
-            } else {
-                judgment += `${userName} جون، مصرف فست‌فودت معقوله، ولی خب گاهی اوقات یه لقمه کثیفم بد نیست، کون لق رژیم!`;
+        }
+        
+        // تبدیل کد تحصیلات به متن
+        function getEducationText(educationCode) {
+            switch(educationCode) {
+                case 'diploma': return 'دیپلم';
+                case 'bachelor': return 'لیسانس';
+                case 'master': return 'فوق لیسانس';
+                case 'phd': return 'دکترا';
+                case 'other': return 'سایر';
+                default: return '';
             }
-            judgment += `</p>`;
-
-            // سیگار
-            const q10Text = document.querySelector('input[name="q10"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد سیگار، گفتی: **${q10Text}** و من می‌گم: `;
-            if (answers.q10 === 'e' || answers.q10 === 'd') {
-                judgment += `${userName} عزیز، تو دیگه دودکش شدی! چرا انقدر سیگار می‌کشی؟ برو سراغ قلیون، یا اگه واقعاً تهش می‌خوای، یه کم تریاک هم بد نیست! کمتر سیگار بکش، ریه‌هات ازت شاکین، آشغال!`;
-            } else if (answers.q10 === 'a') {
-                judgment += `${userName} تو اصلاً سیگار نمی‌کشی؟ ای بابا، چه زندگی بی‌حالی! یه نخ سیگار بکش، آدم می‌شی! (شوخی کردم البته، سلامتیت مهمه! ولی خب یه کم جسارت بد نیست، پخمه!)`;
-            } else if (answers.q10 === 'f') {
-                judgment += `${userName} جون، خوبه که به جای سیگار قلیون یا تریاک می‌کشی! دمت گرم! حداقلش اینه که سیگار نیست، گشاد!`;
-            } else {
-                judgment += `${userName} جان، مصرف سیگارت متوسطه، ولی خب یه کاری کن که بیشتر شه! (بازم شوخی کردم!) `;
+        }
+        
+        // تبدیل کد تأهل به متن
+        function getRelationshipText(relationshipCode) {
+            switch(relationshipCode) {
+                case 'single': return 'مجرد';
+                case 'married': return 'متأهل';
+                case 'divorced': return 'مطلقه';
+                case 'complicated': return 'وضعیت پیچیده';
+                default: return '';
             }
-            judgment += `</p>`;
-
-            // رابطه جنسی
-            const q6Text = document.querySelector('input[name="q6"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد رابطه جنسی، گفتی: **${q6Text}** و من می‌گم: `;
-            if (answers.q6 === 'a' || answers.q6 === 'f') {
-                judgment += `${userName} عزیزم، مگه میشه انقدر کم یا اصلاً رابطه نداشته باشی؟ پاشو یه تکونی به خودت بده، برو یه نفر رو پیدا کن و یه سکس باحال رو تجربه کن که زندگیت جون بگیره، بی ناموس!`;
-            } else if (answers.q6 === 'e') {
-                judgment += `${userName} تو دیگه خیلی سکس می‌کنی! یه کمم استراحت کن، همه چی که سکس نیست! برو یه کتاب بخون یا یه فیلم ببین، جنده!`;
-            } else {
-                judgment += `${userName} جون، رابطه‌ات خوبه، ولی خب همیشه جا برای بیشتر شدن هست! (البته به شرطی که کونت پاره نشه!) `;
-            }
-            judgment += `</p>`;
-
-            // فانتزی جنسی
-            const q7Text = document.querySelector('input[name="q7"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد فانتزی جنسی، گفتی: **${q7Text}** و من می‌گم: `;
-            if (answers.q7 === 'a' || answers.q7 === 'e') {
-                judgment += `${userName}، چرا انقدر از فانتزی‌های جنسی فراری هستی؟ ذهنت رو باز کن، یه عالمه چیزای باحال هست که می‌تونی امتحان کنی! جسور باش، کون‌گشاد!`;
-            } else if (answers.q7 === 'd' || answers.q7 === 'f') {
-                judgment += `${userName} دمت گرم با این فانتزی‌های خفن! حالا وقتشه که همه‌شون رو عملی کنی، نترس! برو تو کارش، کصکش!`;
-            } else {
-                judgment += `${userName} جان، فانتزی‌هات خوبن، ولی خب می‌تونی یه کمم کمتر فکر کنی و بیشتر به عمل بپردازی! (شوخی کردم، لذت ببر ازش، کسخول!)`;
-            }
-            judgment += `</p>`;
-
-            // اسباب‌بازی‌های جنسی
-            const q8Text = document.querySelector('input[name="q8"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد اسباب‌بازی‌های جنسی، گفتی: **${q8Text}** و من می‌گم: `;
-            if (answers.q8 === 'a' || answers.q8 === 'e' || answers.q8 === 'f') {
-                judgment += `${userName} چرا انقدر خجالتی یا بی‌تفاوتی؟ اسباب‌بازی‌های جنسی دنیای جدیدی رو به روت باز می‌کنن! یه بار امتحان کن، ضرر نمی‌کنی، کصخل!`;
-            } else if (answers.q8 === 'c' || answers.q8 === 'd') {
-                judgment += `${userName} ایول به این طرز فکر مدرنت! استفاده کن و لذت ببر! البته زیاده‌روی نکن که اصلی رو فراموش کنی، کص‌لیس!`;
-            } else {
-                judgment += `${userName} عزیز، استفاده از اسباب‌بازی‌های جنسی خوبه، ولی خب گاهی اوقات بدون اونها هم میشه حسابی کیف کرد، جاکش!`;
-            }
-            judgment += `</p>`;
-
-            // ارگاسم شریک جنسی
-            const q9Text = document.querySelector('input[name="q9"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد ارگاسم شریک جنسی، گفتی: **${q9Text}** و من می‌گم: `;
-            if (answers.q9 === 'a' || answers.q9 === 'e') {
-                judgment += `${userName} تو چرا انقدر خودخواهی؟ ارگاسم شریک جنسی از خودت مهم‌تره، مادر جنده! یه کم به فکر اون بدبخت هم باش!`;
-            } else if (answers.q9 === 'd') {
-                judgment += `${userName} دمت گرم که به فکر شریکت هستی! ولی خب گاهی اوقاتم میشه به فکر خودت باشی و از لحظه لذت ببری، ننه سگ!`;
-            } else if (answers.q9 === 'f') {
-                judgment += `${userName} عزیز، ارگاسم چیه؟ واقعاً نمی‌دونی؟ برو یه کم مطالعه کن، حیفه، کصخل!`;
-            } else {
-                judgment += `${userName} جان، به ارگاسم شریکت اهمیت میدی، خوبه! ولی خب گاهی اوقاتم بی‌خیال شو و فقط عشق و حال کن، کس‌کش!`;
-            }
-            judgment += `</p>`;
-
-            // پوزیشن‌های جدید جنسی
-            const q15Text = document.querySelector('input[name="q15"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد پوزیشن‌های جدید جنسی، گفتی: **${q15Text}** و من می‌گم: `;
-            if (answers.q15 === 'a' || answers.q15 === 'b' || answers.q15 === 'f') {
-                judgment += `${userName} چرا انقدر تکراری؟ پاشو برو پوزیشن‌های جدید رو یاد بگیر و امتحان کن! زندگیتو عوض می‌کنه، بی‌ریخت!`;
-            } else if (answers.q15 === 'd' || answers.q15 === 'e') {
-                judgment += `${userName} تو دیگه خودِ حرفه‌ای هستی! دمت گرم! ولی خب گاهی اوقات یه پوزیشن ساده هم می‌تونه کلی حال بده، کس‌خل!`;
-            } else {
-                judgment += `${userName} جان، علاقه‌ات به پوزیشن‌های جدید خوبه، ولی خب گاهی اوقاتم با همون روش‌های قدیمی می‌تونی حسابی بترکونی، کس‌کَش!`;
-            }
-            judgment += `</p>`;
-
-            // مطالعه
-            const q12Text = document.querySelector('input[name="q12"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد مطالعه، گفتی: **${q12Text}** و من می‌گم: `;
-            if (answers.q12 === 'a' || answers.q12 === 'f') {
-                judgment += `${userName} تو اصلاً کتاب نمی‌خونی؟ پاشو برو یه کتاب دستت بگیر، باسواد شی! البته اگه حالشو نداری، همون اینستاگرامتم کافیه، خره!`;
-            } else if (answers.q12 === 'd') {
-                judgment += `${userName} تو دیگه خیلی کتاب می‌خونی! یه کمم از دنیای واقعی لذت ببر! پاشو برو بیرون یه هوایی عوض کن، کتاب‌خوانِ بدبخت!`;
-            } else {
-                judgment += `${userName} عزیز، مطالعه‌ات خوبه، ولی خب گاهی اوقاتم بی‌خیال شو و عشق و حال کن، تنبل!`;
-            }
-            judgment += `</p>`;
-
-            // تفریح
-            const q13Text = document.querySelector('input[name="q13"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد تفریح، گفتی: **${q13Text}** و من می‌گم: `;
-            if (answers.q13 === 'e' || answers.q13 === 'a') {
-                judgment += `${userName} یا معتاد به کاری یا معتاد به خواب! یه کمم تفریح کن! برو بیرون، یه حال و هوایی عوض کن! همه چی کار و خواب نیست، بیچاره!`;
-            } else if (answers.q13 === 'f') {
-                judgment += `${userName} تو دیگه آخرشی! فقط می‌خوری و می‌خوابی؟ دمت گرم، زندگی رو گرفتی! ولی خب یه کمم حرکت بد نیست، گشاد!`;
-            } else {
-                judgment += `${userName} جان، تفریحاتت خوبن، ولی خب گاهی اوقاتم یه کاری کن که کلاً تو خونه نباشی، کصخل!`;
-            }
-            judgment += `</p>`;
-
-            // شانس
-            const q14Text = document.querySelector('input[name="q14"]:checked').parentElement.textContent;
-            judgment += `<p>در مورد شانس، گفتی: **${q14Text}** و من می‌گم: `;
-            if (answers.q14 === 'a') {
-                judgment += `${userName} خوش‌شانسی؟ ایول! ولی خب بدون تلاش هیچ شانسی به دست نمیاد! یه کمم بدشانسی رو تجربه کن تا قدر خوش‌شانسیتو بدونی، احمق!`;
-            } else if (answers.q14 === 'b') {
-                judgment += `${userName} تو بدشانسی؟ ای بابا! یه کم مثبت فکر کن، همه چی درست میشه! یا اینکه برو فال بگیر ببین چی میشه، بدبخت!`;
-            } else if (answers.q14 === 'e') {
-                judgment += `${userName} فیلسوف شدی؟ شانس در کار نیست؟ دمت گرم! ولی خب گاهی اوقاتم تسلیم شانس شو، خر!`;
-            } else {
-                judgment += `${userName} عزیز، در مورد شانست خوب گفتی! ولی خب همیشه یه جایی برای شانس بد هم هست، کسخول!`;
-            }
-            judgment += `</p>`;
-            // و... (می‌توانید برای بقیه سوالات هم قضاوت اضافه کنید)
-
-            resultDiv.innerHTML = judgment;
-            resultDiv.style.display = 'block';
-        });
+        }
+        
+        // انتخاب سوالات تصادفی
+        function getRandomQuestions(questions, count) {
+            const shuffled = [...questions].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+        
+        // انتخاب گزینه‌های تصادفی
+        function getRandomOptions(options, count) {
+            const shuffled = [...options].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
     </script>
-
 </body>
 </html>
