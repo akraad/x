@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پیش‌بینی تقریبی تاریخ مرگ</title>
     <style>
+        :root {
+            --primary-blue: #3498db;
+            --secondary-orange: #e67e22;
+            --light-gray: #ecf0f1;
+            --medium-gray: #bdc3c7;
+            --dark-gray: #34495e;
+            --text-color: #2c3e50;
+            --border-color: #dfe6e9;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
+            background-color: var(--light-gray);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,19 +26,27 @@
             padding: 20px;
             box-sizing: border-box;
             line-height: 1.6;
+            color: var(--text-color);
         }
         .container {
             background-color: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 700px;
+            max-width: 750px;
+            border: 1px solid var(--border-color);
         }
         h1, h2 {
             text-align: center;
-            color: #333;
+            color: var(--dark-gray);
             margin-bottom: 25px;
+            font-weight: 600;
+        }
+        h2 {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 35px;
         }
         .form-group {
             margin-bottom: 20px;
@@ -36,85 +54,123 @@
         label {
             display: block;
             margin-bottom: 8px;
-            color: #555;
+            color: var(--text-color);
             font-weight: bold;
+            font-size: 1.05em;
         }
         input[type="text"],
         input[type="number"],
         select {
-            width: calc(100% - 22px);
+            width: calc(100% - 24px);
             padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 6px;
             font-size: 1rem;
             box-sizing: border-box;
+            background-color: #fcfcfc;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .radio-group label, .checkbox-group label {
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+        .radio-group label {
             display: inline-block;
-            margin-left: 15px;
+            margin-left: 20px;
             font-weight: normal;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            margin-left: 5px;
+            transform: scale(1.1);
+            cursor: pointer;
         }
         button {
-            background-color: #007bff;
+            background-color: var(--primary-blue);
             color: white;
-            padding: 14px 25px;
+            padding: 15px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             width: 100%;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 25px;
+            font-weight: bold;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
         }
         #result {
-            margin-top: 30px;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background-color: #f9f9f9;
+            margin-top: 35px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background-color: #fdfdfd;
             text-align: center;
             font-size: 1.2rem;
-            color: #333;
+            color: var(--text-color);
             animation: fadeIn 1s ease-in-out;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .result-date {
-            font-size: 1.8em;
-            color: #dc3545;
+            font-size: 2.2em;
+            color: var(--secondary-orange);
             font-weight: bold;
-            margin: 15px 0;
+            margin: 20px 0;
             display: block;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         .disclaimer {
-            margin-top: 20px;
+            margin-top: 25px;
             font-size: 0.9em;
-            color: #777;
+            color: #7f8c8d;
             text-align: center;
+            line-height: 1.5;
+            padding: 10px;
+            background-color: #f0f4f7;
+            border-radius: 8px;
+            border: 1px solid #e0e7ed;
         }
         .suggestions-list {
             text-align: right;
-            margin-top: 25px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px dashed var(--medium-gray);
+            padding-top: 25px;
+        }
+        .suggestions-list h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
         }
         .suggestions-list ul {
             list-style-type: disc;
-            padding-right: 25px;
+            padding-right: 30px;
             margin-top: 10px;
+            text-align: right;
         }
         .suggestions-list li {
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            line-height: 1.8;
+            color: var(--text-color);
+            font-weight: bold; /* Make suggestions bold */
         }
-        .score-change {
-            font-size: 0.9em;
-            color: #666;
-            font-style: italic;
+        .suggestions-list li span.benefit {
+            color: var(--secondary-orange);
+            font-weight: bold;
         }
     </style>
 </head>
@@ -367,22 +423,22 @@
             const residence = document.getElementById('residence').value;
 
             // امتیازدهی اولیه (امید به زندگی پایه)
-            let baseLifeExpectancy = 75; // سال پایه امید به زندگی
+            let baseLifeExpectancy = 78; // سال پایه امید به زندگی (با توجه به میانگین جهانی و ایران)
 
             // تنظیم امید به زندگی پایه بر اساس جنسیت
             if (gender === 'female') {
-                baseLifeExpectancy += 4; 
+                baseLifeExpectancy += 4; // زنان معمولاً بیشتر عمر می‌کنند
             } else { // male
-                baseLifeExpectancy -= 1; 
+                baseLifeExpectancy -= 2; // مردان معمولاً کمتر عمر می‌کنند
             }
 
             // تنظیم امید به زندگی پایه بر اساس محل زندگی
             if (residence === 'urban_large') {
-                baseLifeExpectancy -= 2; 
+                baseLifeExpectancy -= 3; // آلودگی و استرس بیشتر
             } else if (residence === 'urban_small') {
                 baseLifeExpectancy += 0; 
             } else if (residence === 'rural') {
-                baseLifeExpectancy += 2; 
+                baseLifeExpectancy += 2; // هوای پاک‌تر و استرس کمتر
             }
 
             let score = 0; // امتیازات جمع‌آوری شده از سوالات سبک زندگی
@@ -391,126 +447,126 @@
                 return document.getElementById(id).value;
             }
 
-            // امتیازدهی سوالات با 6 گزینه
+            // امتیازدهی سوالات با 6 گزینه (تعدیل شده برای واقع‌گرایی بیشتر)
             const smoking = getSelectValue('smoking');
-            if (smoking === 'never') score += 6;
-            else if (smoking === 'ex_occasional') score += 3;
-            else if (smoking === 'ex_daily') score += 1;
-            else if (smoking === 'occasional') score -= 3;
-            else if (smoking === 'light_daily') score -= 7;
-            else if (smoking === 'heavy_daily') score -= 12;
+            if (smoking === 'never') score += 7;
+            else if (smoking === 'ex_occasional') score += 4;
+            else if (smoking === 'ex_daily') score += 2;
+            else if (smoking === 'occasional') score -= 4;
+            else if (smoking === 'light_daily') score -= 9;
+            else if (smoking === 'heavy_daily') score -= 15;
 
             const alcohol = getSelectValue('alcohol');
-            if (alcohol === 'never') score += 4;
-            else if (alcohol === 'rarely') score += 2;
-            else if (alcohol === 'socially') score += 0;
-            else if (alcohol === 'regular') score -= 4;
-            else if (alcohol === 'heavy') score -= 8;
-            else if (alcohol === 'dependent') score -= 15;
+            if (alcohol === 'never') score += 5;
+            else if (alcohol === 'rarely') score += 3;
+            else if (alcohol === 'socially') score += 1;
+            else if (alcohol === 'regular') score -= 5;
+            else if (alcohol === 'heavy') score -= 10;
+            else if (alcohol === 'dependent') score -= 20;
 
             const diet = getSelectValue('diet');
-            if (diet === 'healthy_plant') score += 5;
-            else if (diet === 'balanced_home') score += 3;
+            if (diet === 'healthy_plant') score += 6;
+            else if (diet === 'balanced_home') score += 4;
             else if (diet === 'balanced_mixed') score += 1;
-            else if (diet === 'fast_food_moderate') score -= 2;
-            else if (diet === 'fast_food_often') score -= 6;
-            else if (diet === 'unhealthy_processed') score -= 10;
+            else if (diet === 'fast_food_moderate') score -= 3;
+            else if (diet === 'fast_food_often') score -= 8;
+            else if (diet === 'unhealthy_processed') score -= 12;
 
             const activity = getSelectValue('activity');
-            if (activity === 'very_active') score += 6;
-            else if (activity === 'active') score += 4;
+            if (activity === 'very_active') score += 7;
+            else if (activity === 'active') score += 5;
             else if (activity === 'moderate') score += 2;
-            else if (activity === 'light') score -= 1;
-            else if (activity === 'sedentary_light') score -= 4;
-            else if (activity === 'sedentary_none') score -= 8;
+            else if (activity === 'light') score -= 2;
+            else if (activity === 'sedentary_light') score -= 5;
+            else if (activity === 'sedentary_none') score -= 10;
 
             const sleep = getSelectValue('sleep');
-            if (sleep === 'optimal') score += 4;
-            else if (sleep === 'good') score += 2;
-            else if (sleep === 'some_disruption') score -= 1;
-            else if (sleep === 'less_than_6') score -= 4;
-            else if (sleep === 'more_than_9') score -= 3; // خواب زیاد هم همیشه خوب نیست
-            else if (sleep === 'poor_irregular') score -= 7;
+            if (sleep === 'optimal') score += 5;
+            else if (sleep === 'good') score += 3;
+            else if (sleep === 'some_disruption') score -= 2;
+            else if (sleep === 'less_than_6') score -= 5;
+            else if (sleep === 'more_than_9') score -= 4; 
+            else if (sleep === 'poor_irregular') score -= 9;
 
             const stress = getSelectValue('stress');
-            if (stress === 'very_low') score += 5;
-            else if (stress === 'low') score += 3;
+            if (stress === 'very_low') score += 6;
+            else if (stress === 'low') score += 4;
             else if (stress === 'moderate') score += 0;
-            else if (stress === 'high') score -= 4;
-            else if (stress === 'very_high') score -= 8;
-            else if (stress === 'chronic_stress') score -= 12;
+            else if (stress === 'high') score -= 5;
+            else if (stress === 'very_high') score -= 10;
+            else if (stress === 'chronic_stress') score -= 15;
 
             const heredity = getSelectValue('heredity');
-            if (heredity === 'none') score += 4;
-            else if (heredity === 'minor_distant') score += 1;
-            else if (heredity === 'some_close') score -= 3;
-            else if (heredity === 'significant_close') score -= 7;
-            else if (heredity === 'widespread_severe') score -= 10;
-            else if (heredity === 'early_onset') score -= 15;
+            if (heredity === 'none') score += 5;
+            else if (heredity === 'minor_distant') score += 2;
+            else if (heredity === 'some_close') score -= 4;
+            else if (heredity === 'significant_close') score -= 8;
+            else if (heredity === 'widespread_severe') score -= 12;
+            else if (heredity === 'early_onset') score -= 18;
 
             const job = getSelectValue('job');
-            if (job === 'very_low_risk') score += 4;
-            else if (job === 'low_risk') score += 2;
+            if (job === 'very_low_risk') score += 5;
+            else if (job === 'low_risk') score += 3;
             else if (job === 'medium_risk') score += 0;
-            else if (job === 'high_risk') score -= 4;
-            else if (job === 'very_high_risk') score -= 8;
-            else if (job === 'extreme_risk') score -= 15;
+            else if (job === 'high_risk') score -= 6;
+            else if (job === 'very_high_risk') score -= 12;
+            else if (job === 'extreme_risk') score -= 20;
 
             const bmi = getSelectValue('bmi');
-            if (bmi === 'healthy') score += 4;
-            else if (bmi === 'underweight') score -= 2; // کمبود وزن شدید هم خطرناک است
-            else if (bmi === 'overweight') score -= 1;
-            else if (bmi === 'obese_class1') score -= 5;
-            else if (bmi === 'obese_class2') score -= 9;
-            else if (bmi === 'morbidly_obese') score -= 15;
+            if (bmi === 'healthy') score += 5;
+            else if (bmi === 'underweight') score -= 3; 
+            else if (bmi === 'overweight') score -= 2;
+            else if (bmi === 'obese_class1') score -= 7;
+            else if (bmi === 'obese_class2') score -= 12;
+            else if (bmi === 'morbidly_obese') score -= 18;
 
             const checkup = getSelectValue('checkup');
-            if (checkup === 'annual_full') score += 4;
+            if (checkup === 'annual_full') score += 5;
             else if (checkup === 'regular_partial') score += 2;
             else if (checkup === 'occasional') score += 0;
-            else if (checkup === 'rarely') score -= 3;
-            else if (checkup === 'never') score -= 7;
-            else if (checkup === 'avoid_doctors') score -= 10;
+            else if (checkup === 'rarely') score -= 4;
+            else if (checkup === 'never') score -= 9;
+            else if (checkup === 'avoid_doctors') score -= 14;
 
             const pollution = getSelectValue('pollution');
-            if (pollution === 'very_low') score += 3;
-            else if (pollution === 'low') score += 1;
-            else if (pollution === 'medium') score -= 1;
-            else if (pollution === 'high') score -= 4;
-            else if (pollution === 'very_high') score -= 8;
-            else if (pollution === 'extreme') score -= 12;
+            if (pollution === 'very_low') score += 4;
+            else if (pollution === 'low') score += 2;
+            else if (pollution === 'medium') score -= 2;
+            else if (pollution === 'high') score -= 6;
+            else if (pollution === 'very_high') score -= 10;
+            else if (pollution === 'extreme') score -= 15;
 
             const social = getSelectValue('social');
-            if (social === 'strong_extensive') score += 4;
-            else if (social === 'strong_close') score += 2;
+            if (social === 'strong_extensive') score += 5;
+            else if (social === 'strong_close') score += 3;
             else if (social === 'moderate') score += 0;
-            else if (social === 'limited') score -= 2;
-            else if (social === 'mostly_alone') score -= 5;
-            else if (social === 'isolated') score -= 8;
+            else if (social === 'limited') score -= 3;
+            else if (social === 'mostly_alone') score -= 7;
+            else if (social === 'isolated') score -= 10;
 
             const outlook = getSelectValue('outlook');
-            if (outlook === 'very_positive') score += 3;
+            if (outlook === 'very_positive') score += 4;
             else if (outlook === 'positive') score += 2;
             else if (outlook === 'realistic') score += 0;
-            else if (outlook === 'sometimes_negative') score -= 1;
-            else if (outlook === 'often_negative') score -= 4;
-            else if (outlook === 'pessimistic_depressed') score -= 7;
+            else if (outlook === 'sometimes_negative') score -= 2;
+            else if (outlook === 'often_negative') score -= 5;
+            else if (outlook === 'pessimistic_depressed') score -= 9;
 
             const education = getSelectValue('education');
-            if (education === 'phd_higher') score += 3;
-            else if (education === 'master') score += 2;
+            if (education === 'phd_higher') score += 4;
+            else if (education === 'master') score += 3;
             else if (education === 'bachelor') score += 1;
             else if (education === 'diploma') score += 0;
-            else if (education === 'elementary') score -= 1;
-            else if (education === 'illiterate') score -= 3;
+            else if (education === 'elementary') score -= 2;
+            else if (education === 'illiterate') score -= 4;
 
             const medication = getSelectValue('medication');
-            if (medication === 'no') score += 3;
+            if (medication === 'no') score += 4;
             else if (medication === 'minor_condition') score += 1;
-            else if (medication === 'moderate_condition') score -= 2;
-            else if (medication === 'serious_condition') score -= 6;
-            else if (medication === 'multiple_serious') score -= 10;
-            else if (medication === 'lifelong_critical') score -= 15;
+            else if (medication === 'moderate_condition') score -= 3;
+            else if (medication === 'serious_condition') score -= 8;
+            else if (medication === 'multiple_serious') score -= 12;
+            else if (medication === 'lifelong_critical') score -= 18;
             
             // محاسبه امید به زندگی نهایی
             let finalLifeExpectancy = baseLifeExpectancy + score;
@@ -519,89 +575,135 @@
             if (finalLifeExpectancy < age + 1) { 
                 finalLifeExpectancy = age + 1; // حداقل یک سال دیگر
             }
-            if (finalLifeExpectancy > 105) { // حداکثر 105 سال (فرضی)
-                finalLifeExpectancy = 105;
+            if (finalLifeExpectancy > 110) { // حداکثر 110 سال (فرضی)
+                finalLifeExpectancy = 110;
             }
 
             const yearsToLive = finalLifeExpectancy - age;
             
-            // محاسبه تاریخ مرگ
-            const currentDate = new Date();
-            const predictedDeathDate = new Date(currentDate.getFullYear() + yearsToLive, currentDate.getMonth(), currentDate.getDate());
+            // --- شروع بخش تصادفی‌سازی تاریخ هجری شمسی ---
+            // تابع کمکی برای تبدیل تاریخ میلادی به شمسی
+            // این تابع ساده‌سازی شده است و برای تبدیل دقیق نیاز به کتابخانه جامع‌تری دارد.
+            // اما برای نمایش ماه و روز تصادفی شمسی کافی است.
+            function gregorianToPersian(gDate) {
+                const jalaliMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+                
+                // این بخش برای تبدیل دقیق میلادی به شمسی نیست و فقط برای گرفتن یک روز و ماه تصادفی است.
+                // فرض می‌کنیم در سال پیش‌بینی شده، یک روز و ماه تصادفی میلادی را به عنوان تاریخ شمسی نمایش می‌دهیم
+                // تا تنوع داشته باشد.
+                let gYear = gDate.getFullYear();
+                let gMonth = gDate.getMonth();
+                let gDay = gDate.getDate();
 
-            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-            const formattedDate = predictedDeathDate.toLocaleDateString('fa-IR', options);
-            const formattedDayOfWeek = predictedDeathDate.toLocaleDateString('fa-IR', { weekday: 'long' });
+                // برای نمایش تصادفی ماه و روز شمسی، یک ماه و روز تصادفی از تقویم شمسی انتخاب می‌کنیم.
+                const randomMonthIndex = Math.floor(Math.random() * 12); // 0 تا 11
+                const randomDay = Math.floor(Math.random() * 29) + 1; // 1 تا 29 (برای سادگی)
+
+                // این یک تبدیل دقیق نیست، فقط برای گرفتن نام ماه شمسی و روز تصادفی برای نمایش
+                const persianMonthName = jalaliMonths[randomMonthIndex];
+                const persianYear = gYear + 621; // تقریبی از تبدیل سال میلادی به شمسی
+                
+                return {
+                    year: persianYear,
+                    monthName: persianMonthName,
+                    day: randomDay
+                };
+            }
+
+            const currentDate = new Date();
+            const predictedDeathYear = currentDate.getFullYear() + yearsToLive;
+            
+            // ساخت یک تاریخ میلادی تصادفی در سال پیش‌بینی شده
+            const randomMonthIndexGregorian = Math.floor(Math.random() * 12); // 0-11
+            const randomDayGregorian = Math.floor(Math.random() * 28) + 1; // 1-28 برای جلوگیری از مشکلات روزهای ماه
+            const predictedDeathDateGregorian = new Date(predictedDeathYear, randomMonthIndexGregorian, randomDayGregorian);
+
+            // تبدیل تاریخ میلادی تصادفی به شمسی برای نمایش
+            const persianDate = gregorianToPersian(predictedDeathDateGregorian);
+            const formattedDayOfWeek = predictedDeathDateGregorian.toLocaleDateString('fa-IR', { weekday: 'long' });
+
+            const finalDeathDateText = `${persianDate.day} ${persianDate.monthName} ${persianDate.year} شمسی`;
+            // --- پایان بخش تصادفی‌سازی تاریخ هجری شمسی ---
 
             let resultHtml = `
                 <p><strong>${name}</strong> عزیز،</p>
-                <p>با توجه به اطلاعاتی که ارائه دادید، پیش‌بینی تقریبی ما برای تاریخ درگذشت شما حدوداً:</p>
-                <span class="result-date">${formattedDate}</span>
-                <p>که معادل با <strong>${formattedDayOfWeek}</strong> خواهد بود.</p>
-                <p>این به این معنی است که شما احتمالاً تا حدود <strong>${finalLifeExpectancy.toFixed(0)}</strong> سالگی عمر خواهید کرد.</p>
+                <p>با توجه به اطلاعات شما، پیش‌بینی تقریبی ما این است که با توکل به خدا، تا حدود <strong>${finalLifeExpectancy.toFixed(0)}</strong> سالگی عمر کنید.</p>
+                <p>این به معنی درگذشت شما در حدود:</p>
+                <span class="result-date">${finalDeathDateText}</span>
+                <p>که مصادف با <strong>${formattedDayOfWeek}</strong> خواهد بود.</p>
             `;
 
-            // پیشنهادات افزایش طول عمر
-            let suggestions = "<div class='suggestions-list'><h3>پیشنهاداتی برای افزایش طول عمر:</h3><ul>";
+            // پیشنهادات افزایش طول عمر (تیتروار)
+            let suggestions = "<div class='suggestions-list'><h3>برای افزایش عمر، این کارها را در نظر بگیرید:</h3><ul>";
             let hasSuggestions = false;
 
-            if (smoking === 'occasional' || smoking === 'light_daily' || smoking === 'heavy_daily') {
-                suggestions += `<li><strong>ترک کامل دخانیات:</strong> این مهم‌ترین قدم است! با ترک کامل سیگار/قلیان/ویپ می‌توانید به طور قابل توجهی (<strong>افزایش +۷ تا +۱۲ سال</strong>) خطر بیماری‌های مزمن را کاهش دهید.</li>`;
+            if (smoking !== 'never' && smoking !== 'ex_occasional' && smoking !== 'ex_daily') {
+                suggestions += `<li>ترک کامل دخانیات <span class="benefit">(+۷ تا +۱۵ سال به عمرتان اضافه می‌شود)</span></li>`;
                 hasSuggestions = true;
             }
-
             if (alcohol === 'regular' || alcohol === 'heavy' || alcohol === 'dependent') {
-                suggestions += `<li><strong>کاهش یا قطع مصرف الکل:</strong> مصرف بیش از حد الکل به کبد، قلب و مغز آسیب می‌رساند. با کاهش آن، می‌توانید به سلامت خود کمک کنید (<strong>افزایش +۴ تا +۱۰ سال</strong>).</li>`;
+                suggestions += `<li>کاهش یا قطع مصرف الکل <span class="benefit">(+۵ تا +۲۰ سال)</span></li>`;
                 hasSuggestions = true;
             }
-
             if (diet === 'fast_food_moderate' || diet === 'fast_food_often' || diet === 'unhealthy_processed') {
-                suggestions += `<li><strong>تغذیه سالم‌تر:</strong> مصرف میوه‌ها، سبزیجات، غلات کامل و پروتئین‌های سالم را افزایش دهید و فست‌فود و غذاهای فرآوری‌شده را کم کنید (<strong>افزایش +۵ تا +۱۰ سال</strong>).</li>`;
+                suggestions += `<li>رژیم غذایی سالم (کاهش فست فود، افزایش میوه و سبزیجات) <span class="benefit">(+۶ تا +۱۲ سال)</span></li>`;
                 hasSuggestions = true;
             }
-
             if (activity === 'light' || activity === 'sedentary_light' || activity === 'sedentary_none') {
-                suggestions += `<li><strong>افزایش فعالیت بدنی:</strong> سعی کنید روزانه حداقل ۳۰ دقیقه فعالیت بدنی متوسط داشته باشید. ورزش منظم تاثیر بسزایی بر سلامت دارد (<strong>افزایش +۳ تا +۸ سال</strong>).</li>`;
+                suggestions += `<li>افزایش فعالیت بدنی منظم <span class="benefit">(+۴ تا +۱۰ سال)</span></li>`;
                 hasSuggestions = true;
             }
-
+            if (sleep === 'less_than_6' || sleep === 'more_than_9' || sleep === 'poor_irregular') {
+                suggestions += `<li>بهبود کیفیت و کمیت خواب <span class="benefit">(+۳ تا +۷ سال)</span></li>`;
+                hasSuggestions = true;
+            }
             if (stress === 'high' || stress === 'very_high' || stress === 'chronic_stress') {
-                suggestions += `<li><strong>مدیریت استرس:</strong> تکنیک‌های مدیریت استرس مانند مدیتیشن، یوگا، تنفس عمیق را یاد بگیرید. کاهش استرس سلامت روانی و جسمی شما را بهبود می‌بخشد (<strong>افزایش +۴ تا +۷ سال</strong>).</li>`;
+                suggestions += `<li>مدیریت موثر استرس <span class="benefit">(+۵ تا +۱۰ سال)</span></li>`;
                 hasSuggestions = true;
             }
-
-            if (bmi === 'overweight' || bmi === 'obese_class1' || bmi === 'obese_class2' || bmi === 'morbidly_obese') {
-                suggestions += `<li><strong>رسیدن به وزن ایده‌آل:</strong> کاهش وزن اضافی و رسیدن به BMI سالم، فشار بر قلب و سیستم متابولیسم را کم می‌کند (<strong>افزایش +۳ تا +۱۰ سال</strong>).</li>`;
+            if (heredity !== 'none' && heredity !== 'minor_distant') {
+                suggestions += `<li>مشاوره پزشکی و غربالگری منظم (به ویژه برای سوابق ارثی) <span class="benefit">(+۳ تا +۸ سال)</span></li>`;
                 hasSuggestions = true;
             }
-
+            if (job === 'high_risk' || job === 'very_high_risk' || job === 'extreme_risk') {
+                suggestions += `<li>کاهش خطرات شغلی یا استفاده از ایمنی کامل <span class="benefit">(+۴ تا +۱۰ سال)</span></li>`;
+                hasSuggestions = true;
+            }
+            if (bmi === 'overweight' || bmi === 'obese_class1' || bmi === 'obese_class2' || bmi === 'morbidly_obese' || bmi === 'underweight') {
+                suggestions += `<li>رسیدن به وزن ایده‌آل و سالم <span class="benefit">(+۳ تا +۱۲ سال)</span></li>`;
+                hasSuggestions = true;
+            }
             if (checkup === 'rarely' || checkup === 'never' || checkup === 'avoid_doctors') {
-                suggestions += `<li><strong>چکاپ‌های منظم پزشکی:</strong> تشخیص زودهنگام بیماری‌ها و پیگیری درمان، می‌تواند به حفظ سلامتی شما کمک کند (<strong>افزایش +۳ تا +۷ سال</strong>).</li>`;
+                suggestions += `<li>انجام چکاپ‌های منظم پزشکی <span class="benefit">(+۴ تا +۱۰ سال)</span></li>`;
                 hasSuggestions = true;
             }
-            
             if (pollution === 'high' || pollution === 'very_high' || pollution === 'extreme') {
-                suggestions += `<li><strong>کاهش مواجهه با آلودگی هوا:</strong> در صورت امکان، زمان کمتری را در مناطق با آلودگی شدید بگذرانید یا از ماسک‌های مناسب استفاده کنید (<strong>افزایش +۲ تا +۵ سال</strong>).</li>`;
+                suggestions += `<li>کاهش مواجهه با آلودگی هوا <span class="benefit">(+۳ تا +۷ سال)</span></li>`;
                 hasSuggestions = true;
             }
-
             if (social === 'limited' || social === 'mostly_alone' || social === 'isolated') {
-                suggestions += `<li><strong>تقویت روابط اجتماعی:</strong> ارتباط با دوستان و خانواده و مشارکت در فعالیت‌های گروهی می‌تواند سلامت روان و جسم شما را بهبود بخشد (<strong>افزایش +۲ تا +۵ سال</strong>).</li>`;
+                suggestions += `<li>تقویت روابط اجتماعی و خانوادگی <span class="benefit">(+۳ تا +۷ سال)</span></li>`;
                 hasSuggestions = true;
             }
-
             if (outlook === 'sometimes_negative' || outlook === 'often_negative' || outlook === 'pessimistic_depressed') {
-                suggestions += `<li><strong>تقویت روحیه مثبت:</strong> خوش‌بینی و مثبت‌اندیشی می‌تواند به کاهش استرس و بهبود سلامت کلی کمک کند (<strong>افزایش +۱ تا +۴ سال</strong>).</li>`;
+                suggestions += `<li>تقویت روحیه مثبت و خوش‌بینی <span class="benefit">(+۲ تا +۶ سال)</span></li>`;
                 hasSuggestions = true;
             }
-
+            if (education === 'illiterate' || education === 'elementary') {
+                suggestions += `<li>ادامه تحصیل و یادگیری مداوم <span class="benefit">(+۱ تا +۴ سال)</span></li>`;
+                hasSuggestions = true;
+            }
+            if (medication === 'serious_condition' || medication === 'multiple_serious' || medication === 'lifelong_critical') {
+                suggestions += `<li>مدیریت دقیق بیماری‌های مزمن و مصرف صحیح داروها <span class="benefit">(+۴ تا +۱۰ سال)</span></li>`;
+                hasSuggestions = true;
+            }
 
             suggestions += "</ul></div>";
 
             if (hasSuggestions) {
                 resultHtml += suggestions;
             } else {
-                resultHtml += "<p class='suggestions-list'>با توجه به انتخاب‌های شما، سبک زندگی فعلی‌تان بسیار مطلوب است. به همین روند ادامه دهید!</p>";
+                resultHtml += "<p class='suggestions-list'>با توجه به انتخاب‌های شما، سبک زندگی فعلی‌تان بسیار مطلوب است. به همین روند ادامه دهید و از زندگی لذت ببرید!</p>";
             }
 
             resultHtml += `<p class="disclaimer">باز هم تأکید می‌شود که این فقط یک پیش‌بینی سرگرم‌کننده است و هیچ پایه علمی ندارد.</p>`;
