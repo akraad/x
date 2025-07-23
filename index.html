@@ -1,714 +1,539 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پیش‌بینی تقریبی تاریخ مرگ</title>
+    <title>قضاوت خفن!</title>
     <style>
-        :root {
-            --primary-blue: #3498db;
-            --secondary-orange: #e67e22;
-            --light-gray: #ecf0f1;
-            --medium-gray: #bdc3c7;
-            --dark-gray: #34495e;
-            --text-color: #2c3e50;
-            --border-color: #dfe6e9;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-gray);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            font-family: 'B Homa', 'Tahoma', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
             line-height: 1.6;
-            color: var(--text-color);
-        }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 750px;
-            border: 1px solid var(--border-color);
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            direction: rtl; /* برای فارسی */
+            text-align: right; /* برای فارسی */
         }
         h1, h2 {
+            color: #d9534f;
             text-align: center;
-            color: var(--dark-gray);
             margin-bottom: 25px;
-            font-weight: 600;
         }
-        h2 {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-top: 35px;
-        }
-        .form-group {
+        .section {
+            background-color: #fff;
+            padding: 25px;
             margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
         }
         label {
             display: block;
             margin-bottom: 8px;
-            color: var(--text-color);
             font-weight: bold;
-            font-size: 1.05em;
         }
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: calc(100% - 24px);
-            padding: 12px;
-            border: 1px solid var(--medium-gray);
-            border-radius: 6px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            background-color: #fcfcfc;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        input[type="text"], input[type="number"], select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
         }
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        select:focus {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-            outline: none;
+        .question {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
         }
-        .radio-group label {
-            display: inline-block;
-            margin-left: 20px;
+        .question:last-child {
+            border-bottom: none;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
             font-weight: normal;
-            font-size: 1em;
             cursor: pointer;
         }
-        .radio-group input[type="radio"] {
-            margin-left: 5px;
-            transform: scale(1.1);
-            cursor: pointer;
+        .options input[type="radio"] {
+            margin-left: 10px;
+            transform: scale(1.2);
         }
         button {
-            background-color: var(--primary-blue);
-            color: white;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.15rem;
+            display: block;
             width: 100%;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 25px;
-            font-weight: bold;
+            padding: 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
         }
         button:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-        button:active {
-            transform: translateY(0);
+            background-color: #4cae4c;
         }
         #result {
-            margin-top: 35px;
-            padding: 25px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            background-color: #fdfdfd;
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-color);
-            animation: fadeIn 1s ease-in-out;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .result-date {
-            font-size: 2.2em;
-            color: var(--secondary-orange);
-            font-weight: bold;
-            margin: 20px 0;
-            display: block;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        .disclaimer {
-            margin-top: 25px;
-            font-size: 0.9em;
-            color: #7f8c8d;
-            text-align: center;
-            line-height: 1.5;
-            padding: 10px;
-            background-color: #f0f4f7;
-            border-radius: 8px;
-            border: 1px solid #e0e7ed;
-        }
-        .suggestions-list {
-            text-align: right;
             margin-top: 30px;
-            border-top: 1px dashed var(--medium-gray);
-            padding-top: 25px;
-        }
-        .suggestions-list h3 {
-            color: var(--primary-blue);
-            margin-bottom: 15px;
-            font-size: 1.3em;
+            padding: 25px;
+            background-color: #dff0d8;
+            border: 1px solid #d6e9c6;
+            border-radius: 8px;
+            font-size: 18px;
+            color: #3c763d;
             text-align: center;
-        }
-        .suggestions-list ul {
-            list-style-type: disc;
-            padding-right: 30px;
-            margin-top: 10px;
-            text-align: right;
-        }
-        .suggestions-list li {
-            margin-bottom: 12px;
-            line-height: 1.8;
-            color: var(--text-color);
-            font-weight: bold; /* Make suggestions bold */
-        }
-        .suggestions-list li span.benefit {
-            color: var(--secondary-orange);
             font-weight: bold;
+            display: none; /* مخفی در ابتدا */
+        }
+        .error {
+            color: #a94442;
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>برنامه پیش‌بینی تقریبی تاریخ مرگ</h1>
-        <div class="disclaimer">
-            <p><strong>توجه:</strong> این برنامه فقط برای سرگرمی است و پیش‌بینی‌های آن پایه علمی قوی ندارند. تاریخ مرگ قابل پیش‌بینی نیست و عوامل بسیار زیادی در آن دخیل هستند. این برنامه صرفاً بر اساس فرضیات و امتیازدهی‌های فرضی کار می‌کند.</p>
+
+    <h1>برنامه قضاوت خفن شما!</h1>
+
+    <div class="section">
+        <h2>مشخصات شما:</h2>
+        <div id="personalInfoForm">
+            <label for="name">اسمت چیه؟</label>
+            <input type="text" id="name" placeholder="مثلاً: حسن آقا، زهرا خانم">
+
+            <label for="age">چند سالته؟</label>
+            <input type="number" id="age" min="1" max="120" placeholder="مثلاً: ۳۰">
+
+            <label for="maritalStatus">وضعیت تاهل؟</label>
+            <select id="maritalStatus">
+                <option value="">انتخاب کن</option>
+                <option value="single">مجرد</option>
+                <option value="married">متاهل</option>
+                <option value="divorced">مطلقه</option>
+                <option value="widowed">همسر از دست داده</option>
+            </select>
+
+            <label for="physicalCondition">وضعیت جسمانیت چطوره؟ (مثلاً: توپ، سرحال، خسته، بیمار)</label>
+            <input type="text" id="physicalCondition" placeholder="مثلاً: توپِ توپ">
+
+            <button onclick="startQuiz()">شروع قضاوت!</button>
+            <div id="infoError" class="error">لطفاً همه اطلاعات رو پر کن، جون هرکی دوست داری!</div>
         </div>
-        <form id="deathPredictorForm">
-            <h2>مشخصات فردی</h2>
-            <div class="form-group">
-                <label for="name">نام کامل:</label>
-                <input type="text" id="name" required placeholder="نام خود را وارد کنید">
-            </div>
-            <div class="form-group">
-                <label for="age">سن فعلی:</label>
-                <input type="number" id="age" min="1" max="120" required placeholder="سن خود را وارد کنید">
-            </div>
-            <div class="form-group">
-                <label>جنسیت:</label>
-                <div class="radio-group">
-                    <input type="radio" id="male" name="gender" value="male" required>
-                    <label for="male">مرد</label>
-                    <input type="radio" id="female" name="gender" value="female">
-                    <label for="female">زن</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="residence">محل زندگی اصلی شما:</label>
-                <select id="residence" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="urban_large">کلان‌شهر (تهران، مشهد، اصفهان و...)</option>
-                    <option value="urban_small">شهر کوچک یا متوسط</option>
-                    <option value="rural">روستا یا منطقه ییلاقی</option>
-                </select>
-            </div>
-
-            <h2>سوالات سبک زندگی</h2>
-            
-            <div class="form-group">
-                <label for="smoking">۱. وضعیت استعمال دخانیات (سیگار، قلیان، ویپ و...):</label>
-                <select id="smoking" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="never">هرگز مصرف نکرده‌ام</option>
-                    <option value="ex_occasional">قبلاً گاه‌گاهی مصرف می‌کردم، الان ترک کرده‌ام</option>
-                    <option value="ex_daily">قبلاً روزانه مصرف می‌کردم، الان ترک کرده‌ام</option>
-                    <option value="occasional">گاهی (مثلاً در مهمانی‌ها) مصرف می‌کنم</option>
-                    <option value="light_daily">روزانه به مقدار کم (مثلاً ۱-۵ نخ سیگار)</option>
-                    <option value="heavy_daily">روزانه به مقدار زیاد (بیش از ۵ نخ سیگار یا هر روز قلیان)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="alcohol">۲. وضعیت مصرف الکل:</label>
-                <select id="alcohol" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="never">هرگز مصرف نکرده‌ام</option>
-                    <option value="rarely">به ندرت (سالانه کمتر از ۵ بار)</option>
-                    <option value="socially">گاهی در موقعیت‌های اجتماعی (ماهیانه ۱-۳ بار)</option>
-                    <option value="regular">به صورت منظم (هفتگی یا چند بار در هفته)</option>
-                    <option value="heavy">مصرف سنگین و مکرر (تقریباً روزانه یا مقادیر زیاد)</option>
-                    <option value="dependent">وابستگی شدید به الکل</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="diet">۳. رژیم غذایی معمول شما بیشتر شامل چه مواردی است؟</label>
-                <select id="diet" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="healthy_plant">عمدتاً گیاهی (میوه، سبزیجات، غلات کامل) و سالم</option>
-                    <option value="balanced_home">متعادل، بیشتر غذاهای خانگی و تازه</option>
-                    <option value="balanced_mixed">متعادل، ترکیبی از خانگی و رستورانی/آماده</option>
-                    <option value="fast_food_moderate">متوسط فست فود و غذاهای فرآوری‌شده (چند بار در ماه)</option>
-                    <option value="fast_food_often">اغلب فست فود و غذاهای فرآوری‌شده (هفتگی)</option>
-                    <option value="unhealthy_processed">عمدتاً غذاهای آماده، شیرین و پرچرب</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="activity">۴. سطح فعالیت بدنی منظم شما در هفته چقدر است؟</label>
-                <select id="activity" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="very_active">بیش از ۵ ساعت ورزش شدید یا فعالیت فیزیکی سنگین</option>
-                    <option value="active">۳-۵ ساعت ورزش متوسط تا شدید</option>
-                    <option value="moderate">۱-۳ ساعت فعالیت سبک تا متوسط</option>
-                    <option value="light">کمتر از ۱ ساعت فعالیت سبک</option>
-                    <option value="sedentary_light">عمدتاً کم‌تحرک، گاهی فعالیت بسیار سبک</option>
-                    <option value="sedentary_none">بیشتر زمان بیداری را نشسته‌ام و فعالیت فیزیکی ندارم</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="sleep">۵. کیفیت و مدت زمان خواب شما در شبانه‌روز چگونه است؟</label>
-                <select id="sleep" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="optimal">۷-۹ ساعت خواب با کیفیت و منظم</option>
-                    <option value="good">۶-۹ ساعت خواب، گاهی با تغییرات جزئی</option>
-                    <option value="some_disruption">گاهی مشکلات خواب (بی‌خوابی، بیدار شدن مکرر)</option>
-                    <option value="less_than_6">معمولاً کمتر از ۶ ساعت خواب</option>
-                    <option value="more_than_9">معمولاً بیشتر از ۹ ساعت خواب</option>
-                    <option value="poor_irregular">خواب نامنظم، کمیت و کیفیت پایین</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="stress">۶. سطح استرس و اضطراب شما در زندگی روزمره چقدر است؟</label>
-                <select id="stress" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="very_low">بسیار کم، تقریباً بدون استرس</option>
-                    <option value="low">کم، توانایی خوب در مدیریت استرس</option>
-                    <option value="moderate">متوسط، گاهی احساس استرس می‌کنم</option>
-                    <option value="high">زیاد، اغلب احساس استرس و اضطراب</option>
-                    <option value="very_high">بسیار زیاد، استرس مداوم و تاثیرگذار بر زندگی</option>
-                    <option value="chronic_stress">استرس مزمن و شدید به همراه مشکلات روانی</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="heredity">۷. سابقه بیماری‌های مزمن (مانند قلبی، سرطان، دیابت) در خانواده نزدیک شما:</label>
-                <select id="heredity" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="none">هیچ مورد شناخته‌شده‌ای نداریم</option>
-                    <option value="minor_distant">یک یا دو مورد خفیف یا در بستگان دورتر</option>
-                    <option value="some_close">چند مورد در بستگان نزدیک (والدین، خواهر/برادر)</option>
-                    <option value="significant_close">موارد شایع و جدی در بستگان نزدیک</option>
-                    <option value="widespread_severe">تعداد زیادی از موارد شایع و شدید در خانواده</option>
-                    <option value="early_onset">بیماری‌های جدی با شروع زودرس در بستگان نزدیک</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="job">۸. نوع شغل اصلی شما و میزان خطر مرتبط با آن:</label>
-                <select id="job" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="very_low_risk">بسیار کم‌خطر (کارمند اداری، برنامه‌نویس، محقق)</option>
-                    <option value="low_risk">کم‌خطر (معلم، فروشنده در مغازه، طراح)</option>
-                    <option value="medium_risk">متوسط خطر (راننده تاکسی، پرستار، کارمند بانک)</option>
-                    <option value="high_risk">پرخطر (کارگر ساختمانی، مکانیک، نیروی انتظامی، خلبان)</option>
-                    <option value="very_high_risk">بسیار پرخطر (معدن‌کار، آتش‌نشان، کار با مواد شیمیایی خطرناک)</option>
-                    <option value="extreme_risk">خطر جانی بسیار بالا (نیروی نظامی در منطقه جنگی، برخی مشاغل صنعتی)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="bmi">۹. وضعیت وزن و شاخص توده بدنی (BMI) شما:</label>
-                <select id="bmi" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="underweight">کمبود وزن (BMI زیر ۱۸.۵)</option>
-                    <option value="healthy">محدوده سالم (BMI ۱۸.۵-۲۴.۹)</option>
-                    <option value="overweight">اضافه‌وزن (BMI ۲۵-۲۹.۹)</option>
-                    <option value="obese_class1">چاقی درجه ۱ (BMI ۳۰-۳۴.۹)</option>
-                    <option value="obese_class2">چاقی درجه ۲ (BMI ۳۵-۳۹.۹)</option>
-                    <option value="morbidly_obese">چاقی مفرط (BMI ۴۰ به بالا)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="checkup">۱۰. میزان مراجعه شما به پزشک برای چکاپ‌های منظم و پیشگیرانه:</label>
-                <select id="checkup" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="annual_full">سالانه چکاپ کامل پزشکی</option>
-                    <option value="regular_partial">مراجعه منظم برای برخی چکاپ‌ها (مثلاً دندانپزشکی)</option>
-                    <option value="occasional">گاهی اوقات (مثلاً هر ۲-۳ سال یکبار)</option>
-                    <option value="rarely">به ندرت، فقط در صورت بیماری شدید</option>
-                    <option value="never">هرگز، به پزشک مراجعه نمی‌کنم</option>
-                    <option value="avoid_doctors">از مراجعه به پزشک به شدت اجتناب می‌کنم</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="pollution">۱۱. میزان قرار گرفتن شما در معرض آلودگی هوا (محل زندگی یا کار):</label>
-                <select id="pollution" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="very_low">بسیار کم (مناطق روستایی پاک، کوهستانی)</option>
-                    <option value="low">کم (شهرهای کوچک با هوای نسبتاً خوب)</option>
-                    <option value="medium">متوسط (کلان‌شهرها با آلودگی فصلی)</option>
-                    <option value="high">زیاد (کلان‌شهرها با آلودگی مداوم و شدید)</option>
-                    <option value="very_high">بسیار زیاد (نزدیک به صنایع آلاینده، ترافیک سنگین)</option>
-                    <option value="extreme">کار یا زندگی در محیط‌های صنعتی با آلودگی بسیار بالا</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="social">۱۲. کیفیت و کمیت روابط اجتماعی و حمایت‌های اطرافیان شما:</label>
-                <select id="social" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="strong_extensive">شبکه بسیار قوی و گسترده از دوستان و خانواده</option>
-                    <option value="strong_close">شبکه قوی از دوستان و خانواده نزدیک</option>
-                    <option value="moderate">چند دوست نزدیک و روابط خانوادگی متوسط</option>
-                    <option value="limited">روابط اجتماعی محدود، تعداد کمی دوست</option>
-                    <option value="mostly_alone">بیشتر اوقات تنها هستم و روابط حمایتی کمی دارم</option>
-                    <option value="isolated">احساس انزوا و تنهایی شدید</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="outlook">۱۳. نگرش کلی شما به زندگی و میزان خوش‌بینی‌تان:</label>
-                <select id="outlook" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="very_positive">بسیار مثبت و خوش‌بین</option>
-                    <option value="positive">مثبت و امیدوار</option>
-                    <option value="realistic">واقع‌بینانه، نه خیلی خوش‌بین نه خیلی بدبین</option>
-                    <option value="sometimes_negative">گاهی اوقات منفی‌نگر و ناامید</option>
-                    <option value="often_negative">اغلب منفی‌نگر و بدبین</option>
-                    <option value="pessimistic_depressed">بسیار بدبین، احساس افسردگی مداوم</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="education">۱۴. بالاترین مدرک تحصیلی شما:</label>
-                <select id="education" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="illiterate">بی‌سواد یا سواد خواندن و نوشتن</option>
-                    <option value="elementary">ابتدایی</option>
-                    <option value="diploma">دیپلم</option>
-                    <option value="bachelor">کارشناسی (لیسانس)</option>
-                    <option value="master">کارشناسی ارشد (فوق لیسانس)</option>
-                    <option value="phd_higher">دکترا و بالاتر</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="medication">۱۵. آیا به طور منظم از داروهای خاصی (غیر از ویتامین) استفاده می‌کنید؟</label>
-                <select id="medication" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="no">خیر</option>
-                    <option value="minor_condition">بله، برای یک بیماری خفیف یا کنترل شده (مثلاً آلرژی فصلی)</option>
-                    <option value="moderate_condition">بله، برای یک بیماری مزمن متوسط (مثلاً فشار خون کنترل شده)</option>
-                    <option value="serious_condition">بله، برای یک بیماری مزمن جدی (مثلاً دیابت نوع ۲، بیماری قلبی)</option>
-                    <option value="multiple_serious">بله، برای چندین بیماری مزمن جدی</option>
-                    <option value="lifelong_critical">بله، برای بیماری‌های بحرانی و مادام‌العمر (مثلاً نارسایی کلیه)</option>
-                </select>
-            </div>
-            
-            <button type="submit">پیش‌بینی کن!</button>
-        </form>
-
-        <div id="result">
-            </div>
     </div>
 
+    <div class="section" id="quizSection" style="display: none;">
+        <h2>سوالات سبک زندگی و بقیه چیزا!</h2>
+        <form id="quizForm">
+            <div class="question">
+                <p>1. معمولا شبا چند ساعت می‌خوابی؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> کمتر از ۴ ساعت (لامصب کوآلا هم بیشتر می‌خوابه!)</label>
+                    <label><input type="radio" name="q1" value="b"> ۴ تا ۶ ساعت (خواب سبکی داری گویا)</label>
+                    <label><input type="radio" name="q1" value="c"> ۶ تا ۸ ساعت (نرمالی، خوبه)</label>
+                    <label><input type="radio" name="q1" value="d"> ۸ تا ۱۰ ساعت (خرس قطبی هم انقد نمی‌خوابه)</label>
+                    <label><input type="radio" name="q1" value="e"> بیشتر از ۱۰ ساعت (کمای خوابی؟!)</label>
+                    <label><input type="radio" name="q1" value="f"> نمی‌خوابم کلاً (مگه داریم؟ مگه میشه؟)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>2. تو یه هفته چند بار ورزش می‌کنی؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a"> اصلا (دلت میاد با این هیکل؟)</label>
+                    <label><input type="radio" name="q2" value="b"> ۱-۲ بار (بد نیست، ولی باید بیشتر بشه)</label>
+                    <label><input type="radio" name="q2" value="c"> ۳-۴ بار (خوبه، ادامه بده)</label>
+                    <label><input type="radio" name="q2" value="d"> ۵-۶ بار (ماشالله قهرمانی؟)</label>
+                    <label><input type="radio" name="q2" value="e"> هر روز (پهلوان پنبه! خسته نمیشی؟)</label>
+                    <label><input type="radio" name="q2" value="f"> ورزش چیه؟ فقط جلوی تلویزیون دراز کشیدم (فقط بشین و بخور!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>3. غذای مورد علاقه‌ات چیه؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a"> قورمه سبزی (جونمی، سلطان خورشت‌ها!)</label>
+                    <label><input type="radio" name="q3" value="b"> فست فود (مضره، ولی حال میده!)</label>
+                    <label><input type="radio" name="q3" value="c"> غذای رژیمی (خوش به حالت اگه می‌تونی بخوری!)</label>
+                    <label><input type="radio" name="q3" value="d"> هرچی گیرم بیاد (آدم بی توقعی هستی)</label>
+                    <label><input type="radio" name="q3" value="e"> غذای مامان‌پز (اصلاً لنگه نداره)</label>
+                    <label><input type="radio" name="q3" value="f"> از گشنگی مردم (پس زودتر برو یه چیزی کوفت کن!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>4. در طول روز چقدر با گوشی و اینترنت سروکار داری؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a"> کمتر از ۱ ساعت (مگه میشه؟ مگه داریم؟)</label>
+                    <label><input type="radio" name="q4" value="b"> ۱ تا ۳ ساعت (متعادل، خوبه)</label>
+                    <label><input type="radio" name="q4" value="c"> ۳ تا ۶ ساعت (معتادی؟)</label>
+                    <label><input type="radio" name="q4" value="d"> ۶ تا ۱۰ ساعت (عالی، برو تو گینس!)</label>
+                    <label><input type="radio" name="q4" value="e"> بیشتر از ۱۰ ساعت (یه چک کن ببین دکل مخابرات تو جیبت نیست؟)</label>
+                    <label><input type="radio" name="q4" value="f"> گوشی چیه؟ اینترنت چیه؟ (عصر حجری؟)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>5. رفیق باز هستی یا خونه‌نشین؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="a"> رفیق باز دو آتیشه (پرچمت بالاست رفیق!)</label>
+                    <label><input type="radio" name="q5" value="b"> گاهی اوقات با رفقا می‌رم بیرون (متعادل، خوبه)</label>
+                    <label><input type="radio" name="q5" value="c"> بیشتر خونه‌نشینم (پتو نشین؟)</label>
+                    <label><input type="radio" name="q5" value="d"> فقط با خانواده (خانواده دوست، دمت گرم)</label>
+                    <label><input type="radio" name="q5" value="e"> اصلاً رفیق ندارم (تنها؟ تنها؟)</label>
+                    <label><input type="radio" name="q5" value="f"> رفیق چیه؟ فقط خودم و خودم (خودت باش، ولی تنها نمون!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>6. معمولا هر چند وقت یکبار رابطه جنسی داری؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="a"> ماهی یک بار هم نه (مگه میشه؟)</label>
+                    <label><input type="radio" name="q6" value="b"> ماهی ۱-۲ بار (متوسط)</label>
+                    <label><input type="radio" name="q6" value="c"> هفته‌ای ۱-۲ بار (خوب و رو فرم)</label>
+                    <label><input type="radio" name="q6" value="d"> چند بار در هفته (عالی، پر انرژی!)</label>
+                    <label><input type="radio" name="q6" value="e"> هر روز (مگه بیکاری؟)</label>
+                    <label><input type="radio" name="q6" value="f"> اصلاً رابطه جنسی ندارم (یه فکری به حال خودت کن!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>7. چقدر به فانتزی‌های جنسی اهمیت میدی؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="a"> اصلاً اهمیت نمیدم (خشکی؟)</label>
+                    <label><input type="radio" name="q7" value="b"> کم (یکم چاشنی لازم داری)</label>
+                    <label><input type="radio" name="q7" value="c"> متوسط (خوبه، تنوع ایجاد می‌کنه)</label>
+                    <label><input type="radio" name="q7" value="d"> زیاد (آفرین به این ذهن خلاق!)</label>
+                    <label><input type="radio" name="q7" value="e"> فقط تو رویاهام (یکم جسارت به خرج بده!)</label>
+                    <label><input type="radio" name="q7" value="f"> فانتزی چیه؟ فقط عملیش (پس یه فکری برای عملی کردنش کن!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>8. نظرت در مورد استفاده از اسباب‌بازی‌های جنسی چیه؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="a"> مخالفم (عقایدت قدیمیه ها!)</label>
+                    <label><input type="radio" name="q8" value="b"> بی‌تفاوتم (یکم امتحان کنی بد نیست)</label>
+                    <label><input type="radio" name="q8" value="c"> موافقم (ایول به تو با این ذهن بازت!)</label>
+                    <label><input type="radio" name="q8" value="d"> استفاده می‌کنم (پس خوش می‌گذرونی!)</label>
+                    <label><input type="radio" name="q8" value="e"> خجالت می‌کشم (خجالت برای چیه؟)</label>
+                    <label><input type="radio" name="q8" value="f"> اصلاً نمی‌دونم چی هست (یه سرچ کن تو اینترنت، بد نیست!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>9. چقدر به ارگاسم شریک جنسیت اهمیت میدی؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="a"> اصلاً اهمیت نمی‌دم (خودخواه!)</label>
+                    <label><input type="radio" name="q9" value="b"> کم (یکم بیشتر فکر کن بهش)</label>
+                    <label><input type="radio" name="q9" value="c"> متوسط (خوبه، حداقل به فکرشی)</label>
+                    <label><input type="radio" name="q9" value="d"> زیاد (ایول به تو با این مسئولیت‌پذیری!)</label>
+                    <label><input type="radio" name="q9" value="e"> فقط ارگاسم خودم مهمه‌ (واقعا؟)</label>
+                    <label><input type="radio" name="q9" value="f"> ارگاسم چیه؟ (برو تحقیق کن!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>10. اگه سیگار میکشی، روزی چند نخ؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="a"> نمی‌کشم (آفرین، سلامتیت مهمه!)</label>
+                    <label><input type="radio" name="q10" value="b"> ۱-۵ نخ (کمِ، ولی بازم بده)</label>
+                    <label><input type="radio" name="q10" value="c"> ۵-۱۰ نخ (معتادی؟)</label>
+                    <label><input type="radio" name="q10" value="d"> ۱۰-۲۰ نخ (دودکشی؟)</label>
+                    <label><input type="radio" name="q10" value="e"> بیشتر از ۲۰ نخ (انتحاری؟)</label>
+                    <label><input type="radio" name="q10" value="f"> فقط قلیون یا تریاک می‌کشم (آفرین، از سیگار بهتری!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>11. در هفته چند بار فست‌فود می‌خوری؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="a"> اصلاً (سخت نگیر به خودت!)</label>
+                    <label><input type="radio" name="q11" value="b"> ۱ بار (خوبه، تعادل لازمه)</label>
+                    <label><input type="radio" name="q11" value="c"> ۲-۳ بار (عاشق فست‌فودی!)</label>
+                    <label><input type="radio" name="q11" value="d"> بیشتر از ۳ بار (معده‌ات چیه؟ آهنه؟)</label>
+                    <label><input type="radio" name="q11" value="e"> هر روز (برو دکتر قلب!)</label>
+                    <label><input type="radio" name="q11" value="f"> فست‌فود چیه؟ فقط غذای خونگی (خوش به حال مامانت!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>12. چقدر اهل مطالعه و کتاب خوندنی؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="a"> اصلاً (مغزت زنگ می‌زنه ها!)</label>
+                    <label><input type="radio" name="q12" value="b"> کم (یکم بیشتر تلاش کن)</label>
+                    <label><input type="radio" name="q12" value="c"> متوسط (خوبه، ادامه بده)</label>
+                    <label><input type="radio" name="q12" value="d"> زیاد (فرهیخته!)</label>
+                    <label><input type="radio" name="q12" value="e"> فقط کتاب‌های درسی (پس کتاب دیگه چی؟)</label>
+                    <label><input type="radio" name="q12" value="f"> کتاب چیه؟ فقط اینستاگرام و تلگرام (حواست باشه باسواد شی!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>13. تفریح مورد علاقه ات چیه؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q13" value="a"> خوابیدن (تنبل!)</label>
+                    <label><input type="radio" name="q13" value="b"> فیلم و سریال دیدن (نتفیلیکسی!)</label>
+                    <label><input type="radio" name="q13" value="c"> گشت و گذار و سفر (اهل دلی!)</label>
+                    <label><input type="radio" name="q13" value="d"> ورزش و فعالیت‌های بدنی (سرحال!)</label>
+                    <label><input type="radio" name="q13" value="e"> کار کردن (معتاد به کار!)</label>
+                    <label><input type="radio" name="q13" value="f"> هیچی، فقط می‌خورم و می‌خوابم (زندگی به کامته!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>14. به نظر خودت آدم خوش‌شانسی هستی یا بدشانس؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="a"> خوش‌شانس (ایول به خودت!)</label>
+                    <label><input type="radio" name="q14" value="b"> بدشانس (یکم مثبت فکر کن!)</label>
+                    <label><input type="radio" name="q14" value="c"> نه خوش‌شانس، نه بدشانس (خوب بلدی قایم کنی!)</label>
+                    <label><input type="radio" name="q14" value="d"> گاهی خوش‌شانس، گاهی بدشانس (دقیقاً چی شد؟)</label>
+                    <label><input type="radio" name="q14" value="e"> شانسی در کار نیست، همه چیز تلاشه (فیلسوف شدی؟)</label>
+                    <label><input type="radio" name="q14" value="f"> اصلاً به این چیزا فکر نمی‌کنم (فقط بخور و بخواب!)</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>15. چقدر به امتحان کردن پوزیشن‌های جدید جنسی علاقه داری؟</p>
+                <div class="options">
+                    <label><input type="radio" name="q15" value="a"> اصلاً (یه تکونی به خودت بده!)</label>
+                    <label><input type="radio" name="q15" value="b"> کم (محدودی؟)</label>
+                    <label><input type="radio" name="q15" value="c"> متوسط (خوبه، تنوع لازمه)</label>
+                    <label><input type="radio" name="q15" value="d"> زیاد (حرفه‌ای!)</label>
+                    <label><input type="radio" name="q15" value="e"> هرچی باشه، فقط عشق و حال (آفرین به این روحیه!)</label>
+                    <label><input type="radio" name="q15" value="f"> پوزیشن چیه؟ (برو یاد بگیر!)</label>
+                </div>
+            </div>
+
+            <button type="submit">قضاوتم کن!</button>
+            <div id="quizError" class="error">جون هرکی دوست داری، همه سوالا رو جواب بده!</div>
+        </form>
+    </div>
+
+    <div id="result" class="section">
+        </div>
+
     <script>
-        document.getElementById('deathPredictorForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // جلوگیری از ارسال فرم و رفرش صفحه
+        let userName = "";
 
-            const name = document.getElementById('name').value;
-            const age = parseInt(document.getElementById('age').value);
-            const gender = document.querySelector('input[name="gender"]:checked').value;
-            const residence = document.getElementById('residence').value;
+        function startQuiz() {
+            userName = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const maritalStatus = document.getElementById('maritalStatus').value;
+            const physicalCondition = document.getElementById('physicalCondition').value;
+            const infoError = document.getElementById('infoError');
 
-            // امتیازدهی اولیه (امید به زندگی پایه)
-            let baseLifeExpectancy = 78; // سال پایه امید به زندگی (با توجه به میانگین جهانی و ایران)
-
-            // تنظیم امید به زندگی پایه بر اساس جنسیت
-            if (gender === 'female') {
-                baseLifeExpectancy += 4; // زنان معمولاً بیشتر عمر می‌کنند
-            } else { // male
-                baseLifeExpectancy -= 2; // مردان معمولاً کمتر عمر می‌کنند
-            }
-
-            // تنظیم امید به زندگی پایه بر اساس محل زندگی
-            if (residence === 'urban_large') {
-                baseLifeExpectancy -= 3; // آلودگی و استرس بیشتر
-            } else if (residence === 'urban_small') {
-                baseLifeExpectancy += 0; 
-            } else if (residence === 'rural') {
-                baseLifeExpectancy += 2; // هوای پاک‌تر و استرس کمتر
-            }
-
-            let score = 0; // امتیازات جمع‌آوری شده از سوالات سبک زندگی
-
-            function getSelectValue(id) {
-                return document.getElementById(id).value;
-            }
-
-            // امتیازدهی سوالات با 6 گزینه (تعدیل شده برای واقع‌گرایی بیشتر)
-            const smoking = getSelectValue('smoking');
-            if (smoking === 'never') score += 7;
-            else if (smoking === 'ex_occasional') score += 4;
-            else if (smoking === 'ex_daily') score += 2;
-            else if (smoking === 'occasional') score -= 4;
-            else if (smoking === 'light_daily') score -= 9;
-            else if (smoking === 'heavy_daily') score -= 15;
-
-            const alcohol = getSelectValue('alcohol');
-            if (alcohol === 'never') score += 5;
-            else if (alcohol === 'rarely') score += 3;
-            else if (alcohol === 'socially') score += 1;
-            else if (alcohol === 'regular') score -= 5;
-            else if (alcohol === 'heavy') score -= 10;
-            else if (alcohol === 'dependent') score -= 20;
-
-            const diet = getSelectValue('diet');
-            if (diet === 'healthy_plant') score += 6;
-            else if (diet === 'balanced_home') score += 4;
-            else if (diet === 'balanced_mixed') score += 1;
-            else if (diet === 'fast_food_moderate') score -= 3;
-            else if (diet === 'fast_food_often') score -= 8;
-            else if (diet === 'unhealthy_processed') score -= 12;
-
-            const activity = getSelectValue('activity');
-            if (activity === 'very_active') score += 7;
-            else if (activity === 'active') score += 5;
-            else if (activity === 'moderate') score += 2;
-            else if (activity === 'light') score -= 2;
-            else if (activity === 'sedentary_light') score -= 5;
-            else if (activity === 'sedentary_none') score -= 10;
-
-            const sleep = getSelectValue('sleep');
-            if (sleep === 'optimal') score += 5;
-            else if (sleep === 'good') score += 3;
-            else if (sleep === 'some_disruption') score -= 2;
-            else if (sleep === 'less_than_6') score -= 5;
-            else if (sleep === 'more_than_9') score -= 4; 
-            else if (sleep === 'poor_irregular') score -= 9;
-
-            const stress = getSelectValue('stress');
-            if (stress === 'very_low') score += 6;
-            else if (stress === 'low') score += 4;
-            else if (stress === 'moderate') score += 0;
-            else if (stress === 'high') score -= 5;
-            else if (stress === 'very_high') score -= 10;
-            else if (stress === 'chronic_stress') score -= 15;
-
-            const heredity = getSelectValue('heredity');
-            if (heredity === 'none') score += 5;
-            else if (heredity === 'minor_distant') score += 2;
-            else if (heredity === 'some_close') score -= 4;
-            else if (heredity === 'significant_close') score -= 8;
-            else if (heredity === 'widespread_severe') score -= 12;
-            else if (heredity === 'early_onset') score -= 18;
-
-            const job = getSelectValue('job');
-            if (job === 'very_low_risk') score += 5;
-            else if (job === 'low_risk') score += 3;
-            else if (job === 'medium_risk') score += 0;
-            else if (job === 'high_risk') score -= 6;
-            else if (job === 'very_high_risk') score -= 12;
-            else if (job === 'extreme_risk') score -= 20;
-
-            const bmi = getSelectValue('bmi');
-            if (bmi === 'healthy') score += 5;
-            else if (bmi === 'underweight') score -= 3; 
-            else if (bmi === 'overweight') score -= 2;
-            else if (bmi === 'obese_class1') score -= 7;
-            else if (bmi === 'obese_class2') score -= 12;
-            else if (bmi === 'morbidly_obese') score -= 18;
-
-            const checkup = getSelectValue('checkup');
-            if (checkup === 'annual_full') score += 5;
-            else if (checkup === 'regular_partial') score += 2;
-            else if (checkup === 'occasional') score += 0;
-            else if (checkup === 'rarely') score -= 4;
-            else if (checkup === 'never') score -= 9;
-            else if (checkup === 'avoid_doctors') score -= 14;
-
-            const pollution = getSelectValue('pollution');
-            if (pollution === 'very_low') score += 4;
-            else if (pollution === 'low') score += 2;
-            else if (pollution === 'medium') score -= 2;
-            else if (pollution === 'high') score -= 6;
-            else if (pollution === 'very_high') score -= 10;
-            else if (pollution === 'extreme') score -= 15;
-
-            const social = getSelectValue('social');
-            if (social === 'strong_extensive') score += 5;
-            else if (social === 'strong_close') score += 3;
-            else if (social === 'moderate') score += 0;
-            else if (social === 'limited') score -= 3;
-            else if (social === 'mostly_alone') score -= 7;
-            else if (social === 'isolated') score -= 10;
-
-            const outlook = getSelectValue('outlook');
-            if (outlook === 'very_positive') score += 4;
-            else if (outlook === 'positive') score += 2;
-            else if (outlook === 'realistic') score += 0;
-            else if (outlook === 'sometimes_negative') score -= 2;
-            else if (outlook === 'often_negative') score -= 5;
-            else if (outlook === 'pessimistic_depressed') score -= 9;
-
-            const education = getSelectValue('education');
-            if (education === 'phd_higher') score += 4;
-            else if (education === 'master') score += 3;
-            else if (education === 'bachelor') score += 1;
-            else if (education === 'diploma') score += 0;
-            else if (education === 'elementary') score -= 2;
-            else if (education === 'illiterate') score -= 4;
-
-            const medication = getSelectValue('medication');
-            if (medication === 'no') score += 4;
-            else if (medication === 'minor_condition') score += 1;
-            else if (medication === 'moderate_condition') score -= 3;
-            else if (medication === 'serious_condition') score -= 8;
-            else if (medication === 'multiple_serious') score -= 12;
-            else if (medication === 'lifelong_critical') score -= 18;
-            
-            // محاسبه امید به زندگی نهایی
-            let finalLifeExpectancy = baseLifeExpectancy + score;
-
-            // جلوگیری از نتایج غیرمنطقی
-            if (finalLifeExpectancy < age + 1) { 
-                finalLifeExpectancy = age + 1; // حداقل یک سال دیگر
-            }
-            if (finalLifeExpectancy > 110) { // حداکثر 110 سال (فرضی)
-                finalLifeExpectancy = 110;
-            }
-
-            const yearsToLive = finalLifeExpectancy - age;
-            
-            // --- شروع بخش تصادفی‌سازی تاریخ هجری شمسی ---
-            // تابع کمکی برای تبدیل تاریخ میلادی به شمسی
-            // این تابع ساده‌سازی شده است و برای تبدیل دقیق نیاز به کتابخانه جامع‌تری دارد.
-            // اما برای نمایش ماه و روز تصادفی شمسی کافی است.
-            function gregorianToPersian(gDate) {
-                const jalaliMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
-                
-                // این بخش برای تبدیل دقیق میلادی به شمسی نیست و فقط برای گرفتن یک روز و ماه تصادفی است.
-                // فرض می‌کنیم در سال پیش‌بینی شده، یک روز و ماه تصادفی میلادی را به عنوان تاریخ شمسی نمایش می‌دهیم
-                // تا تنوع داشته باشد.
-                let gYear = gDate.getFullYear();
-                let gMonth = gDate.getMonth();
-                let gDay = gDate.getDate();
-
-                // برای نمایش تصادفی ماه و روز شمسی، یک ماه و روز تصادفی از تقویم شمسی انتخاب می‌کنیم.
-                const randomMonthIndex = Math.floor(Math.random() * 12); // 0 تا 11
-                const randomDay = Math.floor(Math.random() * 29) + 1; // 1 تا 29 (برای سادگی)
-
-                // این یک تبدیل دقیق نیست، فقط برای گرفتن نام ماه شمسی و روز تصادفی برای نمایش
-                const persianMonthName = jalaliMonths[randomMonthIndex];
-                const persianYear = gYear + 621; // تقریبی از تبدیل سال میلادی به شمسی
-                
-                return {
-                    year: persianYear,
-                    monthName: persianMonthName,
-                    day: randomDay
-                };
-            }
-
-            const currentDate = new Date();
-            const predictedDeathYear = currentDate.getFullYear() + yearsToLive;
-            
-            // ساخت یک تاریخ میلادی تصادفی در سال پیش‌بینی شده
-            const randomMonthIndexGregorian = Math.floor(Math.random() * 12); // 0-11
-            const randomDayGregorian = Math.floor(Math.random() * 28) + 1; // 1-28 برای جلوگیری از مشکلات روزهای ماه
-            const predictedDeathDateGregorian = new Date(predictedDeathYear, randomMonthIndexGregorian, randomDayGregorian);
-
-            // تبدیل تاریخ میلادی تصادفی به شمسی برای نمایش
-            const persianDate = gregorianToPersian(predictedDeathDateGregorian);
-            const formattedDayOfWeek = predictedDeathDateGregorian.toLocaleDateString('fa-IR', { weekday: 'long' });
-
-            const finalDeathDateText = `${persianDate.day} ${persianDate.monthName} ${persianDate.year} شمسی`;
-            // --- پایان بخش تصادفی‌سازی تاریخ هجری شمسی ---
-
-            let resultHtml = `
-                <p><strong>${name}</strong> عزیز،</p>
-                <p>با توجه به اطلاعات شما، پیش‌بینی تقریبی ما این است که با توکل به خدا، تا حدود <strong>${finalLifeExpectancy.toFixed(0)}</strong> سالگی عمر کنید.</p>
-                <p>این به معنی درگذشت شما در حدود:</p>
-                <span class="result-date">${finalDeathDateText}</span>
-                <p>که مصادف با <strong>${formattedDayOfWeek}</strong> خواهد بود.</p>
-            `;
-
-            // پیشنهادات افزایش طول عمر (تیتروار)
-            let suggestions = "<div class='suggestions-list'><h3>برای افزایش عمر، این کارها را در نظر بگیرید:</h3><ul>";
-            let hasSuggestions = false;
-
-            if (smoking !== 'never' && smoking !== 'ex_occasional' && smoking !== 'ex_daily') {
-                suggestions += `<li>ترک کامل دخانیات <span class="benefit">(+۷ تا +۱۵ سال به عمرتان اضافه می‌شود)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (alcohol === 'regular' || alcohol === 'heavy' || alcohol === 'dependent') {
-                suggestions += `<li>کاهش یا قطع مصرف الکل <span class="benefit">(+۵ تا +۲۰ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (diet === 'fast_food_moderate' || diet === 'fast_food_often' || diet === 'unhealthy_processed') {
-                suggestions += `<li>رژیم غذایی سالم (کاهش فست فود، افزایش میوه و سبزیجات) <span class="benefit">(+۶ تا +۱۲ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (activity === 'light' || activity === 'sedentary_light' || activity === 'sedentary_none') {
-                suggestions += `<li>افزایش فعالیت بدنی منظم <span class="benefit">(+۴ تا +۱۰ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (sleep === 'less_than_6' || sleep === 'more_than_9' || sleep === 'poor_irregular') {
-                suggestions += `<li>بهبود کیفیت و کمیت خواب <span class="benefit">(+۳ تا +۷ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (stress === 'high' || stress === 'very_high' || stress === 'chronic_stress') {
-                suggestions += `<li>مدیریت موثر استرس <span class="benefit">(+۵ تا +۱۰ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (heredity !== 'none' && heredity !== 'minor_distant') {
-                suggestions += `<li>مشاوره پزشکی و غربالگری منظم (به ویژه برای سوابق ارثی) <span class="benefit">(+۳ تا +۸ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (job === 'high_risk' || job === 'very_high_risk' || job === 'extreme_risk') {
-                suggestions += `<li>کاهش خطرات شغلی یا استفاده از ایمنی کامل <span class="benefit">(+۴ تا +۱۰ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (bmi === 'overweight' || bmi === 'obese_class1' || bmi === 'obese_class2' || bmi === 'morbidly_obese' || bmi === 'underweight') {
-                suggestions += `<li>رسیدن به وزن ایده‌آل و سالم <span class="benefit">(+۳ تا +۱۲ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (checkup === 'rarely' || checkup === 'never' || checkup === 'avoid_doctors') {
-                suggestions += `<li>انجام چکاپ‌های منظم پزشکی <span class="benefit">(+۴ تا +۱۰ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (pollution === 'high' || pollution === 'very_high' || pollution === 'extreme') {
-                suggestions += `<li>کاهش مواجهه با آلودگی هوا <span class="benefit">(+۳ تا +۷ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (social === 'limited' || social === 'mostly_alone' || social === 'isolated') {
-                suggestions += `<li>تقویت روابط اجتماعی و خانوادگی <span class="benefit">(+۳ تا +۷ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (outlook === 'sometimes_negative' || outlook === 'often_negative' || outlook === 'pessimistic_depressed') {
-                suggestions += `<li>تقویت روحیه مثبت و خوش‌بینی <span class="benefit">(+۲ تا +۶ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (education === 'illiterate' || education === 'elementary') {
-                suggestions += `<li>ادامه تحصیل و یادگیری مداوم <span class="benefit">(+۱ تا +۴ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-            if (medication === 'serious_condition' || medication === 'multiple_serious' || medication === 'lifelong_critical') {
-                suggestions += `<li>مدیریت دقیق بیماری‌های مزمن و مصرف صحیح داروها <span class="benefit">(+۴ تا +۱۰ سال)</span></li>`;
-                hasSuggestions = true;
-            }
-
-            suggestions += "</ul></div>";
-
-            if (hasSuggestions) {
-                resultHtml += suggestions;
+            if (!userName || !age || !maritalStatus || !physicalCondition) {
+                infoError.style.display = 'block';
+                return;
             } else {
-                resultHtml += "<p class='suggestions-list'>با توجه به انتخاب‌های شما، سبک زندگی فعلی‌تان بسیار مطلوب است. به همین روند ادامه دهید و از زندگی لذت ببرید!</p>";
+                infoError.style.display = 'none';
             }
 
-            resultHtml += `<p class="disclaimer">باز هم تأکید می‌شود که این فقط یک پیش‌بینی سرگرم‌کننده است و هیچ پایه علمی ندارد.</p>`;
-            document.getElementById('result').innerHTML = resultHtml;
+            document.getElementById('personalInfoForm').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'block';
+        }
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // جلوگیری از ارسال فرم به صورت پیش‌فرض
+
+            const quizError = document.getElementById('quizError');
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'none'; // مخفی کردن نتیجه قبلی
+
+            const answers = {};
+            let allAnswered = true;
+            for (let i = 1; i <= 15; i++) {
+                const questionName = `q${i}`;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                if (selectedOption) {
+                    answers[questionName] = selectedOption.value;
+                } else {
+                    allAnswered = false;
+                    break;
+                }
+            }
+
+            if (!allAnswered) {
+                quizError.style.display = 'block';
+                return;
+            } else {
+                quizError.style.display = 'none';
+            }
+
+            // اطلاعات فردی
+            const age = document.getElementById('age').value;
+            const maritalStatus = document.getElementById('maritalStatus').value;
+            const physicalCondition = document.getElementById('physicalCondition').value;
+
+            let judgment = `<h3> ${userName} عزیز، خب ببینم چی در موردت بگم...</h3>`;
+
+            // قضاوت بر اساس سوالات
+            // خواب
+            const q1Text = document.querySelector('input[name="q1"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد خوابیدن، گفتی: **${q1Text}** و من می‌گم: `;
+            if (answers.q1 === 'a' || answers.q1 === 'b') {
+                judgment += `بابا ${userName}، چته؟ چرا انقدر کم می‌خوابی؟ مگه رباتی؟ پاشو برو بکپ! یه عالمه خواب بهت بدهکارم! باید بیشتر بخوابی، اصلاً بی‌خیال کار و زندگی!`;
+            } else if (answers.q1 === 'd' || answers.q1 === 'e') {
+                judgment += `ای بابا ${userName}! دیگه انقدرم نخواب! پاشو یه تکونی به خودت بده، دنیا منتظره! یه ذره کمتر بخواب و برو دنبال خوشگذرونی، نه کار!`;
+            } else if (answers.q1 === 'f') {
+                judgment += `${userName}، مگه میشه نخوابید؟ تو دیگه کی هستی! برو یه فکری به حال خودت کن، داری از دست میری کصخل!`;
+            } else {
+                judgment += `${userName} جون، خوابت نرماله، ولی خب همیشه جا برای ریدن تو برنامه خوابت هست!`;
+            }
+            judgment += `</p>`;
+
+            // ورزش
+            const q2Text = document.querySelector('input[name="q2"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد ورزش، گفتی: **${q2Text}** و من می‌گم: `;
+            if (answers.q2 === 'a' || answers.q2 === 'f') {
+                judgment += `واااای ${userName}! تو اصلاً ورزش نمی‌کنی؟ بدنت ازت شاکیه، ناموساً! پاشو برو یه حرکتی بزن! حتی شده فقط برای اینکه یه کم عرق کنی و بعدش حال کنی!`;
+            } else if (answers.q2 === 'e') {
+                judgment += `${userName} تو دیگه خیلی ورزش می‌کنی! یه کمم استراحت کن، اینقدر خودتو جر نده!`;
+            } else {
+                judgment += `${userName} عزیز، ورزشت خوبه، ولی خب می‌تونی یه کمم کمتر کنی که بیشتر استراحت کنی و حال کنی!`;
+            }
+            judgment += `</p>`;
+
+            // فست فود
+            const q11Text = document.querySelector('input[name="q11"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد فست‌فود، گفتی: **${q11Text}** و من می‌گم: `;
+            if (answers.q11 === 'e' || answers.q11 === 'd') {
+                judgment += `${userName} شکمت شده کارخونه فست‌فود! کمتر بخور این زهرماری‌ها رو! برو سراغ یه غذای خونگی چرب و چیلی که حالتو جا بیاره، نه این سَم کوفتی!`;
+            } else if (answers.q11 === 'a' || answers.q11 === 'f') {
+                judgment += `${userName} تو اصلاً فست‌فود نمی‌خوری؟ چه زندگی بی‌روحی! یه بار بزن به سیم آخر، برو پیتزا بزن که دلت باز شه، کصنمک!`;
+            } else {
+                judgment += `${userName} جون، مصرف فست‌فودت معقوله، ولی خب گاهی اوقات یه لقمه کثیفم بد نیست، کون لق رژیم!`;
+            }
+            judgment += `</p>`;
+
+            // سیگار
+            const q10Text = document.querySelector('input[name="q10"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد سیگار، گفتی: **${q10Text}** و من می‌گم: `;
+            if (answers.q10 === 'e' || answers.q10 === 'd') {
+                judgment += `${userName} عزیز، تو دیگه دودکش شدی! چرا انقدر سیگار می‌کشی؟ برو سراغ قلیون، یا اگه واقعاً تهش می‌خوای، یه کم تریاک هم بد نیست! کمتر سیگار بکش، ریه‌هات ازت شاکین، آشغال!`;
+            } else if (answers.q10 === 'a') {
+                judgment += `${userName} تو اصلاً سیگار نمی‌کشی؟ ای بابا، چه زندگی بی‌حالی! یه نخ سیگار بکش، آدم می‌شی! (شوخی کردم البته، سلامتیت مهمه! ولی خب یه کم جسارت بد نیست، پخمه!)`;
+            } else if (answers.q10 === 'f') {
+                judgment += `${userName} جون، خوبه که به جای سیگار قلیون یا تریاک می‌کشی! دمت گرم! حداقلش اینه که سیگار نیست، گشاد!`;
+            } else {
+                judgment += `${userName} جان، مصرف سیگارت متوسطه، ولی خب یه کاری کن که بیشتر شه! (بازم شوخی کردم!) `;
+            }
+            judgment += `</p>`;
+
+            // رابطه جنسی
+            const q6Text = document.querySelector('input[name="q6"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد رابطه جنسی، گفتی: **${q6Text}** و من می‌گم: `;
+            if (answers.q6 === 'a' || answers.q6 === 'f') {
+                judgment += `${userName} عزیزم، مگه میشه انقدر کم یا اصلاً رابطه نداشته باشی؟ پاشو یه تکونی به خودت بده، برو یه نفر رو پیدا کن و یه سکس باحال رو تجربه کن که زندگیت جون بگیره، بی ناموس!`;
+            } else if (answers.q6 === 'e') {
+                judgment += `${userName} تو دیگه خیلی سکس می‌کنی! یه کمم استراحت کن، همه چی که سکس نیست! برو یه کتاب بخون یا یه فیلم ببین، جنده!`;
+            } else {
+                judgment += `${userName} جون، رابطه‌ات خوبه، ولی خب همیشه جا برای بیشتر شدن هست! (البته به شرطی که کونت پاره نشه!) `;
+            }
+            judgment += `</p>`;
+
+            // فانتزی جنسی
+            const q7Text = document.querySelector('input[name="q7"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد فانتزی جنسی، گفتی: **${q7Text}** و من می‌گم: `;
+            if (answers.q7 === 'a' || answers.q7 === 'e') {
+                judgment += `${userName}، چرا انقدر از فانتزی‌های جنسی فراری هستی؟ ذهنت رو باز کن، یه عالمه چیزای باحال هست که می‌تونی امتحان کنی! جسور باش، کون‌گشاد!`;
+            } else if (answers.q7 === 'd' || answers.q7 === 'f') {
+                judgment += `${userName} دمت گرم با این فانتزی‌های خفن! حالا وقتشه که همه‌شون رو عملی کنی، نترس! برو تو کارش، کصکش!`;
+            } else {
+                judgment += `${userName} جان، فانتزی‌هات خوبن، ولی خب می‌تونی یه کمم کمتر فکر کنی و بیشتر به عمل بپردازی! (شوخی کردم، لذت ببر ازش، کسخول!)`;
+            }
+            judgment += `</p>`;
+
+            // اسباب‌بازی‌های جنسی
+            const q8Text = document.querySelector('input[name="q8"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد اسباب‌بازی‌های جنسی، گفتی: **${q8Text}** و من می‌گم: `;
+            if (answers.q8 === 'a' || answers.q8 === 'e' || answers.q8 === 'f') {
+                judgment += `${userName} چرا انقدر خجالتی یا بی‌تفاوتی؟ اسباب‌بازی‌های جنسی دنیای جدیدی رو به روت باز می‌کنن! یه بار امتحان کن، ضرر نمی‌کنی، کصخل!`;
+            } else if (answers.q8 === 'c' || answers.q8 === 'd') {
+                judgment += `${userName} ایول به این طرز فکر مدرنت! استفاده کن و لذت ببر! البته زیاده‌روی نکن که اصلی رو فراموش کنی، کص‌لیس!`;
+            } else {
+                judgment += `${userName} عزیز، استفاده از اسباب‌بازی‌های جنسی خوبه، ولی خب گاهی اوقات بدون اونها هم میشه حسابی کیف کرد، جاکش!`;
+            }
+            judgment += `</p>`;
+
+            // ارگاسم شریک جنسی
+            const q9Text = document.querySelector('input[name="q9"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد ارگاسم شریک جنسی، گفتی: **${q9Text}** و من می‌گم: `;
+            if (answers.q9 === 'a' || answers.q9 === 'e') {
+                judgment += `${userName} تو چرا انقدر خودخواهی؟ ارگاسم شریک جنسی از خودت مهم‌تره، مادر جنده! یه کم به فکر اون بدبخت هم باش!`;
+            } else if (answers.q9 === 'd') {
+                judgment += `${userName} دمت گرم که به فکر شریکت هستی! ولی خب گاهی اوقاتم میشه به فکر خودت باشی و از لحظه لذت ببری، ننه سگ!`;
+            } else if (answers.q9 === 'f') {
+                judgment += `${userName} عزیز، ارگاسم چیه؟ واقعاً نمی‌دونی؟ برو یه کم مطالعه کن، حیفه، کصخل!`;
+            } else {
+                judgment += `${userName} جان، به ارگاسم شریکت اهمیت میدی، خوبه! ولی خب گاهی اوقاتم بی‌خیال شو و فقط عشق و حال کن، کس‌کش!`;
+            }
+            judgment += `</p>`;
+
+            // پوزیشن‌های جدید جنسی
+            const q15Text = document.querySelector('input[name="q15"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد پوزیشن‌های جدید جنسی، گفتی: **${q15Text}** و من می‌گم: `;
+            if (answers.q15 === 'a' || answers.q15 === 'b' || answers.q15 === 'f') {
+                judgment += `${userName} چرا انقدر تکراری؟ پاشو برو پوزیشن‌های جدید رو یاد بگیر و امتحان کن! زندگیتو عوض می‌کنه، بی‌ریخت!`;
+            } else if (answers.q15 === 'd' || answers.q15 === 'e') {
+                judgment += `${userName} تو دیگه خودِ حرفه‌ای هستی! دمت گرم! ولی خب گاهی اوقات یه پوزیشن ساده هم می‌تونه کلی حال بده، کس‌خل!`;
+            } else {
+                judgment += `${userName} جان، علاقه‌ات به پوزیشن‌های جدید خوبه، ولی خب گاهی اوقاتم با همون روش‌های قدیمی می‌تونی حسابی بترکونی، کس‌کَش!`;
+            }
+            judgment += `</p>`;
+
+            // مطالعه
+            const q12Text = document.querySelector('input[name="q12"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد مطالعه، گفتی: **${q12Text}** و من می‌گم: `;
+            if (answers.q12 === 'a' || answers.q12 === 'f') {
+                judgment += `${userName} تو اصلاً کتاب نمی‌خونی؟ پاشو برو یه کتاب دستت بگیر، باسواد شی! البته اگه حالشو نداری، همون اینستاگرامتم کافیه، خره!`;
+            } else if (answers.q12 === 'd') {
+                judgment += `${userName} تو دیگه خیلی کتاب می‌خونی! یه کمم از دنیای واقعی لذت ببر! پاشو برو بیرون یه هوایی عوض کن، کتاب‌خوانِ بدبخت!`;
+            } else {
+                judgment += `${userName} عزیز، مطالعه‌ات خوبه، ولی خب گاهی اوقاتم بی‌خیال شو و عشق و حال کن، تنبل!`;
+            }
+            judgment += `</p>`;
+
+            // تفریح
+            const q13Text = document.querySelector('input[name="q13"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد تفریح، گفتی: **${q13Text}** و من می‌گم: `;
+            if (answers.q13 === 'e' || answers.q13 === 'a') {
+                judgment += `${userName} یا معتاد به کاری یا معتاد به خواب! یه کمم تفریح کن! برو بیرون، یه حال و هوایی عوض کن! همه چی کار و خواب نیست، بیچاره!`;
+            } else if (answers.q13 === 'f') {
+                judgment += `${userName} تو دیگه آخرشی! فقط می‌خوری و می‌خوابی؟ دمت گرم، زندگی رو گرفتی! ولی خب یه کمم حرکت بد نیست، گشاد!`;
+            } else {
+                judgment += `${userName} جان، تفریحاتت خوبن، ولی خب گاهی اوقاتم یه کاری کن که کلاً تو خونه نباشی، کصخل!`;
+            }
+            judgment += `</p>`;
+
+            // شانس
+            const q14Text = document.querySelector('input[name="q14"]:checked').parentElement.textContent;
+            judgment += `<p>در مورد شانس، گفتی: **${q14Text}** و من می‌گم: `;
+            if (answers.q14 === 'a') {
+                judgment += `${userName} خوش‌شانسی؟ ایول! ولی خب بدون تلاش هیچ شانسی به دست نمیاد! یه کمم بدشانسی رو تجربه کن تا قدر خوش‌شانسیتو بدونی، احمق!`;
+            } else if (answers.q14 === 'b') {
+                judgment += `${userName} تو بدشانسی؟ ای بابا! یه کم مثبت فکر کن، همه چی درست میشه! یا اینکه برو فال بگیر ببین چی میشه، بدبخت!`;
+            } else if (answers.q14 === 'e') {
+                judgment += `${userName} فیلسوف شدی؟ شانس در کار نیست؟ دمت گرم! ولی خب گاهی اوقاتم تسلیم شانس شو، خر!`;
+            } else {
+                judgment += `${userName} عزیز، در مورد شانست خوب گفتی! ولی خب همیشه یه جایی برای شانس بد هم هست، کسخول!`;
+            }
+            judgment += `</p>`;
+            // و... (می‌توانید برای بقیه سوالات هم قضاوت اضافه کنید)
+
+            resultDiv.innerHTML = judgment;
+            resultDiv.style.display = 'block';
         });
     </script>
+
 </body>
 </html>
