@@ -3,30 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شروع مسابقه چهار گزینه‌ای</title>
-    <link rel="stylesheet" href="style.css">
+    <title>پیش‌بینی تاریخ مرگ</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: calc(100% - 20px);
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline-block;
+            margin-left: 15px;
+            font-weight: normal;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .disclaimer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>مسابقه چهار گزینه‌ای</h1>
-        <div class="card">
-            <h2>اطلاعات شرکت‌کنندگان</h2>
-            <form id="player-form">
-                <div class="form-group">
-                    <label for="num-players">تعداد شرکت‌کنندگان:</label>
-                    <select id="num-players" name="num-players">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                </div>
-                <div id="player-names" class="form-group">
-                    </div>
-                <button type="submit" id="start-game">شروع بازی</button>
-            </form>
+        <h1>برنامه پیش‌بینی تقریبی تاریخ مرگ</h1>
+        <div class="disclaimer">
+            <p><strong>توجه:</strong> این برنامه فقط برای سرگرمی است و پیش‌بینی‌های آن پایه علمی قوی ندارند. تاریخ مرگ قابل پیش‌بینی نیست.</p>
         </div>
+        <form id="deathPredictorForm">
+            <h2>مشخصات فردی</h2>
+            <div class="form-group">
+                <label for="name">نام کامل:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">سن:</label>
+                <input type="number" id="age" min="1" max="120" required>
+            </div>
+            <div class="form-group">
+                <label>جنسیت:</label>
+                <div class="radio-group">
+                    <input type="radio" id="male" name="gender" value="male" required>
+                    <label for="male">مرد</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">زن</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="residence">محل زندگی:</label>
+                <select id="residence" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="urban">شهری</option>
+                    <option value="rural">روستایی</option>
+                </select>
+            </div>
+
+            <h2>سوالات سبک زندگی</h2>
+            
+            <div class="form-group">
+                <label for="smoking">۱. وضعیت استعمال دخانیات:</label>
+                <select id="smoking" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="never">هرگز مصرف نکرده‌ام</option>
+                    <option value="quit">قبلاً مصرف می‌کردم، الان ترک کرده‌ام</option>
+                    <option value="occasional">گاه‌گاهی مصرف می‌کنم</option>
+                    <option value="daily">روزانه سیگار/قلیان مصرف می‌کنم</option>
+                    <option value="heavy">بیش از یک پاکت سیگار در روز</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="alcohol">۲. وضعیت مصرف الکل:</label>
+                <select id="alcohol" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="never">هرگز مصرف نکرده‌ام</option>
+                    <option value="occasional">گاه‌گاهی مصرف می‌کنم</option>
+                    <option value="regular">به صورت منظم مصرف می‌کنم</option>
+                    <option value="heavy">مصرف سنگین و روزانه دارم</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="diet">۳. رژیم غذایی معمول:</label>
+                <select id="diet" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="healthy">عمدتاً میوه و سبزیجات</option>
+                    <option value="balanced">متعادل</option>
+                    <option value="processed">عمدتاً فست فود و غذاهای فرآوری‌شده</option>
+                    <option value="unhealthy">پُر از قند و چربی</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="activity">۴. سطح فعالیت بدنی:</label>
+                <select id="activity" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="heavy">روزانه بیش از ۱ ساعت ورزش سنگین</option>
+                    <option value="moderate">۳-۵ بار در هفته ورزش متوسط</option>
+                    <option value="light">هفته‌ای ۱-۲ بار فعالیت سبک</option>
+                    <option value="sedentary">عمدتاً کم‌تحرک</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sleep">۵. وضعیت خواب:</label>
+                <select id="sleep" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="good">۷-۹ ساعت خواب با کیفیت در شب</option>
+                    <option value="insufficient">کمتر از ۶ ساعت یا بیشتر از ۹ ساعت خواب</option>
+                    <option value="poor">خواب نامنظم یا با کیفیت پایین</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="stress">۶. سطح استرس در زندگی:</label>
+                <select id="stress" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="low">کم (تقریباً بدون استرس)</option>
+                    <option value="medium">متوسط (گاهی اوقات استرس دارم)</option>
+                    <option value="high">زیاد (اغلب احساس استرس می‌کنم)</option>
+                    <option value="very_high">بسیار زیاد (استرس مداوم)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="heredity">۷. تاریخچه بیماری‌های ارثی در خانواده:</label>
+                <select id="heredity" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="none">هیچ مورد شناخته‌شده‌ای نداریم</option>
+                    <option value="few">یک یا دو مورد با شیوع کم</option>
+                    <option value="some">چندین مورد شایع</option>
+                    <option value="many">تعداد زیادی از موارد شایع و شدید</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="job">۸. نوع شغل:</label>
+                <select id="job" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="low_risk">کم‌خطر (کارمند اداری، معلم)</option>
+                    <option value="medium_risk">متوسط خطر (فروشنده، راننده)</option>
+                    <option value="high_risk">پرخطر (معدن‌کار، آتش‌نشان)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="bmi">۹. وزن/BMI:</label>
+                <select id="bmi" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="healthy">محدوده سالم</option>
+                    <option value="overweight">کمی اضافه‌وزن</option>
+                    <option value="obese">چاق</option>
+                    <option value="very_obese">به شدت چاق</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="checkup">۱۰. مراجعه منظم به پزشک برای چکاپ:</label>
+                <select id="checkup" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="annual">بله، سالانه</option>
+                    <option value="sometimes">گاهی اوقات</option>
+                    <option value="never">خیر، فقط در صورت بیماری</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="pollution">۱۱. میزان آلودگی هوای محل زندگی:</label>
+                <select id="pollution" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="low">بسیار کم (مناطق روستایی یا پاک)</option>
+                    <option value="medium">متوسط (شهرهای کوچک)</option>
+                    <option value="high">زیاد (کلان‌شهرها با آلودگی بالا)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="social">۱۲. روابط اجتماعی و حمایتی:</label>
+                <select id="social" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="strong">شبکه قوی از دوستان و خانواده</option>
+                    <option value="few">چند دوست نزدیک</option>
+                    <option value="alone">بیشتر تنها هستم</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="outlook">۱۳. نگرش کلی به زندگی:</label>
+                <select id="outlook" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="positive">مثبت و خوش‌بین</option>
+                    <option value="realistic">واقع‌بین</option>
+                    <option value="negative">اغلب منفی و بدبین</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="education">۱۴. سطح تحصیلات:</label>
+                <select id="education" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="low">زیر دیپلم</option>
+                    <option value="diploma">دیپلم</option>
+                    <option value="bachelor">لیسانس</option>
+                    <option value="higher">فوق لیسانس و بالاتر</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="medication">۱۵. استفاده از داروهای مزمن:</label>
+                <select id="medication" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="no">خیر</option>
+                    <option value="mild">بله، برای یک بیماری خفیف</option>
+                    <option value="serious">بله، برای یک بیماری مزمن جدی</option>
+                </select>
+            </div>
+            
+            <button type="submit">پیش‌بینی کن!</button>
+        </form>
+
+        <div id="result">
+            </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        document.getElementById('deathPredictorForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // جلوگیری از ارسال فرم و رفرش صفحه
+
+            const name = document.getElementById('name').value;
+            const age = parseInt(document.getElementById('age').value);
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const residence = document.getElementById('residence').value;
+
+            // امتیازدهی اولیه (امید به زندگی پایه)
+            let baseLifeExpectancy = 75; // سال
+
+            // تنظیم امید به زندگی پایه بر اساس جنسیت
+            if (gender === 'female') {
+                baseLifeExpectancy += 3; // زنان معمولاً بیشتر عمر می‌کنند
+            }
+
+            // تنظیم امید به زندگی پایه بر اساس محل زندگی
+            if (residence === 'rural') {
+                baseLifeExpectancy += 1; // فرض بر محیط سالم‌تر در روستا
+            } else if (residence === 'urban') {
+                baseLifeExpectancy -= 1; // فرض بر محیط کمی آلوده‌تر در شهر
+            }
+
+            let score = 0; // امتیازات جمع‌آوری شده از سوالات سبک زندگی
+
+            // تابع کمکی برای دریافت مقدار انتخاب شده از select
+            function getSelectValue(id) {
+                return document.getElementById(id).value;
+            }
+
+            // امتیازدهی سوالات (اینجا می‌توانید مقادیر را دقیق‌تر تنظیم کنید)
+            const smoking = getSelectValue('smoking');
+            if (smoking === 'never') score += 5;
+            else if (smoking === 'quit') score += 2;
+            else if (smoking === 'occasional') score -= 1;
+            else if (smoking === 'daily') score -= 5;
+            else if (smoking === 'heavy') score -= 10;
+
+            const alcohol = getSelectValue('alcohol');
+            if (alcohol === 'never') score += 3;
+            else if (alcohol === 'occasional') score += 0;
+            else if (alcohol === 'regular') score -= 3;
+            else if (alcohol === 'heavy') score -= 7;
+
+            const diet = getSelectValue('diet');
+            if (diet === 'healthy') score += 4;
+            else if (diet === 'balanced') score += 2;
+            else if (diet === 'processed') score -= 3;
+            else if (diet === 'unhealthy') score -= 6;
+
+            const activity = getSelectValue('activity');
+            if (activity === 'heavy') score += 5;
+            else if (activity === 'moderate') score += 3;
+            else if (activity === 'light') score += 1;
+            else if (activity === 'sedentary') score -= 5;
+
+            const sleep = getSelectValue('sleep');
+            if (sleep === 'good') score += 3;
+            else if (sleep === 'insufficient') score -= 2;
+            else if (sleep === 'poor') score -= 4;
+
+            const stress = getSelectValue('stress');
+            if (stress === 'low') score += 3;
+            else if (stress === 'medium') score += 0;
+            else if (stress === 'high') score -= 3;
+            else if (stress === 'very_high') score -= 7;
+
+            const heredity = getSelectValue('heredity');
+            if (heredity === 'none') score += 4;
+            else if (heredity === 'few') score += 1;
+            else if (heredity === 'some') score -= 3;
+            else if (heredity === 'many') score -= 7;
+
+            const job = getSelectValue('job');
+            if (job === 'low_risk') score += 3;
+            else if (job === 'medium_risk') score += 0;
+            else if (job === 'high_risk') score -= 5;
+
+            const bmi = getSelectValue('bmi');
+            if (bmi === 'healthy') score += 3;
+            else if (bmi === 'overweight') score -= 1;
+            else if (bmi === 'obese') score -= 4;
+            else if (bmi === 'very_obese') score -= 8;
+
+            const checkup = getSelectValue('checkup');
+            if (checkup === 'annual') score += 2;
+            else if (checkup === 'sometimes') score += 0;
+            else if (checkup === 'never') score -= 3;
+
+            const pollution = getSelectValue('pollution');
+            if (pollution === 'low') score += 2;
+            else if (pollution === 'medium') score += 0;
+            else if (pollution === 'high') score -= 3;
+
+            const social = getSelectValue('social');
+            if (social === 'strong') score += 2;
+            else if (social === 'few') score += 0;
+            else if (social === 'alone') score -= 2;
+
+            const outlook = getSelectValue('outlook');
+            if (outlook === 'positive') score += 2;
+            else if (outlook === 'realistic') score += 0;
+            else if (outlook === 'negative') score -= 2;
+
+            const education = getSelectValue('education');
+            if (education === 'higher') score += 1;
+            else if (education === 'bachelor') score += 0;
+            else if (education === 'diploma') score -= 1;
+            else if (education === 'low') score -= 2;
+
+            const medication = getSelectValue('medication');
+            if (medication === 'no') score += 2;
+            else if (medication === 'mild') score += 0;
+            else if (medication === 'serious') score -= 3;
+            
+            // محاسبه امید به زندگی نهایی
+            let finalLifeExpectancy = baseLifeExpectancy + score;
+
+            // مطمئن شوید که امید به زندگی کمتر از سن فعلی یا خیلی کم نباشد
+            if (finalLifeExpectancy < age + 10) { // حداقل ۱۰ سال دیگر زندگی
+                finalLifeExpectancy = age + 10;
+            }
+            if (finalLifeExpectancy > 100) { // حداکثر ۱۰۰ سال
+                finalLifeExpectancy = 100;
+            }
+
+            const yearsToLive = finalLifeExpectancy - age;
+            
+            // محاسبه تاریخ مرگ
+            const currentDate = new Date();
+            const predictedDeathDate = new Date(currentDate.getFullYear() + yearsToLive, currentDate.getMonth(), currentDate.getDate());
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = predictedDeathDate.toLocaleDateString('fa-IR', options);
+
+            document.getElementById('result').innerHTML = `
+                <p><strong>${name}</strong> عزیز،</p>
+                <p>با توجه به اطلاعاتی که ارائه دادید، پیش‌بینی تقریبی ما برای تاریخ درگذشت شما حدوداً:</p>
+                <p style="font-size: 1.5em; color: #dc3545; font-weight: bold;">${formattedDate}</p>
+                <p>این به این معنی است که شما احتمالاً تا حدود <strong>${finalLifeExpectancy}</strong> سالگی عمر خواهید کرد.</p>
+                <p class="disclaimer">این یک پیش‌بینی نسبتا دقیق است و از الان می‌توانید برای مراسم کفن و دفن آماده شوید. .</p>
+            `;
+        });
+    </script>
 </body>
 </html>
