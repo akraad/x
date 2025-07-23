@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شروع مسابقه چهار گزینه‌ای</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>مسابقه چهار گزینه‌ای</h1>
+        <div class="card">
+            <h2>اطلاعات شرکت‌کنندگان</h2>
+            <form id="player-form">
+                <div class="form-group">
+                    <label for="num-players">تعداد شرکت‌کنندگان:</label>
+                    <select id="num-players" name="num-players">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div id="player-names" class="form-group">
+                    </div>
+                <button type="submit" id="start-game">شروع بازی</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
