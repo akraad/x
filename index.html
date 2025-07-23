@@ -171,7 +171,7 @@
 
         <div id="analysisResult">
             <h3>تحلیل مینیمال شما</h3>
-            <p id="analysisText" class="analysis-text"></p>
+            <div id="analysisText" class="analysis-text"></div>
         </div>
     </div>
 
@@ -904,13 +904,16 @@
             }
         ];
 
-        function getRandomQuestions(num, totalQuestions) {
-            const shuffled = [...totalQuestions].sort(() => 0.5 - Math.random());
+        // Combine all questions for random selection later
+        const combinedQuestions = allQuestions.concat(additionalQuestions);
+
+        function getRandomQuestions(num, allQs) {
+            const shuffled = [...allQs].sort(() => 0.5 - Math.random());
             return shuffled.slice(0, num);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const questionsToAsk = getRandomQuestions(10, allQuestions.concat(additionalQuestions));
+            const questionsToAsk = getRandomQuestions(10, combinedQuestions); // Select 10 random questions
             const questionsContainer = document.getElementById('questionsContainer');
 
             questionsToAsk.forEach((q, index) => {
@@ -934,98 +937,266 @@
 
             const formData = new FormData(this);
             const answers = {};
-            for (let [key, value] of formData.entries()) {
-                answers[key] = value;
-            }
+            // Collect answers for selected random questions
+            document.querySelectorAll('#questionsContainer input[type="radio"]:checked').forEach(input => {
+                answers[input.name] = parseInt(input.value); // Store value as integer
+            });
+            // Collect initial info
+            answers.age = formData.get('age');
+            answers.maritalStatus = formData.get('maritalStatus');
+            answers.gender = formData.get('gender');
+            answers.education = formData.get('education');
 
-            // Perform minimal analysis based on answers
-            const analysisResult = document.getElementById('analysisResult');
-            const analysisText = document.getElementById('analysisText');
-            let resultHtml = '<h3>بر اساس پاسخ‌های شما:</h3>';
 
-            // Example analysis for initial info (basic)
-            resultHtml += `<p><strong>سن:</strong> ${answers.age} سال</p>`;
-            resultHtml += `<p><strong>وضعیت تأهل:</strong> ${answers.maritalStatus === 'single' ? 'مجرد' : answers.maritalStatus === 'married' ? 'متأهل' : answers.maritalStatus === 'divorced' ? 'مطلقه' : answers.maritalStatus === 'widowed' ? 'همسر از دست داده' : 'در رابطه'}</p>`;
-            resultHtml += `<p><strong>جنسیت:</strong> ${answers.gender === 'male' ? 'مرد' : answers.gender === 'female' ? 'زن' : answers.gender === 'non-binary' ? 'غیرباینری' : 'ترجیح داده نشده'}</p>`;
+            const analysisResultDiv = document.getElementById('analysisResult');
+            const analysisTextDiv = document.getElementById('analysisText');
+            let resultHtml = '<h3>تحلیل شخصی شما:</h3>';
 
-            // Analyze specific questions (this is a simplified example)
-            // You would expand this logic significantly based on your therapeutic framework
+            // --- Analysis Logic ---
 
-            // Example: Analyze Q5 (Sexual Orientation)
-            const q5Answer = answers['q5'];
-            if (q5Answer !== undefined) {
-                const orientationOptions = allQuestions.find(q => q.id === 5).options;
-                resultHtml += `<p><strong>گرایش جنسی:</strong> به نظر می‌رسد شما خود را <strong>${orientationOptions[q5Answer]}</strong> تعریف می‌کنید.</p>`;
-            }
+            // Helper to get option text by question ID and chosen index
+            const getOptionText = (qId, optionIndex) => {
+                const q = combinedQuestions.find(q => q.id === qId);
+                return q ? q.options[optionIndex] : 'نامشخص';
+            };
 
-            // Example: Analyze Q1 (Honesty about Orgasm)
-            const q1Answer = answers['q1'];
-            if (q1Answer !== undefined) {
-                const honestyOptions = allQuestions.find(q => q.id === 1).options;
-                if (honestyOptions[q1Answer].includes('هرگز') || honestyOptions[q1Answer].includes('یکی دو بار')) {
-                    resultHtml += `<p><strong>صداقت در ارگاسم:</strong> به نظر می‌رسد شما در بیان ارگاسم خود نسبتاً <strong>صادق</strong> هستید.</p>`;
-                } else if (honestyOptions[q1Answer].includes('زیاد') || honestyOptions[q1Answer].includes('تقریبا همیشه')) {
-                    resultHtml += `<p><strong>صداقت در ارگاسم:</strong> پاسخ شما نشان می‌دهد که ممکن است گاهی برای جلوگیری از دلخوری شریک، <strong>تظاهر به ارگاسم</strong> کرده‌اید. این می‌تواند نشانه‌ای از نیاز به گفتگوی بازتر در رابطه باشد.</p>`;
-                } else if (honestyOptions[q1Answer].includes('کلاً هیچ وقت ارضا نشدم')) {
-                    resultHtml += `<p><strong>صداقت در ارگاسم:</strong> پاسخ شما در مورد ارگاسم نشان می‌دهد که ممکن است <strong>تجربه ارگاسم را نداشته‌اید</strong> یا با آن درگیر هستید. این مورد می‌تواند برای بررسی بیشتر در جلسات مشاوره مفید باشد.</p>`;
+            // 1. اطلاعات دموگرافیک
+            resultHtml += `<h4>مشخصات شما:</h4>`;
+            resultHtml += `<p>سن: <strong>${answers.age} سال</strong>، وضعیت تأهل: <strong>${answers.maritalStatus === 'single' ? 'مجرد' : answers.maritalStatus === 'married' ? 'متأهل' : answers.maritalStatus === 'divorced' ? 'مطلقه' : answers.maritalStatus === 'widowed' ? 'همسر از دست داده' : answers.maritalStatus === 'in_relationship' ? 'در رابطه' : 'نامشخص'}</strong>، جنسیت: <strong>${answers.gender === 'male' ? 'مرد' : answers.gender === 'female' ? 'زن' : answers.gender === 'non-binary' ? 'غیرباینری' : 'ترجیح داده نشده'}</strong>.</p>`;
+
+            // 2. صداقت در روابط جنسی (Q1)
+            if (answers['q1'] !== undefined) {
+                const q1Answer = answers['q1'];
+                if (q1Answer === 0) { // هرگز، همیشه صادق بودم
+                    resultHtml += `<p><strong>صداقت در رابطه جنسی:</strong> به نظر می‌رسد شما در بیان احساسات و ارگاسم خود در رابطه جنسی بسیار <strong>صادق و روراست</strong> هستید. این یک ویژگی مثبت است که به ایجاد اعتماد و صمیمیت در رابطه کمک می‌کند.</p>`;
+                } else if (q1Answer === 1 || q1Answer === 2) { // یکی دو بار پیش اومده / زیاد
+                    resultHtml += `<p><strong>صداقت در رابطه جنسی:</strong> پاسخ شما نشان می‌دهد که ممکن است گاهی (یا زیاد) برای جلوگیری از دلخوری شریک، <strong>تظاهر به ارگاسم</strong> کرده‌اید. این می‌تواند نشانه‌ای از نیاز به گفتگوی بازتر و صادقانه در مورد نیازها و لذت جنسی در رابطه باشد.</p>`;
+                } else if (q1Answer === 3) { // تقریبا همیشه
+                    resultHtml += `<p><strong>صداقت در رابطه جنسی:</strong> پاسخ شما حاکی از آن است که شما <strong>تقریباً همیشه برای جلوگیری از ناراحتی شریک، تظاهر به ارگاسم</strong> می‌کنید. این وضعیت می‌تواند نشانه‌ای از عدم راحتی در بیان نیازهای جنسی یا ترس از قضاوت باشد که بررسی آن در مشاوره می‌تواند مفید باشد.</p>`;
+                } else if (q1Answer === 5) { // کلاً هیچ وقت ارضا نشدم که راست یا دروغ بگم!
+                    resultHtml += `<p><strong>تجربه ارگاسم:</strong> پاسخ شما در مورد ارگاسم نشان می‌دهد که ممکن است شما <strong>تجربه ارگاسم را نداشته‌اید</strong> یا با آن درگیر هستید. این مورد می‌تواند برای بررسی دلایل و راه‌حل‌ها در جلسات مشاوره تخصصی جنسی بسیار کمک‌کننده باشد.</p>`;
                 }
             }
 
-            // Example: Analyze Q4 (Love vs. Sex)
-            const q4Answer = answers['q4'];
-            if (q4Answer !== undefined) {
-                const loveSexOptions = allQuestions.find(q => q.id === 4).options;
-                if (loveSexOptions[q4Answer].includes('فقط با احساس عشقه')) {
-                    resultHtml += `<p><strong>رابطه جنسی و عشق:</strong> به نظر می‌رسد برای شما <strong>عشق و احساس</strong> نقش محوری در تجربه جنسی‌تان ایفا می‌کند.</p>`;
-                } else if (loveSexOptions[q4Answer].includes('بی‌عشق هم جذاب باشه') || loveSexOptions[q4Answer].includes('تنوع برام مهم‌تر از پایداریه')) {
-                    resultHtml += `<p><strong>رابطه جنسی و عشق:</strong> پاسخ شما نشان می‌دهد که ممکن است برای شما <strong>لذت و تجربه جنسی مستقل از عشق عمیق</strong> هم دارای جذابیت باشد.</p>`;
-                } else if (loveSexOptions[q4Answer].includes('هنوز خودم هم نمی‌دونم')) {
-                    resultHtml += `<p><strong>رابطه جنسی و عشق:</strong> به نظر می‌رسد شما هنوز در حال <strong>کشف اولویت‌های خود</strong> در زمینه ارتباط عشق و سکس هستید.</p>`;
+            // 3. فانتزی‌های جنسی (Q2 و Q16 و Q29 و Q31 و Q34 و Q40)
+            const fantasies = [];
+            if (answers['q2'] !== undefined) fantasies.push(getOptionText(2, answers['q2']));
+            if (answers['q16'] !== undefined && answers['q16'] !== 0) fantasies.push("فانتزی‌هایی دارم که از گفتنشان خجالت می‌کشم.");
+            if (answers['q29'] !== undefined && answers['q29'] < 3) fantasies.push("علاقه به خشونت ملایم در سکس.");
+            if (answers['q31'] !== undefined) {
+                const q31Answer = answers['q31'];
+                if (q31Answer === 0) fantasies.push("فکر کردن به فرد آشنا در خودارضایی.");
+                else if (q31Answer === 1) fantasies.push("فکر کردن به سلبریتی در خودارضایی.");
+                else if (q31Answer === 2) fantasies.push("صحنه خاص یا فانتزی ذهنی در خودارضایی.");
+                else if (q31Answer === 3) fantasies.push("موقعیت سلطه‌آمیز یا تسلیم در خودارضایی.");
+            }
+            if (answers['q34'] !== undefined && answers['q34'] < 3) fantasies.push("میل به امتحان فانتزی‌های غیرعادی شریک.");
+            if (answers['q40'] !== undefined && answers['q40'] < 3) fantasies.push("فانتزی تماشا شدن یا تماشا کردن.");
+
+            if (fantasies.length > 0) {
+                resultHtml += `<p><strong>دنیای فانتزی:</strong> شما دارای فانتزی‌های جنسی متنوعی هستید که شامل <strong>${fantasies.join(', ')}</strong> می‌شود. فانتزی‌ها بخشی طبیعی از سلامت جنسی هستند و می‌توانند به شناخت بهتر خود و افزایش لذت کمک کنند.</p>`;
+            } else {
+                resultHtml += `<p><strong>دنیای فانتزی:</strong> به نظر می‌رسد شما در حال حاضر فانتزی‌های جنسی مشخصی ندارید یا تمایل به بررسی آن‌ها ندارید. کاوش در فانتزی‌ها می‌تواند به افزایش آگاهی و لذت شما کمک کند.</p>`;
+            }
+
+            // 4. خودارضایی و احساسات مرتبط (Q3 و Q8)
+            if (answers['q3'] !== undefined && answers['q8'] !== undefined) {
+                const q3Text = getOptionText(3, answers['q3']);
+                const q8Text = getOptionText(8, answers['q8']);
+                resultHtml += `<p><strong>خودارضایی:</strong> شما معمولاً ${q3Text} خودارضایی می‌کنید و پس از آن ${q8Text} دارید. اگر احساس گناه یا پشیمانی دارید، این می‌تواند نشانه‌ای از باورهای منفی در مورد جنسیت باشد که نیاز به بررسی دارد.</p>`;
+            }
+
+            // 5. گرایش جنسی (Q5 و Q9)
+            if (answers['q5'] !== undefined) {
+                const q5Text = getOptionText(5, answers['q5']);
+                let orientationAnalysis = `<p><strong>گرایش جنسی:</strong> شما گرایش جنسی خود را <strong>${q5Text}</strong> تعریف می‌کنید. این خودشناسی قدم مهمی در مسیر سلامت جنسی است.</p>`;
+                if (answers['q9'] !== undefined) {
+                    const q9Text = getOptionText(9, answers['q9']);
+                    if (q9Text.includes('بله، و لذت‌بخش بود') && (answers['q5'] === 0 || answers['q5'] === 1)) { // Hetero or mostly hetero but had same-sex pleasant experience
+                        orientationAnalysis += `<p>با این حال، تجربه شما با جنس موافق (${q9Text}) نشان می‌دهد که ممکن است طیف گرایش جنسی شما <strong>وسیع‌تر از تعریف فعلی‌تان</strong> باشد یا شما در حال کاوش در این زمینه هستید. این کاملاً طبیعی است و نیاز به برچسب‌گذاری فوری نیست.</p>`;
+                    } else if (q9Text.includes('هنوز نمی‌دونم چه گرایشی دارم')) {
+                        orientationAnalysis += `<p>پاسخ‌های شما نشان می‌دهد که شما هنوز در حال <strong>کشف و شناخت گرایش جنسی</strong> خود هستید. این فرآیند زمان‌بر است و جای نگرانی نیست.</p>`;
+                    }
+                }
+                resultHtml += orientationAnalysis;
+            }
+
+            // 6. امنیت و بیان نیازها در رابطه (Q6 و Q52)
+            if (answers['q6'] !== undefined && answers['q52'] !== undefined) {
+                const q6Text = getOptionText(6, answers['q6']);
+                const q52Text = getOptionText(52, answers['q52']);
+                if (answers['q6'] < 2 && answers['q52'] < 2) { // کامل راحت و معمولا راحت
+                    resultHtml += `<p><strong>امنیت و ارتباط در رابطه:</strong> شما در رابطه‌های جنسی خود احساس <strong>امنیت بالایی برای بیان نیازها و خواسته‌هایتان</strong> دارید و در این زمینه شفاف عمل می‌کنید. این یک بستر قوی برای رضایت متقابل ایجاد می‌کند.</p>`;
+                } else if (answers['q6'] > 2 || answers['q52'] > 2) { // خجالت و نمیتونم بگم
+                    resultHtml += `<p><strong>امنیت و ارتباط در رابطه:</strong> پاسخ شما نشان می‌دهد که ممکن است در بیان نیازها و خواسته‌های جنسی خود در رابطه، احساس <strong>امنیت کافی یا راحتی لازم را نداشته باشید</strong>. این موضوع می‌تواند بر رضایت شما از رابطه تأثیر بگذارد و پرداختن به آن در مشاوره می‌تواند کمک‌کننده باشد.</p>`;
                 }
             }
 
-            // Example: Analyze Q15 (Body Satisfaction)
-            const q15Answer = answers['q15'];
-            if (q15Answer !== undefined) {
-                const bodySatisfactionOptions = allQuestions.find(q => q.id === 15).options;
-                if (bodySatisfactionOptions[q15Answer].includes('کاملاً راحت و راضی‌ام') || bodySatisfactionOptions[q15Answer].includes('بیشتر اوقات راضیم')) {
-                    resultHtml += `<p><strong>تصویر بدنی:</strong> شما از <strong>بدن خود در رابطه جنسی احساس رضایت خوبی</strong> دارید.</p>`;
-                } else if (bodySatisfactionOptions[q15Answer].includes('خجالت می‌کشم') || bodySatisfactionOptions[q15Answer].includes('ناامنی زیادی دارم') || bodySatisfactionOptions[q15Answer].includes('اصلاً از بدنم خوشم نمیاد')) {
-                    resultHtml += `<p><strong>تصویر بدنی:</strong> پاسخ شما نشان می‌دهد که ممکن است در مورد <strong>رضایت از بدن خود در رابطه جنسی</strong> چالش‌هایی داشته باشید. این موضوع می‌تواند بر تجربه جنسی شما تأثیر بگذارد.</p>`;
+            // 7. اولویت‌ها در سکس (Q7 و Q43 و Q55)
+            const priorities = [];
+            if (answers['q7'] !== undefined) priorities.push(getOptionText(7, answers['q7']));
+            if (answers['q43'] !== undefined) priorities.push(getOptionText(43, answers['q43']));
+            if (answers['q55'] !== undefined) priorities.push(getOptionText(55, answers['q55']));
+
+            if (priorities.length > 0) {
+                resultHtml += `<p><strong>اولویت‌های جنسی:</strong> برای شما، عوامل مهم در یک رابطه جنسی رضایت‌بخش شامل <strong>${priorities.join(', ')}</strong> می‌شود. شناخت این اولویت‌ها به شما کمک می‌کند تا روابط جنسی رضایت‌بخش‌تری را تجربه کنید.</p>`;
+            }
+
+            // 8. تصویر بدنی و رضایت از خود (Q15)
+            if (answers['q15'] !== undefined) {
+                const q15Answer = answers['q15'];
+                if (q15Answer < 2) { // کاملاً راحت و راضی‌ام / بیشتر اوقات راضیم
+                    resultHtml += `<p><strong>تصویر بدنی:</strong> شما از <strong>بدن خود در رابطه جنسی احساس رضایت خوبی</strong> دارید. پذیرش و دوست داشتن بدن خود نقش مهمی در اعتماد به نفس جنسی و لذت بردن از رابطه دارد.</p>`;
+                } else if (q15Answer > 2) { // معمولی / خجالت / ناامنی / اصلاً خوشم نمیاد
+                    resultHtml += `<p><strong>تصویر بدنی:</strong> پاسخ شما نشان می‌دهد که ممکن است در مورد <strong>رضایت از بدن خود در رابطه جنسی</strong> چالش‌هایی داشته باشید یا احساس ناامنی کنید. این موضوع می‌تواند بر تجربه جنسی شما تأثیر بگذارد و کار بر روی آن می‌تواند مفید باشد.</p>`;
                 }
             }
 
-            // Example: Analyze Q52 (Comfort in expressing desires - from new questions)
-            const q52Answer = answers['q52'];
-            if (q52Answer !== undefined) {
-                const expressComfortOptions = additionalQuestions.find(q => q.id === 52).options;
-                if (expressComfortOptions[q52Answer].includes('کاملاً راحت و شفافم') || expressComfortOptions[q52Answer].includes('معمولاً راحت می‌گم')) {
-                    resultHtml += `<p><strong>ارتباط جنسی:</strong> به نظر می‌رسد شما در <strong>بیان خواسته‌ها و مرزهای جنسی‌تان با شریکتان راحت و شفاف</strong> هستید که یک نکته مثبت در روابط جنسی است.</p>`;
-                } else if (expressComfortOptions[q52Answer].includes('کمی خجالت می‌کشم') || expressComfortOptions[q52Answer].includes('خیلی سختمه بیان کنم') || expressComfortOptions[q52Answer].includes('اصلاً نمی‌تونم بیان کنم')) {
-                    resultHtml += `<p><strong>ارتباط جنسی:</strong> پاسخ شما نشان می‌دهد که ممکن است در <strong>بیان خواسته‌ها و مرزهای جنسی خود با شریکتان چالش</strong> داشته باشید. بهبود این مهارت می‌تواند به رضایت بیشتر شما در رابطه کمک کند.</p>`;
+            // 9. استفاده ابزاری از سکس (Q17)
+            if (answers['q17'] !== undefined) {
+                const q17Answer = answers['q17'];
+                if (q17Answer < 3) { // بله، چند بار / یه‌بار / وسوسه داشتم
+                    resultHtml += `<p><strong>سوءاستفاده از سکس:</strong> پاسخ شما نشان می‌دهد که ممکن است تجربه <strong>استفاده از رابطه جنسی برای رسیدن به اهداف غیرجنسی</strong> را داشته‌اید یا وسوسه آن را. این موضوع می‌تواند پیامدهای عاطفی و اخلاقی پیچیده‌ای داشته باشد و در مشاوره قابل بررسی است.</p>`;
+                } else if (q17Answer === 3) { // نه، اصلاً
+                    resultHtml += `<p><strong>سوءاستفاده از سکس:</strong> شما تا به حال از رابطه جنسی برای <strong>به دست آوردن چیزی استفاده نکرده‌اید</strong> که نشان‌دهنده احترام شما به ماهیت رابطه است.</p>`;
                 }
             }
 
-            // Example: Analyze Q55 (Most important factor for satisfying sex - from new questions)
-            const q55Answer = answers['q55'];
-            if (q55Answer !== undefined) {
-                const importantFactorOptions = additionalQuestions.find(q => q.id === 55).options;
-                if (importantFactorOptions[q55Answer].includes('صمیمیت و ارتباط عاطفی عمیق')) {
-                    resultHtml += `<p><strong>اولویت در سکس:</strong> برای شما <strong>صمیمیت و ارتباط عاطفی</strong> محور اصلی رضایت در رابطه جنسی است.</p>`;
-                } else if (importantFactorOptions[q55Answer].includes('مهارت‌های جنسی و تکنیک‌ها') || importantFactorOptions[q55Answer].includes('برآورده شدن فانتزی‌ها')) {
-                    resultHtml += `<p><strong>اولویت در سکس:</strong> به نظر می‌رسد برای شما <strong>جنبه‌های فنی و فانتزی</strong> در رابطه جنسی از اهمیت بالایی برخوردار است.</p>`;
-                } else if (importantFactorOptions[q55Answer].includes('ارتباط کلامی و بیان خواسته‌ها')) {
-                    resultHtml += `<p><strong>اولویت در سکس:</strong> شما اهمیت زیادی به <strong>ارتباط کلامی و بیان صریح خواسته‌ها</strong> برای یک رابطه جنسی رضایت‌بخش می‌دهید.</p>`;
+            // 10. رابطه جنسی دهانی (Q18)
+            if (answers['q18'] !== undefined) {
+                const q18Text = getOptionText(18, answers['q18']);
+                if (answers['q18'] < 2) { // علاقه زیادی به دادن و گرفتن / فقط دریافت‌کننده‌ام
+                    resultHtml += `<p><strong>رابطه جنسی دهانی:</strong> شما در مورد رابطه جنسی دهانی <strong>پذیرش و علاقه</strong> دارید (${q18Text}). این نشان‌دهنده گشایش شما در کاوش انواع لذت جنسی است.</p>`;
+                } else if (answers['q18'] > 3) { // خوشم نمیاد / تا حالا تجربه‌اش نکردم
+                    resultHtml += `<p><strong>رابطه جنسی دهانی:</strong> شما علاقه‌ای به رابطه جنسی دهانی ندارید یا تا به حال تجربه‌اش نکرده‌اید. مهم است که مرزها و ترجیحات خود را بشناسید و آنها را رعایت کنید.</p>`;
                 }
             }
 
+            // 11. تعداد ارگاسم و رضایت (Q19)
+            if (answers['q19'] !== undefined) {
+                const q19Text = getOptionText(19, answers['q19']);
+                if (answers['q19'] < 3) { // یک‌بار کافیه / معمولاً دوبار / ۳ بار یا بیشتر
+                    resultHtml += `<p><strong>تجربه ارگاسم:</strong> شما معمولاً ${q19Text} در طول رابطه جنسی ارضا می‌شوید که نشان‌دهنده <strong>توانایی شما در رسیدن به اوج لذت</strong> است.</p>`;
+                } else if (answers['q19'] === 4) { // بعضی وقتا اصلاً ارضا نمی‌شم
+                    resultHtml += `<p><strong>تجربه ارگاسم:</strong> اگر گاهی در رسیدن به ارگاسم مشکل دارید، این می‌تواند نشانه‌ای از نیاز به بررسی تکنیک‌ها، عوامل استرس‌زا یا مشکلات ارتباطی باشد.</p>`;
+                }
+            }
 
-            // Final encouraging message
-            resultHtml += `<p>این تحلیل یک دید کلی از برخی ابعاد جنسی شما ارائه می‌دهد. برای درک عمیق‌تر و بررسی مسائل خاص، مشاوره تخصصی توصیه می‌شود.</p>`;
+            // 12. مدت زمان سکس (Q22)
+            if (answers['q22'] !== undefined) {
+                const q22Text = getOptionText(22, answers['q22']);
+                resultHtml += `<p><strong>مدت زمان رابطه جنسی:</strong> ترجیح شما برای مدت زمان رابطه جنسی ${q22Text} است. این نشان‌دهنده اولویت‌های شما در لذت‌بخشی و صمیمیت است.</p>`;
+            }
 
-            analysisText.innerHTML = resultHtml;
-            analysisResult.style.display = 'block'; // Show the result
-            analysisResult.scrollIntoView({ behavior: 'smooth' }); // Scroll to the result
+            // 13. استفاده از سکس تویز (Q23)
+            if (answers['q23'] !== undefined) {
+                const q23Answer = answers['q23'];
+                if (q23Answer < 2) { // استفاده می‌کنم و خیلی راضیم / گاهی استفاده کردم
+                    resultHtml += `<p><strong>لوازم جنسی (Sex Toys):</strong> شما در استفاده از لوازم جنسی <strong>تجربه یا علاقه</strong> دارید که می‌تواند نشانه‌ای از تمایل به کاوش و افزایش لذت فردی یا با شریک باشد.</p>`;
+                } else if (q23Answer === 2) { // دوست دارم امتحان کنم
+                    resultHtml += `<p><strong>لوازم جنسی (Sex Toys):</strong> شما تمایل دارید که استفاده از لوازم جنسی را <strong>امتحان کنید</strong>. این می‌تواند راهی برای کشف ابعاد جدید لذت باشد.</p>`;
+                }
+            }
+
+            // 14. کیفیت روابط جنسی گذشته (Q24)
+            if (answers['q24'] !== undefined) {
+                const q24Answer = answers['q24'];
+                if (q24Answer < 2) { // عالی و رضایت‌بخش / خوب، ولی می‌تونست بهتر باشه
+                    resultHtml += `<p><strong>کیفیت روابط:</strong> شما بیشتر روابط جنسی خود را <strong>رضایت‌بخش</strong> ارزیابی می‌کنید که نشان‌دهنده تجربیات مثبت شماست.</p>`;
+                } else if (q24Answer > 2) { // متوسط / ضعیف / برای خوشحال کردن طرف
+                    resultHtml += `<p><strong>کیفیت روابط:</strong> پاسخ شما نشان می‌دهد که ممکن است روابط جنسی شما در گذشته، <strong>همیشه رضایت‌بخش نبوده</strong> یا بیشتر برای خوشحال کردن طرف مقابل بوده است. این می‌تواند نشانه‌ای از نیاز به تمرکز بر رضایت شخصی یا ارتباط بهتر در رابطه باشد.</p>`;
+                }
+            }
+
+            // 15. حرف زدن حین سکس (Q28)
+            if (answers['q28'] !== undefined) {
+                const q28Answer = answers['q28'];
+                if (q28Answer < 2) { // خیلی، تحریک‌کننده‌ست / معمولاً خوبه
+                    resultHtml += `<p><strong>ارتباط کلامی حین سکس:</strong> شما از <strong>صحبت کردن حین رابطه جنسی لذت</strong> می‌برید و آن را تحریک‌کننده می‌دانید. این به افزایش صمیمیت و درک متقابل کمک می‌کند.</p>`;
+                } else if (q28Answer > 2) { // دوست ندارم کسی چیزی بگه / خودم خجالت می‌کشم / اصلاً نمی‌دونم چی باید بگم
+                    resultHtml += `<p><strong>ارتباط کلامی حین سکس:</strong> شما تمایلی به حرف زدن حین رابطه جنسی ندارید یا در این زمینه خجالتی هستید. افزایش ارتباط کلامی می‌تواند به شریک شما در درک بهتر نیازهایتان کمک کند.</p>`;
+                }
+            }
+
+            // 16. تجربیات ناخواسته جنسی (Q33)
+            if (answers['q33'] !== undefined) {
+                const q33Answer = answers['q33'];
+                if (q33Answer < 2) { // بله، و هنوز تأثیرش هست / بله، ولی باهاش کنار اومدم
+                    resultHtml += `<p><strong>تجربه ناخواسته جنسی:</strong> اگر در گذشته تجربه جنسی ناخواسته‌ای داشته‌اید، مهم است که بدانید تأثیرات آن طبیعی است. حتی اگر با آن کنار آمده‌اید، صحبت با یک متخصص می‌تواند به التیام کامل و پردازش این تجربیات کمک کند.</p>`;
+                }
+            }
+
+            // 17. ترس در سکس (Q38)
+            if (answers['q38'] !== undefined) {
+                const q38Answer = answers['q38'];
+                if (q38Answer < 5) { // هر چیزی غیر از "هیچ‌چیز، کاملاً راحتم"
+                    resultHtml += `<p><strong>ترس‌ها در سکس:</strong> شما در رابطه جنسی از <strong>${getOptionText(38, q38Answer)}</strong> می‌ترسید. شناخت این ترس‌ها اولین قدم برای غلبه بر آنها و تجربه لذت بیشتر در رابطه است.</p>`;
+                } else {
+                    resultHtml += `<p><strong>ترس‌ها در سکس:</strong> شما در رابطه جنسی احساس <strong>راحتی و عدم ترس</strong> می‌کنید که نشان‌دهنده اعتماد به نفس بالای شماست.</p>`;
+                }
+            }
+
+            // 18. عشق و سکس (Q39 و Q47)
+            if (answers['q39'] !== undefined && answers['q47'] !== undefined) {
+                const q39Text = getOptionText(39, answers['q39']);
+                const q47Text = getOptionText(47, answers['q47']);
+                let loveSexAnalysis = `<p><strong>رابطه عشق و سکس:</strong> دیدگاه شما در مورد رابطه جنسی بدون عشق این است: "${q39Text}". و به نظر شما یک رابطه جنسی ایده‌آل باید ${q47Text} عاطفه داشته باشد. این نشان‌دهنده اهمیت عاطفه و ارتباط در تجربه جنسی شماست.</p>`;
+                if (answers['q39'] > 2) { // سکس و عشق دو چیز جدا هستن / تجربه می‌کنم ولی وابسته نمی‌شم / عشق اصلاً مهم نیست
+                    loveSexAnalysis = `<p><strong>رابطه عشق و سکس:</strong> پاسخ‌های شما نشان می‌دهد که ممکن است شما <strong>لذت جنسی را تا حدودی مستقل از ارتباط عمیق عاطفی</strong> می‌بینید یا به دنبال تجربه‌هایی هستید که لزوماً با عشق همراه نیستند.</p>`;
+                }
+                resultHtml += loveSexAnalysis;
+            }
+
+            // 19. اطلاعات و آگاهی جنسی (Q41 و Q44 و Q51 و Q57)
+            const knowledgeAreas = [];
+            if (answers['q41'] !== undefined) knowledgeAreas.push(`اطلاعات کلی بهداشت جنسی (${getOptionText(41, answers['q41'])})`);
+            if (answers['q44'] !== undefined) knowledgeAreas.push(`استفاده از پورن برای یادگیری (${getOptionText(44, answers['q44'])})`);
+            if (answers['q51'] !== undefined) knowledgeAreas.push(`اطلاعات آناتومی جنسی (${getOptionText(51, answers['q51'])})`);
+            if (answers['q57'] !== undefined) knowledgeAreas.push(`مطالعه و تحقیق در زمینه مسائل جنسی (${getOptionText(57, answers['q57'])})`);
+
+            if (knowledgeAreas.length > 0) {
+                resultHtml += `<p><strong>آگاهی جنسی:</strong> میزان آگاهی و اطلاعات شما در زمینه‌های مختلف جنسی شامل <strong>${knowledgeAreas.join(', ')}</strong> می‌باشد. افزایش دانش در این زمینه می‌تواند به شما در تصمیم‌گیری‌های آگاهانه و تجربه روابط سالم‌تر کمک کند.</p>`;
+            }
+
+            // 20. مرزهای جنسی و رضایت (Q46 و Q53)
+            if (answers['q46'] !== undefined && answers['q53'] !== undefined) {
+                const q46Text = getOptionText(46, answers['q46']);
+                const q53Text = getOptionText(53, answers['q53']);
+                if (answers['q46'] < 2 && answers['q53'] < 2) { // کاملاً مشخصه / تقریباً می‌دونم && کاملاً آگاه / اطلاعات خوب
+                    resultHtml += `<p><strong>مرزها و رضایت (Consent):</strong> شما در مورد مرزهای جنسی خود <strong>شفافیت بالایی</strong> دارید و آگاهی خوبی در مورد مفهوم رضایت (Consent) دارید و آن را رعایت می‌کنید. این نشان‌دهنده مسئولیت‌پذیری و احترام به خود و دیگران در روابط جنسی است.</p>`;
+                } else if (answers['q46'] > 2 || answers['q53'] > 2) { // هنوز کشف می‌کنم / مرز خاصی ندارم && اطلاعات کم / فکر نمی‌کنم مهم باشه
+                    resultHtml += `<p><strong>مرزها و رضایت (Consent):</strong> پاسخ‌های شما نشان می‌دهد که ممکن است هنوز در حال <strong>کشف مرزهای جنسی خود</strong> باشید یا نیاز به آگاهی بیشتری در مورد مفهوم رضایت (Consent) دارید. شناخت و احترام به این مرزها برای روابط سالم و ایمن بسیار حیاتی است.</p>`;
+                }
+            }
+
+            // 21. تمایل به مشاوره (Q50 و Q56)
+            if (answers['q50'] !== undefined && answers['q56'] !== undefined) {
+                const q50Text = getOptionText(50, answers['q50']);
+                const q56Text = getOptionText(56, answers['q56']);
+                if (answers['q50'] < 4 || answers['q56'] < 3) { // نیاز به شناخت/تقویت رابطه/درمان/خروج از تکرار && تحت مشاوره/برنامه‌ریزی/فکر کرده‌ام
+                    resultHtml += `<p><strong>نیاز به مشاوره:</strong> شما نیاز به <strong>${q50Text}</strong> را احساس می‌کنید و ${q56Text} به مشاوره جنسی یا روان‌درمانی. این نشان‌دهنده خودآگاهی شما و تمایلتان به بهبود کیفیت زندگی جنسی و عاطفی است.</p>`;
+                } else {
+                    resultHtml += `<p><strong>نیاز به مشاوره:</strong> در حال حاضر، شما نیاز مبرمی به مشاوره جنسی احساس نمی‌کنید. اما در هر مرحله از زندگی، دریافت راهنمایی تخصصی می‌تواند به درک بهتر و عمیق‌تر از خود کمک کند.</p>`;
+                }
+            }
+
+            // 22. میزان رضایت کلی از زندگی جنسی (Q60)
+            if (answers['q60'] !== undefined) {
+                const q60Answer = answers['q60'];
+                if (q60Answer < 2) { // کاملاً راضی / راضی اما جای پیشرفت دارد
+                    resultHtml += `<p><strong>رضایت کلی از زندگی جنسی:</strong> به طور کلی، شما از زندگی جنسی‌تان <strong>رضایت قابل قبولی</strong> دارید. این نشان‌دهنده هارمونی نسبی در این بعد از زندگی شماست.</p>`;
+                } else if (q60Answer > 2) { // متوسط / ناراضی / اصلاً راضی نیستم
+                    resultHtml += `<p><strong>رضایت کلی از زندگی جنسی:</strong> پاسخ شما نشان می‌دهد که شما از زندگی جنسی‌تان <strong>کاملاً راضی نیستید</strong> یا در این زمینه چالش‌هایی دارید. شناسایی و کار بر روی این چالش‌ها می‌تواند به افزایش کیفیت زندگی جنسی و سلامت کلی شما کمک کند.</p>`;
+                }
+            }
+
+            // Final Encouragement and Call to Action
+            resultHtml += `<p>---</p>`;
+            resultHtml += `<p>این تحلیل بر اساس پاسخ‌های شما ارائه شده و به شما دیدگاه‌های کلی در مورد ابعاد مختلف سلامت جنسی‌تان می‌دهد. برای دریافت مشاوره تخصصی و عمیق‌تر، و همچنین کار بر روی چالش‌های خاص یا کشف پتانسیل‌های جدید، توصیه می‌کنیم با یک متخصص در این زمینه مشورت کنید. ما اینجا هستیم تا در این مسیر شما را یاری کنیم.</p>`;
+
+            analysisTextDiv.innerHTML = resultHtml;
+            analysisResultDiv.style.display = 'block'; // Show the result
+            analysisResultDiv.scrollIntoView({ behavior: 'smooth' }); // Scroll to the result
         });
     </script>
 </body>
