@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسابقه</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>مسابقه چهار گزینه‌ای</h1>
+        <div class="card quiz-card">
+            <div class="quiz-header">
+                <p>سوال <span id="current-question-number"></span> از <span id="total-questions-number"></span></p>
+                <p id="player-turn"></p>
+            </div>
+            <div class="question-section">
+                <p id="question"></p>
+            </div>
+            <div id="options-container" class="options-grid">
+                </div>
+            <p id="feedback" class="feedback"></p>
+            <div class="quiz-navigation">
+                <button id="next-question" style="display: none;">سوال بعدی</button>
+                <button id="end-quiz" style="display: none;" class="end-button">پایان مسابقه</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
