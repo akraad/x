@@ -1,0 +1,248 @@
+/* style.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+    direction: rtl; /* Right-to-left for Persian */
+    text-align: right; /* Align text to the right */
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    color: #4CAF50;
+    margin-bottom: 25px;
+    font-size: 2.2em;
+}
+
+h2 {
+    color: #555;
+    margin-bottom: 20px;
+    font-size: 1.6em;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+    text-align: right;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+input[type="text"],
+select {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    text-align: right; /* For RTL inputs */
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+}
+
+/* Quiz Page Specific Styles */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.quiz-header p {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #666;
+}
+
+.question-section {
+    background-color: #e8f5e9;
+    border: 1px solid #c8e6c9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.question-section p {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #333;
+    line-height: 1.5;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.option-button {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1em;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    text-align: right;
+}
+
+.option-button:hover:not(:disabled) {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+.option-button.correct {
+    background-color: #d4edda;
+    border-color: #28a745;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.option-button.incorrect {
+    background-color: #f8d7da;
+    border-color: #dc3545;
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.feedback {
+    margin-top: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.quiz-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.quiz-navigation button {
+    width: auto;
+    padding: 10px 20px;
+}
+
+.end-button {
+    background-color: #dc3545;
+}
+
+.end-button:hover {
+    background-color: #c82333;
+}
+
+/* Results Page Specific Styles */
+#player-scores {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+#player-scores li {
+    background-color: #e3f2fd;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    font-size: 1.1em;
+    color: #1976d2;
+    font-weight: bold;
+}
+
+.winner {
+    font-size: 1.8em;
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#play-again {
+    background-color: #007bff;
+}
+
+#play-again:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .option-button {
+        padding: 12px;
+        font-size: 1em;
+    }
+    
+    .quiz-navigation {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
