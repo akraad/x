@@ -30,24 +30,24 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-            padding: 8px 12px; /* Smallest padding */
-            margin-bottom: 20px; /* Less margin */
+            padding: 8px 12px;
+            margin-bottom: 20px;
             width: 100%;
-            max-width: 600px; /* Wider for 4 buttons */
+            max-width: 500px; /* Adjusted max-width for 3 buttons */
             flex-wrap: wrap;
         }
         .nav-button {
             background-color: #007bff; /* Blue */
             color: white; /* White text */
-            padding: 7px 14px; /* Even smaller padding */
+            padding: 7px 14px;
             border: none;
-            border-radius: 5px; /* Slightly less rounded */
-            font-size: 0.85em; /* Smaller font */
+            border-radius: 5px;
+            font-size: 0.85em;
             cursor: pointer;
             transition: all 0.2s ease;
-            margin: 3px; /* Smaller margin */
+            margin: 3px;
             flex-grow: 1;
-            max-width: 140px; /* Adjusted max-width */
+            max-width: 150px; /* Adjusted max-width */
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -61,49 +61,49 @@
             box-shadow: 0 1px 6px rgba(0, 123, 255, 0.4); /* Blue shadow */
         }
         .nav-button i {
-            margin-left: 5px; /* Smaller margin */
-            font-size: 0.9em; /* Consistent icon size */
+            margin-left: 5px;
+            font-size: 0.9em;
         }
 
         /* --- Common Form Styles (Minimal & Classic) --- */
         .app-container {
             background-color: #fff;
-            border-radius: 10px; /* Slightly less rounded */
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07); /* Less pronounced shadow */
-            padding: 25px; /* Reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+            padding: 25px;
             width: 100%;
-            max-width: 380px; /* Smaller overall width */
+            max-width: 380px;
             text-align: center;
-            border: 1px solid #e0e0e0; /* Lighter border */
-            display: none;
-            transition: all 0.3s ease-in-out; /* Smooth transition */
+            border: 1px solid #e0e0e0;
+            display: none; /* Initially hidden */
+            transition: all 0.3s ease-in-out;
         }
         .app-container h1 {
-            margin-bottom: 20px; /* Reduced margin */
-            font-size: 1.7em; /* Smaller heading */
+            margin-bottom: 20px;
+            font-size: 1.7em;
             font-weight: 700;
-            color: #444; /* Darker, more classic text color */
+            color: #444;
         }
         .input-group {
-            margin-bottom: 15px; /* Reduced margin */
+            margin-bottom: 15px;
             text-align: right;
             position: relative;
         }
         .input-group label {
             display: block;
-            margin-bottom: 5px; /* Reduced margin */
-            font-size: 0.9em; /* Smaller label font */
+            margin-bottom: 5px;
+            font-size: 0.9em;
             color: #555;
         }
         .input-group input[type="number"],
         .input-group input[type="text"],
         .input-group select {
-            width: calc(100% - 35px); /* Adjusted width */
-            padding: 9px 9px 9px 30px; /* Reduced padding */
-            border: 1px solid #bbb; /* Slightly darker border */
-            border-radius: 5px; /* Less rounded */
-            font-size: 0.9em; /* Smaller input font */
-            direction: ltr;
+            width: calc(100% - 35px);
+            padding: 9px 9px 9px 30px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-size: 0.9em;
+            direction: ltr; /* Default for inputs */
             text-align: right;
             transition: border-color 0.2s;
             -webkit-appearance: none;
@@ -111,96 +111,95 @@
             appearance: none;
             background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
             background-repeat: no-repeat;
-            background-position: left 8px center; /* Adjusted icon position */
-            background-size: 14px; /* Smaller icon */
-            padding-left: 35px; /* Adjusted padding for icon */
+            background-position: left 8px center;
+            background-size: 14px;
+            padding-left: 35px;
         }
 
         .input-group select {
-            width: calc(100% - 15px); /* Adjusted width for select */
+            width: calc(100% - 15px);
             padding-left: 8px;
-            direction: rtl;
+            direction: rtl; /* For Persian text in select */
             background-position: left 8px center;
             background-size: 14px;
-            cursor: pointer; /* Indicate it's clickable */
+            cursor: pointer;
         }
         .input-group select option {
-            padding: 5px; /* Padding for options */
+            padding: 5px;
         }
 
         .input-group input[type="number"]:focus,
         .input-group input[type="text"]:focus,
         .input-group select:focus {
             outline: none;
-            border-color: #007bff; /* Blue focus color */
+            border-color: #007bff;
         }
         .input-group .icon {
             position: absolute;
-            left: 8px; /* Adjusted icon position */
+            left: 8px;
             top: 50%;
-            transform: translateY(calc(-50% + 8px)); /* Adjusted transform */
+            transform: translateY(calc(-50% + 8px));
             color: #888;
-            font-size: 1em; /* Smaller icon */
+            font-size: 1em;
         }
         .input-group small {
             display: block;
-            margin-top: 3px; /* Reduced margin */
+            margin-top: 3px;
             color: #888;
-            font-size: 0.75em; /* Smaller hint font */
+            font-size: 0.75em;
         }
-        .weight-inputs, .date-inputs, .fortune-inputs { /* Added fortune-inputs */
+        .weight-inputs, .fortune-inputs { /* Removed .date-inputs */
             display: flex;
-            gap: 8px; /* Reduced gap */
+            gap: 8px;
         }
         .weight-inputs .input-group, 
-        .date-inputs .input-group,
         .fortune-inputs .input-group {
             flex: 1;
             margin-bottom: 0;
         }
         .app-container button {
             color: white;
-            padding: 10px 18px; /* Reduced padding */
+            padding: 10px 18px;
             border: none;
             border-radius: 5px;
-            font-size: 1em; /* Smaller font */
+            font-size: 1em;
             cursor: pointer;
             transition: background-color 0.2s ease;
             width: 100%;
-            font-weight: 600; /* Medium bold */
-            margin-top: 18px; /* Reduced margin */
+            font-weight: 600;
+            margin-top: 18px;
         }
         .app-container button:hover {
             opacity: 0.9;
         }
         .result {
-            margin-top: 20px; /* Reduced margin */
-            background-color: #f8f8f8; /* Lighter background */
-            border: 1px solid #e8e8e8; /* Lighter border */
-            border-radius: 7px; /* Less rounded */
-            padding: 16px; /* Reduced padding */
-            font-size: 1.1em; /* Slightly smaller result font */
+            margin-top: 20px;
+            background-color: #f8f8f8;
+            border: 1px solid #e8e8e8;
+            border-radius: 7px;
+            padding: 16px;
+            font-size: 1.1em;
             color: #333;
             font-weight: 600;
             display: none;
             text-align: right;
-            line-height: 1.6; /* Better readability */
+            line-height: 1.6;
         }
         .result div {
-            margin-bottom: 6px; /* Reduced margin */
+            margin-bottom: 6px;
         }
         .result span {
-            font-size: 0.95em; /* Consistent font size */
+            font-size: 0.95em;
             margin-right: 5px;
             font-weight: 700;
         }
         .fortune-text {
-            font-size: 1.05em; /* Slightly larger for readability */
+            font-size: 1.05em;
             font-weight: normal;
             margin-top: 15px;
-            text-align: justify; /* Justify text for better appearance */
+            text-align: justify;
             background-color: #fdfdfd;
-            border: 1px dashed #ddd; /* Dashed border for classic look */
+            border: 1px dashed #ddd;
             padding: 15px;
             border-radius: 8px;
             color: #444;
@@ -223,17 +222,9 @@
         #bmiCalculator button { background-color: #28a745; }
         #bmiCalculator .result span { color: #28a745; }
 
-        /* Date Converter */
-        #dateConverter { border-color: #cce5ff; }
-        #dateConverter h1 { color: #007bff; }
-        #dateConverter .input-group input:focus,
-        #dateConverter .input-group select:focus { border-color: #007bff; }
-        #dateConverter button { background-color: #007bff; }
-        #dateConverter .result span { color: #007bff; }
-
         /* Fortune Teller */
-        #fortuneTeller { border-color: #ffe0b3; /* Light orange/peach */ }
-        #fortuneTeller h1 { color: #d68910; /* Darker orange/gold */ }
+        #fortuneTeller { border-color: #ffe0b3; }
+        #fortuneTeller h1 { color: #d68910; }
         #fortuneTeller .input-group input:focus,
         #fortuneTeller .input-group select:focus { border-color: #d68910; }
         #fortuneTeller button { background-color: #d68910; }
@@ -278,9 +269,8 @@
 </head>
 <body>
     <div class="navbar">
-        <button class="nav-button active" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> قیمت طلا</button>
+        <button class="nav-button" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> قیمت طلا</button>
         <button class="nav-button" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i> شاخص وزن</button>
-        <button class="nav-button" onclick="showSection('dateConverter', this)"><i class="fas fa-calendar-alt"></i> تبدیل تاریخ</button>
         <button class="nav-button" onclick="showSection('fortuneTeller', this)"><i class="fas fa-hand-sparkles"></i> فال</button>
     </div>
 
@@ -354,52 +344,6 @@
         </div>
     </div>
 
-    <div id="dateConverter" class="app-container">
-        <h1><i class="fas fa-calendar-alt" style="margin-left: 10px;"></i>تبدیل تاریخ</h1>
-        
-        <div class="input-group">
-            <label>تاریخ میلادی:</label>
-            <div class="date-inputs">
-                <div class="input-group">
-                    <select id="gregorianYear"></select>
-                    <i class="fas fa-calendar-day icon"></i>
-                </div>
-                <div class="input-group">
-                    <select id="gregorianMonth"></select>
-                </div>
-                <div class="input-group">
-                    <select id="gregorianDay"></select>
-                </div>
-            </div>
-        </div>
-        
-        <button onclick="convertGregorianToSolar()">تبدیل میلادی به شمسی</button>
-
-        <hr style="margin: 30px 0; border-top: 1px dashed #eee;">
-
-        <div class="input-group">
-            <label>تاریخ شمسی:</label>
-            <div class="date-inputs">
-                <div class="input-group">
-                    <select id="solarYear"></select>
-                    <i class="fas fa-calendar-day icon"></i>
-                </div>
-                <div class="input-group">
-                    <select id="solarMonth"></select>
-                </div>
-                <div class="input-group">
-                    <select id="solarDay"></select>
-                </div>
-            </div>
-        </div>
-        
-        <button onclick="convertSolarToGregorian()">تبدیل شمسی به میلادی</button>
-        
-        <div class="result" id="dateResultDiv">
-            <div><span>تاریخ تبدیل شده:</span> <span id="convertedDate"></span></div>
-        </div>
-    </div>
-
     <div id="fortuneTeller" class="app-container">
         <h1><i class="fas fa-hand-sparkles" style="margin-left: 10px;"></i>فال حافظ</h1>
 
@@ -435,18 +379,21 @@
     </div>
 
 
-    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
-    
     <script>
         // --- Navigation Logic ---
         function showSection(sectionId, clickedButton) {
+            // Hide all app containers
             document.querySelectorAll('.app-container').forEach(section => {
                 section.style.display = 'none';
             });
+            // Remove 'active' class from all nav buttons
             document.querySelectorAll('.nav-button').forEach(button => {
                 button.classList.remove('active');
             });
+
+            // Show the selected app container
             document.getElementById(sectionId).style.display = 'block';
+            // Add 'active' class to the clicked button
             clickedButton.classList.add('active');
 
             // Reset results when switching sections
@@ -454,10 +401,8 @@
                 resultDiv.style.display = 'none';
             });
 
-            // If switching to date converter, ensure dropdowns are populated
-            if (sectionId === 'dateConverter') {
-                initializeDatePickers();
-            } else if (sectionId === 'fortuneTeller') {
+            // If switching to fortune teller, ensure months are populated
+            if (sectionId === 'fortuneTeller') {
                 populateFortuneMonths();
             }
         }
@@ -475,7 +420,7 @@
                 return;
             }
             if (isNaN(usdExchangeRate) || usdExchangeRate <= 0) {
-                alert('لطفاً نرخ برابری دلار را به درستی وارد کنید.');
+                alert('لطfاً نرخ برابری دلار را به درستی وارد کنید.');
                 return;
             }
 
@@ -534,187 +479,8 @@
             document.getElementById('bmiResultDiv').style.display = 'block';
         }
 
-        // --- Date Converter Logic ---
-
-        const gregMonths = [
-            { value: 1, text: 'ژانویه (January)' }, { value: 2, text: 'فوریه (February)' },
-            { value: 3, text: 'مارس (March)' }, { value: 4, text: 'آوریل (April)' },
-            { value: 5, text: 'مه (May)' }, { value: 6, text: 'ژوئن (June)' },
-            { value: 7, text: 'ژوئیه (July)' }, { value: 8, text: 'اوت (August)' },
-            { value: 9, text: 'سپتامبر (September)' }, { value: 10, text: 'اکتبر (October)' },
-            { value: 11, text: 'نوامبر (November)' }, { value: 12, text: 'دسامبر (December)' }
-        ];
-
-        const solarMonths = [
-            { value: 1, text: 'فروردین' }, { value: 2, text: 'اردیبهشت' },
-            { value: 3, text: 'خرداد' }, { value: 4, text: 'تیر' },
-            { value: 5, text: 'مرداد' }, { value: 6, text: 'شهریور' },
-            { value: 7, text: 'مهر' }, { value: 8, text: 'آبان' },
-            { value: 9, text: 'آذر' }, { value: 10, text: 'دی' },
-            { value: 11, text: 'بهمن' }, { value: 12, text: 'اسفند' }
-        ];
-
-        function populateYears(selectId, startYear, endYear, isPersian) {
-            const select = document.getElementById(selectId);
-            select.innerHTML = '<option value="">سال</option>';
-            for (let year = startYear; year >= endYear; year--) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.innerText = isPersian ? new persianDate().formatPersian({ number: year }) : year;
-                select.appendChild(option);
-            }
-        }
-
-        function populateMonths(selectId, monthsArray) {
-            const select = document.getElementById(selectId);
-            select.innerHTML = '<option value="">ماه</option>';
-            monthsArray.forEach(month => {
-                const option = document.createElement('option');
-                option.value = month.value;
-                option.innerText = month.text;
-                select.appendChild(option);
-            });
-        }
-
-        function populateDays(selectId, maxDays) {
-            const select = document.getElementById(selectId);
-            select.innerHTML = '<option value="">روز</option>';
-            for (let day = 1; day <= maxDays; day++) {
-                const option = document.createElement('option');
-                option.value = day;
-                option.innerText = day;
-                select.appendChild(option);
-            }
-        }
-
-        function initializeDatePickers() {
-            const currentGregYear = new Date().getFullYear();
-            const currentSolarYear = new persianDate().year();
-
-            // Populate Gregorian years
-            populateYears('gregorianYear', currentGregYear, currentGregYear - 100, false);
-            populateMonths('gregorianMonth', gregMonths);
-            updateGregorianDays(); // Ensure correct days for default month/year
-
-            // Populate Solar years
-            populateYears('solarYear', currentSolarYear, currentSolarYear - 100, true);
-            populateMonths('solarMonth', solarMonths);
-            updateSolarDays(); // Ensure correct days for default month/year
-
-            // Add event listeners for Gregorian date changes
-            document.getElementById('gregorianYear').onchange = () => { updateGregorianDays(); convertGregorianToSolar(); };
-            document.getElementById('gregorianMonth').onchange = () => { updateGregorianDays(); convertGregorianToSolar(); };
-            document.getElementById('gregorianDay').onchange = convertGregorianToSolar;
-
-            // Add event listeners for Solar date changes
-            document.getElementById('solarYear').onchange = () => { updateSolarDays(); convertSolarToGregorian(); };
-            document.getElementById('solarMonth').onchange = () => { updateSolarDays(); convertSolarToGregorian(); };
-            document.getElementById('solarDay').onchange = convertSolarToGregorian;
-
-            // Clear date results when changing values
-            document.querySelectorAll('#gregorianYear, #gregorianMonth, #gregorianDay, #solarYear, #solarMonth, #solarDay').forEach(select => {
-                select.addEventListener('change', () => {
-                    document.getElementById('dateResultDiv').style.display = 'none';
-                });
-            });
-        }
-
-        function updateGregorianDays() {
-            const year = parseInt(document.getElementById('gregorianYear').value);
-            const month = parseInt(document.getElementById('gregorianMonth').value);
-            
-            if (year && month) {
-                const date = new Date(year, month - 1, 1);
-                const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-                populateDays('gregorianDay', lastDay);
-            } else {
-                populateDays('gregorianDay', 31);
-            }
-        }
-
-        function updateSolarDays() {
-            const year = parseInt(document.getElementById('solarYear').value);
-            const month = parseInt(document.getElementById('solarMonth').value);
-            
-            if (year && month) {
-                let maxDays;
-                if (month <= 6) { // First 6 months have 31 days
-                    maxDays = 31;
-                } else if (month <= 11) { // Next 5 months have 30 days
-                    maxDays = 30;
-                } else { // Esfand (12th month)
-                    // persianDate library correctly handles leap years for Persian calendar
-                    const pDateForLeapCheck = new persianDate([year, 1, 1]); 
-                    maxDays = pDateForLeapCheck.isLeapYear() ? 30 : 29;
-                }
-                populateDays('solarDay', maxDays);
-            } else {
-                populateDays('solarDay', 31);
-            }
-        }
-
-        function convertGregorianToSolar() {
-            const year = parseInt(document.getElementById('gregorianYear').value);
-            const month = parseInt(document.getElementById('gregorianMonth').value);
-            const day = parseInt(document.getElementById('gregorianDay').value);
-
-            if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                document.getElementById('dateResultDiv').style.display = 'none';
-                return;
-            }
-            
-            try {
-                // persianDate expects Gregorian date directly for conversion
-                const pDate = new persianDate([year, month, day]);
-                document.getElementById('convertedDate').innerText = pDate.format('YYYY/MM/DD');
-                document.getElementById('dateResultDiv').style.display = 'block';
-
-                // Clear Solar date inputs to avoid confusion
-                document.getElementById('solarYear').value = '';
-                document.getElementById('solarMonth').value = '';
-                document.getElementById('solarDay').value = '';
-
-            } catch (error) {
-                alert('مشکلی در تبدیل تاریخ میلادی رخ داد. لطفاً تاریخ را بررسی کنید.');
-                console.error(error);
-            }
-        }
-
-        function convertSolarToGregorian() {
-            const year = parseInt(document.getElementById('solarYear').value);
-            const month = parseInt(document.getElementById('solarMonth').value);
-            const day = parseInt(document.getElementById('solarDay').value);
-
-            if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                document.getElementById('dateResultDiv').style.display = 'none';
-                return;
-            }
-            
-            try {
-                // persianDate constructor directly accepts Persian date components
-                const pDate = new persianDate([year, month, day]);
-                const gregorianDate = pDate.toCalendar('gregorian');
-                const gYear = gregorianDate.year();
-                const gMonth = (gregorianDate.month() + 1).toString().padStart(2, '0');
-                const gDay = gregorianDate.date().toString().padStart(2, '0');
-                
-                document.getElementById('convertedDate').innerText = `${gYear}-${gMonth}-${gDay}`;
-                document.getElementById('dateResultDiv').style.display = 'block';
-
-                // Clear Gregorian date inputs to avoid confusion
-                document.getElementById('gregorianYear').value = '';
-                document.getElementById('gregorianMonth').value = '';
-                document.getElementById('gregorianDay').value = '';
-
-            } catch (error) {
-                alert('مشکلی در تبدیل تاریخ شمسی رخ داد. لطفاً تاریخ را بررسی کنید.');
-                console.error(error);
-            }
-        }
-
         // --- Fortune Teller Logic ---
-
-        const birthMonths = [
+        const solarMonths = [ // Re-defined here as persian-date.js is not included
             { value: 'فروردین', text: 'فروردین' }, { value: 'اردیبهشت', text: 'اردیبهشت' },
             { value: 'خرداد', text: 'خرداد' }, { value: 'تیر', text: 'تیر' },
             { value: 'مرداد', text: 'مرداد' }, { value: 'شهریور', text: 'شهریور' },
@@ -812,7 +578,8 @@
 
         function populateFortuneMonths() {
             const select = document.getElementById('birthMonth');
-            select.innerHTML = '<option value="">ماه تولد را انتخاب کنید</option>';
+            // Clear existing options before populating
+            select.innerHTML = '<option value="">ماه تولد را انتخاب کنید</option>'; 
             solarMonths.forEach(month => {
                 const option = document.createElement('option');
                 option.value = month.value;
@@ -837,15 +604,18 @@
                 document.getElementById('fortuneText').innerText = monthFortunes[randomIndex];
                 document.getElementById('fortuneResultDiv').style.display = 'block';
             } else {
+                // This case should ideally not happen if solarMonths and fortunes are correctly mapped
                 document.getElementById('fortuneText').innerText = 'فالی برای این ماه تولد یافت نشد. لطفاً ماه دیگری را انتخاب کنید.';
                 document.getElementById('fortuneResultDiv').style.display = 'block';
             }
         }
 
 
-        // Initial display: show gold calculator by default and initialize relevant dropdowns
+        // Initial setup: On page load, only show the navbar.
+        // No specific calculator is shown by default.
         document.addEventListener('DOMContentLoaded', (event) => {
-            showSection('goldCalculator', document.querySelector('.nav-button.active'));
+            // No active button by default, all app containers are hidden by CSS
+            // The showSection function will be called when a nav button is clicked.
         });
     </script>
 </body>
