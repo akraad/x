@@ -14,7 +14,7 @@
             font-family: 'Shabnam', 'Vazirmatn', sans-serif;
             background-color: #f0f2f5;
             display: flex;
-            flex-direction: column; /* تغییر به ستونی برای ناوبار و محتوا */
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
             margin: 0;
@@ -23,46 +23,48 @@
             box-sizing: border-box;
         }
 
-        /* --- Navigation Bar Styles --- */
+        /* --- Navigation Bar Styles (Smaller & Minimal) --- */
         .navbar {
             display: flex;
             justify-content: center;
             background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            padding: 15px 20px;
-            margin-bottom: 30px;
+            border-radius: 8px; /* گوشه‌های گردتر و کوچک‌تر */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06); /* سایه ملایم‌تر */
+            padding: 10px 15px; /* پدینگ کمتر */
+            margin-bottom: 25px; /* فاصله کمتر */
             width: 100%;
-            max-width: 600px; /* عرض بیشتر برای ناوبار */
-            flex-wrap: wrap; /* برای واکنش‌گرا بودن دکمه‌ها */
+            max-width: 500px; /* عرض کمتر */
+            flex-wrap: wrap;
         }
         .nav-button {
-            background-color: #eee;
-            color: #555;
-            padding: 12px 20px;
+            background-color: #f5f5f5; /* رنگ کمی روشن‌تر */
+            color: #666; /* متن تیره‌تر */
+            padding: 8px 15px; /* پدینگ کمتر */
             border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
+            border-radius: 6px; /* گوشه‌های گردتر */
+            font-size: 0.9em; /* سایز فونت کوچکتر */
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 5px; /* فاصله بین دکمه‌ها */
-            flex-grow: 1; /* اجازه رشد به دکمه‌ها */
-            max-width: 200px; /* حداکثر عرض برای هر دکمه */
-            font-weight: 600;
+            transition: all 0.2s ease; /* انیمیشن سریع‌تر */
+            margin: 4px; /* فاصله کمتر */
+            flex-grow: 1;
+            max-width: 150px; /* حداکثر عرض برای هر دکمه */
+            font-weight: 500; /* وزن فونت کمتر */
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .nav-button:hover {
-            background-color: #ddd;
+            background-color: #eee;
+            color: #333;
         }
         .nav-button.active {
-            background-color: #b8860b; /* رنگ فعال طلایی */
+            background-color: #b8860b;
             color: white;
-            box-shadow: 0 2px 8px rgba(184, 134, 11, 0.4);
+            box-shadow: 0 1px 6px rgba(184, 134, 11, 0.3); /* سایه فعال کوچکتر */
         }
         .nav-button i {
-            margin-left: 8px; /* فاصله آیکون از متن */
+            margin-left: 6px; /* فاصله آیکون از متن */
+            font-size: 1em; /* سایز آیکون متناسب */
         }
 
         /* --- Common Form Styles --- */
@@ -75,7 +77,7 @@
             max-width: 420px;
             text-align: center;
             border: 1px solid #e5e5e5;
-            display: none; /* مخفی کردن اولیه همه فرم‌ها */
+            display: none;
         }
         .app-container h1 {
             margin-bottom: 25px;
@@ -94,18 +96,37 @@
             color: #555;
         }
         .input-group input[type="number"],
-        .input-group input[type="text"] {
+        .input-group input[type="text"],
+        .input-group select { /* استایل برای select ها */
             width: calc(100% - 40px);
             padding: 10px 10px 10px 35px;
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 1em;
-            direction: ltr;
+            direction: ltr; /* برای اعداد و برخی select ها */
             text-align: right;
             transition: border-color 0.3s;
+            -webkit-appearance: none; /* حذف استایل پیش‌فرض مرورگر برای select */
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>'); /* آیکون دراپ‌داون */
+            background-repeat: no-repeat;
+            background-position: left 10px center;
+            background-size: 16px;
+            padding-left: 40px; /* فضای بیشتر برای آیکون دراپ‌داون */
         }
+
+        .input-group select {
+            width: calc(100% - 20px); /* عرض کامل برای select */
+            padding-left: 10px; /* حذف پدینگ اضافی از چپ */
+            direction: rtl; /* برای نمایش متن فارسی راست به چپ */
+            background-position: left 10px center;
+            background-size: 16px;
+        }
+
         .input-group input[type="number"]:focus,
-        .input-group input[type="text"]:focus {
+        .input-group input[type="text"]:focus,
+        .input-group select:focus {
             outline: none;
         }
         .input-group .icon {
@@ -122,11 +143,11 @@
             color: #888;
             font-size: 0.8em;
         }
-        .weight-inputs {
+        .weight-inputs, .date-inputs { /* اضافه کردن date-inputs */
             display: flex;
             gap: 10px;
         }
-        .weight-inputs .input-group {
+        .weight-inputs .input-group, .date-inputs .input-group {
             flex: 1;
             margin-bottom: 0;
         }
@@ -161,7 +182,6 @@
             margin-bottom: 8px;
         }
         .result span {
-            color: #b8860b; /* رنگ پیش‌فرض برای نتیجه */
             font-size: 1em;
             margin-right: 5px;
         }
@@ -169,85 +189,60 @@
         /* --- Specific Form Colors --- */
 
         /* Gold Calculator (Default/Main) */
-        #goldCalculator {
-            border-color: #e5e5e5;
-        }
-        #goldCalculator h1 {
-            color: #b8860b;
-        }
-        #goldCalculator .input-group input:focus {
-            border-color: #b8860b;
-        }
-        #goldCalculator button {
-            background-color: #b8860b;
-        }
-        #goldCalculator .result span {
-            color: #b8860b;
-        }
+        #goldCalculator { border-color: #e5e5e5; }
+        #goldCalculator h1 { color: #b8860b; }
+        #goldCalculator .input-group input:focus { border-color: #b8860b; }
+        #goldCalculator button { background-color: #b8860b; }
+        #goldCalculator .result span { color: #b8860b; }
 
         /* BMI Calculator */
-        #bmiCalculator {
-            border-color: #d1e7dd; /* سبز روشن */
-        }
-        #bmiCalculator h1 {
-            color: #28a745; /* سبز */
-        }
-        #bmiCalculator .input-group input:focus {
-            border-color: #28a745;
-        }
-        #bmiCalculator button {
-            background-color: #28a745; /* سبز */
-        }
-        #bmiCalculator .result span {
-            color: #28a745;
-        }
+        #bmiCalculator { border-color: #d1e7dd; }
+        #bmiCalculator h1 { color: #28a745; }
+        #bmiCalculator .input-group input:focus { border-color: #28a745; }
+        #bmiCalculator button { background-color: #28a745; }
+        #bmiCalculator .result span { color: #28a745; }
 
         /* Date Converter */
-        #dateConverter {
-            border-color: #cce5ff; /* آبی روشن */
-        }
-        #dateConverter h1 {
-            color: #007bff; /* آبی */
-        }
-        #dateConverter .input-group input:focus {
-            border-color: #007bff;
-        }
-        #dateConverter button {
-            background-color: #007bff; /* آبی */
-        }
-        #dateConverter .result span {
-            color: #007bff;
-        }
+        #dateConverter { border-color: #cce5ff; }
+        #dateConverter h1 { color: #007bff; }
+        #dateConverter .input-group input:focus,
+        #dateConverter .input-group select:focus { border-color: #007bff; } /* برای select هم */
+        #dateConverter button { background-color: #007bff; }
+        #dateConverter .result span { color: #007bff; }
 
         /* Media Queries for Responsiveness */
         @media (max-width: 600px) {
             .navbar {
-                flex-direction: column; /* دکمه‌ها زیر هم */
+                flex-direction: column;
                 padding: 10px;
             }
             .nav-button {
                 margin: 5px 0;
-                max-width: none; /* حذف حداکثر عرض */
+                max-width: none;
             }
             .app-container {
                 padding: 20px;
             }
             .input-group input[type="number"],
-            .input-group input[type="text"] {
-                width: calc(100% - 30px); /* پدینگ کمتر برای موبایل */
+            .input-group input[type="text"],
+            .input-group select {
+                width: calc(100% - 30px);
                 padding: 8px 8px 8px 30px;
             }
             .input-group .icon {
-                left: 8px; /* موقعیت آیکون */
+                left: 8px;
                 font-size: 1em;
+            }
+            .input-group select {
+                padding-left: 8px; /* پدینگ برای select در موبایل */
             }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <button class="nav-button active" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> محاسبه قیمت طلا</button>
-        <button class="nav-button" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i> محاسبه شاخص وزن</button>
+        <button class="nav-button active" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> قیمت طلا</button>
+        <button class="nav-button" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i> شاخص وزن</button>
         <button class="nav-button" onclick="showSection('dateConverter', this)"><i class="fas fa-calendar-alt"></i> تبدیل تاریخ</button>
     </div>
 
@@ -325,19 +320,39 @@
         <h1><i class="fas fa-calendar-alt" style="margin-left: 10px;"></i>تبدیل تاریخ</h1>
         
         <div class="input-group">
-            <label for="gregorianDate">تاریخ میلادی (YYYY-MM-DD):</label>
-            <input type="text" id="gregorianDate" placeholder="مثال: 2023-01-15">
-            <i class="far fa-calendar-alt icon"></i>
-            <small>فرمت: سال-ماه-روز</small>
+            <label>تاریخ میلادی:</label>
+            <div class="date-inputs">
+                <div class="input-group">
+                    <select id="gregorianYear"></select>
+                    <i class="fas fa-calendar-day icon"></i>
+                </div>
+                <div class="input-group">
+                    <select id="gregorianMonth"></select>
+                </div>
+                <div class="input-group">
+                    <select id="gregorianDay"></select>
+                </div>
+            </div>
         </div>
         
         <button onclick="convertGregorianToSolar()">تبدیل میلادی به شمسی</button>
 
-        <div class="input-group" style="margin-top: 25px;">
-            <label for="solarDate">تاریخ شمسی (YYYY/MM/DD):</label>
-            <input type="text" id="solarDate" placeholder="مثال: 1402/10/25">
-            <i class="far fa-calendar icon"></i>
-            <small>فرمت: سال/ماه/روز</small>
+        <hr style="margin: 30px 0; border-top: 1px dashed #eee;">
+
+        <div class="input-group">
+            <label>تاریخ شمسی:</label>
+            <div class="date-inputs">
+                <div class="input-group">
+                    <select id="solarYear"></select>
+                    <i class="fas fa-calendar-day icon"></i>
+                </div>
+                <div class="input-group">
+                    <select id="solarMonth"></select>
+                </div>
+                <div class="input-group">
+                    <select id="solarDay"></select>
+                </div>
+            </div>
         </div>
         
         <button onclick="convertSolarToGregorian()">تبدیل شمسی به میلادی</button>
@@ -348,30 +363,26 @@
     </div>
 
     <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
-    <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker-0.4.5.min.css">
     
     <script>
         // --- Navigation Logic ---
         function showSection(sectionId, clickedButton) {
-            // Hide all sections
             document.querySelectorAll('.app-container').forEach(section => {
                 section.style.display = 'none';
             });
-
-            // Deactivate all buttons
             document.querySelectorAll('.nav-button').forEach(button => {
                 button.classList.remove('active');
             });
-
-            // Show the selected section
             document.getElementById(sectionId).style.display = 'block';
-
-            // Activate the clicked button
             clickedButton.classList.add('active');
+
+            // Reset results when switching sections
+            document.querySelectorAll('.result').forEach(resultDiv => {
+                resultDiv.style.display = 'none';
+            });
         }
 
-        // --- Gold Calculator Logic (Renamed function to avoid conflict) ---
+        // --- Gold Calculator Logic ---
         function calculateGoldPrice() {
             const goldPricePerGramToman = parseFloat(document.getElementById('goldPriceToman').value);
             const usdExchangeRate = parseFloat(document.getElementById('usdExchangeRate').value);
@@ -444,76 +455,171 @@
         }
 
         // --- Date Converter Logic ---
-        // Ensure persian-date.js and persian-datepicker.js are loaded
-        // For Persian Date Picker (Optional, but useful for user input)
-        // $(document).ready(function() {
-        //     $("#gregorianDate").pDatepicker({
-        //         format: 'YYYY-MM-DD',
-        //         altField: '#gregorianDate',
-        //         calendarType: 'gregorian'
-        //     });
-        //     $("#solarDate").pDatepicker({
-        //         format: 'YYYY/MM/DD',
-        //         altField: '#solarDate',
-        //         calendarType: 'persian'
-        //     });
-        // });
+
+        const gregMonths = [
+            { value: 1, text: 'ژانویه (January)' }, { value: 2, text: 'فوریه (February)' },
+            { value: 3, text: 'مارس (March)' }, { value: 4, text: 'آوریل (April)' },
+            { value: 5, text: 'مه (May)' }, { value: 6, text: 'ژوئن (June)' },
+            { value: 7, text: 'ژوئیه (July)' }, { value: 8, text: 'اوت (August)' },
+            { value: 9, text: 'سپتامبر (September)' }, { value: 10, text: 'اکتبر (October)' },
+            { value: 11, text: 'نوامبر (November)' }, { value: 12, text: 'دسامبر (December)' }
+        ];
+
+        const solarMonths = [
+            { value: 1, text: 'فروردین' }, { value: 2, text: 'اردیبهشت' },
+            { value: 3, text: 'خرداد' }, { value: 4, text: 'تیر' },
+            { value: 5, text: 'مرداد' }, { value: 6, text: 'شهریور' },
+            { value: 7, text: 'مهر' }, { value: 8, text: 'آبان' },
+            { value: 9, text: 'آذر' }, { value: 10, text: 'دی' },
+            { value: 11, text: 'بهمن' }, { value: 12, text: 'اسفند' }
+        ];
+
+        function populateYears(selectId, startYear, endYear, isPersian) {
+            const select = document.getElementById(selectId);
+            select.innerHTML = '<option value="">سال</option>';
+            for (let year = startYear; year >= endYear; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.innerText = isPersian ? new persianDate().formatPersian({ number: year }) : year; // نمایش اعداد فارسی برای شمسی
+                select.appendChild(option);
+            }
+        }
+
+        function populateMonths(selectId, monthsArray) {
+            const select = document.getElementById(selectId);
+            select.innerHTML = '<option value="">ماه</option>';
+            monthsArray.forEach(month => {
+                const option = document.createElement('option');
+                option.value = month.value;
+                option.innerText = month.text;
+                select.appendChild(option);
+            });
+        }
+
+        function populateDays(selectId, maxDays) {
+            const select = document.getElementById(selectId);
+            select.innerHTML = '<option value="">روز</option>';
+            for (let day = 1; day <= maxDays; day++) {
+                const option = document.createElement('option');
+                option.value = day;
+                option.innerText = day;
+                select.appendChild(option);
+            }
+        }
+
+        // Initialize date dropdowns on page load or section show
+        function initializeDatePickers() {
+            const currentGregYear = new Date().getFullYear();
+            const currentSolarYear = new persianDate().year();
+
+            // Populate Gregorian years (current year to 100 years ago)
+            populateYears('gregorianYear', currentGregYear, currentGregYear - 100, false);
+            populateMonths('gregorianMonth', gregMonths);
+            populateDays('gregorianDay', 31); // Default max days
+
+            // Populate Solar years (current year to 100 years ago)
+            populateYears('solarYear', currentSolarYear, currentSolarYear - 100, true);
+            populateMonths('solarMonth', solarMonths);
+            populateDays('solarDay', 31); // Default max days
+
+            // Add event listeners for month/year changes to update days (Gregorian)
+            document.getElementById('gregorianYear').addEventListener('change', updateGregorianDays);
+            document.getElementById('gregorianMonth').addEventListener('change', updateGregorianDays);
+            document.getElementById('gregorianDay').addEventListener('change', () => document.getElementById('dateResultDiv').style.display = 'none');
+
+
+            // Add event listeners for month/year changes to update days (Solar)
+            document.getElementById('solarYear').addEventListener('change', updateSolarDays);
+            document.getElementById('solarMonth').addEventListener('change', updateSolarDays);
+            document.getElementById('solarDay').addEventListener('change', () => document.getElementById('dateResultDiv').style.display = 'none');
+        }
+
+        function updateGregorianDays() {
+            const year = parseInt(document.getElementById('gregorianYear').value);
+            const month = parseInt(document.getElementById('gregorianMonth').value);
+            
+            if (year && month) {
+                const date = new Date(year, month - 1, 1); // Month is 0-indexed
+                const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+                populateDays('gregorianDay', lastDay);
+            } else {
+                populateDays('gregorianDay', 31); // Reset to default
+            }
+            document.getElementById('dateResultDiv').style.display = 'none';
+        }
+
+        function updateSolarDays() {
+            const year = parseInt(document.getElementById('solarYear').value);
+            const month = parseInt(document.getElementById('solarMonth').value);
+            
+            if (year && month) {
+                let maxDays;
+                if (month <= 6) { // First 6 months have 31 days
+                    maxDays = 31;
+                } else if (month <= 11) { // Next 5 months have 30 days
+                    maxDays = 30;
+                } else { // Esfand (12th month)
+                    // Check for leap year in Persian calendar
+                    const isLeap = new persianDate([year, 1, 1]).isLeapYear();
+                    maxDays = isLeap ? 30 : 29;
+                }
+                populateDays('solarDay', maxDays);
+            } else {
+                populateDays('solarDay', 31); // Reset to default
+            }
+            document.getElementById('dateResultDiv').style.display = 'none';
+        }
 
         function convertGregorianToSolar() {
-            const gregorianDateStr = document.getElementById('gregorianDate').value;
-            if (!gregorianDateStr) {
-                alert('لطفاً تاریخ میلادی را وارد کنید.');
+            const year = parseInt(document.getElementById('gregorianYear').value);
+            const month = parseInt(document.getElementById('gregorianMonth').value);
+            const day = parseInt(document.getElementById('gregorianDay').value);
+
+            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                alert('لطفاً یک تاریخ میلادی کامل و صحیح را انتخاب کنید.');
                 return;
             }
             
             try {
-                // Using the native Date object for parsing Gregorian
-                const date = new Date(gregorianDateStr);
-                if (isNaN(date)) {
-                    throw new Error('Invalid date');
-                }
-                
-                // persian-date library expects year, month (0-indexed), day
-                const pDate = new persianDate([date.getFullYear(), date.getMonth(), date.getDate()]);
+                // persianDate expects Gregorian date directly for conversion
+                const pDate = new persianDate([year, month, day]);
                 document.getElementById('convertedDate').innerText = pDate.format('YYYY/MM/DD');
                 document.getElementById('dateResultDiv').style.display = 'block';
             } catch (error) {
-                alert('فرمت تاریخ میلادی صحیح نیست. (مثال: 2023-01-15)');
+                alert('مشکلی در تبدیل تاریخ میلادی رخ داد. لطفاً تاریخ را بررسی کنید.');
                 console.error(error);
             }
         }
 
         function convertSolarToGregorian() {
-            const solarDateStr = document.getElementById('solarDate').value;
-            if (!solarDateStr) {
-                alert('لطفاً تاریخ شمسی را وارد کنید.');
-                return;
-            }
+            const year = parseInt(document.getElementById('solarYear').value);
+            const month = parseInt(document.getElementById('solarMonth').value);
+            const day = parseInt(document.getElementById('solarDay').value);
 
-            const parts = solarDateStr.split('/');
-            if (parts.length !== 3) {
-                alert('فرمت تاریخ شمسی صحیح نیست. (مثال: 1402/10/25)');
+            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                alert('لطفاً یک تاریخ شمسی کامل و صحیح را انتخاب کنید.');
                 return;
             }
             
             try {
-                // persian-date library for converting Persian to Gregorian
-                const pDate = new persianDate([parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2])]);
+                // persianDate constructor directly accepts Persian date components
+                const pDate = new persianDate([year, month, day]);
                 const gregorianDate = pDate.toCalendar('gregorian');
-                const year = gregorianDate.getFullYear();
-                const month = (gregorianDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed
-                const day = gregorianDate.getDate().toString().padStart(2, '0');
+                const gYear = gregorianDate.year();
+                const gMonth = (gregorianDate.month() + 1).toString().padStart(2, '0'); // Month is 0-indexed in native Date
+                const gDay = gregorianDate.date().toString().padStart(2, '0');
                 
-                document.getElementById('convertedDate').innerText = `${year}-${month}-${day}`;
+                document.getElementById('convertedDate').innerText = `${gYear}-${gMonth}-${gDay}`;
                 document.getElementById('dateResultDiv').style.display = 'block';
             } catch (error) {
-                alert('فرمت تاریخ شمسی صحیح نیست. (مثال: 1402/10/25)');
+                alert('مشکلی در تبدیل تاریخ شمسی رخ داد. لطفاً تاریخ را بررسی کنید.');
                 console.error(error);
             }
         }
 
-        // Initial display: show gold calculator by default
+        // Initialize and show default section on load
         document.addEventListener('DOMContentLoaded', (event) => {
+            initializeDatePickers(); // Initialize date dropdowns first
             showSection('goldCalculator', document.querySelector('.nav-button.active'));
         });
     </script>
