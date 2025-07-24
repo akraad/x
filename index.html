@@ -23,173 +23,194 @@
             box-sizing: border-box;
         }
 
-        /* --- Navigation Bar Styles (Smaller & Minimal) --- */
+        /* --- Navigation Bar Styles (Minimal & Blue) --- */
         .navbar {
             display: flex;
             justify-content: center;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-            padding: 10px 15px;
-            margin-bottom: 25px;
+            padding: 8px 12px; /* Smallest padding */
+            margin-bottom: 20px; /* Less margin */
             width: 100%;
-            max-width: 500px;
+            max-width: 600px; /* Wider for 4 buttons */
             flex-wrap: wrap;
         }
         .nav-button {
-            background-color: #f5f5f5;
-            color: #666;
-            padding: 8px 15px;
+            background-color: #007bff; /* Blue */
+            color: white; /* White text */
+            padding: 7px 14px; /* Even smaller padding */
             border: none;
-            border-radius: 6px;
-            font-size: 0.9em;
+            border-radius: 5px; /* Slightly less rounded */
+            font-size: 0.85em; /* Smaller font */
             cursor: pointer;
             transition: all 0.2s ease;
-            margin: 4px;
+            margin: 3px; /* Smaller margin */
             flex-grow: 1;
-            max-width: 150px;
+            max-width: 140px; /* Adjusted max-width */
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .nav-button:hover {
-            background-color: #eee;
-            color: #333;
+            background-color: #0056b3; /* Darker blue on hover */
         }
         .nav-button.active {
-            background-color: #b8860b;
-            color: white;
-            box-shadow: 0 1px 6px rgba(184, 134, 11, 0.3);
+            background-color: #0056b3; /* Darker blue when active */
+            box-shadow: 0 1px 6px rgba(0, 123, 255, 0.4); /* Blue shadow */
         }
         .nav-button i {
-            margin-left: 6px;
-            font-size: 1em;
+            margin-left: 5px; /* Smaller margin */
+            font-size: 0.9em; /* Consistent icon size */
         }
 
-        /* --- Common Form Styles --- */
+        /* --- Common Form Styles (Minimal & Classic) --- */
         .app-container {
             background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            padding: 30px;
+            border-radius: 10px; /* Slightly less rounded */
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07); /* Less pronounced shadow */
+            padding: 25px; /* Reduced padding */
             width: 100%;
-            max-width: 420px;
+            max-width: 380px; /* Smaller overall width */
             text-align: center;
-            border: 1px solid #e5e5e5;
+            border: 1px solid #e0e0e0; /* Lighter border */
             display: none;
+            transition: all 0.3s ease-in-out; /* Smooth transition */
         }
         .app-container h1 {
-            margin-bottom: 25px;
-            font-size: 1.9em;
+            margin-bottom: 20px; /* Reduced margin */
+            font-size: 1.7em; /* Smaller heading */
             font-weight: 700;
+            color: #444; /* Darker, more classic text color */
         }
         .input-group {
-            margin-bottom: 18px;
+            margin-bottom: 15px; /* Reduced margin */
             text-align: right;
             position: relative;
         }
         .input-group label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 0.95em;
+            margin-bottom: 5px; /* Reduced margin */
+            font-size: 0.9em; /* Smaller label font */
             color: #555;
         }
         .input-group input[type="number"],
         .input-group input[type="text"],
         .input-group select {
-            width: calc(100% - 40px);
-            padding: 10px 10px 10px 35px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 1em;
+            width: calc(100% - 35px); /* Adjusted width */
+            padding: 9px 9px 9px 30px; /* Reduced padding */
+            border: 1px solid #bbb; /* Slightly darker border */
+            border-radius: 5px; /* Less rounded */
+            font-size: 0.9em; /* Smaller input font */
             direction: ltr;
             text-align: right;
-            transition: border-color 0.3s;
+            transition: border-color 0.2s;
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
             background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
             background-repeat: no-repeat;
-            background-position: left 10px center;
-            background-size: 16px;
-            padding-left: 40px;
+            background-position: left 8px center; /* Adjusted icon position */
+            background-size: 14px; /* Smaller icon */
+            padding-left: 35px; /* Adjusted padding for icon */
         }
 
         .input-group select {
-            width: calc(100% - 20px);
-            padding-left: 10px;
+            width: calc(100% - 15px); /* Adjusted width for select */
+            padding-left: 8px;
             direction: rtl;
-            background-position: left 10px center;
-            background-size: 16px;
+            background-position: left 8px center;
+            background-size: 14px;
+            cursor: pointer; /* Indicate it's clickable */
+        }
+        .input-group select option {
+            padding: 5px; /* Padding for options */
         }
 
         .input-group input[type="number"]:focus,
         .input-group input[type="text"]:focus,
         .input-group select:focus {
             outline: none;
+            border-color: #007bff; /* Blue focus color */
         }
         .input-group .icon {
             position: absolute;
-            left: 10px;
+            left: 8px; /* Adjusted icon position */
             top: 50%;
-            transform: translateY(calc(-50% + 10px));
+            transform: translateY(calc(-50% + 8px)); /* Adjusted transform */
             color: #888;
-            font-size: 1.1em;
+            font-size: 1em; /* Smaller icon */
         }
         .input-group small {
             display: block;
-            margin-top: 4px;
+            margin-top: 3px; /* Reduced margin */
             color: #888;
-            font-size: 0.8em;
+            font-size: 0.75em; /* Smaller hint font */
         }
-        .weight-inputs, .date-inputs {
+        .weight-inputs, .date-inputs, .fortune-inputs { /* Added fortune-inputs */
             display: flex;
-            gap: 10px;
+            gap: 8px; /* Reduced gap */
         }
-        .weight-inputs .input-group, .date-inputs .input-group {
+        .weight-inputs .input-group, 
+        .date-inputs .input-group,
+        .fortune-inputs .input-group {
             flex: 1;
             margin-bottom: 0;
         }
         .app-container button {
             color: white;
-            padding: 12px 20px;
+            padding: 10px 18px; /* Reduced padding */
             border: none;
-            border-radius: 6px;
-            font-size: 1.1em;
+            border-radius: 5px;
+            font-size: 1em; /* Smaller font */
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s ease;
             width: 100%;
-            font-weight: 700;
-            margin-top: 20px;
+            font-weight: 600; /* Medium bold */
+            margin-top: 18px; /* Reduced margin */
         }
         .app-container button:hover {
             opacity: 0.9;
         }
         .result {
-            margin-top: 25px;
-            background-color: #f9f9f9;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 18px;
-            font-size: 1.2em;
+            margin-top: 20px; /* Reduced margin */
+            background-color: #f8f8f8; /* Lighter background */
+            border: 1px solid #e8e8e8; /* Lighter border */
+            border-radius: 7px; /* Less rounded */
+            padding: 16px; /* Reduced padding */
+            font-size: 1.1em; /* Slightly smaller result font */
             color: #333;
-            font-weight: 700;
+            font-weight: 600;
             display: none;
             text-align: right;
+            line-height: 1.6; /* Better readability */
         }
         .result div {
-            margin-bottom: 8px;
+            margin-bottom: 6px; /* Reduced margin */
         }
         .result span {
-            font-size: 1em;
+            font-size: 0.95em; /* Consistent font size */
             margin-right: 5px;
+            font-weight: 700;
         }
+        .fortune-text {
+            font-size: 1.05em; /* Slightly larger for readability */
+            font-weight: normal;
+            margin-top: 15px;
+            text-align: justify; /* Justify text for better appearance */
+            background-color: #fdfdfd;
+            border: 1px dashed #ddd; /* Dashed border for classic look */
+            padding: 15px;
+            border-radius: 8px;
+            color: #444;
+        }
+
 
         /* --- Specific Form Colors --- */
 
-        /* Gold Calculator (Default/Main) */
-        #goldCalculator { border-color: #e5e5e5; }
+        /* Gold Calculator */
+        #goldCalculator { border-color: #e0e0e0; }
         #goldCalculator h1 { color: #b8860b; }
         #goldCalculator .input-group input:focus { border-color: #b8860b; }
         #goldCalculator button { background-color: #b8860b; }
@@ -210,31 +231,47 @@
         #dateConverter button { background-color: #007bff; }
         #dateConverter .result span { color: #007bff; }
 
+        /* Fortune Teller */
+        #fortuneTeller { border-color: #ffe0b3; /* Light orange/peach */ }
+        #fortuneTeller h1 { color: #d68910; /* Darker orange/gold */ }
+        #fortuneTeller .input-group input:focus,
+        #fortuneTeller .input-group select:focus { border-color: #d68910; }
+        #fortuneTeller button { background-color: #d68910; }
+        #fortuneTeller .result span { color: #d68910; }
+
         /* Media Queries for Responsiveness */
         @media (max-width: 600px) {
             .navbar {
                 flex-direction: column;
-                padding: 10px;
+                padding: 8px;
             }
             .nav-button {
-                margin: 5px 0;
+                margin: 4px 0;
                 max-width: none;
+                font-size: 0.8em;
+                padding: 6px 10px;
             }
             .app-container {
-                padding: 20px;
+                padding: 18px;
+                max-width: 340px;
             }
             .input-group input[type="number"],
             .input-group input[type="text"],
             .input-group select {
-                width: calc(100% - 30px);
-                padding: 8px 8px 8px 30px;
+                width: calc(100% - 25px);
+                padding: 7px 7px 7px 25px;
             }
             .input-group .icon {
-                left: 8px;
-                font-size: 1em;
+                left: 6px;
+                font-size: 0.9em;
+                transform: translateY(calc(-50% + 7px));
             }
             .input-group select {
-                padding-left: 8px;
+                padding-left: 6px;
+            }
+            .fortune-text {
+                font-size: 0.95em;
+                padding: 12px;
             }
         }
     </style>
@@ -244,6 +281,7 @@
         <button class="nav-button active" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> قیمت طلا</button>
         <button class="nav-button" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i> شاخص وزن</button>
         <button class="nav-button" onclick="showSection('dateConverter', this)"><i class="fas fa-calendar-alt"></i> تبدیل تاریخ</button>
+        <button class="nav-button" onclick="showSection('fortuneTeller', this)"><i class="fas fa-hand-sparkles"></i> فال</button>
     </div>
 
     <div id="goldCalculator" class="app-container">
@@ -362,6 +400,41 @@
         </div>
     </div>
 
+    <div id="fortuneTeller" class="app-container">
+        <h1><i class="fas fa-hand-sparkles" style="margin-left: 10px;"></i>فال حافظ</h1>
+
+        <div class="input-group">
+            <label for="userAge">سن شما:</label>
+            <input type="number" id="userAge" placeholder="مثال: 30" min="1" max="120">
+            <i class="fas fa-user icon"></i>
+        </div>
+
+        <div class="input-group">
+            <label for="maritalStatus">وضعیت تاهل:</label>
+            <select id="maritalStatus">
+                <option value="">انتخاب کنید</option>
+                <option value="مجرد">مجرد</option>
+                <option value="متاهل">متاهل</option>
+                <option value="طلاق گرفته">طلاق گرفته</option>
+                <option value="همسر از دست داده">همسر از دست داده</option>
+            </select>
+            <i class="fas fa-ring icon"></i>
+        </div>
+
+        <div class="input-group">
+            <label for="birthMonth">ماه تولد:</label>
+            <select id="birthMonth"></select>
+            <i class="fas fa-calendar-star icon"></i>
+        </div>
+
+        <button onclick="generateFortune()">بگیر فال حافظ!</button>
+
+        <div class="result" id="fortuneResultDiv">
+            <div class="fortune-text" id="fortuneText"></div>
+        </div>
+    </div>
+
+
     <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
     
     <script>
@@ -384,6 +457,8 @@
             // If switching to date converter, ensure dropdowns are populated
             if (sectionId === 'dateConverter') {
                 initializeDatePickers();
+            } else if (sectionId === 'fortuneTeller') {
+                populateFortuneMonths();
             }
         }
 
@@ -519,22 +594,22 @@
             // Populate Gregorian years
             populateYears('gregorianYear', currentGregYear, currentGregYear - 100, false);
             populateMonths('gregorianMonth', gregMonths);
-            populateDays('gregorianDay', 31);
+            updateGregorianDays(); // Ensure correct days for default month/year
 
             // Populate Solar years
             populateYears('solarYear', currentSolarYear, currentSolarYear - 100, true);
             populateMonths('solarMonth', solarMonths);
-            populateDays('solarDay', 31);
+            updateSolarDays(); // Ensure correct days for default month/year
 
             // Add event listeners for Gregorian date changes
-            document.getElementById('gregorianYear').addEventListener('change', () => { updateGregorianDays(); convertGregorianToSolar(); });
-            document.getElementById('gregorianMonth').addEventListener('change', () => { updateGregorianDays(); convertGregorianToSolar(); });
-            document.getElementById('gregorianDay').addEventListener('change', convertGregorianToSolar);
+            document.getElementById('gregorianYear').onchange = () => { updateGregorianDays(); convertGregorianToSolar(); };
+            document.getElementById('gregorianMonth').onchange = () => { updateGregorianDays(); convertGregorianToSolar(); };
+            document.getElementById('gregorianDay').onchange = convertGregorianToSolar;
 
             // Add event listeners for Solar date changes
-            document.getElementById('solarYear').addEventListener('change', () => { updateSolarDays(); convertSolarToGregorian(); });
-            document.getElementById('solarMonth').addEventListener('change', () => { updateSolarDays(); convertSolarToGregorian(); });
-            document.getElementById('solarDay').addEventListener('change', convertSolarToGregorian);
+            document.getElementById('solarYear').onchange = () => { updateSolarDays(); convertSolarToGregorian(); };
+            document.getElementById('solarMonth').onchange = () => { updateSolarDays(); convertSolarToGregorian(); };
+            document.getElementById('solarDay').onchange = convertSolarToGregorian;
 
             // Clear date results when changing values
             document.querySelectorAll('#gregorianYear, #gregorianMonth, #gregorianDay, #solarYear, #solarMonth, #solarDay').forEach(select => {
@@ -563,16 +638,13 @@
             
             if (year && month) {
                 let maxDays;
-                if (month <= 6) {
+                if (month <= 6) { // First 6 months have 31 days
                     maxDays = 31;
-                } else if (month <= 11) {
+                } else if (month <= 11) { // Next 5 months have 30 days
                     maxDays = 30;
                 } else { // Esfand (12th month)
-                    // Check for leap year in Persian calendar using persianDate library
-                    // A simple check if the 12th month has 30 days.
-                    // persianDate().isLeapYear() determines if the current persian year is leap.
-                    // To check for a specific year, we create a persianDate object for that year.
-                    const pDateForLeapCheck = new persianDate([year, 1, 1]);
+                    // persianDate library correctly handles leap years for Persian calendar
+                    const pDateForLeapCheck = new persianDate([year, 1, 1]); 
                     maxDays = pDateForLeapCheck.isLeapYear() ? 30 : 29;
                 }
                 populateDays('solarDay', maxDays);
@@ -587,12 +659,12 @@
             const day = parseInt(document.getElementById('gregorianDay').value);
 
             if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                // alert('لطفاً یک تاریخ میلادی کامل و صحیح را انتخاب کنید.');
                 document.getElementById('dateResultDiv').style.display = 'none';
                 return;
             }
             
             try {
+                // persianDate expects Gregorian date directly for conversion
                 const pDate = new persianDate([year, month, day]);
                 document.getElementById('convertedDate').innerText = pDate.format('YYYY/MM/DD');
                 document.getElementById('dateResultDiv').style.display = 'block';
@@ -614,12 +686,12 @@
             const day = parseInt(document.getElementById('solarDay').value);
 
             if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                // alert('لطفاً یک تاریخ شمسی کامل و صحیح را انتخاب کنید.');
                 document.getElementById('dateResultDiv').style.display = 'none';
                 return;
             }
             
             try {
+                // persianDate constructor directly accepts Persian date components
                 const pDate = new persianDate([year, month, day]);
                 const gregorianDate = pDate.toCalendar('gregorian');
                 const gYear = gregorianDate.year();
@@ -640,9 +712,139 @@
             }
         }
 
-        // Initialize and show default section on load
+        // --- Fortune Teller Logic ---
+
+        const birthMonths = [
+            { value: 'فروردین', text: 'فروردین' }, { value: 'اردیبهشت', text: 'اردیبهشت' },
+            { value: 'خرداد', text: 'خرداد' }, { value: 'تیر', text: 'تیر' },
+            { value: 'مرداد', text: 'مرداد' }, { value: 'شهریور', text: 'شهریور' },
+            { value: 'مهر', text: 'مهر' }, { value: 'آبان', text: 'آبان' },
+            { value: 'آذر', text: 'آذر' }, { value: 'دی', text: 'دی' },
+            { value: 'بهمن', text: 'بهمن' }, { value: 'اسفند', text: 'اسفند' }
+        ];
+
+        const fortunes = {
+            'فروردین': [
+                "در مسیر زندگی شما تغییرات مثبتی در راه است. با آغوش باز پذیرای آن‌ها باشید و از فرصت‌های جدید استفاده کنید. شجاعت شما ستودنی است.",
+                "نزدیک‌ترین افراد به شما، حامیان واقعی‌تان هستند. به آن‌ها اعتماد کنید و از مشورت‌هایشان بهره ببرید. روزهای روشن در پیش دارید.",
+                "ممکن است با چالش کوچکی روبرو شوید، اما قدرت درونی شما برای غلبه بر آن کافیست. به خودتان ایمان داشته باشید و پافشاری کنید.",
+                "فکر جدیدی که در سر دارید، پتانسیل زیادی برای موفقیت دارد. آن را جدی بگیرید و با برنامه‌ریزی پیش بروید. خوشبختی در دستان شماست.",
+                "لحظات آرامی در انتظار شماست. از این فرصت برای خوداندیشی و برنامه‌ریزی برای آینده استفاده کنید. قلب شما راهنماست."
+            ],
+            'اردیبهشت': [
+                "صبر و پشتکار شما نتیجه خواهد داد. هدف‌هایی که در نظر دارید، کم‌کم به بار می‌نشینند. به تلاش‌هایتان ادامه دهید.",
+                "در مسائل مالی، هوشیار باشید. فرصت‌های خوبی برای بهبود وضعیت اقتصادی‌تان پیش می‌آید. از آن‌ها غافل نشوید.",
+                "روابط عاطفی شما در مرحله‌ای حساس قرار دارد. با صبوری و درک متقابل می‌توانید آن را تقویت کنید. عشق شما پایدار است.",
+                "طبیعت و آرامش آن برای شما شفابخش خواهد بود. لحظاتی را به دور از هیاهو بگذرانید و روحتان را تازه کنید.",
+                "انتظار خبری خوش را داشته باشید که زندگی شما را دگرگون می‌کند. آماده پذیرش تغییرات مثبت باشید. شادمانی در راه است."
+            ],
+            'خرداد': [
+                "ذهن شما پر از ایده‌های نو است. این ایده‌ها را به اشتراک بگذارید و از قدرت ارتباطات خود برای پیشرفت استفاده کنید.",
+                "درگیری‌های ذهنی کوچک ممکن است شما را آزار دهد. سعی کنید آن‌ها را با منطق حل کنید و آرامش خود را حفظ کنید.",
+                "فردی از گذشته ممکن است دوباره وارد زندگی شما شود. با احتیاط عمل کنید و درس‌های گذشته را به خاطر بسپارید.",
+                "سفر کوتاهی در پیش دارید که برای شما پر از تجربه و آموختن خواهد بود. از این فرصت نهایت استفاده را ببرید.",
+                "توانایی شما در سازگاری با شرایط جدید بی‌نظیر است. از این ویژگی برای رسیدن به اهدافتان استفاده کنید. موفقیت نزدیک است."
+            ],
+            'تیر': [
+                "خانواده و عزیزان شما منبع آرامش و قدرت شما هستند. برای آن‌ها وقت بگذارید و قدردان حضورشان باشید.",
+                "مسائل عاطفی برای شما در اولویت قرار می‌گیرد. با صداقت و مهربانی می‌توانید مشکلات را حل کنید و به صلح برسید.",
+                "فرصتی برای کسب درآمد بیشتر یا بهبود وضعیت شغلی‌تان پیش می‌آید. آن را از دست ندهید.",
+                "احساسات شما قوی هستند. آن‌ها را کنترل کنید تا تصمیمات منطقی‌تری بگیرید. دل شما پاک است.",
+                "در روزهای آینده خبری از کسی که مدت‌ها منتظرش بودید، دریافت خواهید کرد. این خبر مسیر زندگی‌تان را تغییر می‌دهد."
+            ],
+            'مرداد': [
+                "شما رهبری ذاتی دارید. از این ویژگی برای هدایت خود و اطرافیانتان به سمت موفقیت استفاده کنید.",
+                "در محیط کار یا تحصیل، فرصتی برای درخشش و نشان دادن توانایی‌هایتان پیش می‌آید. آن را غنیمت بشمارید.",
+                "مراقب حسادت برخی افراد باشید. با اعتماد به نفس و تمرکز بر اهدافتان، از انرژی‌های منفی دور بمانید.",
+                "تفریحات و سرگرمی‌ها برای شما لازم است. کمی استراحت کنید و به روحیه خود اهمیت دهید. شادی حق شماست.",
+                "قلب شما به زودی با عشق و هیجان جدیدی روبرو خواهد شد. آماده یک رابطه عمیق و پرشور باشید."
+            ],
+            'شهریور': [
+                "دقت و نظم شما در هر کاری تحسین‌برانگیز است. با همین ویژگی به موفقیت‌های بزرگ دست پیدا می‌کنید.",
+                "ممکن است نیاز به بازنگری در برنامه‌های مالی خود داشته باشید. با دقت برنامه‌ریزی کنید و از هزینه‌های غیرضروری بپرهیزید.",
+                "سلامتی خود را در اولویت قرار دهید. رژیم غذایی مناسب و ورزش به شما انرژی بیشتری می‌دهد.",
+                "در روابط شخصی، به جزئیات توجه کنید. گاهی یک حرکت کوچک، تأثیر بزرگی دارد. مهربانی شما سرمایه است.",
+                "یک راز قدیمی ممکن است برملا شود. با آن به درستی برخورد کنید و از قضاوت عجولانه پرهیز کنید."
+            ],
+            'مهر': [
+                "عدالت و توازن برای شما بسیار مهم است. در هر تصمیمی، سعی کنید انصاف را رعایت کنید. آرامش در صلح است.",
+                "در روابط عاطفی، به دنبال هماهنگی و درک متقابل باشید. با گفتگو می‌توانید سوءتفاهم‌ها را برطرف کنید.",
+                "فرصتی برای همکاری‌های جدید پیش می‌آید. با دقت شرکا را انتخاب کنید. آینده‌ای روشن در انتظار است.",
+                "زیبایی‌های اطرافتان را کشف کنید. هنر و طبیعت می‌توانند روحیه شما را تازه کنند. لذت ببرید.",
+                "تصمیمی مهم در پیش است که باید با مشورت و سنجیده گرفته شود. عجله نکنید. خرد شما راهنماست."
+            ],
+            'آبان': [
+                "قدرت درونی شما برای مواجهه با مشکلات بی‌نظیر است. از موانع نترسید و با شهامت پیش بروید.",
+                "مسائل مالی پیچیده‌ای ممکن است پیش آید. با تحقیق و مشورت با متخصصان می‌توانید بهترین تصمیم را بگیرید.",
+                "در روابط شخصی، به عمق احساسات توجه کنید. صداقت و صمیمیت رمز موفقیت شماست. عشق شما پایدار است.",
+                "ممکن است وسوسه شوید که رازی را برملا کنید. صبور باشید و عواقب آن را بسنجید. راز نگهدار باشید.",
+                "تغییرات ناگهانی ممکن است رخ دهد. با انعطاف‌پذیری می‌توانید خود را با شرایط جدید وفق دهید. پیروزی با شماست."
+            ],
+            'آذر': [
+                "ماجراجویی و کشف چیزهای جدید برای شما حیاتی است. به دنبال فرصت‌های تازه باشید و از منطقه امن خود خارج شوید.",
+                "در یادگیری و گسترش دانش خود سرمایه‌گذاری کنید. این راهی برای پیشرفت و موفقیت‌های آتی شماست.",
+                "برخی سوءتفاهم‌ها با دوستان ممکن است پیش آید. با صراحت و مهربانی می‌توانید آن‌ها را حل کنید.",
+                "سفر طولانی‌مدتی در پیش دارید که برای شما تجربه‌های ارزشمندی به ارمغان می‌آورد. آماده باشید.",
+                "آرمان‌گرایی شما ستودنی است. با هدف‌گذاری واقع‌بینانه می‌توانید به آرزوهایتان دست پیدا کنید. افق‌های شما روشن است."
+            ],
+            'دی': [
+                "پشتکار و تعهد شما به اهدافتان، ستودنی است. با همین رویکرد به قله‌های موفقیت می‌رسید.",
+                "در مسائل شغلی، جدی باشید و مسئولیت‌پذیری خود را نشان دهید. پاداش تلاش‌هایتان را دریافت خواهید کرد.",
+                "ممکن است احساس تنهایی کنید. با خانواده و دوستانتان وقت بگذرانید و از حمایت آن‌ها بهره‌مند شوید.",
+                "برنامه‌ریزی دقیق برای آینده برای شما ضروری است. قدم به قدم پیش بروید و از مسیر لذت ببرید.",
+                "در مواجهه با سختی‌ها، قوی باشید. قدرت درونی شما بیشتر از آن چیزی است که فکر می‌کنید. پیروزی نزدیک است."
+            ],
+            'بهمن': [
+                "ایده‌های نو و خلاقانه شما مورد تحسین قرار خواهد گرفت. از به اشتراک گذاشتن آن‌ها نترسید.",
+                "ممکن است با افرادی آشنا شوید که دیدگاه‌های شما را تغییر دهند. از این تجربیات استفاده کنید.",
+                "در مسائل اجتماعی فعال باشید. کمک به دیگران به شما احساس رضایت می‌بخشد. قلب شما بزرگ است.",
+                "آزادی و استقلال برای شما اهمیت زیادی دارد. برای حفظ آن تلاش کنید، اما مسئولیت‌پذیری را فراموش نکنید.",
+                "یک آرزوی دیرینه به زودی محقق می‌شود. شکرگزار باشید و از لحظات شاد زندگی لذت ببرید."
+            ],
+            'اسفند': [
+                "احساسات شما عمیق و قوی هستند. آن‌ها را درک کنید و به خودتان اجازه دهید که آن‌ها را تجربه کنید.",
+                "خلاقیت شما در اوج است. از این فرصت برای خلق آثار هنری یا حل مشکلات به شیوه‌ای نو استفاده کنید.",
+                "ممکن است احساس کنید در دنیای خیالی خود غرق شده‌اید. کمی به واقعیت برگردید و برنامه‌ریزی کنید.",
+                "در روابط عاطفی، همدلی و فداکاری شما ستودنی است. اما مراقب باشید که از خودتان غافل نشوید.",
+                "پیام‌های مهمی از ناخودآگاه خود دریافت خواهید کرد. به رویاهایتان توجه کنید و از شهودتان پیروی کنید. موفقیت در راه است."
+            ]
+        };
+
+        function populateFortuneMonths() {
+            const select = document.getElementById('birthMonth');
+            select.innerHTML = '<option value="">ماه تولد را انتخاب کنید</option>';
+            solarMonths.forEach(month => {
+                const option = document.createElement('option');
+                option.value = month.value;
+                option.innerText = month.text;
+                select.appendChild(option);
+            });
+        }
+
+        function generateFortune() {
+            const age = document.getElementById('userAge').value;
+            const maritalStatus = document.getElementById('maritalStatus').value;
+            const birthMonth = document.getElementById('birthMonth').value;
+
+            if (!age || !maritalStatus || !birthMonth) {
+                alert('لطفاً تمام اطلاعات مورد نیاز برای گرفتن فال را تکمیل کنید.');
+                return;
+            }
+
+            const monthFortunes = fortunes[birthMonth];
+            if (monthFortunes && monthFortunes.length > 0) {
+                const randomIndex = Math.floor(Math.random() * monthFortunes.length);
+                document.getElementById('fortuneText').innerText = monthFortunes[randomIndex];
+                document.getElementById('fortuneResultDiv').style.display = 'block';
+            } else {
+                document.getElementById('fortuneText').innerText = 'فالی برای این ماه تولد یافت نشد. لطفاً ماه دیگری را انتخاب کنید.';
+                document.getElementById('fortuneResultDiv').style.display = 'block';
+            }
+        }
+
+
+        // Initial display: show gold calculator by default and initialize relevant dropdowns
         document.addEventListener('DOMContentLoaded', (event) => {
-            initializeDatePickers(); // Initialize date dropdowns first
             showSection('goldCalculator', document.querySelector('.nav-button.active'));
         });
     </script>
