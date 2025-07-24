@@ -76,6 +76,8 @@
         .nav-button[data-color="purple"]:before { background-color: #800080; } /* Purple */
         .nav-button[data-color="blue"]:before { background-color: #1e90ff; } /* Blue */
         .nav-button[data-color="red"]:before { background-color: #dc3545; } /* Red */
+        .nav-button[data-color="darkgreen"]:before { background-color: #006400; } /* Dark Green for Salawat */
+
 
         .nav-button:hover {
             background-color: #4a4a4a;
@@ -644,6 +646,82 @@
             color: #e0e0e0;
         }
 
+        /* Salawat Counter Specific Styles */
+        #salawatCounter h1 {
+            color: #006400; /* Dark Green */
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+        #salawatCount {
+            font-size: 3.5em; /* Large number */
+            font-weight: 800;
+            color: #FFD700; /* Gold */
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        #salawatButton {
+            background-color: #228B22; /* Forest Green */
+            border-radius: 50%; /* Make it round */
+            width: 180px; /* Large button */
+            height: 180px; /* Large button */
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+            border: 5px solid #006400; /* Darker border */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            transition: all 0.2s ease;
+        }
+        #salawatButton:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        #salawatButton:hover {
+            background-color: #27ae60; /* Slightly lighter green on hover */
+            cursor: pointer;
+        }
+        #encouragementMessage {
+            font-size: 1.3em;
+            color: #8aff8a; /* Lighter green */
+            margin-top: 20px;
+            height: 30px; /* Reserve space */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #salawatTargetGroup {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px dashed #555;
+        }
+        #salawatTargetGroup label {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        #salawatTargetInput {
+            width: calc(100% - 30px);
+            padding: 10px 15px;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 1em;
+            background-color: #3a3a3a;
+            color: #f0f0f0;
+            text-align: center;
+            direction: ltr;
+        }
+        #salawatTargetInput:focus {
+            outline: none;
+            border-color: #006400;
+            box-shadow: 0 0 0 3px rgba(0, 100, 0, 0.3);
+        }
+        #targetReachedMessage {
+            font-size: 1.4em;
+            color: #FFD700;
+            margin-top: 20px;
+            font-weight: bold;
+            display: none;
+        }
 
         /* Media Queries for Responsiveness */
         @media (max-width: 768px) {
@@ -687,6 +765,14 @@
                 font-size: 0.9em;
                 padding: 8px 12px;
             }
+            #salawatButton {
+                width: 150px;
+                height: 150px;
+                font-size: 1.5em;
+            }
+            #salawatCount {
+                font-size: 3em;
+            }
         }
 
         @media (max-width: 480px) {
@@ -704,6 +790,17 @@
                 font-size: 0.8em;
                 padding: 8px 5px;
             }
+            #salawatButton {
+                width: 120px;
+                height: 120px;
+                font-size: 1.2em;
+            }
+            #salawatCount {
+                font-size: 2.5em;
+            }
+            #encouragementMessage {
+                font-size: 1.1em;
+            }
         }
     </style>
 </head>
@@ -717,6 +814,7 @@
         <button class="nav-button" data-color="purple" onclick="showSection('loanDepositCalculator', this)"><i class="fas fa-university"></i><span>سود/وام</span></button>
         <button class="nav-button" data-color="blue" onclick="showSection('currencyConverter', this)"><i class="fas fa-exchange-alt"></i><span>مبدل ارز</span></button>
         <button class="nav-button" data-color="red" onclick="showSection('hypotheticalServicesCalculator', this)"><i class="fas fa-heart"></i><span>شاخص لذت</span></button>
+        <button class="nav-button" data-color="darkgreen" onclick="showSection('salawatCounter', this)"><i class="fas fa-pray"></i><span>صلوات شمار</span></button>
     </div>
 
     
@@ -1012,8 +1110,7 @@
         <div class="input-group">
             <label for="houseOwnership">وضعیت سکونت:</label>
             <select id="houseOwnership">
-                <option value="">انتخاب کنید</option>
-                <option value="مالک">صاحب‌خانه</option>
+                <option value="">انتخاب کنید</                <option value="مالک">صاحب‌خانه</option>
                 <option value="مستاجر">مستأجر</option>
             </select>
             <i class="fas fa-home icon"></i>
@@ -1070,6 +1167,26 @@
             </div>
         </div>
     </div>
+
+    <div id="salawatCounter" class="app-container">
+        <h1><i class="fas fa-pray" style="margin-left: 10px;"></i>صلوات شمار</h1>
+
+        <div id="salawatCount">0</div>
+
+        <button id="salawatButton" onclick="incrementSalawat()">
+            <i class="fas fa-hand-pointer"></i> صلوات
+        </button>
+
+        <div id="encouragementMessage"></div>
+
+        <div class="input-group" id="salawatTargetGroup">
+            <label for="salawatTargetInput">هدف صلوات (اختیاری):</label>
+            <input type="number" id="salawatTargetInput" placeholder="مثال: 1000" min="0">
+            <i class="fas fa-bullseye icon"></i>
+        </div>
+        
+        <div id="targetReachedMessage">تبریک! به هدف صلوات خود رسیدید!</div>
+    </div>
     
     <script>
         // --- Navigation Logic (Concise) ---
@@ -1079,6 +1196,14 @@
             document.getElementById(sectionId).style.display = 'block';
             clickedButton.classList.add('active');
             document.querySelectorAll('.result').forEach(r => r.style.display = 'none');
+            // Reset Salawat counter when switching sections
+            if (sectionId !== 'salawatCounter') {
+                salawatCount = 0;
+                document.getElementById('salawatCount').innerText = 0;
+                document.getElementById('salawatButton').disabled = false;
+                document.getElementById('encouragementMessage').style.opacity = 0;
+                document.getElementById('targetReachedMessage').style.display = 'none';
+            }
             if (sectionId === 'personalityTest') { populatePersonalityMonths(); populateCompareMonths(); }
             if (sectionId === 'loanDepositCalculator') { showLoanDepositTab('deposit', document.querySelector('#loanDepositCalculator .tab-buttons .tab-button:first-child')); }
             if (sectionId === 'currencyConverter') { populateCurrencies(); updateExchangeRateLabels(); }
@@ -1469,7 +1594,7 @@
             const addDiscretionaryActivity = (name, count, minCostKey, maxCostKey = minCostKey, isPerPerson = false) => {
                 let cost = iranianServiceCostsUSD[minCostKey].min;
                 if (iranianServiceCostsUSD[maxCostKey]) { // Check if max exists
-                    cost = (iranianServiceCostsUSD[minCostKey].min + iranianServiceCostsUSD[maxCostKey].max) / 2;
+                    cost = (irarianServiceCostsUSD[minCostKey].min + iranianServiceCostsUSD[maxCostKey].max) / 2;
                 }
                 if (isPerPerson) {
                     cost *= numberOfPeople;
@@ -1514,7 +1639,7 @@
                     addDiscretionaryActivity('بلیط سینما و یک نوشیدنی', '۲ بار', 'سینما (یک بلیط)');
                     addDiscretionaryActivity('یک وعده غذای رستورانی (لوکس)', '۱ بار', 'رستوران لوکس (نفری)', 'رستوران لوکس (نفری)', true);
                     addDiscretionaryActivity('شهریه باشگاه ورزشی (ماهیانه) / استخر', '۱ بار', 'باشگاه (ماهیانه)', 'یک بار استفاده از استخر');
-                    addDiscretionaryActivity('کلاس آموزشی/تفریحی (ماهانه)', '۱ بار', 'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)', 'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهیانه)', true);
+                    addDiscretionaryActivity('کلاس آموزشی/تفریحی (ماهانه)', '۱ بار', 'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)', 'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)', true);
                     addDiscretionaryActivity('خرید کتاب/اشتراک نرم‌افزار', '۱ بار', 'خرید یک کتاب جدید', 'اشتراک ماهانه نرم‌افزار کاربردی');
                     addDiscretionaryActivity('مسافرت داخلی (متوسط/رفاهی) - (تقسیم بر ماه)', '۲ روز', 'مسافرت داخلی (متوسط، روزانه)', 'مسافرت داخلی (رفاهی، روزانه)');
                     
@@ -1525,12 +1650,13 @@
                     if (userOccupation === 'دانشجو' || userOccupation === 'آزادکار/فریلنسر' || userOccupation === 'هنرمند') {
                         addDiscretionaryActivity('فعالیت‌های فرهنگی و هنری', '۱ بار', 'خرید یک کتاب جدید'); // Using book cost as a proxy
                     }
-                    if (Math.random() > 0.7) { 
-                        addDiscretionaryActivity('سیگار (چند پاکت ماهیانه)', '۱۰ پاکت', 'سیگار (یک پاکت)');
-                    }
-                    if (Math.random() > 0.85 && userAge > 25) { 
-                        addDiscretionaryActivity('مشروب (یک بطری)', '۰.۵ بطری', 'مشروب (یک بطری)');
-                    }
+                    // Consider alcohol/cigarette if specified or user profile suggests
+                    // if (Math.random() > 0.7) { 
+                    //     addDiscretionaryActivity('سیگار (چند پاکت ماهیانه)', '۱۰ پاکت', 'سیگار (یک پاکت)');
+                    // }
+                    // if (Math.random() > 0.85 && userAge > 25) { 
+                    //     addDiscretionaryActivity('مشروب (یک بطری)', '۰.۵ بطری', 'مشروب (یک بطری)');
+                    // }
                     break;
             }
 
@@ -1594,7 +1720,7 @@
                     <ul>
                         <li><span class="highlight">کاهش شدید هزینه‌ها:</span> فقط روی نیازهای اساسی متمرکز شوید و تمام خرج‌های غیرضروری را قطع کنید.</li>
                         <li><span class="highlight">درآمدزایی اضطراری:</span> هر نوع کار پاره‌وقت یا موقت که می‌تواند درآمد ایجاد کند را دنبال کنید.</li>
-                        <li><span class="highlight">مشاوره مالی:</span> در صورت لزوم، از یک مشاور مالی برای برنامه‌ریزی دقیق کمک بگیرید.</li>
+                        <li><span class="highlight">مشاوره مالی:</span> در صورت لزوم، از یک مشاور مالی برای برنامه‌ریزی دقیق کمک بگیP>
                         <li><span class="highlight">بازنگری در سبک زندگی:</span> تغییرات اساسی در هزینه‌های ثابت (مانند مسکن یا حمل و نقل) را بررسی کنید.</li>
                     </ul>`;
             }
@@ -1602,6 +1728,49 @@
 
 
             document.getElementById('hypotheticalServicesResultDiv').style.display = 'block';
+        }
+
+        // --- Salawat Counter Logic ---
+        let salawatCount = 0;
+        let lastClickTime = 0;
+        const MIN_CLICK_INTERVAL = 2000; // 2 seconds
+
+        const encouragementMessages = [
+            'ماشاالله!', 'آفرین!', 'ایول!', 'دمت گرم!', 'بابا بچه‌مذهبی ترکوندی!', 'همینطوری ادامه بده!', 'آااا ماشاالله!',
+            'قبول باشه!', 'خدا قوت!', 'چه همت بلندی!', 'پر خیر و برکت!', 'موفق باشی!', 'فوق‌العاده‌ای!', 'احسنت!',
+            'بهشت گوارای وجودت!', 'صلواتت مقبول حق!', 'روح‌پرور!', 'عالیه ادامه بده!', 'خدا همراهت!', 'پیروز باشی!'
+        ];
+
+        function showEncouragement() {
+            const messageDiv = document.getElementById('encouragementMessage');
+            const randomMessage = encouragementMessages[Math.floor(Math.random() * encouragementMessages.length)];
+            messageDiv.innerText = randomMessage;
+            messageDiv.style.opacity = 1;
+            setTimeout(() => {
+                messageDiv.style.opacity = 0;
+            }, 1500); // Message fades out after 1.5 seconds
+        }
+
+        function incrementSalawat() {
+            const currentTime = new Date().getTime();
+            if (currentTime - lastClickTime < MIN_CLICK_INTERVAL) {
+                // Optionally provide feedback if clicked too fast
+                // console.log("Please wait 2 seconds between salawats.");
+                return;
+            }
+            lastClickTime = currentTime;
+
+            salawatCount++;
+            document.getElementById('salawatCount').innerText = salawatCount;
+            showEncouragement();
+
+            const targetInput = document.getElementById('salawatTargetInput');
+            const target = parseInt(targetInput.value);
+
+            if (!isNaN(target) && target > 0 && salawatCount >= target) {
+                document.getElementById('targetReachedMessage').style.display = 'block';
+                document.getElementById('salawatButton').disabled = true; // Disable button when target reached
+            }
         }
 
         // Initial setup: On page load, no section is active by default.
