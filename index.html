@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاسبه‌گر قیمت طلا</title>
+    <title>ابزارک‌های هوشمند</title>
     
     <link href="https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
         body {
-            font-family: 'Shabnam', 'Vazirmatn', sans-serif; /* استفاده از شبنم، با Vazirmatn به عنوان فونت جایگزین */
+            font-family: 'Shabnam', 'Vazirmatn', sans-serif;
             background-color: #f0f2f5;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* تغییر به ستونی برای ناوبار و محتوا */
             align-items: center;
             min-height: 100vh;
             margin: 0;
@@ -23,20 +22,64 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .gold-calculator {
+
+        /* --- Navigation Bar Styles --- */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 600px; /* عرض بیشتر برای ناوبار */
+            flex-wrap: wrap; /* برای واکنش‌گرا بودن دکمه‌ها */
+        }
+        .nav-button {
+            background-color: #eee;
+            color: #555;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px; /* فاصله بین دکمه‌ها */
+            flex-grow: 1; /* اجازه رشد به دکمه‌ها */
+            max-width: 200px; /* حداکثر عرض برای هر دکمه */
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-button:hover {
+            background-color: #ddd;
+        }
+        .nav-button.active {
+            background-color: #b8860b; /* رنگ فعال طلایی */
+            color: white;
+            box-shadow: 0 2px 8px rgba(184, 134, 11, 0.4);
+        }
+        .nav-button i {
+            margin-left: 8px; /* فاصله آیکون از متن */
+        }
+
+        /* --- Common Form Styles --- */
+        .app-container {
             background-color: #fff;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             padding: 30px;
             width: 100%;
-            max-width: 420px; /* کمی بزرگ‌تر برای فیلد دلار */
+            max-width: 420px;
             text-align: center;
             border: 1px solid #e5e5e5;
+            display: none; /* مخفی کردن اولیه همه فرم‌ها */
         }
-        h1 {
-            color: #b8860b;
+        .app-container h1 {
             margin-bottom: 25px;
-            font-size: 1.9em; /* کمی بزرگتر */
+            font-size: 1.9em;
             font-weight: 700;
         }
         .input-group {
@@ -50,7 +93,8 @@
             font-size: 0.95em;
             color: #555;
         }
-        .input-group input[type="number"] {
+        .input-group input[type="number"],
+        .input-group input[type="text"] {
             width: calc(100% - 40px);
             padding: 10px 10px 10px 35px;
             border: 1px solid #ccc;
@@ -60,8 +104,8 @@
             text-align: right;
             transition: border-color 0.3s;
         }
-        .input-group input[type="number"]:focus {
-            border-color: #b8860b;
+        .input-group input[type="number"]:focus,
+        .input-group input[type="text"]:focus {
             outline: none;
         }
         .input-group .icon {
@@ -86,8 +130,7 @@
             flex: 1;
             margin-bottom: 0;
         }
-        button {
-            background-color: #b8860b;
+        .app-container button {
             color: white;
             padding: 12px 20px;
             border: none;
@@ -99,8 +142,8 @@
             font-weight: 700;
             margin-top: 20px;
         }
-        button:hover {
-            background-color: #a07a0a;
+        .app-container button:hover {
+            opacity: 0.9;
         }
         .result {
             margin-top: 25px;
@@ -112,20 +155,103 @@
             color: #333;
             font-weight: 700;
             display: none;
-            text-align: right; /* برای نمایش بهتر دو قیمت */
+            text-align: right;
         }
         .result div {
-            margin-bottom: 8px; /* فاصله بین قیمت‌ها */
+            margin-bottom: 8px;
         }
         .result span {
-            color: #b8860b;
+            color: #b8860b; /* رنگ پیش‌فرض برای نتیجه */
             font-size: 1em;
             margin-right: 5px;
+        }
+
+        /* --- Specific Form Colors --- */
+
+        /* Gold Calculator (Default/Main) */
+        #goldCalculator {
+            border-color: #e5e5e5;
+        }
+        #goldCalculator h1 {
+            color: #b8860b;
+        }
+        #goldCalculator .input-group input:focus {
+            border-color: #b8860b;
+        }
+        #goldCalculator button {
+            background-color: #b8860b;
+        }
+        #goldCalculator .result span {
+            color: #b8860b;
+        }
+
+        /* BMI Calculator */
+        #bmiCalculator {
+            border-color: #d1e7dd; /* سبز روشن */
+        }
+        #bmiCalculator h1 {
+            color: #28a745; /* سبز */
+        }
+        #bmiCalculator .input-group input:focus {
+            border-color: #28a745;
+        }
+        #bmiCalculator button {
+            background-color: #28a745; /* سبز */
+        }
+        #bmiCalculator .result span {
+            color: #28a745;
+        }
+
+        /* Date Converter */
+        #dateConverter {
+            border-color: #cce5ff; /* آبی روشن */
+        }
+        #dateConverter h1 {
+            color: #007bff; /* آبی */
+        }
+        #dateConverter .input-group input:focus {
+            border-color: #007bff;
+        }
+        #dateConverter button {
+            background-color: #007bff; /* آبی */
+        }
+        #dateConverter .result span {
+            color: #007bff;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            .navbar {
+                flex-direction: column; /* دکمه‌ها زیر هم */
+                padding: 10px;
+            }
+            .nav-button {
+                margin: 5px 0;
+                max-width: none; /* حذف حداکثر عرض */
+            }
+            .app-container {
+                padding: 20px;
+            }
+            .input-group input[type="number"],
+            .input-group input[type="text"] {
+                width: calc(100% - 30px); /* پدینگ کمتر برای موبایل */
+                padding: 8px 8px 8px 30px;
+            }
+            .input-group .icon {
+                left: 8px; /* موقعیت آیکون */
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="gold-calculator">
+    <div class="navbar">
+        <button class="nav-button active" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> محاسبه قیمت طلا</button>
+        <button class="nav-button" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i> محاسبه شاخص وزن</button>
+        <button class="nav-button" onclick="showSection('dateConverter', this)"><i class="fas fa-calendar-alt"></i> تبدیل تاریخ</button>
+    </div>
+
+    <div id="goldCalculator" class="app-container">
         <h1><i class="fas fa-gem" style="margin-left: 10px;"></i>محاسبه‌گر هوشمند طلا</h1>
         
         <div class="input-group">
@@ -163,16 +289,90 @@
             <small>اگر اجرت ندارد، این فیلد را خالی بگذارید یا ۰ وارد کنید.</small>
         </div>
         
-        <button onclick="calculatePrice()">محاسبه قیمت</button>
+        <button onclick="calculateGoldPrice()">محاسبه قیمت</button>
         
-        <div class="result" id="resultDiv">
+        <div class="result" id="goldResultDiv">
             <div><span>قیمت نهایی:</span> <span id="finalPriceToman"></span> تومان</div>
             <div><span>قیمت نهایی:</span> <span id="finalPriceDollar"></span> دلار</div>
         </div>
     </div>
 
+    <div id="bmiCalculator" class="app-container">
+        <h1><i class="fas fa-calculator" style="margin-left: 10px;"></i>محاسبه شاخص توده بدنی (BMI)</h1>
+        
+        <div class="input-group">
+            <label for="weight">وزن (کیلوگرم):</label>
+            <input type="number" id="weight" placeholder="مثال: 70" min="1" step="any">
+            <i class="fas fa-weight icon"></i>
+        </div>
+        
+        <div class="input-group">
+            <label for="height">قد (متر):</label>
+            <input type="number" id="height" placeholder="مثال: 1.75" min="0.1" step="0.01">
+            <i class="fas fa-ruler-vertical icon"></i>
+            <small>مثال: ۱۷۵ سانتی‌متر را ۱.۷۵ متر وارد کنید.</small>
+        </div>
+        
+        <button onclick="calculateBMI()">محاسبه BMI</button>
+        
+        <div class="result" id="bmiResultDiv">
+            <div><span>شاخص BMI شما:</span> <span id="bmiValue"></span></div>
+            <div><span>وضعیت:</span> <span id="bmiStatus"></span></div>
+        </div>
+    </div>
+
+    <div id="dateConverter" class="app-container">
+        <h1><i class="fas fa-calendar-alt" style="margin-left: 10px;"></i>تبدیل تاریخ</h1>
+        
+        <div class="input-group">
+            <label for="gregorianDate">تاریخ میلادی (YYYY-MM-DD):</label>
+            <input type="text" id="gregorianDate" placeholder="مثال: 2023-01-15">
+            <i class="far fa-calendar-alt icon"></i>
+            <small>فرمت: سال-ماه-روز</small>
+        </div>
+        
+        <button onclick="convertGregorianToSolar()">تبدیل میلادی به شمسی</button>
+
+        <div class="input-group" style="margin-top: 25px;">
+            <label for="solarDate">تاریخ شمسی (YYYY/MM/DD):</label>
+            <input type="text" id="solarDate" placeholder="مثال: 1402/10/25">
+            <i class="far fa-calendar icon"></i>
+            <small>فرمت: سال/ماه/روز</small>
+        </div>
+        
+        <button onclick="convertSolarToGregorian()">تبدیل شمسی به میلادی</button>
+        
+        <div class="result" id="dateResultDiv">
+            <div><span>تاریخ تبدیل شده:</span> <span id="convertedDate"></span></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker-0.4.5.min.css">
+    
     <script>
-        function calculatePrice() {
+        // --- Navigation Logic ---
+        function showSection(sectionId, clickedButton) {
+            // Hide all sections
+            document.querySelectorAll('.app-container').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Deactivate all buttons
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show the selected section
+            document.getElementById(sectionId).style.display = 'block';
+
+            // Activate the clicked button
+            clickedButton.classList.add('active');
+        }
+
+        // --- Gold Calculator Logic (Renamed function to avoid conflict) ---
+        function calculateGoldPrice() {
             const goldPricePerGramToman = parseFloat(document.getElementById('goldPriceToman').value);
             const usdExchangeRate = parseFloat(document.getElementById('usdExchangeRate').value);
             const goldWeightGram = parseFloat(document.getElementById('goldWeightGram').value || 0);
@@ -195,28 +395,127 @@
                  return;
             }
 
-            // محاسبه اجرت به تومان
             let wageAmountToman = (goldPricePerGramToman * (wagePercent / 100)) * totalWeightGram;
-            
-            // 7 درصد سود به تومان
             const profitAmountToman = (goldPricePerGramToman * 0.07) * totalWeightGram;
-
-            // محاسبه مالیات به تومان (10 درصد از اجرت و سود)
             const taxAmountToman = (wageAmountToman + profitAmountToman) * 0.10;
-
-            // قیمت خام طلا به تومان
             const rawGoldPriceToman = goldPricePerGramToman * totalWeightGram;
-            
-            // قیمت نهایی به تومان
             const finalPriceToman = rawGoldPriceToman + wageAmountToman + profitAmountToman + taxAmountToman;
-
-            // تبدیل قیمت نهایی به دلار
             const finalPriceDollar = finalPriceToman / usdExchangeRate;
 
-            document.getElementById('finalPriceToman').innerText = finalPriceToman.toLocaleString('fa-IR'); // نمایش با جداکننده هزارگان
-            document.getElementById('finalPriceDollar').innerText = finalPriceDollar.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // نمایش با 2 رقم اعشار برای دلار
-            document.getElementById('resultDiv').style.display = 'block'; // نمایش نتیجه
+            document.getElementById('finalPriceToman').innerText = finalPriceToman.toLocaleString('fa-IR');
+            document.getElementById('finalPriceDollar').innerText = finalPriceDollar.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('goldResultDiv').style.display = 'block';
         }
+
+        // --- BMI Calculator Logic ---
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+
+            if (isNaN(weight) || weight <= 0) {
+                alert('لطفاً وزن را به درستی وارد کنید.');
+                return;
+            }
+            if (isNaN(height) || height <= 0) {
+                alert('لطفاً قد را به درستی وارد کنید.');
+                return;
+            }
+
+            const bmi = weight / (height * height);
+            let status = '';
+
+            if (bmi < 18.5) {
+                status = 'کم‌وزنی';
+            } else if (bmi >= 18.5 && bmi <= 24.9) {
+                status = 'وزن نرمال';
+            } else if (bmi >= 25 && bmi <= 29.9) {
+                status = 'اضافه‌وزن';
+            } else if (bmi >= 30 && bmi <= 34.9) {
+                status = 'چاقی (درجه ۱)';
+            } else if (bmi >= 35 && bmi <= 39.9) {
+                status = 'چاقی شدید (درجه ۲)';
+            } else {
+                status = 'چاقی مفرط (درجه ۳)';
+            }
+
+            document.getElementById('bmiValue').innerText = bmi.toLocaleString('fa-IR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+            document.getElementById('bmiStatus').innerText = status;
+            document.getElementById('bmiResultDiv').style.display = 'block';
+        }
+
+        // --- Date Converter Logic ---
+        // Ensure persian-date.js and persian-datepicker.js are loaded
+        // For Persian Date Picker (Optional, but useful for user input)
+        // $(document).ready(function() {
+        //     $("#gregorianDate").pDatepicker({
+        //         format: 'YYYY-MM-DD',
+        //         altField: '#gregorianDate',
+        //         calendarType: 'gregorian'
+        //     });
+        //     $("#solarDate").pDatepicker({
+        //         format: 'YYYY/MM/DD',
+        //         altField: '#solarDate',
+        //         calendarType: 'persian'
+        //     });
+        // });
+
+        function convertGregorianToSolar() {
+            const gregorianDateStr = document.getElementById('gregorianDate').value;
+            if (!gregorianDateStr) {
+                alert('لطفاً تاریخ میلادی را وارد کنید.');
+                return;
+            }
+            
+            try {
+                // Using the native Date object for parsing Gregorian
+                const date = new Date(gregorianDateStr);
+                if (isNaN(date)) {
+                    throw new Error('Invalid date');
+                }
+                
+                // persian-date library expects year, month (0-indexed), day
+                const pDate = new persianDate([date.getFullYear(), date.getMonth(), date.getDate()]);
+                document.getElementById('convertedDate').innerText = pDate.format('YYYY/MM/DD');
+                document.getElementById('dateResultDiv').style.display = 'block';
+            } catch (error) {
+                alert('فرمت تاریخ میلادی صحیح نیست. (مثال: 2023-01-15)');
+                console.error(error);
+            }
+        }
+
+        function convertSolarToGregorian() {
+            const solarDateStr = document.getElementById('solarDate').value;
+            if (!solarDateStr) {
+                alert('لطفاً تاریخ شمسی را وارد کنید.');
+                return;
+            }
+
+            const parts = solarDateStr.split('/');
+            if (parts.length !== 3) {
+                alert('فرمت تاریخ شمسی صحیح نیست. (مثال: 1402/10/25)');
+                return;
+            }
+            
+            try {
+                // persian-date library for converting Persian to Gregorian
+                const pDate = new persianDate([parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2])]);
+                const gregorianDate = pDate.toCalendar('gregorian');
+                const year = gregorianDate.getFullYear();
+                const month = (gregorianDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed
+                const day = gregorianDate.getDate().toString().padStart(2, '0');
+                
+                document.getElementById('convertedDate').innerText = `${year}-${month}-${day}`;
+                document.getElementById('dateResultDiv').style.display = 'block';
+            } catch (error) {
+                alert('فرمت تاریخ شمسی صحیح نیست. (مثال: 1402/10/25)');
+                console.error(error);
+            }
+        }
+
+        // Initial display: show gold calculator by default
+        document.addEventListener('DOMContentLoaded', (event) => {
+            showSection('goldCalculator', document.querySelector('.nav-button.active'));
+        });
     </script>
 </body>
 </html>
