@@ -23,23 +23,24 @@
             box-sizing: border-box;
         }
 
-        /* --- Modern Navbar Styles (Teal/Cyan) --- */
+        /* --- Modern Minimal Grey Navbar Styles --- */
         .navbar {
             display: flex;
             justify-content: center;
-            background-color: #20B2AA; /* Teal/Light Sea Green */
+            background-color: #f8f8f8; /* Light grey background */
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             padding: 10px 15px;
             margin-bottom: 25px;
             width: 100%;
-            max-width: 900px; /* Increased max-width for more buttons */
+            max-width: 900px;
             flex-wrap: wrap;
-            gap: 8px; /* Spacing between buttons */
+            gap: 8px;
+            border: 1px solid #e0e0e0; /* Subtle border */
         }
         .nav-button {
-            background-color: #008080; /* Darker Teal */
-            color: white;
+            background-color: #ececec; /* Slightly darker grey for buttons */
+            color: #555; /* Dark grey text */
             padding: 10px 18px;
             border: none;
             border-radius: 8px;
@@ -48,26 +49,32 @@
             transition: all 0.3s ease;
             flex-grow: 1;
             min-width: 120px;
-            max-width: 180px; /* Adjusted max-width */
+            max-width: 180px;
             font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
         .nav-button:hover {
-            background-color: #006666; /* Even darker Teal on hover */
+            background-color: #e0e0e0; /* Even darker grey on hover */
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            color: #333; /* Darker text on hover */
         }
         .nav-button.active {
-            background-color: #004d4d; /* Active state, very dark Teal */
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25), inset 0 0 10px rgba(255, 255, 255, 0.2);
+            background-color: #d0d0d0; /* Active state, darker grey */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18), inset 0 0 8px rgba(0, 0, 0, 0.1);
             transform: translateY(0);
+            color: #222; /* Even darker text for active */
         }
         .nav-button i {
             margin-left: 8px;
             font-size: 1em;
+            color: #777; /* Icon color */
+        }
+        .nav-button.active i {
+            color: #333; /* Icon color when active */
         }
 
         /* --- Common Form Styles (Minimal & Classic) --- */
@@ -300,6 +307,67 @@
         .loan-deposit-content {
             display: none;
         }
+         .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+        }
+        .toggle-switch span {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 22px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+        input:checked + .slider:before {
+            -webkit-transform: translateX(18px);
+            -ms-transform: translateX(18px);
+            transform: translateX(18px);
+        }
+
 
         /* --- Specific Form Colors --- */
 
@@ -533,11 +601,21 @@
                 <input type="number" id="depositInterestRate" placeholder="مثال: 18" min="0" max="100" step="0.1">
                 <i class="fas fa-percent icon"></i>
             </div>
+
+            <div class="toggle-switch">
+                <span>محاسبه سود روزشمار؟</span>
+                <label class="switch">
+                    <input type="checkbox" id="dailyInterestToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
             <div class="input-group">
-                <label for="depositDurationMonths">مدت زمان سپرده (ماه):</label>
-                <input type="number" id="depositDurationMonths" placeholder="مثال: 12" min="1">
+                <label for="depositDurationDays" id="depositDurationLabel">مدت زمان سپرده (روز):</label>
+                <input type="number" id="depositDurationDays" placeholder="مثال: 365" min="1">
                 <i class="fas fa-calendar-alt icon"></i>
             </div>
+
             <button onclick="calculateDepositInterest()">محاسبه سود سپرده</button>
             <div class="result" id="depositResultDiv">
                 <div><span>سود کل:</span> <span id="totalDepositInterest"></span> تومان</div>
@@ -579,17 +657,23 @@
             <i class="fas fa-money-bill-wave icon"></i>
         </div>
         
-        <div class="flex-inputs">
-            <div class="input-group">
-                <label for="fromCurrency">از واحد:</label>
-                <select id="fromCurrency"></select>
-                <i class="fas fa-chevron-circle-down icon"></i>
-            </div>
-            <div class="input-group">
-                <label for="toCurrency">به واحد:</label>
-                <select id="toCurrency"></select>
-                <i class="fas fa-chevron-circle-down icon"></i>
-            </div>
+        <div class="input-group">
+            <label for="fromCurrency">از واحد:</label>
+            <select id="fromCurrency"></select>
+            <i class="fas fa-chevron-circle-down icon"></i>
+        </div>
+
+        <div class="input-group">
+            <label for="toCurrency">به واحد:</label>
+            <select id="toCurrency"></select>
+            <i class="fas fa-chevron-circle-down icon"></i>
+        </div>
+
+        <div class="input-group" id="exchangeRateInputGroup" style="display: none;">
+            <label for="exchangeRate">نرخ تبدیل (1 <span id="fromCurrencySymbol"></span> = ? <span id="toCurrencySymbol"></span>):</label>
+            <input type="number" id="exchangeRate" placeholder="مثال: 0.000001" min="0" step="any">
+            <i class="fas fa-coins icon"></i>
+            <small>برای تبدیل دستی نرخ را وارد کنید (مثال: برای تبدیل دلار به تومان، نرخ هر دلار را به تومان وارد کنید).</small>
         </div>
         
         <button onclick="convertCurrency()">تبدیل ارز</button>
@@ -632,6 +716,7 @@
                 showLoanDepositTab('deposit', document.querySelector('#loanDepositCalculator .tab-buttons .tab-button:first-child'));
             } else if (sectionId === 'currencyConverter') {
                 populateCurrencies();
+                updateExchangeRateInputVisibility(); // Ensure initial visibility is correct
             }
         }
 
@@ -932,21 +1017,64 @@
             // Hide results when switching tabs
             document.getElementById('depositResultDiv').style.display = 'none';
             document.getElementById('loanResultDiv').style.display = 'none';
+
+            // Reset specific fields when switching tabs for better UX
+            if (tabId === 'deposit') {
+                document.getElementById('depositAmount').value = '';
+                document.getElementById('depositInterestRate').value = '';
+                document.getElementById('depositDurationDays').value = '';
+                document.getElementById('dailyInterestToggle').checked = false; // Reset to monthly calculation default
+                updateDepositDurationLabel(); // Update label based on toggle
+            } else { // loan tab
+                document.getElementById('loanAmount').value = '';
+                document.getElementById('loanInterestRate').value = '';
+                document.getElementById('loanDurationMonths').value = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const dailyInterestToggle = document.getElementById('dailyInterestToggle');
+            if (dailyInterestToggle) {
+                dailyInterestToggle.addEventListener('change', updateDepositDurationLabel);
+                updateDepositDurationLabel(); // Set initial label
+            }
+        });
+
+        function updateDepositDurationLabel() {
+            const dailyInterestToggle = document.getElementById('dailyInterestToggle');
+            const depositDurationLabel = document.getElementById('depositDurationLabel');
+            if (dailyInterestToggle.checked) {
+                depositDurationLabel.innerText = 'مدت زمان سپرده (روز):';
+            } else {
+                depositDurationLabel.innerText = 'مدت زمان سپرده (ماه):';
+            }
         }
 
         function calculateDepositInterest() {
             const amount = parseFloat(document.getElementById('depositAmount').value);
             const rate = parseFloat(document.getElementById('depositInterestRate').value);
-            const duration = parseFloat(document.getElementById('depositDurationMonths').value);
+            const durationInput = parseFloat(document.getElementById('depositDurationDays').value); // This is now days or months
+            const isDailyInterest = document.getElementById('dailyInterestToggle').checked;
 
-            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate <= 0 || isNaN(duration) || duration <= 0) {
+            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate <= 0 || isNaN(durationInput) || durationInput <= 0) {
                 alert('لطفاً تمام فیلدها را با مقادیر صحیح وارد کنید.');
                 return;
             }
 
-            const monthlyRate = (rate / 100) / 12;
-            const totalInterest = amount * monthlyRate * duration;
-            const finalAmount = amount + totalInterest;
+            let totalInterest;
+            let finalAmount;
+
+            if (isDailyInterest) {
+                // Daily interest calculation
+                const dailyRate = (rate / 100) / 365;
+                totalInterest = amount * dailyRate * durationInput;
+            } else {
+                // Monthly interest calculation (based on months duration)
+                const monthlyRate = (rate / 100) / 12;
+                totalInterest = amount * monthlyRate * durationInput;
+            }
+            
+            finalAmount = amount + totalInterest;
 
             document.getElementById('totalDepositInterest').innerText = totalInterest.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
             document.getElementById('finalDepositAmount').innerText = finalAmount.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -986,14 +1114,14 @@
         }
 
         // --- Currency Converter Logic ---
-        const currencies = {
-            'ریال ایران': { symbol: 'IRR', rate: 1, base: true }, // Base currency
-            'دلار آمریکا': { symbol: 'USD', rate: 600000, toToman: true }, // Example rate to IRR (1 USD = 600,000 IRR)
-            'یورو': { symbol: 'EUR', rate: 650000, toToman: true }, // Example rate to IRR
-            'پوند بریتانیا': { symbol: 'GBP', rate: 750000, toToman: true }, // Example rate to IRR
-            'درهم امارات': { symbol: 'AED', rate: 165000, toToman: true }, // Example rate to IRR
-            'لیر ترکیه': { symbol: 'TRY', rate: 19000, toToman: true } // Example rate to IRR
-        };
+        const currencies = [
+            { name: 'ریال ایران', symbol: 'IRR' },
+            { name: 'دلار آمریکا', symbol: 'USD' },
+            { name: 'یورو', symbol: 'EUR' },
+            { name: 'پوند بریتانیا', symbol: 'GBP' },
+            { name: 'درهم امارات', symbol: 'AED' },
+            { name: 'لیر ترکیه', symbol: 'TRY' }
+        ];
 
         function populateCurrencies() {
             const fromCurrencySelect = document.getElementById('fromCurrency');
@@ -1002,26 +1130,48 @@
             fromCurrencySelect.innerHTML = '';
             toCurrencySelect.innerHTML = '';
 
-            for (const currencyName in currencies) {
+            currencies.forEach(currency => {
                 const optionFrom = document.createElement('option');
-                optionFrom.value = currencyName;
-                optionFrom.innerText = `${currencyName} (${currencies[currencyName].symbol})`;
+                optionFrom.value = currency.symbol;
+                optionFrom.innerText = `${currency.name} (${currency.symbol})`;
                 fromCurrencySelect.appendChild(optionFrom);
 
                 const optionTo = document.createElement('option');
-                optionTo.value = currencyName;
-                optionTo.innerText = `${currencyName} (${currencies[currencyName].symbol})`;
+                optionTo.value = currency.symbol;
+                optionTo.innerText = `${currency.name} (${currency.symbol})`;
                 toCurrencySelect.appendChild(optionTo);
-            }
+            });
             // Set default selections
-            fromCurrencySelect.value = 'ریال ایران';
-            toCurrencySelect.value = 'دلار آمریکا';
+            fromCurrencySelect.value = 'USD';
+            toCurrencySelect.value = 'IRR';
+
+            // Add event listeners for changes
+            fromCurrencySelect.addEventListener('change', updateExchangeRateInputVisibility);
+            toCurrencySelect.addEventListener('change', updateExchangeRateInputVisibility);
+            updateExchangeRateInputVisibility(); // Call initially to set correct state
+        }
+
+        function updateExchangeRateInputVisibility() {
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            const exchangeRateInputGroup = document.getElementById('exchangeRateInputGroup');
+            const fromCurrencySymbolSpan = document.getElementById('fromCurrencySymbol');
+            const toCurrencySymbolSpan = document.getElementById('toCurrencySymbol');
+
+            if (fromCurrency === toCurrency) {
+                exchangeRateInputGroup.style.display = 'none'; // Hide if same currency
+            } else {
+                exchangeRateInputGroup.style.display = 'block'; // Show if different
+                fromCurrencySymbolSpan.innerText = fromCurrency;
+                toCurrencySymbolSpan.innerText = toCurrency;
+            }
         }
 
         function convertCurrency() {
             const amount = parseFloat(document.getElementById('amountToConvert').value);
             const fromCurrency = document.getElementById('fromCurrency').value;
             const toCurrency = document.getElementById('toCurrency').value;
+            const exchangeRate = parseFloat(document.getElementById('exchangeRate').value);
 
             if (isNaN(amount) || amount <= 0) {
                 alert('لطفاً مبلغ را به درستی وارد کنید.');
@@ -1032,34 +1182,19 @@
                 return;
             }
             if (fromCurrency === toCurrency) {
-                alert('لطفاً واحدهای ارزی متفاوت را برای تبدیل انتخاب کنید.');
-                document.getElementById('convertedAmount').innerText = amount.toLocaleString('fa-IR') + ' ' + currencies[toCurrency].symbol;
+                document.getElementById('convertedAmount').innerText = amount.toLocaleString('fa-IR') + ' ' + fromCurrency;
                 document.getElementById('currencyResultDiv').style.display = 'block';
                 return;
             }
 
-            let amountInIRR;
-
-            // Convert 'from' currency to IRR (if it's not IRR)
-            if (currencies[fromCurrency].base) {
-                amountInIRR = amount;
-            } else {
-                amountInIRR = amount * currencies[fromCurrency].rate;
+            if (isNaN(exchangeRate) || exchangeRate <= 0) {
+                alert('لطفاً نرخ تبدیل را به درستی وارد کنید.');
+                return;
             }
 
-            let convertedValue;
-            let convertedSymbol;
-
-            // Convert from IRR to 'to' currency
-            if (currencies[toCurrency].base) {
-                convertedValue = amountInIRR;
-                convertedSymbol = currencies[toCurrency].symbol;
-            } else {
-                convertedValue = amountInIRR / currencies[toCurrency].rate;
-                convertedSymbol = currencies[toCurrency].symbol;
-            }
+            const convertedValue = amount * exchangeRate;
             
-            document.getElementById('convertedAmount').innerText = convertedValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + convertedSymbol;
+            document.getElementById('convertedAmount').innerText = convertedValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + toCurrency;
             document.getElementById('currencyResultDiv').style.display = 'block';
         }
 
