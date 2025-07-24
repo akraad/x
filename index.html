@@ -232,6 +232,13 @@
             margin-right: 5px;
             font-weight: 700;
         }
+        .result .small-text {
+            font-size: 0.7em;
+            color: #777;
+            display: block;
+            margin-top: 10px;
+            font-weight: normal;
+        }
         .personality-text {
             font-size: 1.05em;
             font-weight: normal;
@@ -469,6 +476,18 @@
             color: #777;
             margin-right: 5px;
         }
+        .self-pleasure-note {
+            font-size: 0.85em;
+            color: #555;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .self-pleasure-note strong {
+            color: #333;
+        }
 
 
         /* Media Queries for Responsiveness */
@@ -581,6 +600,7 @@
         <div class="result" id="goldResultDiv">
             <div><span>قیمت نهایی:</span> <span id="finalPriceToman"></span> تومان</div>
             <div><span>قیمت نهایی:</span> <span id="finalPriceDollar"></span> دلار</div>
+            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
@@ -606,6 +626,7 @@
         <div class="result" id="bmiResultDiv">
             <div><span>شاخص BMI شما:</span> <span id="bmiValue"></span></div>
             <div><span>وضعیت:</span> <span id="bmiStatus"></span></div>
+            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
@@ -642,6 +663,7 @@
                     <div id="comparisonText"></div>
                 </div>
             </div>
+            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
@@ -685,6 +707,7 @@
             <div class="result" id="depositResultDiv">
                 <div><span>سود کل:</span> <span id="totalDepositInterest"></span> تومان</div>
                 <div><span>مبلغ نهایی با سود:</span> <span id="finalDepositAmount"></span> تومان</div>
+                <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
             </div>
         </div>
 
@@ -710,6 +733,7 @@
                 <div><span>مبلغ هر قسط:</span> <span id="monthlyInstallment"></span> تومان</div>
                 <div><span>کل سود پرداختی:</span> <span id="totalLoanInterest"></span> تومان</div>
                 <div><span>مجموع پرداختی:</span> <span id="totalPayment"></span> تومان</div>
+                <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
             </div>
         </div>
     </div>
@@ -747,6 +771,7 @@
         
         <div class="result" id="currencyResultDiv">
             <div><span>مبلغ تبدیل شده:</span> <span id="convertedAmount"></span></div>
+            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
@@ -754,7 +779,7 @@
 <div id="hypotheticalServicesCalculator" class="app-container">
         <h1><i class="fas fa-money-bill-wave" style="margin-left: 10px;"></i>شاخص روسپی</h1>
         <div class="disclaimer">
-            <p><strong>توجه:</strong> این ابزار صرفاً یک **نمونه کد و برای هدف آموزشی و نمایشی** است و به هیچ عنوان ترویج‌کننده یا تسهیل‌کننده فعالیت‌های غیرقانونی یا غیراخلاقی نیست. تمامی قیمت‌ها و دسته‌بندی‌ها کاملاً **فرضی و غیرواقعی** هستند و بر اساس هیچ داده حقیقی یا توصیه‌ای نیستند. هدف آن **کمک به درک فرضی مقیاس هزینه‌ها برای مدیریت بودجه ماهیانه** است.</p>
+            <p><strong>توجه:</strong> این ابزار صرفاً یک **نمونه کد و برای هدف آموزشی و نمایشی** است و به هیچ عنوان ترویج‌کننده یا تسهیل‌کننده فعالیت‌های غیرقانونی یا غیراخلاقی نیست. تمامی قیمت‌ها و دسته‌بندی‌ها کاملاً **غیرواقعی** هستند و بر اساس هیچ داده حقیقی یا توصیه‌ای نیستند. هدف آن **کمک به درک مقیاس هزینه‌ها برای مدیریت بودجه ماهیانه** است.</p>
         </div>
         
         <div class="input-group">
@@ -765,7 +790,7 @@
         </div>
 
         <div class="input-group">
-            <label for="hypotheticalBudget">مبلغ ماهیانه فرضی مورد نظر (تومان):</label>
+            <label for="hypotheticalBudget">مبلغ ماهیانه مورد نظر (تومان):</label>
             <input type="number" id="hypotheticalBudget" placeholder="مثال: 5,000,000" min="0">
             <i class="fas fa-coins icon"></i>
         </div>
@@ -773,10 +798,14 @@
         <button onclick="calculateHypotheticalServices()">محاسبه</button>
         
         <div class="result" id="hypotheticalServicesResultDiv">
-            <div><span>با مبلغ ماهیانه فرضی شما، ممکن است بتوانید از دسته‌بندی‌های زیر (کاملاً فرضی) استفاده کنید:</span></div>
+            <div><span>با مبلغ ماهیانه شما، ممکن است بتوانید از دسته‌بندی‌های زیر (کاملاً غیرواقعی) استفاده کنید:</span></div>
             <ul id="affordableCategories"></ul>
             <div><span>دسته‌بندی‌هایی که ممکن است خارج از محدوده باشند:</span></div>
             <ul id="unaffordableCategories"></ul>
+            <p class="self-pleasure-note">
+                اگر از این هزینه‌ها صرف نظر کنید و به جای آن **خودارضایی** را انتخاب کنید، می‌توانید این مبلغ را پس‌انداز یا سرمایه‌گذاری کرده و به رشد مالی خود کمک کنید.
+            </p>
+            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
     
@@ -1313,8 +1342,7 @@
         // Prices are in USD for easier conversion and consistency
         const hypotheticalServiceCategories = [
             { name: 'خیابانی', minPriceUSD: 10, maxPriceUSD: 30 }, // $10 - $30
-            { name: 'مراکز (فرضی)', minPriceUSD: 20, maxPriceUSD: 70 }, // $20 - $70
-            { name: 'اسکورت', minPriceUSD: 50, maxPriceUSD: 200 }, // $50 - $200
+            { name: 'مراکز', minPriceUSD: 20, maxPriceUSD: 70 }, // $20 - $70
             { name: 'اینترنتی (اشتراک ماهانه)', minPriceUSD: 5, maxPriceUSD: 25 }, // $5 - $25 per month
             { name: 'معاشرت‌های تجملی (ماهانه)', minPriceUSD: 200, maxPriceUSD: 1000 }, // $200 - $1000 per month
             { name: 'مدل‌های همراهی (رویداد خاص)', minPriceUSD: 500, maxPriceUSD: 2000 } // $500 - $2000 per event
@@ -1329,7 +1357,7 @@
                 return;
             }
             if (isNaN(budgetToman) || budgetToman <= 0) {
-                alert('لطفاً مبلغ ماهیانه فرضی را به درستی وارد کنید (عدد مثبت).');
+                alert('لطفاً مبلغ ماهیانه را به درستی وارد کنید (عدد مثبت).');
                 return;
             }
 
@@ -1365,18 +1393,18 @@
                 affordable.forEach(category => {
                     const li = document.createElement('li');
                     li.classList.add('category-item');
-                    li.innerHTML = `${category.name} <span class="category-range">(محدوده فرضی: ${category.minPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تا ${category.maxPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان)</span>`;
+                    li.innerHTML = `${category.name} <span class="category-range">(محدوده: ${category.minPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تا ${category.maxPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان)</span>`;
                     affordableList.appendChild(li);
                 });
             } else {
-                affordableList.innerHTML = '<li>با این مبلغ فرضی، هیچ دسته‌بندی در دسترس نیست.</li>';
+                affordableList.innerHTML = '<li>با این مبلغ، هیچ دسته‌بندی در دسترس نیست.</li>';
             }
 
             if (unaffordable.length > 0) {
                 unaffordable.forEach(category => {
                     const li = document.createElement('li');
                     li.classList.add('category-item');
-                    li.innerHTML = `${category.name} <span class="category-range">(محدوده فرضی: ${category.minPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تا ${category.maxPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان)</span>`;
+                    li.innerHTML = `${category.name} <span class="category-range">(محدوده: ${category.minPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تا ${category.maxPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان)</span>`;
                     unaffordableList.appendChild(li);
                 });
             } else {
