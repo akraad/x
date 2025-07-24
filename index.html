@@ -33,7 +33,7 @@
             padding: 8px 12px;
             margin-bottom: 20px;
             width: 100%;
-            max-width: 500px; /* Adjusted max-width for 3 buttons */
+            max-width: 500px;
             flex-wrap: wrap;
         }
         .nav-button {
@@ -47,7 +47,7 @@
             transition: all 0.2s ease;
             margin: 3px;
             flex-grow: 1;
-            max-width: 150px; /* Adjusted max-width */
+            max-width: 150px;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -148,12 +148,12 @@
             color: #888;
             font-size: 0.75em;
         }
-        .weight-inputs, .fortune-inputs { /* Removed .date-inputs */
+        .weight-inputs, .personality-inputs { /* Changed to .personality-inputs */
             display: flex;
             gap: 8px;
         }
         .weight-inputs .input-group, 
-        .fortune-inputs .input-group {
+        .personality-inputs .input-group {
             flex: 1;
             margin-bottom: 0;
         }
@@ -193,7 +193,7 @@
             margin-right: 5px;
             font-weight: 700;
         }
-        .fortune-text {
+        .personality-text { /* New class for personality text */
             font-size: 1.05em;
             font-weight: normal;
             margin-top: 15px;
@@ -203,6 +203,64 @@
             padding: 15px;
             border-radius: 8px;
             color: #444;
+        }
+        .comparison-section { /* New section for comparison */
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px dashed #eee;
+            text-align: right;
+        }
+        .comparison-section label {
+            font-size: 0.9em;
+            color: #555;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .comparison-section select {
+            width: calc(100% - 15px);
+            padding: 9px 9px 9px 8px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-size: 0.9em;
+            direction: rtl;
+            background-position: left 8px center;
+            background-size: 14px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .comparison-section button {
+            margin-top: 10px;
+            background-color: #007bff; /* Blue for comparison button */
+        }
+        .comparison-result {
+            margin-top: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #e9e9e9;
+            border-radius: 7px;
+            padding: 15px;
+            text-align: right;
+        }
+        .comparison-result h3 {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .comparison-result p {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        .positive-point {
+            color: #28a745; /* Green for positive points */
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .negative-point {
+            color: #dc3545; /* Red for negative points */
+            font-weight: 600;
+            margin-bottom: 5px;
         }
 
 
@@ -222,13 +280,15 @@
         #bmiCalculator button { background-color: #28a745; }
         #bmiCalculator .result span { color: #28a745; }
 
-        /* Fortune Teller */
-        #fortuneTeller { border-color: #ffe0b3; }
-        #fortuneTeller h1 { color: #d68910; }
-        #fortuneTeller .input-group input:focus,
-        #fortuneTeller .input-group select:focus { border-color: #d68910; }
-        #fortuneTeller button { background-color: #d68910; }
-        #fortuneTeller .result span { color: #d68910; }
+        /* Personality Test */
+        #personalityTest { border-color: #ffe0b3; }
+        #personalityTest h1 { color: #d68910; }
+        #personalityTest .input-group input:focus,
+        #personalityTest .input-group select:focus { border-color: #d68910; }
+        #personalityTest button { background-color: #d68910; }
+        #personalityTest .result span { color: #d68910; }
+        #personalityTest .comparison-section button { background-color: #007bff; }
+
 
         /* Media Queries for Responsiveness */
         @media (max-width: 600px) {
@@ -260,7 +320,7 @@
             .input-group select {
                 padding-left: 6px;
             }
-            .fortune-text {
+            .personality-text {
                 font-size: 0.95em;
                 padding: 12px;
             }
@@ -271,7 +331,7 @@
     <div class="navbar">
         <button class="nav-button" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> قیمت طلا</button>
         <button class="nav-button" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i> شاخص وزن</button>
-        <button class="nav-button" onclick="showSection('fortuneTeller', this)"><i class="fas fa-hand-sparkles"></i> فال</button>
+        <button class="nav-button" onclick="showSection('personalityTest', this)"><i class="fas fa-brain"></i> تست شخصیت</button>
     </div>
 
     <div id="goldCalculator" class="app-container">
@@ -344,41 +404,41 @@
         </div>
     </div>
 
-    <div id="fortuneTeller" class="app-container">
-        <h1><i class="fas fa-hand-sparkles" style="margin-left: 10px;"></i>فال حافظ</h1>
+    <div id="personalityTest" class="app-container">
+        <h1><i class="fas fa-brain" style="margin-left: 10px;"></i>تست شخصیت‌شناسی</h1>
 
         <div class="input-group">
-            <label for="userAge">سن شما:</label>
-            <input type="number" id="userAge" placeholder="مثال: 30" min="1" max="120">
-            <i class="fas fa-user icon"></i>
-        </div>
-
-        <div class="input-group">
-            <label for="maritalStatus">وضعیت تاهل:</label>
-            <select id="maritalStatus">
-                <option value="">انتخاب کنید</option>
-                <option value="مجرد">مجرد</option>
-                <option value="متاهل">متاهل</option>
-                <option value="طلاق گرفته">طلاق گرفته</option>
-                <option value="همسر از دست داده">همسر از دست داده</option>
-            </select>
-            <i class="fas fa-ring icon"></i>
-        </div>
-
-        <div class="input-group">
-            <label for="birthMonth">ماه تولد:</label>
-            <select id="birthMonth"></select>
+            <label for="userBirthMonth">ماه تولد شما:</label>
+            <select id="userBirthMonth"></select>
             <i class="fas fa-calendar-star icon"></i>
         </div>
 
-        <button onclick="generateFortune()">بگیر فال حافظ!</button>
+        <div class="input-group">
+            <label for="userGender">جنسیت شما:</label>
+            <select id="userGender">
+                <option value="">انتخاب کنید</option>
+                <option value="مرد">مرد</option>
+                <option value="زن">زن</option>
+                <option value="دیگر">دیگر</option>
+            </select>
+            <i class="fas fa-venus-mars icon"></i>
+        </div>
 
-        <div class="result" id="fortuneResultDiv">
-            <div class="fortune-text" id="fortuneText"></div>
+        <button onclick="analyzePersonality()">تحلیل شخصیت</button>
+
+        <div class="result" id="personalityResultDiv">
+            <div class="personality-text" id="personalityText"></div>
+            <div class="comparison-section">
+                <label for="compareMonth">مقایسه با متولدین ماه:</label>
+                <select id="compareMonth"></select>
+                <button onclick="comparePersonalities()">مقایسه شخصیت‌ها</button>
+                <div class="result comparison-result" id="comparisonResultDiv">
+                    <div id="comparisonText"></div>
+                </div>
+            </div>
         </div>
     </div>
-
-
+    
     <script>
         // --- Navigation Logic ---
         function showSection(sectionId, clickedButton) {
@@ -400,10 +460,13 @@
             document.querySelectorAll('.result').forEach(resultDiv => {
                 resultDiv.style.display = 'none';
             });
+            document.getElementById('comparisonResultDiv').style.display = 'none';
 
-            // If switching to fortune teller, ensure months are populated
-            if (sectionId === 'fortuneTeller') {
-                populateFortuneMonths();
+
+            // If switching to personality test, ensure months are populated
+            if (sectionId === 'personalityTest') {
+                populatePersonalityMonths();
+                populateCompareMonths();
             }
         }
 
@@ -420,7 +483,7 @@
                 return;
             }
             if (isNaN(usdExchangeRate) || usdExchangeRate <= 0) {
-                alert('لطfاً نرخ برابری دلار را به درستی وارد کنید.');
+                alert('لطفاً نرخ برابری دلار را به درستی وارد کنید.');
                 return;
             }
 
@@ -479,140 +542,214 @@
             document.getElementById('bmiResultDiv').style.display = 'block';
         }
 
-        // --- Fortune Teller Logic ---
-        const solarMonths = [ // Re-defined here as persian-date.js is not included
-            { value: 'فروردین', text: 'فروردین' }, { value: 'اردیبهشت', text: 'اردیبهشت' },
-            { value: 'خرداد', text: 'خرداد' }, { value: 'تیر', text: 'تیر' },
-            { value: 'مرداد', text: 'مرداد' }, { value: 'شهریور', text: 'شهریور' },
-            { value: 'مهر', text: 'مهر' }, { value: 'آبان', text: 'آبان' },
-            { value: 'آذر', text: 'آذر' }, { value: 'دی', text: 'دی' },
-            { value: 'بهمن', text: 'بهمن' }, { value: 'اسفند', text: 'اسفند' }
+        // --- Personality Test Logic ---
+        const solarMonths = [
+            { value: 'فروردین', text: 'فروردین (حمل)' }, { value: 'اردیبهشت', text: 'اردیبهشت (ثور)' },
+            { value: 'خرداد', text: 'خرداد (جوزا)' }, { value: 'تیر', text: 'تیر (سرطان)' },
+            { value: 'مرداد', text: 'مرداد (اسد)' }, { value: 'شهریور', text: 'شهریور (سنبله)' },
+            { value: 'مهر', text: 'مهر (میزان)' }, { value: 'آبان', text: 'آبان (عقرب)' },
+            { value: 'آذر', text: 'آذر (قوس)' }, { value: 'دی', text: 'دی (جدی)' },
+            { value: 'بهمن', text: 'بهمن (دلو)' }, { value: 'اسفند', text: 'اسفند (حوت)' }
         ];
 
-        const fortunes = {
-            'فروردین': [
-                "در مسیر زندگی شما تغییرات مثبتی در راه است. با آغوش باز پذیرای آن‌ها باشید و از فرصت‌های جدید استفاده کنید. شجاعت شما ستودنی است.",
-                "نزدیک‌ترین افراد به شما، حامیان واقعی‌تان هستند. به آن‌ها اعتماد کنید و از مشورت‌هایشان بهره ببرید. روزهای روشن در پیش دارید.",
-                "ممکن است با چالش کوچکی روبرو شوید، اما قدرت درونی شما برای غلبه بر آن کافیست. به خودتان ایمان داشته باشید و پافشاری کنید.",
-                "فکر جدیدی که در سر دارید، پتانسیل زیادی برای موفقیت دارد. آن را جدی بگیرید و با برنامه‌ریزی پیش بروید. خوشبختی در دستان شماست.",
-                "لحظات آرامی در انتظار شماست. از این فرصت برای خوداندیشی و برنامه‌ریزی برای آینده استفاده کنید. قلب شما راهنماست."
-            ],
-            'اردیبهشت': [
-                "صبر و پشتکار شما نتیجه خواهد داد. هدف‌هایی که در نظر دارید، کم‌کم به بار می‌نشینند. به تلاش‌هایتان ادامه دهید.",
-                "در مسائل مالی، هوشیار باشید. فرصت‌های خوبی برای بهبود وضعیت اقتصادی‌تان پیش می‌آید. از آن‌ها غافل نشوید.",
-                "روابط عاطفی شما در مرحله‌ای حساس قرار دارد. با صبوری و درک متقابل می‌توانید آن را تقویت کنید. عشق شما پایدار است.",
-                "طبیعت و آرامش آن برای شما شفابخش خواهد بود. لحظاتی را به دور از هیاهو بگذرانید و روحتان را تازه کنید.",
-                "انتظار خبری خوش را داشته باشید که زندگی شما را دگرگون می‌کند. آماده پذیرش تغییرات مثبت باشید. شادمانی در راه است."
-            ],
-            'خرداد': [
-                "ذهن شما پر از ایده‌های نو است. این ایده‌ها را به اشتراک بگذارید و از قدرت ارتباطات خود برای پیشرفت استفاده کنید.",
-                "درگیری‌های ذهنی کوچک ممکن است شما را آزار دهد. سعی کنید آن‌ها را با منطق حل کنید و آرامش خود را حفظ کنید.",
-                "فردی از گذشته ممکن است دوباره وارد زندگی شما شود. با احتیاط عمل کنید و درس‌های گذشته را به خاطر بسپارید.",
-                "سفر کوتاهی در پیش دارید که برای شما پر از تجربه و آموختن خواهد بود. از این فرصت نهایت استفاده را ببرید.",
-                "توانایی شما در سازگاری با شرایط جدید بی‌نظیر است. از این ویژگی برای رسیدن به اهدافتان استفاده کنید. موفقیت نزدیک است."
-            ],
-            'تیر': [
-                "خانواده و عزیزان شما منبع آرامش و قدرت شما هستند. برای آن‌ها وقت بگذارید و قدردان حضورشان باشید.",
-                "مسائل عاطفی برای شما در اولویت قرار می‌گیرد. با صداقت و مهربانی می‌توانید مشکلات را حل کنید و به صلح برسید.",
-                "فرصتی برای کسب درآمد بیشتر یا بهبود وضعیت شغلی‌تان پیش می‌آید. آن را از دست ندهید.",
-                "احساسات شما قوی هستند. آن‌ها را کنترل کنید تا تصمیمات منطقی‌تری بگیرید. دل شما پاک است.",
-                "در روزهای آینده خبری از کسی که مدت‌ها منتظرش بودید، دریافت خواهید کرد. این خبر مسیر زندگی‌تان را تغییر می‌دهد."
-            ],
-            'مرداد': [
-                "شما رهبری ذاتی دارید. از این ویژگی برای هدایت خود و اطرافیانتان به سمت موفقیت استفاده کنید.",
-                "در محیط کار یا تحصیل، فرصتی برای درخشش و نشان دادن توانایی‌هایتان پیش می‌آید. آن را غنیمت بشمارید.",
-                "مراقب حسادت برخی افراد باشید. با اعتماد به نفس و تمرکز بر اهدافتان، از انرژی‌های منفی دور بمانید.",
-                "تفریحات و سرگرمی‌ها برای شما لازم است. کمی استراحت کنید و به روحیه خود اهمیت دهید. شادی حق شماست.",
-                "قلب شما به زودی با عشق و هیجان جدیدی روبرو خواهد شد. آماده یک رابطه عمیق و پرشور باشید."
-            ],
-            'شهریور': [
-                "دقت و نظم شما در هر کاری تحسین‌برانگیز است. با همین ویژگی به موفقیت‌های بزرگ دست پیدا می‌کنید.",
-                "ممکن است نیاز به بازنگری در برنامه‌های مالی خود داشته باشید. با دقت برنامه‌ریزی کنید و از هزینه‌های غیرضروری بپرهیزید.",
-                "سلامتی خود را در اولویت قرار دهید. رژیم غذایی مناسب و ورزش به شما انرژی بیشتری می‌دهد.",
-                "در روابط شخصی، به جزئیات توجه کنید. گاهی یک حرکت کوچک، تأثیر بزرگی دارد. مهربانی شما سرمایه است.",
-                "یک راز قدیمی ممکن است برملا شود. با آن به درستی برخورد کنید و از قضاوت عجولانه پرهیز کنید."
-            ],
-            'مهر': [
-                "عدالت و توازن برای شما بسیار مهم است. در هر تصمیمی، سعی کنید انصاف را رعایت کنید. آرامش در صلح است.",
-                "در روابط عاطفی، به دنبال هماهنگی و درک متقابل باشید. با گفتگو می‌توانید سوءتفاهم‌ها را برطرف کنید.",
-                "فرصتی برای همکاری‌های جدید پیش می‌آید. با دقت شرکا را انتخاب کنید. آینده‌ای روشن در انتظار است.",
-                "زیبایی‌های اطرافتان را کشف کنید. هنر و طبیعت می‌توانند روحیه شما را تازه کنند. لذت ببرید.",
-                "تصمیمی مهم در پیش است که باید با مشورت و سنجیده گرفته شود. عجله نکنید. خرد شما راهنماست."
-            ],
-            'آبان': [
-                "قدرت درونی شما برای مواجهه با مشکلات بی‌نظیر است. از موانع نترسید و با شهامت پیش بروید.",
-                "مسائل مالی پیچیده‌ای ممکن است پیش آید. با تحقیق و مشورت با متخصصان می‌توانید بهترین تصمیم را بگیرید.",
-                "در روابط شخصی، به عمق احساسات توجه کنید. صداقت و صمیمیت رمز موفقیت شماست. عشق شما پایدار است.",
-                "ممکن است وسوسه شوید که رازی را برملا کنید. صبور باشید و عواقب آن را بسنجید. راز نگهدار باشید.",
-                "تغییرات ناگهانی ممکن است رخ دهد. با انعطاف‌پذیری می‌توانید خود را با شرایط جدید وفق دهید. پیروزی با شماست."
-            ],
-            'آذر': [
-                "ماجراجویی و کشف چیزهای جدید برای شما حیاتی است. به دنبال فرصت‌های تازه باشید و از منطقه امن خود خارج شوید.",
-                "در یادگیری و گسترش دانش خود سرمایه‌گذاری کنید. این راهی برای پیشرفت و موفقیت‌های آتی شماست.",
-                "برخی سوءتفاهم‌ها با دوستان ممکن است پیش آید. با صراحت و مهربانی می‌توانید آن‌ها را حل کنید.",
-                "سفر طولانی‌مدتی در پیش دارید که برای شما تجربه‌های ارزشمندی به ارمغان می‌آورد. آماده باشید.",
-                "آرمان‌گرایی شما ستودنی است. با هدف‌گذاری واقع‌بینانه می‌توانید به آرزوهایتان دست پیدا کنید. افق‌های شما روشن است."
-            ],
-            'دی': [
-                "پشتکار و تعهد شما به اهدافتان، ستودنی است. با همین رویکرد به قله‌های موفقیت می‌رسید.",
-                "در مسائل شغلی، جدی باشید و مسئولیت‌پذیری خود را نشان دهید. پاداش تلاش‌هایتان را دریافت خواهید کرد.",
-                "ممکن است احساس تنهایی کنید. با خانواده و دوستانتان وقت بگذرانید و از حمایت آن‌ها بهره‌مند شوید.",
-                "برنامه‌ریزی دقیق برای آینده برای شما ضروری است. قدم به قدم پیش بروید و از مسیر لذت ببرید.",
-                "در مواجهه با سختی‌ها، قوی باشید. قدرت درونی شما بیشتر از آن چیزی است که فکر می‌کنید. پیروزی نزدیک است."
-            ],
-            'بهمن': [
-                "ایده‌های نو و خلاقانه شما مورد تحسین قرار خواهد گرفت. از به اشتراک گذاشتن آن‌ها نترسید.",
-                "ممکن است با افرادی آشنا شوید که دیدگاه‌های شما را تغییر دهند. از این تجربیات استفاده کنید.",
-                "در مسائل اجتماعی فعال باشید. کمک به دیگران به شما احساس رضایت می‌بخشد. قلب شما بزرگ است.",
-                "آزادی و استقلال برای شما اهمیت زیادی دارد. برای حفظ آن تلاش کنید، اما مسئولیت‌پذیری را فراموش نکنید.",
-                "یک آرزوی دیرینه به زودی محقق می‌شود. شکرگزار باشید و از لحظات شاد زندگی لذت ببرید."
-            ],
-            'اسفند': [
-                "احساسات شما عمیق و قوی هستند. آن‌ها را درک کنید و به خودتان اجازه دهید که آن‌ها را تجربه کنید.",
-                "خلاقیت شما در اوج است. از این فرصت برای خلق آثار هنری یا حل مشکلات به شیوه‌ای نو استفاده کنید.",
-                "ممکن است احساس کنید در دنیای خیالی خود غرق شده‌اید. کمی به واقعیت برگردید و برنامه‌ریزی کنید.",
-                "در روابط عاطفی، همدلی و فداکاری شما ستودنی است. اما مراقب باشید که از خودتان غافل نشوید.",
-                "پیام‌های مهمی از ناخودآگاه خود دریافت خواهید کرد. به رویاهایتان توجه کنید و از شهودتان پیروی کنید. موفقیت در راه است."
-            ]
+        const personalityTraits = {
+            'فروردین': {
+                'نقاط قوت': ["انرژی بالا و شروعکنندهی پروژهها", "خلاق و ایدهپرداز", "اجتماعی و خوشمشرب", "خوشبین و امیدوار", "کنجکاو و علاقهمند به یادگیری", "رها و آزاداندیش"],
+                'نقاط ضعف': ["ممکن است زود از پروژهها خسته شوید", "بینظم و نامرتب", "روابطتان گاهی سطحی میماند", "عجول و کمحوصله", "گاهی بیش از حد خوشبین و غیرواقعبین", "مسئولیتگریز"]
+            },
+            'اردیبهشت': {
+                'نقاط قوت': ["منظم و برنامهریز", "وفادار و قابل اعتماد", "صبور و با حوصله", "واقعبین و عملگرا", "سختکوش و پرتلاش", "محافظهکار و ریسکگریز"],
+                'نقاط ضعف': ["گاهی بیش از حد سختگیر", "مقاوم در برابر تغییر", "ممکن است مادیگرا باشید", "کینهتوزی در صورت آسیب دیدن", "گاهی خشک و بیاحساس", "انعطافناپذیر"]
+            },
+            'خرداد': {
+                'نقاط قوت': ["کنجکاو و دانشجو", "سازگار و انعطافپذیر", "شوخطبع و سرزنده", "همدل و دلسوز", "اجتماعی و خونگرم", "خوشبین و مثبتاندیش"],
+                'نقاط ضعف': ["پرحرف و گاهی یکطرفه", "بیقرار و کمتحمل", "سطحینگر و کمعمق", "فراموشکار و نامرتب", "ممکن است زود علاقهتان را از دست بدهید", "گاهی غیرقابل پیشبینی"]
+            },
+            'تیر': {
+                'نقاط قوت': ["عاطفی و مهربان", "خانوادهدوست و دلسوز", "خلاق و هنرمند", "وفادار و متعهد", "غریزهی قوی و شهودی", "عمیق و معنوی"],
+                'نقاط ضعف': ["حساس و زودرنج", "گاهی وابسته و نیازمند تایید دیگران", "کمالگرا و خودانتقادگر", "ممکن است احساساتتان شما را کنترل کند", "غیرتی و حساس به قضاوت دیگران", "گاهی درونگرا و منزوی"]
+            },
+            'مرداد': {
+                'نقاط قوت': ["قوی و بااراده", "رهبر و تصمیمگیرنده", "صریح و رک", "متعهد و پایبند به قول", "قابل اعتماد و مسئولیتپذیر", "جاهطلب و مصمم"],
+                'نقاط ضعف': ["مغرور و خودمحور", "سلطهجو و کنترلگر", "کینهتوز و کمگذشت", "گاهی بیش از حد سختگیر", "انعطافناپذیر", "ممکن دیگران را تحت فشار بگذارید"]
+            },
+            'شهریور': {
+                'نقاط قوت': ["منظم و دقیق", "کوشا و سختکوش", "عملی و واقعبین", "وفادار و پایدار", "انتقادپذیر (و انتقادگر)", "مسئولیتپذیر و قابل اعتماد"],
+                'نقاط ضعف': ["کمالگرا و ایرادگیر", "گاهی سرد و کماحساس", "محافظهکار و ریسکگریز", "ممکن است بیش از حد منتقد باشید", "سختگیر در روابط", "گاهی وسواس در جزئیات"]
+            },
+            'مهر': {
+                'نقاط قوت': ["منصف و عادل", "دیپلماتیک و صلحطلب", "جذاب و دوستداشتنی", "اجتماعی و معاشرتی", "انعطافپذیر و سازگار", "رمانتیک و هنردوست"],
+                'نقاط ضعف': ["تودار و کماحساس", "مردد و بیتصمیم", "گاهی وابسته به نظر دیگران", "ممکن است از تعارض فرار کنید", "سطحینگر در برخی روابط", "گاهی بیش از حد سازشکار"]
+            },
+            'آبان': {
+                'نقاط قوت': ["مرموز و جذاب", "شهودی و باهوش", "پرشور و احساساتی", "مصمم و رقابتجو", "وفادار و حامی", "رازدار و قابل اعتماد"],
+                'نقاط ضعف': ["کینهتوز و کمگذشت", "کنترلگر و سلطهجو", "گاهی بدبین و مشکوک", "ممکن است افراطی عمل کنید", "انعطافناپذیر در برخی موارد", "احساسات عمیق ولی پنهان"]
+            },
+            'آذر': {
+                'نقاط قوت': ["ماجراجو و آزاداندیش", "خوشبین و شاد", "صادق و رک", "اجتماعی و مردمدار", "انعطافپذیر و سازگار", "انرژیبخش و الهامدهنده"],
+                'نقاط ضعف': ["بیتعهد و فرار از مسئولیت", "سطحینگر و کمعمق", "فراموشکار و نامرتب", "ممکن است غیرقابل پیشبینی باشید", "گاهی بیش از حد بیخیال", "عدم پایداری در روابط"]
+            },
+            'دی': {
+                'نقاط قوت': ["جدی و مسئولیتپذیر", "منضبط و قاعدهمند", "صبور و پایدار", "سختکوش و مصمم", "وفادار و قابل اعتماد", "محکم و استوار"],
+                'نقاط ضعف': ["سرد و کماحساس", "یکدنده و انعطافناپذیر", "محافظهکار و ترسو", "گاهی بیش از حد منتقد", "خشک و بیحوصله", "ممکن است دیگران را تحت فشار بگذارید"]
+            },
+            'بهمن': {
+                'نقاط قوت': ["خلاق و نوآور", "انقلابی و پیشرو", "بشر دوست و عدالتخواه", "کنجکاو و تحلیلگر", "متعهد به ارزشها", "مرموز و جذاب"],
+                'نقاط ضعف': ["غیرقابل پیشبینی", "سرسخت و یکدنده", "گاهی غیرمنطقی", "ممکن است افراطی عمل کنید", "کمتحمل در برابر سنتها", "گاهی منزوی و در خودفرورفته"]
+            },
+            'اسفند': {
+                'نقاط قوت': ["خیالپرداز و خلاق", "حساس و همدل", "رمانتیک و عاشقانه", "مهربان و بخشنده", "شهودی و درک بالا", "انعطافپذیر و سازگار"],
+                'نقاط ضعف': ["زودرنج و آسیبپذیر", "غیرواقعبین و رویایی", "گاهی غیرقابل پیشبینی", "فراموشکار و نامرتب", "ممکن است وابسته شوید", "گاهی منزوی و درونگرا"]
+            }
         };
 
-        function populateFortuneMonths() {
-            const select = document.getElementById('birthMonth');
-            // Clear existing options before populating
-            select.innerHTML = '<option value="">ماه تولد را انتخاب کنید</option>'; 
+        function getRandomElements(arr, count) {
+            const shuffled = arr.slice().sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function populatePersonalityMonths() {
+            const userMonthSelect = document.getElementById('userBirthMonth');
+            const compareMonthSelect = document.getElementById('compareMonth');
+            
+            userMonthSelect.innerHTML = '<option value="">ماه تولد شما را انتخاب کنید</option>';
+            compareMonthSelect.innerHTML = '<option value="">برای مقایسه انتخاب کنید</option>';
+
             solarMonths.forEach(month => {
-                const option = document.createElement('option');
-                option.value = month.value;
-                option.innerText = month.text;
-                select.appendChild(option);
+                const option1 = document.createElement('option');
+                option1.value = month.value;
+                option1.innerText = month.text;
+                userMonthSelect.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = month.value;
+                option2.innerText = month.text;
+                compareMonthSelect.appendChild(option2);
             });
         }
 
-        function generateFortune() {
-            const age = document.getElementById('userAge').value;
-            const maritalStatus = document.getElementById('maritalStatus').value;
-            const birthMonth = document.getElementById('birthMonth').value;
+        function populateCompareMonths() {
+            // This function is now redundant as populatePersonalityMonths handles both
+            // Kept for clarity but could be removed.
+            populatePersonalityMonths(); 
+        }
 
-            if (!age || !maritalStatus || !birthMonth) {
-                alert('لطفاً تمام اطلاعات مورد نیاز برای گرفتن فال را تکمیل کنید.');
+        function analyzePersonality() {
+            const birthMonth = document.getElementById('userBirthMonth').value;
+            const gender = document.getElementById('userGender').value;
+
+            if (!birthMonth || !gender) {
+                alert('لطفاً ماه تولد و جنسیت خود را انتخاب کنید.');
                 return;
             }
 
-            const monthFortunes = fortunes[birthMonth];
-            if (monthFortunes && monthFortunes.length > 0) {
-                const randomIndex = Math.floor(Math.random() * monthFortunes.length);
-                document.getElementById('fortuneText').innerText = monthFortunes[randomIndex];
-                document.getElementById('fortuneResultDiv').style.display = 'block';
-            } else {
-                // This case should ideally not happen if solarMonths and fortunes are correctly mapped
-                document.getElementById('fortuneText').innerText = 'فالی برای این ماه تولد یافت نشد. لطفاً ماه دیگری را انتخاب کنید.';
-                document.getElementById('fortuneResultDiv').style.display = 'block';
+            const traits = personalityTraits[birthMonth];
+            if (!traits) {
+                alert('اطلاعات شخصیتی برای این ماه یافت نشد.');
+                return;
             }
+
+            const positiveTraits = getRandomElements(traits['نقاط قوت'], Math.floor(Math.random() * (4 - 3 + 1)) + 3); // 3 to 4 positives
+            const negativeTraits = getRandomElements(traits['نقاط ضعف'], Math.floor(Math.random() * (3 - 2 + 1)) + 2); // 2 to 3 negatives
+
+            let resultHtml = `<h2>شخصیت متولدین ماه ${birthMonth}</h2>`;
+            resultHtml += `<h3>نقاط قوت شما:</h3><ul>`;
+            positiveTraits.forEach(trait => {
+                resultHtml += `<li class="positive-point">${trait}</li>`;
+            });
+            resultHtml += `</ul><h3>نقاط قابل بهبود شما:</h3><ul>`;
+            negativeTraits.forEach(trait => {
+                resultHtml += `<li class="negative-point">${trait}</li>`;
+            });
+            resultHtml += `</ul>`;
+
+            document.getElementById('personalityText').innerHTML = resultHtml;
+            document.getElementById('personalityResultDiv').style.display = 'block';
+            document.getElementById('comparisonResultDiv').style.display = 'none'; // Hide comparison results
         }
 
+        function comparePersonalities() {
+            const userMonth = document.getElementById('userBirthMonth').value;
+            const compareMonth = document.getElementById('compareMonth').value;
+
+            if (!userMonth || !compareMonth) {
+                alert('لطفاً ماه تولد خودتان و ماهی که می‌خواهید مقایسه کنید را انتخاب نمایید.');
+                return;
+            }
+            if (userMonth === compareMonth) {
+                alert('لطفاً ماه متفاوتی را برای مقایسه انتخاب کنید.');
+                return;
+            }
+
+            const userTraits = personalityTraits[userMonth];
+            const compareTraits = personalityTraits[compareMonth];
+
+            if (!userTraits || !compareTraits) {
+                alert('اطلاعات شخصیتی برای یکی از ماه‌ها یافت نشد.');
+                return;
+            }
+
+            let commonPositives = userTraits['نقاط قوت'].filter(trait => compareTraits['نقاط قوت'].includes(trait));
+            let commonNegatives = userTraits['نقاط ضعف'].filter(trait => compareTraits['نقاط ضعف'].includes(trait));
+            
+            let userUniquePositives = userTraits['نقاط قوت'].filter(trait => !compareTraits['نقاط قوت'].includes(trait));
+            let compareUniquePositives = compareTraits['نقاط قوت'].filter(trait => !userTraits['نقاط قوت'].includes(trait));
+            
+            let userUniqueNegatives = userTraits['نقاط ضعف'].filter(trait => !compareTraits['نقاط ضعف'].includes(trait));
+            let compareUniqueNegatives = compareTraits['نقاط ضعف'].filter(trait => !userTraits['نقاط ضعف'].includes(trait));
+
+            let comparisonHtml = `<h3>مقایسه شخصیت متولد ${userMonth} با متولد ${compareMonth}:</h3>`;
+            
+            if (commonPositives.length > 0) {
+                comparisonHtml += `<p><strong>نقاط مشترک مثبت:</strong></p><ul>`;
+                commonPositives.forEach(trait => comparisonHtml += `<li class="positive-point">${trait}</li>`);
+                comparisonHtml += `</ul>`;
+            } else {
+                comparisonHtml += `<p><strong>نقاط مشترک مثبت:</strong> مورد قابل توجهی یافت نشد.</p>`;
+            }
+
+            if (userUniquePositives.length > 0 || compareUniquePositives.length > 0) {
+                comparisonHtml += `<p><strong>نقاط قوت متفاوت:</strong></p><ul>`;
+                userUniquePositives.forEach(trait => comparisonHtml += `<li>متولد ${userMonth}: ${trait}</li>`);
+                compareUniquePositives.forEach(trait => comparisonHtml += `<li>متولد ${compareMonth}: ${trait}</li>`);
+                comparisonHtml += `</ul>`;
+            }
+
+            if (commonNegatives.length > 0) {
+                comparisonHtml += `<p><strong>نقاط مشترک منفی (احتمال عدم تفاهم):</strong></p><ul>`;
+                commonNegatives.forEach(trait => comparisonHtml += `<li class="negative-point">${trait}</li>`);
+                comparisonHtml += `</ul>`;
+            } else {
+                comparisonHtml += `<p><strong>نقاط مشترک منفی:</strong> مورد قابل توجهی یافت نشد.</p>`;
+            }
+
+             if (userUniqueNegatives.length > 0 || compareUniqueNegatives.length > 0) {
+                comparisonHtml += `<p><strong>نقاط ضعف متفاوت:</strong></p><ul>`;
+                userUniqueNegatives.forEach(trait => comparisonHtml += `<li>متولد ${userMonth}: ${trait}</li>`);
+                compareUniqueNegatives.forEach(trait => comparisonHtml += `<li>متولد ${compareMonth}: ${trait}</li>`);
+                comparisonHtml += `</ul>`;
+            }
+
+
+            // General compatibility statement
+            let compatibilityStatement = "";
+            let compatibilityScore = commonPositives.length - commonNegatives.length;
+
+            if (compatibilityScore >= 3) {
+                compatibilityStatement = "شما و متولد این ماه شباهت‌های مثبتی زیادی دارید و احتمالاً به خوبی با هم کنار می‌آیید.";
+            } else if (compatibilityScore >= 0) {
+                compatibilityStatement = "شما و متولد این ماه می‌توانید در بسیاری از زمینه‌ها تفاهم داشته باشید، با کمی درک متقابل.";
+            } else {
+                compatibilityStatement = "ممکن است در برخی زمینه‌ها چالش‌هایی در تفاهم با متولد این ماه داشته باشید. نیاز به درک بیشتر از تفاوت‌هاست.";
+            }
+            comparisonHtml += `<p><strong>نتیجه کلی تفاهم:</strong> ${compatibilityStatement}</p>`;
+
+
+            document.getElementById('comparisonText').innerHTML = comparisonHtml;
+            document.getElementById('comparisonResultDiv').style.display = 'block';
+        }
 
         // Initial setup: On page load, only show the navbar.
-        // No specific calculator is shown by default.
         document.addEventListener('DOMContentLoaded', (event) => {
             // No active button by default, all app containers are hidden by CSS
             // The showSection function will be called when a nav button is clicked.
