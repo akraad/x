@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه‌گر قیمت طلا</title>
+    
+    <link href="https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <style>
         body {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: #f0f2f5; /* روشن‌تر */
+            font-family: 'Shabnam', 'Vazirmatn', sans-serif; /* استفاده از شبنم، با Vazirmatn به عنوان فونت جایگزین */
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,36 +26,36 @@
         .gold-calculator {
             background-color: #fff;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* سایه ملایم‌تر */
-            padding: 30px; /* پدینگ کمتر */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
             width: 100%;
-            max-width: 400px; /* عرض کمتر */
+            max-width: 420px; /* کمی بزرگ‌تر برای فیلد دلار */
             text-align: center;
             border: 1px solid #e5e5e5;
         }
         h1 {
             color: #b8860b;
-            margin-bottom: 25px; /* فاصله کمتر */
-            font-size: 1.8em; /* سایز کوچکتر */
+            margin-bottom: 25px;
+            font-size: 1.9em; /* کمی بزرگتر */
             font-weight: 700;
         }
         .input-group {
-            margin-bottom: 18px; /* فاصله کمتر */
+            margin-bottom: 18px;
             text-align: right;
-            position: relative; /* برای قرارگیری آیکون */
+            position: relative;
         }
         .input-group label {
             display: block;
-            margin-bottom: 6px; /* فاصله کمتر */
-            font-size: 0.95em; /* سایز کوچکتر */
+            margin-bottom: 6px;
+            font-size: 0.95em;
             color: #555;
         }
         .input-group input[type="number"] {
-            width: calc(100% - 40px); /* فضای آیکون */
-            padding: 10px 10px 10px 35px; /* پدینگ برای آیکون */
+            width: calc(100% - 40px);
+            padding: 10px 10px 10px 35px;
             border: 1px solid #ccc;
-            border-radius: 6px; /* گوشه‌های گردتر */
-            font-size: 1em; /* سایز کوچکتر */
+            border-radius: 6px;
+            font-size: 1em;
             direction: ltr;
             text-align: right;
             transition: border-color 0.3s;
@@ -62,33 +66,33 @@
         }
         .input-group .icon {
             position: absolute;
-            left: 10px; /* موقعیت آیکون */
+            left: 10px;
             top: 50%;
-            transform: translateY(calc(-50% + 10px)); /* تنظیم دقیق‌تر */
+            transform: translateY(calc(-50% + 10px));
             color: #888;
             font-size: 1.1em;
         }
         .input-group small {
             display: block;
-            margin-top: 4px; /* فاصله کمتر */
+            margin-top: 4px;
             color: #888;
-            font-size: 0.8em; /* سایز کوچکتر */
+            font-size: 0.8em;
         }
         .weight-inputs {
             display: flex;
-            gap: 10px; /* فاصله بین فیلدهای وزن */
+            gap: 10px;
         }
         .weight-inputs .input-group {
-            flex: 1; /* تقسیم مساوی فضا */
-            margin-bottom: 0; /* حذف margin-bottom از اینجا */
+            flex: 1;
+            margin-bottom: 0;
         }
         button {
             background-color: #b8860b;
             color: white;
-            padding: 12px 20px; /* پدینگ کمتر */
+            padding: 12px 20px;
             border: none;
             border-radius: 6px;
-            font-size: 1.1em; /* سایز کوچکتر */
+            font-size: 1.1em;
             cursor: pointer;
             transition: background-color 0.3s ease;
             width: 100%;
@@ -99,19 +103,23 @@
             background-color: #a07a0a;
         }
         .result {
-            margin-top: 25px; /* فاصله کمتر */
+            margin-top: 25px;
             background-color: #f9f9f9;
             border: 1px solid #eee;
             border-radius: 8px;
-            padding: 18px; /* پدینگ کمتر */
-            font-size: 1.2em; /* سایز کوچکتر */
+            padding: 18px;
+            font-size: 1.2em;
             color: #333;
             font-weight: 700;
             display: none;
+            text-align: right; /* برای نمایش بهتر دو قیمت */
+        }
+        .result div {
+            margin-bottom: 8px; /* فاصله بین قیمت‌ها */
         }
         .result span {
             color: #b8860b;
-            font-size: 1em; /* سایز متناسب */
+            font-size: 1em;
             margin-right: 5px;
         }
     </style>
@@ -121,9 +129,16 @@
         <h1><i class="fas fa-gem" style="margin-left: 10px;"></i>محاسبه‌گر هوشمند طلا</h1>
         
         <div class="input-group">
-            <label for="goldPrice">قیمت روز طلا (تومان در گرم):</label>
-            <input type="number" id="goldPrice" placeholder="مثال: 3,200,000" min="0">
+            <label for="goldPriceToman">قیمت روز طلا (تومان در گرم):</label>
+            <input type="number" id="goldPriceToman" placeholder="مثال: 3,200,000" min="0">
             <i class="fas fa-coins icon"></i>
+        </div>
+
+        <div class="input-group">
+            <label for="usdExchangeRate">نرخ برابری دلار به تومان:</label>
+            <input type="number" id="usdExchangeRate" placeholder="مثال: 60000" min="1000">
+            <i class="fas fa-dollar-sign icon"></i>
+            <small>نرخ هر دلار چند تومان است.</small>
         </div>
 
         <div class="input-group">
@@ -151,19 +166,25 @@
         <button onclick="calculatePrice()">محاسبه قیمت</button>
         
         <div class="result" id="resultDiv">
-            <span>قیمت نهایی:</span> <span id="finalPrice"></span> تومان
+            <div><span>قیمت نهایی:</span> <span id="finalPriceToman"></span> تومان</div>
+            <div><span>قیمت نهایی:</span> <span id="finalPriceDollar"></span> دلار</div>
         </div>
     </div>
 
     <script>
         function calculatePrice() {
-            const goldPricePerGram = parseFloat(document.getElementById('goldPrice').value);
+            const goldPricePerGramToman = parseFloat(document.getElementById('goldPriceToman').value);
+            const usdExchangeRate = parseFloat(document.getElementById('usdExchangeRate').value);
             const goldWeightGram = parseFloat(document.getElementById('goldWeightGram').value || 0);
             const goldWeightSoot = parseFloat(document.getElementById('goldWeightSoot').value || 0);
             const wagePercent = parseFloat(document.getElementById('wagePercent').value || 0);
 
-            if (isNaN(goldPricePerGram) || goldPricePerGram <= 0) {
+            if (isNaN(goldPricePerGramToman) || goldPricePerGramToman <= 0) {
                 alert('لطفاً قیمت روز طلا را به درستی وارد کنید.');
+                return;
+            }
+            if (isNaN(usdExchangeRate) || usdExchangeRate <= 0) {
+                alert('لطفاً نرخ برابری دلار را به درستی وارد کنید.');
                 return;
             }
 
@@ -174,24 +195,26 @@
                  return;
             }
 
-            // محاسبه اجرت (بر اساس درصد وارد شده)
-            // اجرت بر اساس قیمت روز طلا و درصد اجرت محاسبه می‌شود.
-            let wageAmount = (goldPricePerGram * (wagePercent / 100)) * totalWeightGram;
+            // محاسبه اجرت به تومان
+            let wageAmountToman = (goldPricePerGramToman * (wagePercent / 100)) * totalWeightGram;
             
-            // 7 درصد سود
-            // سود بر اساس قیمت روز طلا و 7 درصد سود محاسبه می‌شود.
-            const profitAmount = (goldPricePerGram * 0.07) * totalWeightGram;
+            // 7 درصد سود به تومان
+            const profitAmountToman = (goldPricePerGramToman * 0.07) * totalWeightGram;
 
-            // محاسبه مالیات (10 درصد از اجرت و سود)
-            const taxAmount = (wageAmount + profitAmount) * 0.10;
+            // محاسبه مالیات به تومان (10 درصد از اجرت و سود)
+            const taxAmountToman = (wageAmountToman + profitAmountToman) * 0.10;
 
-            // قیمت خام طلا
-            const rawGoldPrice = goldPricePerGram * totalWeightGram;
+            // قیمت خام طلا به تومان
+            const rawGoldPriceToman = goldPricePerGramToman * totalWeightGram;
             
-            // قیمت نهایی = قیمت خام طلا + اجرت + سود + مالیات (مالیات روی اجرت و سود اعمال شده است)
-            const finalPrice = rawGoldPrice + wageAmount + profitAmount + taxAmount;
+            // قیمت نهایی به تومان
+            const finalPriceToman = rawGoldPriceToman + wageAmountToman + profitAmountToman + taxAmountToman;
 
-            document.getElementById('finalPrice').innerText = finalPrice.toLocaleString('fa-IR'); // نمایش با جداکننده هزارگان
+            // تبدیل قیمت نهایی به دلار
+            const finalPriceDollar = finalPriceToman / usdExchangeRate;
+
+            document.getElementById('finalPriceToman').innerText = finalPriceToman.toLocaleString('fa-IR'); // نمایش با جداکننده هزارگان
+            document.getElementById('finalPriceDollar').innerText = finalPriceDollar.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // نمایش با 2 رقم اعشار برای دلار
             document.getElementById('resultDiv').style.display = 'block'; // نمایش نتیجه
         }
     </script>
