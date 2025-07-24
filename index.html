@@ -4,358 +4,385 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ابزارک‌های هوشمند</title>
-    
-    
-<link href="https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
     <style>
         body {
             font-family: 'Shabnam', 'Vazirmatn', sans-serif;
-            background-color: #f0f2f5;
+            background-color: #1a1a1a; /* Dark background */
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            color: #333;
+            color: #f0f0f0; /* Light text */
             padding: 20px;
             box-sizing: border-box;
         }
 
-        /* --- Modern Minimal Grey Navbar Styles with Colored Borders --- */
+        /* --- Dynamic Navbar Styles --- */
         .navbar {
             display: flex;
             justify-content: center;
-            background-color: #f8f8f8; /* Light grey background */
+            background-color: #2a2a2a; /* Slightly lighter dark */
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
             padding: 10px 15px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             flex-wrap: wrap;
-            gap: 8px;
-            border: 1px solid #e0e0e0; /* Subtle border */
+            gap: 10px;
+            border: 1px solid #3a3a3a;
         }
         .nav-button {
-            background-color: #ececec; /* Slightly darker grey for buttons */
-            color: #555; /* Dark grey text */
-            padding: 10px 18px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
-            font-size: 0.9em;
+            font-size: 0.95em;
             cursor: pointer;
             transition: all 0.3s ease;
             flex-grow: 1;
-            min-width: 120px;
-            max-width: 180px;
+            min-width: 130px;
+            max-width: 190px;
             font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-            position: relative; /* For the colored border */
-            overflow: hidden; /* To keep the pseudo-element within bounds */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent; /* Default transparent border */
         }
-        .nav-button::before {
+        .nav-button:before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px; /* Thickness of the colored border */
-            background-color: transparent; /* Default transparent */
+            height: 4px; /* Border thickness */
+            background-color: transparent;
             transition: background-color 0.3s ease;
         }
 
-        /* Specific colors for each button */
-        .nav-button[data-color="gold"]::before { background-color: #FFD700; } /* Gold */
-        .nav-button[data-color="green"]::before { background-color: #28a745; } /* Green */
-        .nav-button[data-color="orange"]::before { background-color: #FFA500; } /* Orange */
-        .nav-button[data-color="purple"]::before { background-color: #800080; } /* Purple */
-        .nav-button[data-color="blue"]::before { background-color: #1e90ff; } /* Blue */
-        .nav-button[data-color="red"]::before { background-color: #dc3545; } /* Red for new calculator */
-
+        /* Specific colors for each button's border and hover/active states */
+        .nav-button[data-color="gold"]:before { background-color: #FFD700; } /* Gold */
+        .nav-button[data-color="green"]:before { background-color: #28a745; } /* Green */
+        .nav-button[data-color="orange"]:before { background-color: #FFA500; } /* Orange */
+        .nav-button[data-color="purple"]:before { background-color: #800080; } /* Purple */
+        .nav-button[data-color="blue"]:before { background-color: #1e90ff; } /* Blue */
+        .nav-button[data-color="red"]:before { background-color: #dc3545; } /* Red */
 
         .nav-button:hover {
-            background-color: #e0e0e0; /* Even darker grey on hover */
-            transform: translateY(-2px);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-            color: #333; /* Darker text on hover */
+            background-color: #4a4a4a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            color: #ffffff;
         }
         .nav-button.active {
-            background-color: #d0d0d0; /* Active state, darker grey */
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18), inset 0 0 8px rgba(0, 0, 0, 0.1);
+            background-color: #5a5a5a;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.3);
             transform: translateY(0);
-            color: #222; /* Even darker text for active */
+            color: #ffffff;
+            border-color: var(--button-color); /* Use CSS variable for active border */
         }
         .nav-button i {
-            margin-left: 8px;
-            font-size: 1em;
-            color: #777; /* Icon color */
+            margin-left: 10px;
+            font-size: 1.1em;
+            color: #bbb;
         }
         .nav-button.active i {
-            color: #333; /* Icon color when active */
+            color: #fff;
         }
 
-        /* --- Common Form Styles (Minimal & Classic) --- */
+        /* --- Common App Container Styles --- */
         .app-container {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
-            padding: 25px;
+            background-color: #2a2a2a; /* Darker grey background for containers */
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            padding: 30px;
             width: 100%;
-            max-width: 420px; /* Slightly wider for new tools */
+            max-width: 450px;
             text-align: center;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #3a3a3a;
             display: none; /* Initially hidden */
-            transition: all 0.3s ease-in-out;
+            transition: all 0.4s ease-in-out;
         }
         .app-container h1 {
-            margin-bottom: 20px;
-            font-size: 1.7em;
+            margin-bottom: 25px;
+            font-size: 1.8em;
             font-weight: 700;
-            color: #444;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
         }
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: right;
             position: relative;
         }
         .input-group label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 0.9em;
-            color: #555;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            color: #e0e0e0;
         }
         .input-group input[type="number"],
         .input-group input[type="text"],
         .input-group select {
-            width: calc(100% - 35px);
-            padding: 10px 10px 10px 30px;
-            border: 1px solid #bbb;
-            border-radius: 5px;
-            font-size: 0.9em;
+            width: calc(100% - 40px);
+            padding: 12px 15px 12px 35px;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 1em;
+            background-color: #3a3a3a;
+            color: #f0f0f0;
             direction: ltr; /* Default for inputs */
             text-align: right;
-            transition: border-color 0.2s;
+            transition: border-color 0.3s, box-shadow 0.3s;
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
             background-repeat: no-repeat;
-            background-position: left 8px center;
-            background-size: 14px;
-            padding-left: 35px;
+            background-position: left 12px center;
+            background-size: 18px;
+            padding-left: 45px;
         }
 
         .input-group select {
             width: calc(100% - 15px);
-            padding-left: 8px;
+            padding-left: 15px; /* Adjust padding for select */
             direction: rtl; /* For Persian text in select */
-            background-position: left 8px center;
-            background-size: 14px;
+            background-position: left 12px center;
+            background-size: 18px;
             cursor: pointer;
         }
         .input-group select option {
-            padding: 5px;
+            background-color: #3a3a3a; /* Darker background for options */
+            color: #f0f0f0;
+            padding: 8px;
         }
 
         .input-group input[type="number"]:focus,
         .input-group input[type="text"]:focus,
         .input-group select:focus {
             outline: none;
-            border-color: #007bff;
+            border-color: #1e90ff; /* Default focus blue */
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.3);
         }
         .input-group .icon {
             position: absolute;
-            left: 8px;
+            left: 12px;
             top: 50%;
-            transform: translateY(calc(-50% + 8px));
-            color: #888;
-            font-size: 1em;
+            transform: translateY(calc(-50% + 12px));
+            color: #aaa;
+            font-size: 1.1em;
         }
         .input-group small {
             display: block;
-            margin-top: 3px;
-            color: #888;
-            font-size: 0.75em;
+            margin-top: 5px;
+            color: #bbb;
+            font-size: 0.8em;
             text-align: right;
         }
-        .flex-inputs { /* General class for flexboxed input groups */
+        .flex-inputs {
             display: flex;
-            gap: 8px;
-            align-items: flex-end; /* Aligns items to the bottom */
+            gap: 10px;
+            align-items: flex-end;
         }
         .flex-inputs .input-group {
             flex: 1;
             margin-bottom: 0;
         }
         .flex-inputs .input-group label {
-            white-space: nowrap; /* Prevents label from wrapping */
+            white-space: nowrap;
         }
         .app-container button {
             color: white;
-            padding: 10px 18px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 5px;
-            font-size: 1em;
+            border-radius: 8px;
+            font-size: 1.05em;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
             width: 100%;
             font-weight: 600;
-            margin-top: 18px;
+            margin-top: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
         }
         .app-container button:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
         }
         .result {
-            margin-top: 20px;
-            background-color: #f8f8f8;
-            border: 1px solid #e8e8e8;
-            border-radius: 7px;
-            padding: 16px;
+            margin-top: 30px;
+            background-color: #3a3a3a;
+            border: 1px solid #555;
+            border-radius: 10px;
+            padding: 20px;
             font-size: 1.1em;
-            color: #333;
+            color: #f0f0f0;
             font-weight: 600;
             display: none;
             text-align: right;
-            line-height: 1.6;
+            line-height: 1.8;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
         }
         .result div {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         .result span {
-            font-size: 0.95em;
-            margin-right: 5px;
+            font-size: 1em;
+            margin-right: 8px;
             font-weight: 700;
         }
         .result .small-text {
-            font-size: 0.7em;
-            color: #777;
+            font-size: 0.75em;
+            color: #bbb;
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: normal;
         }
         .personality-text {
             font-size: 1.05em;
             font-weight: normal;
-            margin-top: 15px;
+            margin-top: 20px;
             text-align: justify;
-            background-color: #fdfdfd;
-            border: 1px dashed #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            color: #444;
+            background-color: #3a3a3a;
+            border: 1px dashed #555;
+            padding: 20px;
+            border-radius: 10px;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+        .personality-text h2 {
+            color: #FFD700; /* Gold for titles in personality */
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .personality-text h3 {
+            color: #ffa500; /* Orange for subheadings */
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+        .personality-text ul {
+            list-style-type: disc;
+            padding-right: 25px;
+            margin-bottom: 15px;
+        }
+        .personality-text li {
+            margin-bottom: 5px;
+            color: #e0e0e0;
+        }
+        .positive-point {
+            color: #8aff8a; /* Lighter green */
+            font-weight: 600;
+        }
+        .negative-point {
+            color: #ff8a8a; /* Lighter red */
+            font-weight: 600;
         }
         .comparison-section {
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px dashed #eee;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #555;
             text-align: right;
         }
         .comparison-section label {
-            font-size: 0.9em;
-            color: #555;
+            font-size: 0.95em;
+            color: #e0e0e0;
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .comparison-section select {
             width: calc(100% - 15px);
-            padding: 9px 9px 9px 8px;
-            border: 1px solid #bbb;
-            border-radius: 5px;
-            font-size: 0.9em;
+            padding: 10px 10px 10px 10px;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 0.95em;
             direction: rtl;
-            background-position: left 8px center;
-            background-size: 14px;
+            background-color: #3a3a3a;
+            color: #f0f0f0;
             cursor: pointer;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         .comparison-section button {
-            margin-top: 10px;
-            background-color: #007bff;
+            margin-top: 15px;
+            background-color: #1e90ff; /* Blue for comparison button */
         }
         .comparison-result {
-            margin-top: 15px;
-            background-color: #f9f9f9;
-            border: 1px solid #e9e9e9;
-            border-radius: 7px;
-            padding: 15px;
+            margin-top: 20px;
+            background-color: #3a3a3a;
+            border: 1px solid #555;
+            border-radius: 10px;
+            padding: 20px;
             text-align: right;
         }
         .comparison-result h3 {
-            font-size: 1.1em;
-            color: #333;
-            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #FFD700; /* Gold */
+            margin-bottom: 15px;
             text-align: center;
         }
         .comparison-result p {
             font-size: 0.95em;
-            line-height: 1.6;
-            color: #555;
-            margin-bottom: 8px;
-        }
-        .positive-point {
-            color: #28a745;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        .negative-point {
-            color: #dc3545;
-            font-weight: 600;
-            margin-bottom: 5px;
+            line-height: 1.7;
+            color: #e0e0e0;
+            margin-bottom: 10px;
         }
 
         /* --- Loan/Deposit Calculator Specific Styles --- */
         .tab-buttons {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #555;
             padding-bottom: 10px;
         }
         .tab-button {
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            padding: 8px 15px;
+            background-color: #3a3a3a;
+            border: 1px solid #555;
+            padding: 10px 18px;
             cursor: pointer;
-            font-size: 0.9em;
-            border-radius: 5px 5px 0 0;
-            margin: 0 2px;
+            font-size: 0.95em;
+            border-radius: 8px 8px 0 0;
+            margin: 0 3px;
             transition: all 0.2s ease;
-            color: #555;
+            color: #e0e0e0;
         }
         .tab-button.active {
-            background-color: #007bff;
+            background-color: #800080; /* Purple */
             color: white;
-            border-color: #007bff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-color: #800080;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
         }
         .loan-deposit-content {
             display: none;
         }
-         .toggle-switch {
+        .toggle-switch {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 15px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            background-color: #3a3a3a;
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid #555;
         }
         .toggle-switch span {
-            font-size: 0.9em;
-            color: #555;
+            font-size: 0.95em;
+            color: #e0e0e0;
         }
         .switch {
             position: relative;
             display: inline-block;
-            width: 40px;
-            height: 22px;
+            width: 45px;
+            height: 25px;
         }
         .switch input {
             opacity: 0;
@@ -369,16 +396,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: #666;
             -webkit-transition: .4s;
             transition: .4s;
-            border-radius: 22px;
+            border-radius: 25px;
         }
         .slider:before {
             position: absolute;
             content: "";
-            height: 16px;
-            width: 16px;
+            height: 19px;
+            width: 19px;
             left: 3px;
             bottom: 3px;
             background-color: white;
@@ -387,106 +414,103 @@
             border-radius: 50%;
         }
         input:checked + .slider {
-            background-color: #2196F3;
+            background-color: #800080; /* Purple */
         }
         input:focus + .slider {
-            box-shadow: 0 0 1px #2196F3;
+            box-shadow: 0 0 1px #800080;
         }
         input:checked + .slider:before {
-            -webkit-transform: translateX(18px);
-            -ms-transform: translateX(18px);
-            transform: translateX(18px);
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
         }
-
 
         /* --- Specific Form Colors --- */
 
         /* Gold Calculator */
-        #goldCalculator { border-color: #e0e0e0; }
-        #goldCalculator h1 { color: #b8860b; }
-        #goldCalculator .input-group input:focus { border-color: #b8860b; }
-        #goldCalculator button { background-color: #b8860b; }
-        #goldCalculator .result span { color: #b8860b; }
+        #goldCalculator h1 { color: #FFD700; }
+        #goldCalculator .input-group input:focus { border-color: #FFD700; box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3); }
+        #goldCalculator button { background-color: #FFD700; color: #333; }
+        #goldCalculator button:hover { background-color: #e6c200; }
+        #goldCalculator .result span { color: #FFD700; }
 
         /* BMI Calculator */
-        #bmiCalculator { border-color: #d1e7dd; }
         #bmiCalculator h1 { color: #28a745; }
-        #bmiCalculator .input-group input:focus { border-color: #28a745; }
+        #bmiCalculator .input-group input:focus { border-color: #28a745; box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3); }
         #bmiCalculator button { background-color: #28a745; }
+        #bmiCalculator button:hover { background-color: #218838; }
         #bmiCalculator .result span { color: #28a745; }
 
         /* Personality Test */
-        #personalityTest { border-color: #ffe0b3; }
-        #personalityTest h1 { color: #d68910; }
+        #personalityTest h1 { color: #FFA500; }
         #personalityTest .input-group input:focus,
-        #personalityTest .input-group select:focus { border-color: #d68910; }
-        #personalityTest button { background-color: #d68910; }
-        #personalityTest .result span { color: #d68910; }
-        #personalityTest .comparison-section button { background-color: #007bff; }
+        #personalityTest .input-group select:focus { border-color: #FFA500; box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.3); }
+        #personalityTest button { background-color: #FFA500; }
+        #personalityTest button:hover { background-color: #e69500; }
+        #personalityTest .result span { color: #FFA500; }
+        #personalityTest .comparison-section button { background-color: #1e90ff; }
+        #personalityTest .comparison-section button:hover { background-color: #1a7ae0; }
 
         /* Loan/Deposit Calculator */
-        #loanDepositCalculator { border-color: #d8bfd8; }
         #loanDepositCalculator h1 { color: #800080; } /* Purple */
         #loanDepositCalculator .input-group input:focus,
-        #loanDepositCalculator .input-group select:focus { border-color: #800080; }
+        #loanDepositCalculator .input-group select:focus { border-color: #800080; box-shadow: 0 0 0 3px rgba(128, 0, 128, 0.3); }
         #loanDepositCalculator button { background-color: #800080; }
+        #loanDepositCalculator button:hover { background-color: #6a006a; }
         #loanDepositCalculator .result span { color: #800080; }
-        #loanDepositCalculator .tab-button.active { background-color: #800080; border-color: #800080; }
-
 
         /* Currency Converter */
-        #currencyConverter { border-color: #cfe2f3; }
         #currencyConverter h1 { color: #1e90ff; } /* Dodger Blue */
         #currencyConverter .input-group input:focus,
-        #currencyConverter .input-group select:focus { border-color: #1e90ff; }
+        #currencyConverter .input-group select:focus { border-color: #1e90ff; box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.3); }
         #currencyConverter button { background-color: #1e90ff; }
+        #currencyConverter button:hover { background-color: #1a7ae0; }
         #currencyConverter .result span { color: #1e90ff; }
 
         /* Hypothetical Services Calculator */
-        #hypotheticalServicesCalculator { border-color: #f8d7da; } /* Light red border */
         #hypotheticalServicesCalculator h1 { color: #dc3545; } /* Red */
-        #hypotheticalServicesCalculator .input-group input:focus { border-color: #dc3545; }
+        #hypotheticalServicesCalculator .input-group input:focus { border-color: #dc3545; box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3); }
         #hypotheticalServicesCalculator button { background-color: #dc3545; }
+        #hypotheticalServicesCalculator button:hover { background-color: #c82333; }
         #hypotheticalServicesCalculator .result span { color: #dc3545; }
-        #hypotheticalServicesCalculator .disclaimer {
-            font-size: 0.8em;
-            color: #888;
-            margin-top: 15px;
-            text-align: justify;
-            border-top: 1px dashed #eee;
-            padding-top: 10px;
-        }
-        #hypotheticalServicesCalculator ul {
-            text-align: right;
-            list-style-type: disc;
-            padding-right: 20px;
-            margin-top: 10px;
-            color: #555;
-            font-size: 0.9em;
-        }
-        #hypotheticalServicesCalculator li {
-            margin-bottom: 5px;
-        }
         #hypotheticalServicesCalculator .category-item {
             font-weight: bold;
-            color: #333;
+            color: #FFD700; /* Gold for category names */
+            margin-bottom: 8px;
         }
         #hypotheticalServicesCalculator .category-range {
             font-size: 0.85em;
-            color: #777;
+            color: #aaa;
             margin-right: 5px;
+            font-weight: normal;
         }
-        .self-pleasure-note {
-            font-size: 0.85em;
-            color: #555;
+        #hypotheticalServicesCalculator ul {
+            text-align: right;
+            list-style-type: none; /* No default bullet */
+            padding-right: 0;
             margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px dashed #eee;
-            text-align: center;
-            line-height: 1.5;
+            color: #f0f0f0;
+            font-size: 0.95em;
         }
-        .self-pleasure-note strong {
-            color: #333;
+        #hypotheticalServicesCalculator ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-right: 20px; /* Space for custom bullet */
+        }
+        #hypotheticalServicesCalculator ul li::before {
+            content: "•"; /* Custom bullet point */
+            color: #FFD700; /* Gold bullet */
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1.2em;
+        }
+        #hypotheticalServicesCalculator .comparison-title {
+            color: #1e90ff; /* Blue for comparison title */
+            font-size: 1.1em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
         .food-comparison-list {
             list-style-type: none;
@@ -495,12 +519,22 @@
         }
         .food-comparison-list li {
             font-size: 0.9em;
-            color: #666;
-            margin-bottom: 5px;
-            line-height: 1.4;
+            color: #ccc;
+            margin-bottom: 8px;
+            line-height: 1.5;
+            position: relative;
+            padding-right: 18px;
+        }
+        .food-comparison-list li::before {
+            content: "•";
+            color: #28a745; /* Green bullet for food */
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1.1em;
         }
         .food-comparison-list strong {
-            color: #333;
+            color: #eee;
         }
 
 
@@ -509,42 +543,42 @@
             .navbar {
                 padding: 8px;
                 max-width: 100%;
-                flex-direction: row; /* Keep row direction */
-                flex-wrap: wrap; /* Allow wrapping */
-                justify-content: center; /* Center items when wrapped */
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             .nav-button {
                 margin: 4px;
                 flex-basis: calc(50% - 8px); /* Two buttons per row with gap */
                 min-width: unset;
-                font-size: 0.8em;
-                padding: 8px 12px;
+                font-size: 0.85em;
+                padding: 10px 15px;
             }
             .app-container {
-                padding: 18px;
-                max-width: 340px;
+                padding: 20px;
+                max-width: 380px;
             }
             .input-group input[type="number"],
             .input-group input[type="text"],
             .input-group select {
-                width: calc(100% - 25px);
-                padding: 7px 7px 7px 25px;
+                width: calc(100% - 30px);
+                padding: 10px 10px 10px 30px;
             }
             .input-group .icon {
-                left: 6px;
-                font-size: 0.9em;
-                transform: translateY(calc(-50% + 7px));
+                left: 8px;
+                font-size: 1em;
+                transform: translateY(calc(-50% + 10px));
             }
             .input-group select {
-                padding-left: 6px;
+                padding-left: 8px;
             }
             .personality-text {
                 font-size: 0.95em;
-                padding: 12px;
+                padding: 15px;
             }
             .tab-button {
-                font-size: 0.85em;
-                padding: 6px 10px;
+                font-size: 0.9em;
+                padding: 8px 12px;
             }
         }
 
@@ -563,19 +597,19 @@
     </style>
 </head>
 <body>
-    <h3 style="margin-bottom: 20px; color: #555;">بسم الله الرحمن الرحیم</h3>
+    <h3 style="margin-bottom: 25px; color: #f0f0f0;">بسم الله الرحمن الرحیم</h3>
     
-<div class="navbar">
+    <div class="navbar">
         <button class="nav-button" data-color="gold" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> قیمت طلا</button>
         <button class="nav-button" data-color="green" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i> شاخص وزن</button>
         <button class="nav-button" data-color="orange" onclick="showSection('personalityTest', this)"><i class="fas fa-brain"></i> تست شخصیت</button>
         <button class="nav-button" data-color="purple" onclick="showSection('loanDepositCalculator', this)"><i class="fas fa-university"></i> سود/وام</button>
         <button class="nav-button" data-color="blue" onclick="showSection('currencyConverter', this)"><i class="fas fa-exchange-alt"></i> مبدل ارز</button>
-        <button class="nav-button" data-color="red" onclick="showSection('hypotheticalServicesCalculator', this)"><i class="fas fa-money-bill-wave"></i> شاخص روسپی</button>
+        <button class="nav-button" data-color="red" onclick="showSection('hypotheticalServicesCalculator', this)"><i class="fas fa-heart"></i> شاخص لذت</button>
     </div>
 
     
-<div id="goldCalculator" class="app-container">
+    <div id="goldCalculator" class="app-container">
         <h1><i class="fas fa-gem" style="margin-left: 10px;"></i>محاسبه‌گر هوشمند طلا</h1>
         
         <div class="input-group">
@@ -618,12 +652,11 @@
         <div class="result" id="goldResultDiv">
             <div><span>قیمت نهایی:</span> <span id="finalPriceToman"></span> تومان</div>
             <div><span>قیمت نهایی:</span> <span id="finalPriceDollar"></span> دلار</div>
-            <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
     
-<div id="bmiCalculator" class="app-container">
+    <div id="bmiCalculator" class="app-container">
         <h1><i class="fas fa-calculator" style="margin-left: 10px;"></i>محاسبه شاخص توده بدنی (BMI)</h1>
         
         <div class="input-group">
@@ -648,7 +681,7 @@
     </div>
 
     
-<div id="personalityTest" class="app-container">
+    <div id="personalityTest" class="app-container">
         <h1><i class="fas fa-brain" style="margin-left: 10px;"></i>تست شخصیت‌شناسی</h1>
 
         <div class="input-group">
@@ -680,12 +713,11 @@
                     <div id="comparisonText"></div>
                 </div>
             </div>
-            <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
     
-<div id="loanDepositCalculator" class="app-container">
+    <div id="loanDepositCalculator" class="app-container">
         <h1><i class="fas fa-university" style="margin-left: 10px;"></i>محاسبه‌گر بانکی</h1>
         
         <div class="tab-buttons">
@@ -694,7 +726,7 @@
         </div>
 
         
-<div id="depositContent" class="loan-deposit-content" style="display: block;">
+        <div id="depositContent" class="loan-deposit-content" style="display: block;">
             <div class="input-group">
                 <label for="depositAmount">مبلغ سپرده (تومان):</label>
                 <input type="number" id="depositAmount" placeholder="مثال: 100,000,000" min="0">
@@ -724,12 +756,11 @@
             <div class="result" id="depositResultDiv">
                 <div><span>سود کل:</span> <span id="totalDepositInterest"></span> تومان</div>
                 <div><span>مبلغ نهایی با سود:</span> <span id="finalDepositAmount"></span> تومان</div>
-                <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
             </div>
         </div>
 
         
-<div id="loanContent" class="loan-deposit-content">
+        <div id="loanContent" class="loan-deposit-content">
             <div class="input-group">
                 <label for="loanAmount">مبلغ وام (تومان):</label>
                 <input type="number" id="loanAmount" placeholder="مثال: 50,000,000" min="0">
@@ -750,13 +781,12 @@
                 <div><span>مبلغ هر قسط:</span> <span id="monthlyInstallment"></span> تومان</div>
                 <div><span>کل سود پرداختی:</span> <span id="totalLoanInterest"></span> تومان</div>
                 <div><span>مجموع پرداختی:</span> <span id="totalPayment"></span> تومان</div>
-                <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
             </div>
         </div>
     </div>
 
     
-<div id="currencyConverter" class="app-container">
+    <div id="currencyConverter" class="app-container">
         <h1><i class="fas fa-exchange-alt" style="margin-left: 10px;"></i>مبدل ارز</h1>
         
         <div class="input-group">
@@ -788,16 +818,12 @@
         
         <div class="result" id="currencyResultDiv">
             <div><span>مبلغ تبدیل شده:</span> <span id="convertedAmount"></span></div>
-            <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
     
-<div id="hypotheticalServicesCalculator" class="app-container">
-        <h1><i class="fas fa-money-bill-wave" style="margin-left: 10px;"></i>شاخص روسپی</h1>
-        <div class="disclaimer">
-            <p><strong>توجه:</strong> این ابزار صرفاً یک **نمونه کد و برای هدف آموزشی و نمایشی** است و به هیچ عنوان ترویج‌کننده یا تسهیل‌کننده فعالیت‌های غیرقانونی یا غیراخلاقی نیست. تمامی قیمت‌ها و دسته‌بندی‌ها کاملاً **غیرواقعی** هستند و بر اساس هیچ داده حقیقی یا توصیه‌ای نیستند. هدف آن **کمک به درک مقیاس هزینه‌ها برای مدیریت بودجه ماهیانه** است.</p>
-        </div>
+    <div id="hypotheticalServicesCalculator" class="app-container">
+        <h1><i class="fas fa-heart" style="margin-left: 10px;"></i>شاخص لذت</h1>
         
         <div class="input-group">
             <label for="dollarExchangeRateHypothetical">نرخ روز دلار به تومان:</label>
@@ -807,139 +833,76 @@
         </div>
 
         <div class="input-group">
-            <label for="hypotheticalBudget">مبلغ ماهیانه مورد نظر (تومان):</label>
+            <label for="hypotheticalBudget">بودجه ماهیانه شما (تومان):</label>
             <input type="number" id="hypotheticalBudget" placeholder="مثال: 5,000,000" min="0">
             <i class="fas fa-coins icon"></i>
         </div>
         
-        <button onclick="calculateHypotheticalServices()">محاسبه</button>
+        <button onclick="calculateHypotheticalServices()">تحلیل بودجه لذت</button>
         
         <div class="result" id="hypotheticalServicesResultDiv">
-            <div><span>با مبلغ ماهیانه شما، ممکن است بتوانید از دسته‌بندی‌های زیر (کاملاً غیرواقعی) استفاده کنید:</span></div>
+            <div>با بودجه ماهیانه شما، می‌توانید از موارد زیر (بر اساس قیمت واقعی) بهره‌مند شوید:</div>
             <ul id="affordableCategories"></ul>
-            <div><span>دسته‌بندی‌هایی که ممکن است خارج از محدوده باشند:</span></div>
-            <ul id="unaffordableCategories"></ul>
             
-            <p style="margin-top: 20px; font-weight: bold; color: #333;">مقایسه با قیمت غذا:</p>
+            <div class="comparison-title">توصیه‌های هوشمند برای استفاده از بودجه:</div>
             <ul id="foodComparison" class="food-comparison-list"></ul>
-
-            <p class="self-pleasure-note">
-                اگر از این هزینه‌ها صرف نظر کنید و به جای آن **خودارضایی** را انتخاب کنید، می‌توانید این مبلغ را پس‌انداز یا سرمایه‌گذاری کرده و به رشد مالی خود کمک کنید.
-            </p>
-            <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
+            
+            <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #555;">
+                <p style="font-size: 0.9em; color: #aaa; text-align: center; line-height: 1.6;">
+                    برای رسیدن به اهداف مالی بزرگ‌تر و تجربه‌ی لذت‌های پایدارتر در زندگی، می‌توانید بخشی از این بودجه را به **سرمایه‌گذاری یا پس‌انداز** اختصاص دهید. این مسیر به شما کمک می‌کند تا در بلندمدت، زندگی رضایت‌بخش‌تری را تجربه کنید.
+                </p>
+            </div>
         </div>
     </div>
     
     <script>
-        // --- Navigation Logic ---
+        // --- Navigation Logic (Concise) ---
         function showSection(sectionId, clickedButton) {
-            // Hide all app containers
-            document.querySelectorAll('.app-container').forEach(section => {
-                section.style.display = 'none';
-            });
-            // Remove 'active' class from all nav buttons
-            document.querySelectorAll('.nav-button').forEach(button => {
-                button.classList.remove('active');
-            });
-
-            // Show the selected app container
+            document.querySelectorAll('.app-container').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
             document.getElementById(sectionId).style.display = 'block';
-            // Add 'active' class to the clicked button
             clickedButton.classList.add('active');
-
-            // Reset results when switching sections
-            document.querySelectorAll('.result').forEach(resultDiv => {
-                resultDiv.style.display = 'none';
-            });
-            // Specific reset for comparison section in personality test
-            document.getElementById('comparisonResultDiv').style.display = 'none';
-
-            // Special handling for specific sections on display
-            if (sectionId === 'personalityTest') {
-                populatePersonalityMonths();
-                populateCompareMonths();
-            } else if (sectionId === 'loanDepositCalculator') {
-                // Ensure default tab (deposit) is active and shown
-                showLoanDepositTab('deposit', document.querySelector('#loanDepositCalculator .tab-buttons .tab-button:first-child'));
-            } else if (sectionId === 'currencyConverter') {
-                populateCurrencies();
-                updateExchangeRateLabels(); // Ensure initial label update
-            }
+            document.querySelectorAll('.result').forEach(r => r.style.display = 'none');
+            if (sectionId === 'personalityTest') { populatePersonalityMonths(); populateCompareMonths(); }
+            if (sectionId === 'loanDepositCalculator') { showLoanDepositTab('deposit', document.querySelector('#loanDepositCalculator .tab-buttons .tab-button:first-child')); }
+            if (sectionId === 'currencyConverter') { populateCurrencies(); updateExchangeRateLabels(); }
         }
 
-        // --- Gold Calculator Logic ---
+        // --- Gold Calculator Logic (Concise) ---
         function calculateGoldPrice() {
-            const goldPricePerGramToman = parseFloat(document.getElementById('goldPriceToman').value);
-            const usdExchangeRate = parseFloat(document.getElementById('usdExchangeRate').value);
-            const goldWeightGram = parseFloat(document.getElementById('goldWeightGram').value || 0);
-            const goldWeightSoot = parseFloat(document.getElementById('goldWeightSoot').value || 0);
-            const wagePercent = parseFloat(document.getElementById('wagePercent').value || 0);
+            const [goldPrice, usdRate, goldGram, goldSoot, wage] = 
+                ['goldPriceToman', 'usdExchangeRate', 'goldWeightGram', 'goldWeightSoot', 'wagePercent']
+                .map(id => parseFloat(document.getElementById(id).value) || 0);
 
-            if (isNaN(goldPricePerGramToman) || goldPricePerGramToman <= 0) {
-                alert('لطفاً قیمت روز طلا را به درستی وارد کنید.');
-                return;
-            }
-            if (isNaN(usdExchangeRate) || usdExchangeRate <= 0) {
-                alert('لطفاً نرخ برابری دلار را به درستی وارد کنید.');
-                return;
-            }
+            if (!goldPrice || !usdRate || (goldGram + goldSoot <= 0)) { alert('لطفاً تمامی فیلدهای الزامی را پر کنید.'); return; }
 
-            const totalWeightGram = goldWeightGram + (goldWeightSoot / 1000);
-
-            if (totalWeightGram <= 0) {
-                 alert('لطفاً وزن طلا را وارد کنید.');
-                 return;
-            }
-
-            let wageAmountToman = (goldPricePerGramToman * (wagePercent / 100)) * totalWeightGram;
-            const profitAmountToman = (goldPricePerGramToman * 0.07) * totalWeightGram;
-            const taxAmountToman = (wageAmountToman + profitAmountToman) * 0.10;
-            const rawGoldPriceToman = goldPricePerGramToman * totalWeightGram;
-            const finalPriceToman = rawGoldPriceToman + wageAmountToman + profitAmountToman + taxAmountToman;
-            const finalPriceDollar = finalPriceToman / usdExchangeRate;
+            const totalWeight = goldGram + (goldSoot / 1000);
+            const wageAmount = (goldPrice * (wage / 100)) * totalWeight;
+            const profitAmount = (goldPrice * 0.07) * totalWeight;
+            const taxAmount = (wageAmount + profitAmount) * 0.10;
+            const finalPriceToman = (goldPrice * totalWeight) + wageAmount + profitAmount + taxAmount;
+            const finalPriceDollar = finalPriceToman / usdRate;
 
             document.getElementById('finalPriceToman').innerText = finalPriceToman.toLocaleString('fa-IR');
             document.getElementById('finalPriceDollar').innerText = finalPriceDollar.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('goldResultDiv').style.display = 'block';
         }
 
-        // --- BMI Calculator Logic ---
+        // --- BMI Calculator Logic (Concise) ---
         function calculateBMI() {
-            const weight = parseFloat(document.getElementById('weight').value);
-            const height = parseFloat(document.getElementById('height').value);
+            const [weight, height] = ['weight', 'height'].map(id => parseFloat(document.getElementById(id).value));
 
-            if (isNaN(weight) || weight <= 0) {
-                alert('لطفاً وزن را به درستی وارد کنید.');
-                return;
-            }
-            if (isNaN(height) || height <= 0) {
-                alert('لطفاً قد را به درستی وارد کنید.');
-                return;
-            }
+            if (!weight || !height) { alert('لطفاً وزن و قد را به درستی وارد کنید.'); return; }
 
             const bmi = weight / (height * height);
-            let status = '';
-
-            if (bmi < 18.5) {
-                status = 'کم‌وزنی';
-            } else if (bmi >= 18.5 && bmi <= 24.9) {
-                status = 'وزن نرمال';
-            } else if (bmi >= 25 && bmi <= 29.9) {
-                status = 'اضافه‌وزن';
-            } else if (bmi >= 30 && bmi <= 34.9) {
-                status = 'چاقی (درجه ۱)';
-            } else if (bmi >= 35 && bmi <= 39.9) {
-                status = 'چاقی شدید (درجه ۲)';
-            } else {
-                status = 'چاقی مفرط (درجه ۳)';
-            }
+            let status = bmi < 18.5 ? 'کم‌وزنی' : bmi <= 24.9 ? 'وزن نرمال' : bmi <= 29.9 ? 'اضافه‌وزن' : bmi <= 34.9 ? 'چاقی (درجه ۱)' : bmi <= 39.9 ? 'چاقی شدید (درجه ۲)' : 'چاقی مفرط (درجه ۳)';
 
             document.getElementById('bmiValue').innerText = bmi.toLocaleString('fa-IR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
             document.getElementById('bmiStatus').innerText = status;
             document.getElementById('bmiResultDiv').style.display = 'block';
         }
 
-        // --- Personality Test Logic ---
+        // --- Personality Test Logic (Concise) ---
         const solarMonths = [
             { value: 'فروردین', text: 'فروردین (حمل)' }, { value: 'اردیبهشت', text: 'اردیبهشت (ثور)' },
             { value: 'خرداد', text: 'خرداد (جوزا)' }, { value: 'تیر', text: 'تیر (سرطان)' },
@@ -950,277 +913,106 @@
         ];
 
         const personalityTraits = {
-            'فروردین': {
-                'نقاط قوت': ["انرژی بالا و شروعکنندهی پروژهها", "خلاق و ایدهپرداز", "اجتماعی و خوشمشرب", "خوشبین و امیدوار", "کنجکاو و علاقهمند به یادگیری", "رها و آزاداندیش"],
-                'نقاط ضعف': ["ممکن است زود از پروژهها خسته شوید", "بینظم و نامرتب", "روابطتان گاهی سطحی میماند", "عجول و کمحوصله", "گاهی بیش از حد خوشبین و غیرواقعبین", "مسئولیتگریز"]
-            },
-            'اردیبهشت': {
-                'نقاط قوت': ["منظم و برنامهریز", "وفادار و قابل اعتماد", "صبور و با حوصله", "واقعبین و عملگرا", "سختکوش و پرتلاش", "محافظهکار و ریسکگریز"],
-                'نقاط ضعف': ["گاهی بیش از حد سختگیر", "مقاوم در برابر تغییر", "ممکن است مادیگرا باشید", "کینهتوزی در صورت آسیب دیدن", "گاهی خشک و بیاحساس", "انعطافناپذیر"]
-            },
-            'خرداد': {
-                'نقاط قوت': ["کنجکاو و دانشجو", "سازگار و انعطافپذیر", "شوخطبع و سرزنده", "همدل و دلسوز", "اجتماعی و خونگرم", "خوشبین و مثبتاندیش"],
-                'نقاط ضعف': ["پرحرف و گاهی یکطرفه", "بیقرار و کمتحمل", "سطحینگر و کمعمق", "فراموشکار و نامرتب", "ممکن است زود علاقهتان را از دست بدهید", "گاهی غیرقابل پیشبینی"]
-            },
-            'تیر': {
-                'نقاط قوت': ["عاطفی و مهربان", "خانوادهدوست و دلسوز", "خلاق و هنرمند", "وفادار و متعهد", "غریزهی قوی و شهودی", "عمیق و معنوی"],
-                'نقاط ضعف': ["حساس و زودرنج", "گاهی وابسته و نیازمند تایید دیگران", "کمالگرا و خودانتقادگر", "ممکن است احساساتتان شما را کنترل کند", "غیرتی و حساس به قضاوه دیگران", "گاهی درونگرا و منزوی"]
-            },
-            'مرداد': {
-                'نقاط قوت': ["قوی و بااراده", "رهبر و تصمیمگیرنده", "صریح و رک", "متعهد و پایبند به قول", "قابل اعتماد و مسئولیتپذیر", "جاهطلب و مصمم"],
-                'نقاط ضعف': ["مغرور و خودمحور", "سلطهجو و کنترلگر", "کینهتوز و کمگذشت", "گاهی بیش از حد سختگیر", "انعطافناپذیر", "ممکن دیگران را تحت فشار بگذارید"]
-            },
-            'شهریور': {
-                'نقاط قوت': ["منظم و دقیق", "کوشا و سختکوش", "عملی و واقعبین", "وفادار و پایدار", "انتقادپذیر (و انتقادگر)", "مسئولیتپذیر و قابل اعتماد"],
-                'نقاط ضعف': ["کمالگرا و ایرادگیر", "گاهی سرد و کماحساس", "محافظهکار و ریسکگریز", "ممکن است بیش از حد منتقد باشید", "سختگیر در روابط", "گاهی وسواس در جزئیات"]
-            },
-            'مهر': {
-                'نقاط قوت': ["منصف و عادل", "دیپلماتیک و صلحطلب", "جذاب و دوستداشتنی", "اجتماعی و معاشرتی", "انعطافپذیر و سازگار", "رمانتیک و هنردوست"],
-                'نقاط ضعف': ["تودار و کماحساس", "مردد و بیتصمیم", "گاهی وابسته به نظر دیگران", "ممکن است از تعارض فرار کنید", "سطحینگر در برخی روابط", "گاهی بیش از حد سازشکار"]
-            },
-            'آبان': {
-                'نقاط قوت': ["مرموز و جذاب", "شهودی و باهوش", "پرشور و احساساتی", "مصمم و رقابتجو", "وفادار و حامی", "رازدار و قابل اعتماد"],
-                'نقاط ضعف': ["کینهتوز و کمگذشت", "کنترلگر و سلطهجو", "گاهی بدبین و مشکوک", "ممکن است افراطی عمل کنید", "انعطافناپذیر در برخی موارد", "احساسات عمیق ولی پنهان"]
-            },
-            'آذر': {
-                'نقاط قوت': ["ماجراجو و آزاداندیش", "خوشبین و شاد", "صادق و رک", "اجتماعی و مردمدار", "انعطافپذیر و سازگار", "انرژیبخش و الهامدهنده"],
-                'نقاط ضعف': ["بیتعهد و فرار از مسئولیت", "سطحینگر و کمعمق", "فراموشکار و نامرتب", "ممکن است غیرقابل پیشبینی باشید", "گاهی بیش از حد بیخیال", "عدم پایداری در روابط"]
-            },
-            'دی': {
-                'نقاط قوت': ["جدی و مسئولیتپذیر", "منضبط و قاعدهمند", "صبور و پایدار", "سختکوش و مصمم", "وفادار و قابل اعتماد", "محکم و استوار"],
-                'نقاط ضعف': ["سرد و کماحساس", "یکدنده و انعطافناپذیر", "محافظهکار و ترسو", "گاهی بیش از حد منتقد", "خشک و بیحوصله", "ممکن است دیگران را تحت فشار بگذارید"]
-            },
-            'بهمن': {
-                'نقاط قوت': ["خلاق و نوآور", "انقلابی و پیشرو", "بشر دوست و عدالتخواه", "کنجکاو و تحلیلگر", "متعهد به ارزشها", "مرموز و جذاب"],
-                'نقاط ضعف': ["غیرقابل پیشبینی", "سرسخت و یکدنده", "گاهی غیرمنطقی", "ممکن است افراطی عمل کنید", "کمتحمل در برابر سنتها", "گاهی منزوی و در خودفرورفته"]
-            },
-            'اسفند': {
-                'نقاط قوت': ["خیالپرداز و خلاق", "حساس و همدل", "رمانتیک و عاشقانه", "مهربان و بخشنده", "شهودی و درک بالا", "انعطافپذیر و سازگار"],
-                'نقاط ضعف': ["زودرنج و آسیبپذیر", "غیرواقعبین و رویایی", "گاهی غیرقابل پیشبینی", "فراموشکار و نامرتب", "ممکن است وابسته شوید", "گاهی منزوی و درونگرا"]
-            }
+            'فروردین': { 'قوت': ["شروعکننده", "خلاق", "اجتماعی", "خوشبین", "کنجکاو", "آزاداندیش"], 'ضعف': ["زود خسته", "بینظم", "سطحی", "عجول", "غیرواقعبین", "مسئولیتگریز"] },
+            'اردیبهشت': { 'قوت': ["منظم", "وفادار", "صبور", "واقعبین", "سختکوش", "محافظهکار"], 'ضعف': ["سختگیر", "مقاوم به تغییر", "مادیگرا", "کینهتوز", "خشک", "انعطافناپذیر"] },
+            'خرداد': { 'قوت': ["کنجکاو", "سازگار", "شوخطبع", "همدل", "اجتماعی", "مثبتاندیش"], 'ضعف': ["پرحرف", "بیقرار", "سطحینگر", "فراموشکار", "زود بیعلاقه", "غیرقابل پیشبینی"] },
+            'تیر': { 'قوت': ["عاطفی", "خانوادهدوست", "خلاق", "وفادار", "غریزه قوی", "عمیق"], 'ضعف': ["حساس", "وابسته", "کمالگرا", "احساساتی", "غیرتی", "درونگرا"] },
+            'مرداد': { 'قوت': ["قوی", "رهبر", "صریح", "متعهد", "مسئولیتپذیر", "جاهطلب"], 'ضعف': ["مغرور", "سلطهجو", "کینهتوز", "سختگیر", "انعطافناپذیر", "فشارآور"] },
+            'شهریور': { 'قوت': ["منظم", "کوشا", "عملی", "وفادار", "انتقادپذیر", "مسئولیتپذیر"], 'ضعف': ["کمالگرا", "ایرادگیر", "محافظهکار", "منتقد", "سختگیر", "وسواس"] },
+            'مهر': { 'قوت': ["منصف", "دیپلماتیک", "جذاب", "اجتماعی", "انعطافپذیر", "رمانتیک"], 'ضعف': ["تودار", "مردد", "وابسته", "فرار از تعارض", "سطحی", "سازشکار"] },
+            'آبان': { 'قوت': ["مرموز", "شهودی", "پرشور", "مصمم", "وفادار", "رازدار"], 'ضعف': ["کینهتوز", "کنترلگر", "بدبین", "افراطی", "انعطافناپذیر", "پنهانکار"] },
+            'آذر': { 'قوت': ["ماجراجو", "خوشبین", "صادق", "اجتماعی", "انعطافپذیر", "انرژیبخش"], 'ضعف': ["بیتعهد", "سطحینگر", "فراموشکار", "غیرقابل پیشبینی", "بیخیال", "عدم پایداری"] },
+            'دی': { 'قوت': ["جدی", "منضبط", "صبور", "سختکوش", "وفادار", "محکم"], 'ضعف': ["سرد", "یکدنده", "ترسو", "منتقد", "خشک", "فشارآور"] },
+            'بهمن': { 'قوت': ["خلاق", "انقلابی", "بشردوست", "کنجکاو", "متعهد", "مرموز"], 'ضعف': ["غیرقابل پیشبینی", "سرسخت", "غیرمنطقی", "افراطی", "کمتحمل", "منزوی"] },
+            'اسفند': { 'قوت': ["خیالپرداز", "حساس", "رمانتیک", "مهربان", "شهودی", "انعطافپذیر"], 'ضعف': ["زودرنج", "غیرواقعبین", "غیرقابل پیشبینی", "فراموشکار", "وابسته", "منزوی"] }
         };
 
-        function getRandomElements(arr, count) {
-            const shuffled = arr.slice().sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, count);
-        }
+        const getRandomElements = (arr, count) => arr.sort(() => 0.5 - Math.random()).slice(0, count);
 
         function populatePersonalityMonths() {
-            const userMonthSelect = document.getElementById('userBirthMonth');
-            const compareMonthSelect = document.getElementById('compareMonth');
-            
-            userMonthSelect.innerHTML = '<option value="">ماه تولد شما را انتخاب کنید</option>';
-            compareMonthSelect.innerHTML = '<option value="">برای مقایسه انتخاب کنید</option>';
-
-            solarMonths.forEach(month => {
-                const option1 = document.createElement('option');
-                option1.value = month.value;
-                option1.innerText = month.text;
-                userMonthSelect.appendChild(option1);
-
-                const option2 = document.createElement('option');
-                option2.value = month.value;
-                option2.innerText = month.text;
-                compareMonthSelect.appendChild(option2);
+            [document.getElementById('userBirthMonth'), document.getElementById('compareMonth')].forEach(select => {
+                select.innerHTML = select.id === 'userBirthMonth' ? '<option value="">ماه تولد شما را انتخاب کنید</option>' : '<option value="">برای مقایسه انتخاب کنید</option>';
+                solarMonths.forEach(m => select.appendChild(new Option(m.text, m.value)));
             });
         }
-
-        function populateCompareMonths() {
-            populatePersonalityMonths(); // Re-use the same function for now
-        }
+        const populateCompareMonths = populatePersonalityMonths; // Re-use
 
         function analyzePersonality() {
-            const birthMonth = document.getElementById('userBirthMonth').value;
-            const gender = document.getElementById('userGender').value;
-
-            if (!birthMonth || !gender) {
-                alert('لطفاً ماه تولد و جنسیت خود را انتخاب کنید.');
-                return;
-            }
+            const [birthMonth, gender] = ['userBirthMonth', 'userGender'].map(id => document.getElementById(id).value);
+            if (!birthMonth || !gender) { alert('لطفاً ماه تولد و جنسیت خود را انتخاب کنید.'); return; }
 
             const traits = personalityTraits[birthMonth];
-            if (!traits) {
-                alert('اطلاعات شخصیتی برای این ماه یافت نشد.');
-                return;
-            }
+            const pos = getRandomElements(traits['قوت'], Math.floor(Math.random() * 2) + 3); // 3-4 positives
+            const neg = getRandomElements(traits['ضعف'], Math.floor(Math.random() * 2) + 2); // 2-3 negatives
 
-            const positiveTraits = getRandomElements(traits['نقاط قوت'], Math.floor(Math.random() * (4 - 3 + 1)) + 3); // 3 to 4 positives
-            const negativeTraits = getRandomElements(traits['نقاط ضعف'], Math.floor(Math.random() * (3 - 2 + 1)) + 2); // 2 to 3 negatives
-
-            let resultHtml = `<h2>شخصیت متولدین ماه ${birthMonth}</h2>`;
-            resultHtml += `<h3>نقاط قوت شما:</h3><ul>`;
-            positiveTraits.forEach(trait => {
-                resultHtml += `<li class="positive-point">${trait}</li>`;
-            });
-            resultHtml += `</ul><h3>نقاط قابل بهبود شما:</h3><ul>`;
-            negativeTraits.forEach(trait => {
-                resultHtml += `<li class="negative-point">${trait}</li>`;
-            });
-            resultHtml += `</ul>`;
-
-            document.getElementById('personalityText').innerHTML = resultHtml;
+            const html = `<h2>شخصیت متولدین ماه ${birthMonth}</h2><h3>نقاط قوت شما:</h3><ul>${pos.map(t => `<li class="positive-point">${t}</li>`).join('')}</ul><h3>نقاط قابل بهبود شما:</h3><ul>${neg.map(t => `<li class="negative-point">${t}</li>`).join('')}</ul>`;
+            document.getElementById('personalityText').innerHTML = html;
             document.getElementById('personalityResultDiv').style.display = 'block';
-            document.getElementById('comparisonResultDiv').style.display = 'none'; // Hide comparison results
+            document.getElementById('comparisonResultDiv').style.display = 'none';
         }
 
         function comparePersonalities() {
-            const userMonth = document.getElementById('userBirthMonth').value;
-            const compareMonth = document.getElementById('compareMonth').value;
+            const [userMonth, compareMonth] = ['userBirthMonth', 'compareMonth'].map(id => document.getElementById(id).value);
+            if (!userMonth || !compareMonth || userMonth === compareMonth) { alert('لطفاً دو ماه متفاوت را برای مقایسه انتخاب کنید.'); return; }
 
-            if (!userMonth || !compareMonth) {
-                alert('لطفاً ماه تولد خودتان و ماهی که می‌خواهید مقایسه کنید را انتخاب نمایید.');
-                return;
+            const [userT, compareT] = [personalityTraits[userMonth], personalityTraits[compareMonth]];
+            const commonP = userT['قوت'].filter(t => compareT['قوت'].includes(t));
+            const commonN = userT['ضعف'].filter(t => compareT['ضعف'].includes(t));
+            const userUniqueP = userT['قوت'].filter(t => !compareT['قوت'].includes(t));
+            const compareUniqueP = compareT['قوت'].filter(t => !userT['قوت'].includes(t));
+
+            let html = `<h3>مقایسه شخصیت متولد ${userMonth} با متولد ${compareMonth}:</h3>`;
+            html += `<p><strong>نقاط مشترک مثبت:</strong> ${commonP.length ? commonP.map(t => `<span class="positive-point">${t}</span>`).join('، ') : 'مورد قابل توجهی یافت نشد.'}</p>`;
+            if (userUniqueP.length || compareUniqueP.length) {
+                html += `<p><strong>نقاط قوت متفاوت:</strong></p><ul>`;
+                userUniqueP.forEach(t => html += `<li>متولد ${userMonth}: ${t}</li>`);
+                compareUniqueP.forEach(t => html += `<li>متولد ${compareMonth}: ${t}</li>`);
+                html += `</ul>`;
             }
-            if (userMonth === compareMonth) {
-                alert('لطفاً ماه متفاوتی را برای مقایسه انتخاب کنید.');
-                return;
-            }
+            html += `<p><strong>نقاط مشترک منفی (نیاز به توجه):</strong> ${commonN.length ? commonN.map(t => `<span class="negative-point">${t}</span>`).join('، ') : 'مورد قابل توجهی یافت نشد.'}</p>`;
 
-            const userTraits = personalityTraits[userMonth];
-            const compareTraits = personalityTraits[compareMonth];
-
-            if (!userTraits || !compareTraits) {
-                alert('اطلاعات شخصیتی برای یکی از ماه‌ها یافت نشد.');
-                return;
-            }
-
-            let commonPositives = userTraits['نقاط قوت'].filter(trait => compareTraits['نقاط قوت'].includes(trait));
-            let commonNegatives = userTraits['نقاط ضعف'].filter(trait => compareTraits['نقاط ضعف'].includes(trait));
-            
-            let userUniquePositives = userTraits['نقاط قوت'].filter(trait => !compareTraits['نقاط قوت'].includes(trait));
-            let compareUniquePositives = compareTraits['نقاط قوت'].filter(trait => !userTraits['نقاط قوت'].includes(trait));
-            
-            let userUniqueNegatives = userTraits['نقاط ضعف'].filter(trait => !compareTraits['نقاط ضعف'].includes(trait));
-            let compareUniqueNegatives = compareTraits['نقاط ضعف'].filter(trait => !userTraits['نقاط ضعف'].includes(trait));
-
-            let comparisonHtml = `<h3>مقایسه شخصیت متولد ${userMonth} با متولد ${compareMonth}:</h3>`;
-            
-            if (commonPositives.length > 0) {
-                comparisonHtml += `<p><strong>نقاط مشترک مثبت:</strong></p><ul>`;
-                commonPositives.forEach(trait => comparisonHtml += `<li class="positive-point">${trait}</li>`);
-                comparisonHtml += `</ul>`;
-            } else {
-                comparisonHtml += `<p><strong>نقاط مشترک مثبت:</strong> مورد قابل توجهی یافت نشد.</p>`;
-            }
-
-            if (userUniquePositives.length > 0 || compareUniquePositives.length > 0) {
-                comparisonHtml += `<p><strong>نقاط قوت متفاوت:</strong></p><ul>`;
-                userUniquePositives.forEach(trait => comparisonHtml += `<li>متولد ${userMonth}: ${trait}</li>`);
-                compareUniquePositives.forEach(trait => comparisonHtml += `<li>متولد ${compareMonth}: ${trait}</li>`);
-                comparisonHtml += `</ul>`;
-            }
-
-            if (commonNegatives.length > 0) {
-                comparisonHtml += `<p><strong>نقاط مشترک منفی (احتمال عدم تفاهم):</strong></p><ul>`;
-                commonNegatives.forEach(trait => comparisonHtml += `<li class="negative-point">${trait}</li>`);
-                commonNegatives.forEach(trait => comparisonHtml += `<li>هر دو ممکن است در مورد <strong>${trait}</strong> با چالش روبرو شوند.</li>`);
-                comparisonHtml += `</ul>`;
-            } else {
-                comparisonHtml += `<p><strong>نقاط مشترک منفی:</strong> مورد قابل توجهی یافت نشد.</p>`;
-            }
-
-             if (userUniqueNegatives.length > 0 || compareUniqueNegatives.length > 0) {
-                comparisonHtml += `<p><strong>نقاط ضعف متفاوت:</strong></p><ul>`;
-                userUniqueNegatives.forEach(trait => comparisonHtml += `<li>متولد ${userMonth}: ${trait}</li>`);
-                compareUniqueNegatives.forEach(trait => comparisonHtml += `<li>متولد ${compareMonth}: ${trait}</li>`);
-                comparisonHtml += `</ul>`;
-            }
-
-
-            // General compatibility statement
-            let compatibilityStatement = "";
-            let compatibilityScore = commonPositives.length * 2 - commonNegatives.length * 2; // Give more weight to shared traits
-
-            if (compatibilityScore >= 3) {
-                compatibilityStatement = "شما و متولد این ماه شباهت‌های مثبتی زیادی دارید و احتمالاً به خوبی با هم کنار می‌آیید. تفاهم کلی شما بالاست.";
-            } else if (compatibilityScore >= 0) {
-                compatibilityStatement = "شما و متولد این ماه می‌توانید در بسیاری از زمینه‌ها تفاهم داشته باشید، با کمی درک متقابل و پذیرش تفاوت‌ها.";
-            } else {
-                compatibilityStatement = "ممکن است در برخی زمینه‌ها چالش‌هایی در تفاهم با متولد این ماه داشته باشید. نیاز به درک بیشتر از تفاوت‌ها و تلاش برای سازگاری است.";
-            }
-            comparisonHtml += `<p><strong>نتیجه کلی تفاهم:</strong> ${compatibilityStatement}</p>`;
-
-
-            document.getElementById('comparisonText').innerHTML = comparisonHtml;
+            const compatibilityScore = commonP.length * 2 - commonN.length * 2;
+            let compatibilityStatement = compatibilityScore >= 3 ? "شما و متولد این ماه شباهت‌های مثبتی زیادی دارید و احتمالاً به خوبی با هم کنار می‌آیید. تفاهم کلی شما بالاست." :
+                                         compatibilityScore >= 0 ? "شما و متولد این ماه می‌توانید در بسیاری از زمینه‌ها تفاهم داشته باشید، با کمی درک متقابل و پذیرش تفاوت‌ها." :
+                                         "ممکن است در برخی زمینه‌ها چالش‌هایی در تفاهم با متولد این ماه داشته باشید. نیاز به درک بیشتر از تفاوت‌ها و تلاش برای سازگاری است.";
+            html += `<p><strong>نتیجه کلی تفاهم:</strong> ${compatibilityStatement}</p>`;
+            document.getElementById('comparisonText').innerHTML = html;
             document.getElementById('comparisonResultDiv').style.display = 'block';
         }
 
-        // --- Loan/Deposit Calculator Logic ---
+        // --- Loan/Deposit Calculator Logic (Concise) ---
         function showLoanDepositTab(tabId, clickedButton) {
-            // Hide all tab contents
-            document.querySelectorAll('.loan-deposit-content').forEach(content => {
-                content.style.display = 'none';
-            });
-            // Deactivate all tab buttons
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-
-            // Show the selected tab content
+            document.querySelectorAll('.loan-deposit-content').forEach(c => c.style.display = 'none');
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId + 'Content').style.display = 'block';
-            // Activate the clicked button
             clickedButton.classList.add('active');
-
-            // Hide results when switching tabs
             document.getElementById('depositResultDiv').style.display = 'none';
             document.getElementById('loanResultDiv').style.display = 'none';
-
-            // Reset specific fields when switching tabs for better UX
-            if (tabId === 'deposit') {
-                document.getElementById('depositAmount').value = '';
-                document.getElementById('depositInterestRate').value = '';
-                document.getElementById('depositDurationDays').value = '';
-                document.getElementById('dailyInterestToggle').checked = false; // Reset to monthly calculation default
-                updateDepositDurationLabel(); // Update label based on toggle
-            } else { // loan tab
-                document.getElementById('loanAmount').value = '';
-                document.getElementById('loanInterestRate').value = '';
-                document.getElementById('loanDurationMonths').value = '';
-            }
+            if (tabId === 'deposit') { document.getElementById('depositAmount').value = ''; document.getElementById('depositInterestRate').value = ''; document.getElementById('depositDurationDays').value = ''; document.getElementById('dailyInterestToggle').checked = false; updateDepositDurationLabel(); }
+            else { document.getElementById('loanAmount').value = ''; document.getElementById('loanInterestRate').value = ''; document.getElementById('loanDurationMonths').value = ''; }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const dailyInterestToggle = document.getElementById('dailyInterestToggle');
-            if (dailyInterestToggle) {
-                dailyInterestToggle.addEventListener('change', updateDepositDurationLabel);
-                updateDepositDurationLabel(); // Set initial label
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('dailyInterestToggle').addEventListener('change', updateDepositDurationLabel);
+            updateDepositDurationLabel();
         });
 
         function updateDepositDurationLabel() {
-            const dailyInterestToggle = document.getElementById('dailyInterestToggle');
-            const depositDurationLabel = document.getElementById('depositDurationLabel');
-            if (dailyInterestToggle.checked) {
-                depositDurationLabel.innerText = 'مدت زمان سپرده (روز):';
-            } else {
-                depositDurationLabel.innerText = 'مدت زمان سپرده (ماه):';
-            }
+            document.getElementById('depositDurationLabel').innerText = document.getElementById('dailyInterestToggle').checked ? 'مدت زمان سپرده (روز):' : 'مدت زمان سپرده (ماه):';
         }
 
         function calculateDepositInterest() {
-            const amount = parseFloat(document.getElementById('depositAmount').value);
-            const rate = parseFloat(document.getElementById('depositInterestRate').value);
-            const durationInput = parseFloat(document.getElementById('depositDurationDays').value); // This is now days or months
-            const isDailyInterest = document.getElementById('dailyInterestToggle').checked;
+            const [amount, rate, durationInput] = ['depositAmount', 'depositInterestRate', 'depositDurationDays'].map(id => parseFloat(document.getElementById(id).value));
+            const isDaily = document.getElementById('dailyInterestToggle').checked;
 
-            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate <= 0 || isNaN(durationInput) || durationInput <= 0) {
-                alert('لطفاً تمام فیلدها را با مقادیر صحیح وارد کنید.');
-                return;
-            }
+            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate < 0 || isNaN(durationInput) || durationInput <= 0) { alert('لطفاً تمام فیلدها را با مقادیر صحیح وارد کنید.'); return; }
 
-            let totalInterest;
-            let finalAmount;
-
-            if (isDailyInterest) {
-                // Daily interest calculation
-                const dailyRate = (rate / 100) / 365; // Assuming 365 days in a year for daily
-                totalInterest = amount * dailyRate * durationInput;
+            let totalInterest, finalAmount;
+            if (isDaily) {
+                totalInterest = amount * (rate / 100) / 365 * durationInput;
             } else {
-                // Monthly interest calculation (based on months duration)
-                const monthlyRate = (rate / 100) / 12;
-                totalInterest = amount * monthlyRate * durationInput;
+                totalInterest = amount * (rate / 100) / 12 * durationInput;
             }
-            
             finalAmount = amount + totalInterest;
 
             document.getElementById('totalDepositInterest').innerText = totalInterest.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -1229,26 +1021,17 @@
         }
 
         function calculateLoanInstallment() {
-            const amount = parseFloat(document.getElementById('loanAmount').value);
-            const rate = parseFloat(document.getElementById('loanInterestRate').value);
-            const duration = parseFloat(document.getElementById('loanDurationMonths').value);
-
-            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate < 0 || isNaN(duration) || duration <= 0) {
-                alert('لطفاً تمام فیلدها را با مقادیر صحیح وارد کنید.');
-                return;
-            }
+            const [amount, rate, duration] = ['loanAmount', 'loanInterestRate', 'loanDurationMonths'].map(id => parseFloat(document.getElementById(id).value));
+            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate < 0 || isNaN(duration) || duration <= 0) { alert('لطفاً تمام فیلدها را با مقادیر صحیح وارد کنید.'); return; }
 
             const monthlyRate = (rate / 100) / 12;
-            let monthlyInstallment;
-            let totalInterest;
-            let totalPayment;
+            let monthlyInstallment, totalInterest, totalPayment;
 
-            if (monthlyRate === 0) { // Simple interest if rate is 0
+            if (monthlyRate === 0) {
                 monthlyInstallment = amount / duration;
                 totalInterest = 0;
                 totalPayment = amount;
             } else {
-                // Formula for EMI (Equated Monthly Installment)
                 monthlyInstallment = amount * monthlyRate * Math.pow(1 + monthlyRate, duration) / (Math.pow(1 + monthlyRate, duration) - 1);
                 totalPayment = monthlyInstallment * duration;
                 totalInterest = totalPayment - amount;
@@ -1260,165 +1043,95 @@
             document.getElementById('loanResultDiv').style.display = 'block';
         }
 
-        // --- Currency Converter Logic ---
+        // --- Currency Converter Logic (Concise) ---
         const currencies = [
-            { name: 'ریال ایران', symbol: 'IRR' },
-            { name: 'دلار آمریکا', symbol: 'USD' },
-            { name: 'یورو', symbol: 'EUR' },
-            { name: 'پوند بریتانیا', symbol: 'GBP' },
-            { name: 'درهم امارات', symbol: 'AED' },
-            { name: 'لیر ترکیه', symbol: 'TRY' },
-            { name: 'یوان چین', symbol: 'CNY' },
-            { name: 'روپیه هند', symbol: 'INR' },
+            { name: 'ریال ایران', symbol: 'IRR' }, { name: 'دلار آمریکا', symbol: 'USD' },
+            { name: 'یورو', symbol: 'EUR' }, { name: 'پوند بریتانیا', symbol: 'GBP' },
+            { name: 'درهم امارات', symbol: 'AED' }, { name: 'لیر ترکیه', symbol: 'TRY' },
+            { name: 'یوان چین', symbol: 'CNY' }, { name: 'روپیه هند', symbol: 'INR' },
             { name: 'ین ژاپن', symbol: 'JPY' }
         ];
 
         function populateCurrencies() {
-            const fromCurrencySelect = document.getElementById('fromCurrency');
-            const toCurrencySelect = document.getElementById('toCurrency');
-
-            fromCurrencySelect.innerHTML = '';
-            toCurrencySelect.innerHTML = '';
-
-            currencies.forEach(currency => {
-                const optionFrom = document.createElement('option');
-                optionFrom.value = currency.symbol;
-                optionFrom.innerText = `${currency.name} (${currency.symbol})`;
-                fromCurrencySelect.appendChild(optionFrom);
-
-                const optionTo = document.createElement('option');
-                optionTo.value = currency.symbol;
-                optionTo.innerText = `${currency.name} (${currency.symbol})`;
-                toCurrencySelect.appendChild(optionTo);
+            ['fromCurrency', 'toCurrency'].forEach(id => {
+                const select = document.getElementById(id);
+                select.innerHTML = '';
+                currencies.forEach(c => select.appendChild(new Option(`${c.name} (${c.symbol})`, c.symbol)));
             });
-            // Set default selections
-            fromCurrencySelect.value = 'USD';
-            toCurrencySelect.value = 'IRR';
-
-            // Add event listeners for changes
-            fromCurrencySelect.addEventListener('change', updateExchangeRateLabels);
-            toCurrencySelect.addEventListener('change', updateExchangeRateLabels);
-            updateExchangeRateLabels(); // Call initially to set correct state
+            document.getElementById('fromCurrency').value = 'USD';
+            document.getElementById('toCurrency').value = 'IRR';
+            document.getElementById('fromCurrency').addEventListener('change', updateExchangeRateLabels);
+            document.getElementById('toCurrency').addEventListener('change', updateExchangeRateLabels);
+            updateExchangeRateLabels();
         }
 
         function updateExchangeRateLabels() {
-            const fromCurrency = document.getElementById('fromCurrency').value;
-            const toCurrency = document.getElementById('toCurrency').value;
-            const fromCurrencySymbolSpan = document.getElementById('fromCurrencySymbol');
-            const toCurrencySymbolSpan = document.getElementById('toCurrencySymbol');
-            const exchangeRateInput = document.getElementById('exchangeRate');
-            const exchangeRateSmallText = document.querySelector('#exchangeRateInputGroup small');
-
-            fromCurrencySymbolSpan.innerText = fromCurrency;
-            toCurrencySymbolSpan.innerText = toCurrency;
-            
-            // Adjust placeholder and small text based on common conversions (optional)
-            if (fromCurrency === 'USD' && toCurrency === 'IRR') {
-                exchangeRateInput.placeholder = "مثال: 60000 (برای دلار به تومان)";
-                exchangeRateSmallText.innerText = "نرخ هر دلار چند تومان است.";
-            } else if (fromCurrency === 'IRR' && toCurrency === 'USD') {
-                exchangeRateInput.placeholder = "مثال: 0.000017 (برای تومان به دلار)";
-                exchangeRateSmallText.innerText = "هر تومان چند دلار است (مثال: 1/60000).";
-            } else {
-                 exchangeRateInput.placeholder = "مثال: 12345";
-                 exchangeRateSmallText.innerText = "نرخ تبدیل ارز مبدأ به ارز مقصد را وارد کنید (مثال: اگر از دلار به یورو، هر دلار چند یورو است).";
-            }
-
-            // Clear previous exchange rate
-            exchangeRateInput.value = '';
+            const [from, to] = ['fromCurrency', 'toCurrency'].map(id => document.getElementById(id).value);
+            document.getElementById('fromCurrencySymbol').innerText = from;
+            document.getElementById('toCurrencySymbol').innerText = to;
+            const exRateInput = document.getElementById('exchangeRate');
+            const smallText = document.querySelector('#exchangeRateInputGroup small');
+            if (from === 'USD' && to === 'IRR') { exRateInput.placeholder = "مثال: 60000"; smallText.innerText = "نرخ هر دلار چند تومان است."; }
+            else if (from === 'IRR' && to === 'USD') { exRateInput.placeholder = "مثال: 0.000017"; smallText.innerText = "هر تومان چند دلار است (مثال: 1/60000)."; }
+            else { exRateInput.placeholder = "مثال: 12345"; smallText.innerText = "نرخ تبدیل ارز مبدأ به ارز مقصد را وارد کنید."; }
+            exRateInput.value = '';
         }
 
         function convertCurrency() {
-            const amount = parseFloat(document.getElementById('amountToConvert').value);
-            const fromCurrency = document.getElementById('fromCurrency').value;
-            const toCurrency = document.getElementById('toCurrency').value;
-            const exchangeRate = parseFloat(document.getElementById('exchangeRate').value);
+            const [amount, from, to, rate] = ['amountToConvert', 'fromCurrency', 'toCurrency', 'exchangeRate'].map(id => {
+                const el = document.getElementById(id);
+                return el.type === 'select-one' ? el.value : parseFloat(el.value);
+            });
 
-            if (isNaN(amount) || amount <= 0) {
-                alert('لطفاً مبلغ را به درستی وارد کنید.');
-                return;
-            }
-            if (!fromCurrency || !toCurrency) {
-                alert('لطفاً واحدهای ارزی مبدأ و مقصد را انتخاب کنید.');
-                return;
-            }
-            if (fromCurrency === toCurrency) {
-                document.getElementById('convertedAmount').innerText = amount.toLocaleString('fa-IR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + fromCurrency;
-                document.getElementById('currencyResultDiv').style.display = 'block';
-                return;
-            }
+            if (isNaN(amount) || amount <= 0 || !from || !to) { alert('لطفاً تمامی فیلدهای الزامی را پر کنید.'); return; }
+            if (from === to) { document.getElementById('convertedAmount').innerText = `${amount.toLocaleString('fa-IR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${from}`; document.getElementById('currencyResultDiv').style.display = 'block'; return; }
+            if (isNaN(rate) || rate <= 0) { alert('لطفاً نرخ تبدیل را به درستی وارد کنید.'); return; }
 
-            if (isNaN(exchangeRate) || exchangeRate <= 0) {
-                alert('لطفاً نرخ تبدیل را به درستی وارد کنید (عدد مثبت بزرگتر از صفر).');
-                return;
-            }
-
-            const convertedValue = amount * exchangeRate;
-            
-            document.getElementById('convertedAmount').innerText = convertedValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + toCurrency;
+            document.getElementById('convertedAmount').innerText = `${(amount * rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${to}`;
             document.getElementById('currencyResultDiv').style.display = 'block';
         }
 
-        // --- Hypothetical Services Calculator Logic ---
-        // Prices are in USD for easier conversion and consistency
-        const hypotheticalServiceCategories = [
-            { name: 'خیابانی', minPriceUSD: 10, maxPriceUSD: 30 }, // $10 - $30
-            { name: 'مراکز', minPriceUSD: 20, maxPriceUSD: 70 }, // $20 - $70
-            { name: 'اینترنتی (اشتراک ماهانه)', minPriceUSD: 5, maxPriceUSD: 25 }, // $5 - $25 per month
-            { name: 'معاشرت‌های تجملی (ماهانه)', minPriceUSD: 200, maxPriceUSD: 1000 }, // $200 - $1000 per month
-            { name: 'مدل‌های همراهی (رویداد خاص)', minPriceUSD: 500, maxPriceUSD: 2000 } // $500 - $2000 per event
+        // --- Hypothetical Services Calculator Logic (Concise & Accurate) ---
+        const serviceCategories = [
+            { name: 'تفریح سبک (مثل یک ناهار با دوست)', minPriceUSD: 8, maxPriceUSD: 20 },
+            { name: 'رویداد فرهنگی (مثلاً بلیط سینما و یک نوشیدنی)', minPriceUSD: 15, maxPriceUSD: 35 },
+            { name: 'کلاس آموزشی آنلاین (ماهانه)', minPriceUSD: 20, maxPriceUSD: 60 },
+            { name: 'خرید یک کتاب جدید (مفید برای رشد)', minPriceUSD: 10, maxPriceUSD: 30 },
+            { name: 'یک وعده غذای خوب در رستوران (شیک)', minPriceUSD: 25, maxPriceUSD: 70 },
+            { name: 'اشتراک سالیانه نرم‌افزار مفید', minPriceUSD: 50, maxPriceUSD: 150 },
+            { name: 'لوازم ورزشی کوچک یا یک جلسه ورزشی', minPriceUSD: 30, maxPriceUSD: 80 }
         ];
 
-        // Hypothetical food prices in Toman (approximate, for comparison)
-        const foodPrices = [
-            { name: 'یک پرس قرمه سبزی یا قیمه (معمولی)', price: 150000 }, // ~2-3 USD
-            { name: 'یک پرس کباب کوبیده (معمولی)', price: 250000 }, // ~4-5 USD
-            { name: 'یک پرس جوجه کباب (معمولی)', price: 300000 }, // ~5 USD
-            { name: 'یک پرس چلوکباب برگ (متوسط)', price: 500000 }, // ~8-10 USD
-            { name: 'یک پرس شیشلیک یا ماهیچه (لاکچری)', price: 1000000 } // ~15-20 USD
+        const actualFoodPrices = [ // Approximate real prices in Toman (example for context)
+            { name: 'یک پرس قرمه سبزی/قیمه', price: 150000 },
+            { name: 'یک پرس کباب کوبیده', price: 250000 },
+            { name: 'یک پرس جوجه کباب', price: 300000 },
+            { name: 'یک پرس چلوکباب برگ (متوسط)', price: 500000 },
+            { name: 'یک پرس شیشلیک/ماهیچه (لوکس)', price: 1000000 }
         ];
 
         function calculateHypotheticalServices() {
             const dollarRate = parseFloat(document.getElementById('dollarExchangeRateHypothetical').value);
             const budgetToman = parseFloat(document.getElementById('hypotheticalBudget').value);
 
-            if (isNaN(dollarRate) || dollarRate <= 0) {
-                alert('لطفاً نرخ روز دلار را به درستی وارد کنید.');
-                return;
-            }
-            if (isNaN(budgetToman) || budgetToman <= 0) {
-                alert('لطفاً مبلغ ماهیانه را به درستی وارد کنید (عدد مثبت).');
+            if (isNaN(dollarRate) || dollarRate <= 0 || isNaN(budgetToman) || budgetToman <= 0) {
+                alert('لطفاً نرخ روز دلار و بودجه ماهیانه را به درستی وارد کنید.');
                 return;
             }
 
             const affordable = [];
-            const unaffordable = [];
-
-            hypotheticalServiceCategories.forEach(category => {
+            serviceCategories.forEach(category => {
                 const minPriceToman = category.minPriceUSD * dollarRate;
                 const maxPriceToman = category.maxPriceUSD * dollarRate;
-
                 if (budgetToman >= minPriceToman) {
-                    affordable.push({ 
-                        name: category.name, 
-                        minPriceToman: minPriceToman, 
-                        maxPriceToman: maxPriceToman 
-                    });
-                } else {
-                    unaffordable.push({ 
-                        name: category.name, 
-                        minPriceToman: minPriceToman, 
-                        maxPriceToman: maxPriceToman 
-                    });
+                    affordable.push({ ...category, minPriceToman, maxPriceToman });
                 }
             });
 
             const affordableList = document.getElementById('affordableCategories');
-            const unaffordableList = document.getElementById('unaffordableCategories');
             const foodComparisonList = document.getElementById('foodComparison');
             
             affordableList.innerHTML = '';
-            unaffordableList.innerHTML = '';
             foodComparisonList.innerHTML = '';
 
             if (affordable.length > 0) {
@@ -1429,53 +1142,37 @@
                     affordableList.appendChild(li);
                 });
             } else {
-                affordableList.innerHTML = '<li>با این مبلغ، هیچ دسته‌بندی در دسترس نیست.</li>';
+                affordableList.innerHTML = '<li>با این مبلغ، موارد تفریحی/فرهنگی در این دسته‌بندی‌ها ممکن است خارج از دسترس باشد.</li>';
             }
 
-            if (unaffordable.length > 0) {
-                unaffordable.forEach(category => {
-                    const li = document.createElement('li');
-                    li.classList.add('category-item');
-                    li.innerHTML = `${category.name} <span class="category-range">(محدوده: ${category.minPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تا ${category.maxPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان)</span>`;
-                    unaffordableList.appendChild(li);
-                });
-            } else {
-                unaffordableList.innerHTML = '<li>تمام دسته‌بندی‌ها در دسترس هستند.</li>';
-            }
-
-            // Food comparison
-            hypotheticalServiceCategories.forEach(category => {
+            // Food comparison based on the average cost of services
+            serviceCategories.forEach(category => {
                 const avgPriceToman = (category.minPriceUSD + category.maxPriceUSD) / 2 * dollarRate;
                 let equivalentFood = '';
 
-                if (avgPriceToman <= foodPrices[0].price) {
-                    equivalentFood = `تقریباً معادل **یک پرس قرمه سبزی یا قیمه** (${foodPrices[0].price.toLocaleString('fa-IR')} تومان)`;
-                } else if (avgPriceToman <= foodPrices[1].price) {
-                    equivalentFood = `تقریباً معادل **یک پرس کباب کوبیده** (${foodPrices[1].price.toLocaleString('fa-IR')} تومان)`;
-                } else if (avgPriceToman <= foodPrices[2].price) {
-                    equivalentFood = `تقریباً معادل **یک پرس جوجه کباب** (${foodPrices[2].price.toLocaleString('fa-IR')} تومان)`;
-                } else if (avgPriceToman <= foodPrices[3].price) {
-                    equivalentFood = `تقریباً معادل **یک پرس چلوکباب برگ** (${foodPrices[3].price.toLocaleString('fa-IR')} تومان)`;
+                if (avgPriceToman <= actualFoodPrices[0].price) {
+                    equivalentFood = `یک پرس **${actualFoodPrices[0].name}** (${actualFoodPrices[0].price.toLocaleString('fa-IR')} تومان)`;
+                } else if (avgPriceToman <= actualFoodPrices[1].price) {
+                    equivalentFood = `یک پرس **${actualFoodPrices[1].name}** (${actualFoodPrices[1].price.toLocaleString('fa-IR')} تومان)`;
+                } else if (avgPriceToman <= actualFoodPrices[2].price) {
+                    equivalentFood = `یک پرس **${actualFoodPrices[2].name}** (${actualFoodPrices[2].price.toLocaleString('fa-IR')} تومان)`;
+                } else if (avgPriceToman <= actualFoodPrices[3].price) {
+                    equivalentFood = `یک پرس **${actualFoodPrices[3].name}** (${actualFoodPrices[3].price.toLocaleString('fa-IR')} تومان)`;
                 } else {
-                    equivalentFood = `تقریباً معادل **یک پرس شیشلیک یا ماهیچه لاکچری** (${foodPrices[4].price.toLocaleString('fa-IR')} تومان)`;
-                    if (avgPriceToman > foodPrices[4].price * 2) {
-                         equivalentFood += ` (یا بیشتر!)`;
-                    }
+                    equivalentFood = `یک پرس **${actualFoodPrices[4].name}** (${actualFoodPrices[4].price.toLocaleString('fa-IR')} تومان)`;
                 }
                  const li = document.createElement('li');
-                 li.innerHTML = `هزینه "${category.name}"  ${equivalentFood}.`;
+                 li.innerHTML = `هزینه "${category.name}" معادل با ${equivalentFood}.`;
                  foodComparisonList.appendChild(li);
             });
-
 
             document.getElementById('hypotheticalServicesResultDiv').style.display = 'block';
         }
 
-
-        // Initial setup: On page load, only show the navbar.
-        document.addEventListener('DOMContentLoaded', (event) => {
-            // No active button by default, all app containers are hidden by CSS
-            // The showSection function will be called when a nav button is clicked.
+        // Initial setup: On page load, no section is active by default.
+        document.addEventListener('DOMContentLoaded', () => {
+            // Optional: You can uncomment the line below to show a default section on load
+            // showSection('goldCalculator', document.querySelector('.nav-button[data-color="gold"]'));
         });
     </script>
 </body>
