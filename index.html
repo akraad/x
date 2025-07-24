@@ -46,7 +46,7 @@
 
         /* Light Theme Specific Styles */
         body.light-theme {
-            background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0); /* Grey gradient background */
+            background-image: linear-gradient(135deg, #e0e0e0, #f0f0f0, #e8e8e8); /* Gray gradient */
             color: #333; /* Dark text */
         }
         body.light-theme .navbar,
@@ -139,6 +139,12 @@
             border-color: #6a006a;
             color: white;
         }
+        body.light-theme .tab-button i {
+            color: #888;
+        }
+        body.light-theme .tab-button.active i {
+            color: #333;
+        }
         body.light-theme .toggle-switch {
             background-color: #e9ecef;
             border: 1px solid #ced4da;
@@ -213,16 +219,44 @@
             background-color: #e9ecef !important;
             color: #333 !important;
         }
-        body.light-theme .plus-minus-buttons button {
-            background-color: #cccccc; /* Light grey for buttons in light theme */
-            color: #333; /* Dark text for buttons */
+        /* New styles for +/- buttons */
+        .input-with-buttons {
+            display: flex;
+            align-items: center;
+            gap: 5px; /* Space between input and buttons */
         }
-        body.light-theme .plus-minus-buttons button:hover {
-            background-color: #b0b0b0;
+        .input-with-buttons input[type="number"] {
+            flex-grow: 1;
+            width: auto; /* Allow input to grow */
+            text-align: center;
         }
-        body.light-theme .overspend-warning {
-            color: #d9534f; /* Darker red for warning in light theme */
+        .input-with-buttons button {
+            width: 35px; /* Fixed width for buttons */
+            height: 35px;
+            padding: 0;
+            margin: 0;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%; /* Make them round */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background-color: #555;
+            color: white;
+            transition: background-color 0.2s ease;
         }
+        .input-with-buttons button:hover {
+            background-color: #777;
+        }
+        body.light-theme .input-with-buttons button {
+            background-color: #ccc;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        body.light-theme .input-with-buttons button:hover {
+            background-color: #bbb;
+        }
+
 
         /* --- Dynamic Navbar Styles --- */
         .navbar {
@@ -768,13 +802,10 @@
             color: #8aff8a;
             font-weight: 700;
         }
-        .overspend-warning {
-            color: #dc3545; /* Red for warnings */
-            font-weight: bold;
-            margin-top: 15px;
-            text-align: center;
+        .suggestion-section .warning-text {
+            color: #ff8a8a; /* Red for warnings */
+            font-weight: 700;
         }
-
 
         /* Styles for the new detailed activity table */
         .activity-table {
@@ -811,130 +842,12 @@
         .total-cost-row td {
             color: #8aff8a !important; /* Green for total cost cells */
         }
-
-        /* Modal Styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1001; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
-            padding-top: 60px;
+        .total-cost-row.warning {
+            color: #ff8a8a !important; /* Red for warning total */
         }
-
-        .modal-content {
-            background-color: #2a2a2a;
-            margin: 5% auto; /* 5% from the top and centered */
-            padding: 30px;
-            border: 1px solid #555;
-            border-radius: 12px;
-            width: 80%; /* Could be more or less, depending on screen size */
-            max-width: 500px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-            position: relative;
-            text-align: right;
+        .total-cost-row.warning td {
+            color: #ff8a8a !important; /* Red for warning total cells */
         }
-
-        .modal-content h2 {
-            color: #1e90ff; /* Blue for modal titles */
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .modal-content p {
-            color: #e0e0e0;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-
-        .close-button {
-            color: #aaa;
-            float: left; /* Position on the left for RTL */
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute;
-            top: 10px;
-            left: 20px;
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: #f0f0f0;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        #activityOptions {
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 10px;
-            border: 1px solid #555;
-            border-radius: 8px;
-            background-color: #3a3a3a;
-            text-align: right;
-        }
-
-        .activity-item-option {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            background-color: #2a2a2a;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #444;
-        }
-        .activity-item-option label {
-            color: #e0e0e0 !important; /* Override general label color */
-            margin-bottom: 0 !important;
-            cursor: pointer;
-        }
-        .activity-item-option input[type="checkbox"] {
-            margin-left: 10px;
-            width: 18px;
-            height: 18px;
-            accent-color: #FFA500; /* Orange accent for checkboxes */
-        }
-        .activity-item-option input[type="number"] {
-            width: 60px;
-            padding: 6px;
-            border-radius: 5px;
-            border: 1px solid #666;
-            background-color: #3a3a3a;
-            color: #f0f0f0;
-            text-align: center;
-            margin-left: 8px;
-        }
-        .plus-minus-buttons {
-            display: flex;
-            gap: 5px;
-            margin-left: 8px; /* Space between input and buttons */
-        }
-        .plus-minus-buttons button {
-            background-color: #555;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            width: 30px;
-            height: 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.2s;
-            padding: 0;
-            margin: 0;
-        }
-        .plus-minus-buttons button:hover {
-            background-color: #777;
-        }
-
 
         /* Media Queries for Responsiveness */
         @media (max-width: 768px) {
@@ -967,10 +880,21 @@
                 font-size: 1em;
                 transform: translateY(calc(-50% + 10px));
             }
-            .modal-content {
-                width: 90%;
-                margin: 20px auto;
-                padding: 20px;
+            .input-group select {
+                padding-left: 8px;
+            }
+            .personality-text {
+                font-size: 0.95em;
+                padding: 15px;
+            }
+            .tab-button {
+                font-size: 0.9em;
+                padding: 8px 12px;
+            }
+            .input-with-buttons button {
+                width: 30px;
+                height: 30px;
+                font-size: 1em;
             }
         }
     </style>
@@ -980,75 +904,72 @@
 
     <div class="navbar">
         <button class="nav-button active" data-target="goldCalculator" data-color="gold">
-            <i class="fas fa-money-bill-alt"></i>
-            <span>ماشین حساب طلا</span>
+            <i class="fas fa-coins"></i>
+            <span>حسابگر طلا</span>
         </button>
         <button class="nav-button" data-target="bmiCalculator" data-color="green">
-            <i class="fas fa-calculator"></i>
-            <span>ماشین حساب BMI</span>
+            <i class="fas fa-weight"></i>
+            <span>شاخص BMI</span>
         </button>
         <button class="nav-button" data-target="personalityTest" data-color="orange">
-            <i class="fas fa-user-check"></i>
-            <span>شخصیت شناسی</span>
+            <i class="fas fa-user"></i>
+            <span>تست شخصیت</span>
         </button>
         <button class="nav-button" data-target="loanDepositCalculator" data-color="purple">
             <i class="fas fa-hand-holding-usd"></i>
             <span>وام و سپرده</span>
         </button>
         <button class="nav-button" data-target="currencyConverter" data-color="blue">
-            <i class="fas fa-coins"></i>
+            <i class="fas fa-exchange-alt"></i>
             <span>تبدیل ارز</span>
         </button>
         <button class="nav-button" data-target="hypotheticalServicesCalculator" data-color="red">
-            <i class="fas fa-chart-line"></i>
-            <span>بودجه لذت و خدمات</span>
+            <i class="fas fa-dollar-sign"></i>
+            <span>لذت و هزینه‌ها</span>
         </button>
     </div>
 
-    <div id="goldCalculator" class="app-container active">
-        <h1>ماشین حساب طلا</h1>
+    <div id="goldCalculator" class="app-container">
+        <h1>حسابگر تعهدات طلا</h1>
         <div class="input-group">
             <label for="goldWeight">وزن طلا (گرم):</label>
-            <input type="number" id="goldWeight" placeholder="مثال: 10" min="0" step="0.1">
-            <i class="fas fa-weight-hanging icon"></i>
+            <input type="number" id="goldWeight" placeholder="مثال: 10" step="0.01">
+            <i class="fas fa-balance-scale icon"></i>
         </div>
         <div class="input-group">
-            <label for="goldPurity">عیار طلا (مثال: 750 برای 18 عیار):</label>
-            <input type="number" id="goldPurity" placeholder="مثال: 750" min="0" max="999" step="1">
-            <i class="fas fa-percent icon"></i>
+            <label for="goldPricePerGram">قیمت هر گرم طلا (تومان):</label>
+            <input type="number" id="goldPricePerGram" placeholder="مثال: 3,000,000">
+            <i class="fas fa-money-bill-wave icon"></i>
         </div>
-        <div class="input-group">
-            <label for="goldPricePerGram">قیمت هر گرم طلای 18 عیار (تومان):</label>
-            <input type="number" id="goldPricePerGram" placeholder="مثال: 3,000,000" min="0">
-            <i class="fas fa-lira-sign icon"></i>
-        </div>
-        <button onclick="calculateGoldPrice()">محاسبه قیمت طلا</button>
+        <button onclick="calculateGoldCommitment()">محاسبه</button>
         <div id="goldResultDiv" class="result">
-            <div>قیمت نهایی طلا: <span id="goldTotalPrice">0</span> تومان</div>
+            <div>ارزش کل تعهد طلا: <span id="totalGoldValue"></span> تومان</div>
+            <div class="small-text">این مبلغ صرفاً یک تخمین است و برای برنامه‌ریزی مالی استفاده شود.</div>
         </div>
     </div>
 
     <div id="bmiCalculator" class="app-container">
-        <h1>ماشین حساب BMI</h1>
+        <h1>شاخص توده بدنی (BMI)</h1>
         <div class="input-group">
             <label for="weight">وزن (کیلوگرم):</label>
-            <input type="number" id="weight" placeholder="مثال: 70" min="0">
+            <input type="number" id="weight" placeholder="مثال: 70">
             <i class="fas fa-weight icon"></i>
         </div>
         <div class="input-group">
             <label for="height">قد (سانتی‌متر):</label>
-            <input type="number" id="height" placeholder="مثال: 175" min="0">
+            <input type="number" id="height" placeholder="مثال: 175">
             <i class="fas fa-ruler-vertical icon"></i>
         </div>
         <button onclick="calculateBMI()">محاسبه BMI</button>
         <div id="bmiResultDiv" class="result">
-            <div>BMI شما: <span id="bmiValue">0</span></div>
+            <div>BMI شما: <span id="bmiValue"></span></div>
             <div>وضعیت: <span id="bmiStatus"></span></div>
+            <div class="small-text">شاخص BMI ابزاری برای سنجش تناسب قد و وزن است. برای تشخیص دقیق‌تر، با پزشک مشورت کنید.</div>
         </div>
     </div>
 
     <div id="personalityTest" class="app-container">
-        <h1>شخصیت شناسی متولدین ماه</h1>
+        <h1>تست شخصیت ماه تولد</h1>
         <div class="input-group">
             <label for="birthMonth">ماه تولد خود را انتخاب کنید:</label>
             <select id="birthMonth">
@@ -1068,91 +989,102 @@
             </select>
             <i class="fas fa-calendar-alt icon"></i>
         </div>
-        <button onclick="displayPersonalityTraits()">نمایش ویژگی‌های شخصیتی</button>
-        <div id="personalityResultDiv" class="result" style="display: block;">
-            <div id="personalityText"></div>
-            <div id="comparisonSection" class="comparison-section">
-                <label for="compareMonth">مقایسه با ماه دیگر:</label>
-                <select id="compareMonth">
-                    <option value="">انتخاب کنید</option>
-                    <option value="فروردین">فروردین</option>
-                    <option value="اردیبهشت">اردیبهشت</option>
-                    <option value="خرداد">خرداد</option>
-                    <option value="تیر">تیر</option>
-                    <option value="مرداد">مرداد</option>
-                    <option value="شهریور">شهریور</option>
-                    <option value="مهر">مهر</option>
-                    <option value="آبان">آبان</option>
-                    <option value="آذر">آذر</option>
-                    <option value="دی">دی</option>
-                    <option value="بهمن">بهمن</option>
-                    <option value="اسفند">اسفند</option>
-                </select>
-                <button onclick="comparePersonalities()">مقایسه شخصیت‌ها</button>
-                <div id="comparisonResultDiv" class="comparison-result">
-                    <div id="comparisonText"></div>
-                </div>
+        <button onclick="showPersonalityTraits()">نمایش ویژگی‌ها</button>
+        <div id="personalityResultDiv" class="result" style="display: none;">
+            <div id="personalityText" class="personality-text"></div>
+            <div class="small-text">این ویژگی‌ها بر اساس باورهای عمومی درباره ماه‌های تولد هستند و جنبه سرگرمی دارند.</div>
+        </div>
+
+        <div class="comparison-section">
+            <label for="compareMonth">مقایسه با ماه تولد دیگر:</label>
+            <select id="compareMonth">
+                <option value="">انتخاب کنید</option>
+                <option value="فروردین">فروردین</option>
+                <option value="اردیبهشت">اردیبهشت</option>
+                <option value="خرداد">خرداد</option>
+                <option value="تیر">تیر</option>
+                <option value="مرداد">مرداد</option>
+                <option value="شهریور">شهریور</option>
+                <option value="مهر">مهر</option>
+                <option value="آبان">آبان</option>
+                <option value="آذر">آذر</option>
+                <option value="دی">دی</option>
+                <option value="بهمن">بهمن</option>
+                <option value="اسفند">اسفند</option>
+            </select>
+            <button onclick="comparePersonalities()">مقایسه شخصیت</button>
+            <div id="comparisonResultDiv" class="result" style="display: none;">
+                <div id="comparisonText" class="comparison-result"></div>
             </div>
         </div>
     </div>
 
     <div id="loanDepositCalculator" class="app-container">
-        <h1>ماشین حساب وام و سپرده</h1>
+        <h1>حسابگر وام و سپرده</h1>
         <div class="tab-buttons">
-            <button class="tab-button active" onclick="showLoanDepositTab('loan', this)">وام</button>
-            <button class="tab-button" onclick="showLoanDepositTab('deposit', this)">سپرده</button>
+            <button class="tab-button active" onclick="showLoanDepositTab('loan', this)">
+                <i class="fas fa-money-check-alt"></i>
+                <span>محاسبه وام</span>
+            </button>
+            <button class="tab-button" onclick="showLoanDepositTab('deposit', this)">
+                <i class="fas fa-piggy-bank"></i>
+                <span>محاسبه سپرده</span>
+            </button>
         </div>
 
-        <div id="loanContent" class="loan-deposit-content active">
+        <div id="loanContent" class="loan-deposit-content" style="display: block;">
             <div class="input-group">
                 <label for="loanAmount">مبلغ وام (تومان):</label>
-                <input type="number" id="loanAmount" placeholder="مثال: 100,000,000" min="0">
-                <i class="fas fa-money-check-alt icon"></i>
+                <input type="number" id="loanAmount" placeholder="مثال: 100,000,000">
+                <i class="fas fa-hand-holding-usd icon"></i>
             </div>
             <div class="input-group">
-                <label for="loanInterestRate">نرخ سود سالانه وام (درصد):</label>
-                <input type="number" id="loanInterestRate" placeholder="مثال: 18" min="0" step="0.1">
+                <label for="loanInterestRate">نرخ سود سالانه (%):</label>
+                <input type="number" id="loanInterestRate" placeholder="مثال: 18" step="0.1">
                 <i class="fas fa-percent icon"></i>
             </div>
             <div class="input-group">
-                <label for="loanDuration">مدت بازپرداخت (ماه):</label>
-                <input type="number" id="loanDuration" placeholder="مثال: 36" min="1">
+                <label for="loanDurationMonths">مدت بازپرداخت (ماه):</label>
+                <input type="number" id="loanDurationMonths" placeholder="مثال: 60">
                 <i class="fas fa-calendar-alt icon"></i>
             </div>
-            <button onclick="calculateLoan()">محاسبه وام</button>
+            <button onclick="calculateLoanInstallment()">محاسبه اقساط</button>
             <div id="loanResultDiv" class="result">
-                <div>قسط ماهانه: <span id="monthlyInstallment">0</span> تومان</div>
-                <div>کل سود: <span id="totalLoanInterest">0</span> تومان</div>
-                <div>کل مبلغ بازپرداخت: <span id="totalPayment">0</span> تومان</div>
+                <div>قسط ماهانه: <span id="monthlyInstallment"></span> تومان</div>
+                <div>کل سود: <span id="totalLoanInterest"></span> تومان</div>
+                <div>کل بازپرداخت: <span id="totalPayment"></span> تومان</div>
+                <div class="small-text">این محاسبات تخمینی هستند و برای اطلاعات دقیق‌تر با بانک مشورت کنید.</div>
             </div>
         </div>
 
         <div id="depositContent" class="loan-deposit-content">
             <div class="input-group">
                 <label for="depositAmount">مبلغ سپرده (تومان):</label>
-                <input type="number" id="depositAmount" placeholder="مثال: 50,000,000" min="0">
-                <i class="fas fa-wallet icon"></i>
+                <input type="number" id="depositAmount" placeholder="مثال: 50,000,000">
+                <i class="fas fa-piggy-bank icon"></i>
             </div>
             <div class="input-group">
-                <label for="depositInterestRate">نرخ سود سالانه سپرده (درصد):</label>
-                <input type="number" id="depositInterestRate" placeholder="مثال: 20" min="0" step="0.1">
+                <label for="depositInterestRate">نرخ سود سالانه (%):</label>
+                <input type="number" id="depositInterestRate" placeholder="مثال: 20" step="0.1">
                 <i class="fas fa-percent icon"></i>
             </div>
             <div class="input-group">
-                <label for="depositDurationDays">مدت سپرده گذاری (روز): <span id="depositDurationLabel">365 روز</span></label>
-                <input type="range" id="depositDurationDays" min="1" max="1825" value="365" oninput="updateDepositDurationLabel()">
+                <label id="depositDurationLabel" for="depositDurationDays">مدت زمان سپرده (ماه):</label>
+                <input type="number" id="depositDurationDays" placeholder="مثال: 12">
+                <i class="fas fa-calendar-alt icon"></i>
             </div>
             <div class="toggle-switch">
-                <span>محاسبه روز شمار</span>
+                <span>محاسبه سود روزشمار</span>
                 <label class="switch">
                     <input type="checkbox" id="dailyInterestToggle">
                     <span class="slider round"></span>
                 </label>
             </div>
-            <button onclick="calculateDeposit()">محاسبه سپرده</button>
+            <button onclick="calculateDepositInterest()">محاسبه سود</button>
             <div id="depositResultDiv" class="result">
-                <div>سود قابل دریافت: <span id="depositInterestEarned">0</span> تومان</div>
-                <div>مجموع قابل دریافت: <span id="totalDepositAmount">0</span> تومان</div>
+                <div>سود کل سپرده: <span id="totalDepositInterest"></span> تومان</div>
+                <div>مبلغ نهایی با سود: <span id="finalDepositAmount"></span> تومان</div>
+                <div class="small-text">این محاسبات تخمینی هستند. برای اطلاعات دقیق‌تر با بانک مشورت کنید.</div>
             </div>
         </div>
     </div>
@@ -1161,292 +1093,191 @@
         <h1>تبدیل ارز</h1>
         <div class="input-group">
             <label for="amountToConvert">مبلغ:</label>
-            <input type="number" id="amountToConvert" placeholder="مثال: 1000" min="0">
+            <input type="number" id="amountToConvert" placeholder="مثال: 1000">
             <i class="fas fa-money-bill-wave icon"></i>
         </div>
-        <div class="input-group">
-            <label for="fromCurrency">از ارز:</label>
-            <select id="fromCurrency"></select>
-            <i class="fas fa-exchange-alt icon"></i>
+        <div class="flex-inputs">
+            <div class="input-group">
+                <label for="fromCurrency">از ارز:</label>
+                <select id="fromCurrency">
+                    <option value="IRR">تومان</option>
+                    <option value="USD">دلار آمریکا</option>
+                    <option value="EUR">یورو</option>
+                    <option value="GBP">پوند انگلیس</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="toCurrency">به ارز:</label>
+                <select id="toCurrency">
+                    <option value="USD">دلار آمریکا</option>
+                    <option value="IRR">تومان</option>
+                    <option value="EUR">یورو</option>
+                    <option value="GBP">پوند انگلیس</option>
+                </select>
+            </div>
         </div>
         <div class="input-group">
-            <label for="toCurrency">به ارز:</label>
-            <select id="toCurrency"></select>
-            <i class="fas fa-exchange-alt icon"></i>
+            <label for="exchangeRate">نرخ تبدیل (مثلاً 1 دلار چند تومان است):</label>
+            <input type="number" id="exchangeRate" placeholder="مثال: 50000" step="0.01">
+            <i class="fas fa-percentage icon"></i>
         </div>
-        <button onclick="convertCurrency()">تبدیل ارز</button>
+        <button onclick="convertCurrency()">تبدیل</button>
         <div id="currencyResultDiv" class="result">
-            <div>مبلغ تبدیل شده: <span id="convertedAmount">0</span></div>
+            <div>مبلغ تبدیل شده: <span id="convertedAmount"></span></div>
+            <div class="small-text">نرخ‌های تبدیل ارز دائماً در حال تغییر هستند. این ارقام صرفاً جهت اطلاع‌رسانی می‌باشند.</div>
         </div>
     </div>
 
     <div id="hypotheticalServicesCalculator" class="app-container">
-        <h1>بودجه لذت و خدمات</h1>
+        <h1>هزینه‌ها و لذت ماهانه</h1>
         <div class="input-group">
-            <label for="dollarExchangeRateHypothetical">نرخ روز دلار به تومان:</label>
-            <input type="number" id="dollarExchangeRateHypothetical" placeholder="مثال: 50000" min="1" step="100">
+            <label for="dollarExchangeRateHyp">نرخ لحظه‌ای دلار (تومان):</label>
+            <input type="number" id="dollarExchangeRateHyp" placeholder="مثال: 55000" value="55000">
             <i class="fas fa-dollar-sign icon"></i>
         </div>
         <div class="input-group">
-            <label for="hypotheticalBudget">درآمد ماهانه (تومان):</label>
-            <input type="number" id="hypotheticalBudget" placeholder="مثال: 30,000,000" min="0">
-            <i class="fas fa-sack-dollar icon"></i>
+            <label for="monthlyIncomeHyp">درآمد ماهانه (تومان):</label>
+            <input type="number" id="monthlyIncomeHyp" placeholder="مثال: 30,000,000">
+            <i class="fas fa-wallet icon"></i>
         </div>
-        <div class="input-group">
-            <label for="userAge">سن شما:</label>
-            <input type="number" id="userAge" placeholder="مثال: 30" min="1">
-            <i class="fas fa-user icon"></i>
-        </div>
-        <div class="input-group">
-            <label for="userOccupation">شغل شما:</label>
-            <select id="userOccupation"></select>
-            <i class="fas fa-briefcase icon"></i>
-        </div>
-        <div class="input-group">
-            <label for="maritalStatus">وضعیت تأهل:</label>
-            <select id="maritalStatus">
-                <option value="">انتخاب کنید</option>
-                <option value="مجرد">مجرد</option>
-                <option value="متاهل">متاهل</option>
-            </select>
-            <i class="fas fa-heart icon"></i>
-        </div>
-        <div id="childrenCountGroup" class="input-group" style="display: none;">
-            <label for="childrenCount">تعداد فرزندان:</label>
-            <input type="number" id="childrenCount" placeholder="مثال: 0" min="0">
-            <i class="fas fa-child icon"></i>
-        </div>
-        <div class="input-group">
-            <label for="livingArea">محل زندگی:</label>
-            <select id="livingArea">
-                <option value="">انتخاب کنید</option>
-                <option value="شهری">شهری</option>
-                <option value="روستایی">روستایی</option>
-            </select>
-            <i class="fas fa-city icon"></i>
-        </div>
-        <div class="input-group">
-            <label for="houseOwnership">وضعیت مالکیت خانه:</label>
-            <select id="houseOwnership">
-                <option value="">انتخاب کنید</option>
-                <option value="مالک">مالک</option>
-                <option value="مستأجر">مستأجر</option>
-            </select>
-            <i class="fas fa-home icon"></i>
-        </div>
-        <div class="input-group">
-            <label for="carOwnership">وضعیت مالکیت خودرو:</label>
-            <select id="carOwnership">
-                <option value="">انتخاب کنید</option>
-                <option value="دارم">دارم</option>
-                <option value="ندارم">ندارم</option>
-            </select>
-            <i class="fas fa-car icon"></i>
-        </div>
+        <p style="text-align: right; color: #e0e0e0; font-size: 0.9em; margin-top: 20px; margin-bottom: 15px;">فعالیت‌های ماهانه مورد نظر خود را انتخاب کنید:</p>
+        <div id="activityOptions">
+            </div>
+        <button onclick="calculateHypotheticalServicesCost()">محاسبه هزینه‌ها و بودجه</button>
 
-        <button onclick="showActivitySelectionModal()">انتخاب تفریحات دلخواه</button>
-        <button onclick="calculateHypotheticalServices()">محاسبه بودجه لذت و خدمات</button>
         <div id="hypotheticalServicesResultDiv" class="result">
-            <div>درآمد ماهانه: <span id="displayMonthlyIncome">0</span> تومان</div>
-            <div>جمع کل هزینه‌های تفریحات و خدمات انتخابی: <span id="totalActivityCost">0</span></div>
-            <div>مبلغ باقیمانده/کسری: <span id="remainingOrDeficitAmount">0</span> تومان</div>
-            <div id="budgetSuggestionText" class="suggestion-section"></div>
-            <div id="expenseCutSuggestions" class="suggestion-section" style="display: none;">
-                <h3 class="overspend-warning">هشدار: شما این ماه بیش از درآمد خود هزینه کرده‌اید!</h3>
-                <p>برای تعادل دخل و خرج، پیشنهاد می‌کنیم موارد زیر را کاهش دهید یا حذف کنید:</p>
-                <ul id="cutSuggestionsList"></ul>
+            <table class="activity-table">
+                <thead>
+                    <tr>
+                        <th>فعالیت</th>
+                        <th>تعداد/دفعات</th>
+                        <th>هزینه (تومان)</th>
+                    </tr>
+                </thead>
+                <tbody id="activityTableBody">
+                    </tbody>
+                <tfoot>
+                    <tr id="totalCostRow" class="total-cost-row">
+                        <td colspan="2">جمع کل هزینه‌های انتخابی:</td>
+                        <td id="totalActivityCostSpan"></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="suggestion-section">
+                <h3 id="budgetSuggestionTitle"></h3>
+                <p id="budgetSuggestionText"></p>
+                <ul id="suggestionList" style="display: none;"></ul>
             </div>
-            <div id="activityDetails" style="margin-top: 20px;">
-                <h3>جزئیات هزینه‌های تفریحات انتخابی</h3>
-                <table class="activity-table">
-                    <thead>
-                        <tr>
-                            <th>نام فعالیت</th>
-                            <th>تعداد/میزان</th>
-                            <th>هزینه حدودی (تومان)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="activityTableBody">
-                        </tbody>
-                    <tfoot>
-                        <tr class="total-cost-row">
-                            <td colspan="2">کل هزینه‌های تفریحات:</td>
-                            <td id="totalActivityCostFooter">0 تومان</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+            <div class="small-text">این تخمین‌ها بر اساس میانگین هزینه‌ها هستند و ممکن است با واقعیت متفاوت باشند.</div>
         </div>
     </div>
-
-    <div id="activitySelectionModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeActivitySelectionModal()">&times;</span>
-            <h2>انتخاب تفریحات و خدمات دلخواه</h2>
-            <p>فعالیت‌هایی که معمولاً در ماه انجام می‌دهید را انتخاب کنید و تعداد/مقدار آن را وارد کنید:</p>
-            <div id="activityOptions">
-                </div>
-            <button onclick="saveSelectedActivities()">ذخیره تفریحات انتخاب شده</button>
-        </div>
-    </div>
-
 
     <script>
-        let globalUserData = {};
-        let selectedCustomActivities = []; // To store user's selected activities with quantities
-
-        // Define a comprehensive list of services with min/max costs in USD
-        const iranianServiceCostsUSD = {
-            'یک فنجان قهوه در کافه': { min: 0.5, max: 3, type: 'leisure', unit: 'بار' },
-            'یک فنجان چای در کافه': { min: 0.5, max: 1, type: 'leisure', unit: 'بار' },
-            'بلیط سینما و یک نوشیدنی': { min: 2.5, max: 7, type: 'culture', unit: 'بار' },
-            'یک وعده غذای فست فود': { min: 3, max: 8, type: 'food', unit: 'بار' },
-            'یک وعده غذای رستورانی (اقتصادی)': { min: 5, max: 12, type: 'food', unit: 'بار' },
-            'یک وعده غذای رستورانی (لوکس)': { min: 15, max: 40, type: 'food', unit: 'بار' },
-            'خدمات آرایشی/پیرایش ساده': { min: 3, max: 10, type: 'personal', unit: 'بار' },
-            'اینترنت ماهانه خانگی': { min: 5, max: 15, type: 'fixed', unit: 'ماه' },
-            'قبوض آب و برق و گاز (ماهانه)': { min: 10, max: 30, type: 'fixed', unit: 'ماه' },
-            'حمل و نقل عمومی (ماهیانه)': { min: 5, max: 10, type: 'transport', unit: 'ماه' },
-            'لوازم بهداشتی/شوینده (ماهانه)': { min: 5, max: 20, type: 'fixed', unit: 'ماه' },
-            'میوه و سبزیجات (ماهانه)': { min: 20, max: 50, type: 'food', unit: 'ماه' },
-            'پروتئین (گوشت، مرغ، ماهی) (ماهانه)': { min: 30, max: 100, type: 'food', unit: 'ماه' },
-            'پوشاک (ماهانه، تقریبی)': { min: 10, max: 50, type: 'personal', unit: 'ماه' },
-            'شهریه باشگاه ورزشی (ماهانه)': { min: 6, max: 20, type: 'health', unit: 'ماه' },
-            'یک بار استفاده از استخر': { min: 2, max: 4, type: 'health', unit: 'بار' },
-            'خرید یک کتاب جدید': { min: 1.5, max: 4, type: 'education', unit: 'کتاب' },
-            'اشتراک ماهانه نرم‌افزار کاربردی': { min: 2, max: 10, type: 'education', unit: 'ماه' },
-            'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)': { min: 2, max: 10, type: 'education', unit: 'ماه' },
-            'هزینه مسافرت داخلی/خارجی (به ازای هر نفر در روز، اقتصادی)': { min: 10, max: 30, type: 'travel', unit: 'روز' },
-            'هزینه مسافرت داخلی/خارجی (به ازای هر نفر در روز، رفاهی)': { min: 30, max: 100, type: 'travel', unit: 'روز' },
-            'تعمیر و نگهداری خودرو (ماهیانه، تقریبی)': { min: 10, max: 50, type: 'transport', unit: 'ماه' },
-            'بنزین/سوخت خودرو (ماهیانه، تقریبی)': { min: 15, max: 40, type: 'transport', unit: 'ماه' },
-            'تاکسی/اسنپ (شهری)': { min: 1.5, max: 3, type: 'transport', unit: 'بار' },
-            'اجاره خانه شهری (ماهیانه)': { min: 150, max: 500, type: 'fixed' },
-            'اجاره خانه روستایی (ماهیانه)': { min: 50, max: 100, type: 'fixed' },
-            'هزینه هر پاکت سیگار': { min: 0.5, max: 1, type: 'luxury', unit: 'پاکت' },
-            'مشروب (1.5 لیتری عرق سگی)': { min: 10, max: 10, type: 'luxury', unit: 'بطری' },
-            'مشروب (ویسکی 50 دلاری)': { min: 50, max: 50, type: 'luxury', unit: 'بطری' }
-        };
-
-        const allActivities = {
-            'نوشیدنی‌ها و تنقلات': [
-                { id: 'coffee', name: 'یک فنجان قهوه در کافه', minCost: 0.5, maxCost: 3, type: 'leisure', unit: 'بار' },
-                { id: 'tea', name: 'یک فنجان چای در کافه', minCost: 0.5, maxCost: 1, type: 'leisure', unit: 'بار' },
-                { id: 'cigarette', name: 'پاکت سیگار', minCost: 0.5, maxCost: 1, type: 'luxury', unit: 'پاکت' },
-                { id: 'arak', name: 'بطری عرق سگی (1.5 لیتری)', minCost: 10, maxCost: 10, type: 'luxury', unit: 'بطری' },
-                { id: 'whiskey', name: 'بطری ویسکی (50 دلاری)', minCost: 50, maxCost: 50, type: 'luxury', unit: 'بطری' },
-            ],
-            'تفریحات و سرگرمی': [
-                { id: 'cinema', name: 'بلیط سینما و یک نوشیدنی', minCost: 2.5, maxCost: 7, type: 'culture', unit: 'بار' },
-                { id: 'gaming', name: 'هزینه گیم نت/بازی (ساعتی)', minCost: 1, maxCost: 3, type: 'leisure', unit: 'ساعت' },
-                { id: 'park', name: 'هزینه یک گردش در پارک/فضای سبز', minCost: 0.5, maxCost: 2, type: 'free', unit: 'بار' }
-            ],
-            'غذا و رستوران': [
-                { id: 'fastFood', name: 'یک وعده غذای فست فود', minCost: 3, maxCost: 8, type: 'food', unit: 'بار' },
-                { id: 'economicRestaurant', name: 'یک وعده غذای رستورانی (اقتصادی)', minCost: 5, maxCost: 12, type: 'food', unit: 'بار' },
-                { id: 'luxuryRestaurant', name: 'یک وعده غذای رستورانی (لوکس)', minCost: 15, maxCost: 40, type: 'food', unit: 'بار' }
-            ],
-            'حمل و نقل': [
-                { id: 'publicTransport', name: 'حمل و نقل عمومی (ماهیانه)', minCost: 5, maxCost: 10, type: 'transport', unit: 'ماه' },
-                { id: 'taxiTrip', name: 'تاکسی/اسنپ (شهری)', minCost: 1.5, maxCost: 3, type: 'transport', unit: 'بار' },
-                { id: 'carFuel', name: 'بنزین/سوخت خودرو (ماهیانه، تقریبی)', minCost: 15, maxCost: 40, type: 'transport', unit: 'ماه' }
-            ],
-            'ورزش و سلامت': [
-                { id: 'gym', name: 'شهریه باشگاه ورزشی (ماهانه)', minCost: 6, maxCost: 20, type: 'health', unit: 'ماه' },
-                { id: 'pool', name: 'یک بار استفاده از استخر', minCost: 2, maxCost: 4, type: 'health', unit: 'بار' },
-                { id: 'sportClass', name: 'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)', minCost: 2, maxCost: 10, type: 'education', unit: 'ماه' }
-            ],
-            'آموزش و توسعه فردی': [
-                { id: 'book', name: 'خرید یک کتاب جدید', minCost: 1.5, maxCost: 4, type: 'education', unit: 'کتاب' },
-                { id: 'softwareSub', name: 'اشتراک ماهانه نرم‌افزار کاربردی', minCost: 2, maxCost: 10, type: 'education', unit: 'ماه' },
-                { id: 'workshop', name: 'شرکت در یک کارگاه/سمینار کوتاه', minCost: 5, maxCost: 25, type: 'education', unit: 'بار' }
-            ],
-            'مسافرت': [
-                { id: 'domesticTravelEconomic', name: 'مسافرت داخلی (اقتصادی، هر روز)', minCost: 10, maxCost: 30, type: 'travel', unit: 'روز' },
-                { id: 'domesticTravelLuxury', name: 'مسافرت داخلی (رفاهی، هر روز)', minCost: 30, maxCost: 100, type: 'travel', unit: 'روز' }
-            ],
-            'هزینه‌های ثابت و اساسی (تخمینی)': [
-                { id: 'homeInternet', name: 'اینترنت ماهانه خانگی', minCost: 5, maxCost: 15, type: 'fixed', unit: 'ماه' },
-                { id: 'bills', name: 'قبوض آب و برق و گاز (ماهانه)', minCost: 10, max: 30, type: 'fixed', unit: 'ماه' },
-                { id: 'hygiene', name: 'لوازم بهداشتی/شوینده (ماهانه)', min: 5, max: 20, type: 'fixed', unit: 'ماه' },
-                { id: 'fruitsVegetables', name: 'میوه و سبزیجات (ماهانه)', min: 20, max: 50, type: 'food', unit: 'ماه' },
-                { id: 'protein', name: 'پروتئین (گوشت، مرغ، ماهی) (ماهانه)', min: 30, max: 100, type: 'food', unit: 'ماه' },
-                { id: 'clothing', name: 'پوشاک (ماهانه، تقریبی)', min: 10, max: 50, type: 'personal', unit: 'ماه' },
-                { id: 'carMaintenance', name: 'تعمیر و نگهداری خودرو (ماهیانه، تقریبی)', min: 10, max: 50, type: 'transport', unit: 'ماه' },
-                { id: 'urbanRent', name: 'اجاره خانه شهری (ماهیانه)', min: 150, max: 500, type: 'fixed', unit: 'ماه' },
-                { id: 'ruralRent', name: 'اجاره خانه روستایی (ماهیانه)', min: 50, max: 100, type: 'fixed', unit: 'ماه' }
-            ]
-        };
-
-
-        // --- Navbar Functionality ---
-        document.querySelectorAll('.nav-button').forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove 'active' from all buttons and hide all containers
-                document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.app-container').forEach(container => container.style.display = 'none');
-
-                // Add 'active' to the clicked button
-                this.classList.add('active');
-
-                // Show the corresponding app container
-                const targetId = this.dataset.target;
-                document.getElementById(targetId).style.display = 'block';
-
-                // Set CSS variable for active border color
-                document.documentElement.style.setProperty('--button-color', this.dataset.color);
-            });
-        });
-
-        // --- Theme Toggle ---
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            const body = document.body;
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme Toggle
             const themeToggleBtn = document.getElementById('themeToggle');
-            if (body.classList.contains('light-theme')) {
-                body.classList.remove('light-theme');
-                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-                localStorage.setItem('theme', 'dark');
-            } else {
+            const body = document.body;
+
+            themeToggleBtn.addEventListener('click', () => {
+                body.classList.toggle('light-theme');
+                if (body.classList.contains('light-theme')) {
+                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+                localStorage.setItem('theme', body.classList.contains('light-theme') ? 'light' : 'dark');
+            });
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
                 body.classList.add('light-theme');
                 themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light-theme');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
             }
+
+            // Navbar Button Logic
+            const navButtons = document.querySelectorAll('.nav-button');
+            const appContainers = document.querySelectorAll('.app-container');
+
+            function showApp(targetId) {
+                appContainers.forEach(container => {
+                    container.style.display = 'none';
+                });
+                document.getElementById(targetId).style.display = 'block';
+            }
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    showApp(button.dataset.target);
+                });
+            });
+
+            // Show the first app by default on load
+            if (navButtons.length > 0) {
+                navButtons[0].click();
+            }
+
+            // Loan/Deposit Calculator tab logic
+            document.getElementById('dailyInterestToggle').addEventListener('change', updateDepositDurationLabel);
+            updateDepositDurationLabel();
+
+            // Event listener for marital status to show/hide children count (inside personality or wherever applicable)
+            // This part might need adjustment if marital status is global but not in this specific app
+            const maritalStatusEl = document.getElementById('maritalStatus');
+            if (maritalStatusEl) {
+                maritalStatusEl.addEventListener('change', function() {
+                    document.getElementById('childrenCountGroup').style.display = this.value === 'متاهل' ? 'block' : 'none';
+                });
+                maritalStatusEl.dispatchEvent(new Event('change')); // Initial dispatch
+            }
+
+            // Initialize hypothetical services activities
+            populateActivityOptions();
         });
 
-        // --- Gold Calculator Logic ---
-        function calculateGoldPrice() {
-            const weight = parseFloat(document.getElementById('goldWeight').value);
-            const purity = parseFloat(document.getElementById('goldPurity').value);
-            const pricePerGram = parseFloat(document.getElementById('goldPricePerGram').value.replace(/,/g, ''));
+        // --- Global Data (Removed as per user request) ---
+        // let globalUserData = {};
 
-            if (isNaN(weight) || isNaN(purity) || isNaN(pricePerGram) || weight <= 0 || purity <= 0 || pricePerGram <= 0) {
-                alert('لطفاً مقادیر صحیح و مثبت را وارد کنید.');
+        // --- Gold Calculator Logic ---
+        function calculateGoldCommitment() {
+            const goldWeight = parseFloat(document.getElementById('goldWeight').value);
+            const goldPricePerGram = parseFloat(document.getElementById('goldPricePerGram').value);
+
+            if (isNaN(goldWeight) || isNaN(goldPricePerGram) || goldWeight <= 0 || goldPricePerGram <= 0) {
+                alert('لطفاً وزن و قیمت طلا را با مقادیر صحیح وارد کنید.');
                 return;
             }
 
-            const goldPrice = (weight * purity * pricePerGram) / 750; // Assuming 750 is 18 carat gold standard
-            document.getElementById('goldTotalPrice').innerText = goldPrice.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            const totalValue = goldWeight * goldPricePerGram;
+            document.getElementById('totalGoldValue').innerText = totalValue.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
             document.getElementById('goldResultDiv').style.display = 'block';
         }
 
         // --- BMI Calculator Logic ---
         function calculateBMI() {
             const weight = parseFloat(document.getElementById('weight').value);
-            const height = parseFloat(document.getElementById('height').value) / 100; // Convert cm to meters
+            const heightCm = parseFloat(document.getElementById('height').value);
 
-            if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
-                alert('لطفاً وزن و قد را به درستی وارد کنید.');
+            if (isNaN(weight) || isNaN(heightCm) || weight <= 0 || heightCm <= 0) {
+                alert('لطفاً وزن و قد را با مقادیر صحیح وارد کنید.');
                 return;
             }
 
-            const bmi = weight / (height * height);
-            let status;
+            const heightM = heightCm / 100;
+            const bmi = weight / (heightM * heightM);
+            let status = '';
+
             if (bmi < 18.5) {
                 status = 'کم‌وزن';
-            } else if (bmi >= 18.5 && bmi <= 24.9) {
+            } else if (bmi >= 18.5 && bmi < 24.9) {
                 status = 'وزن طبیعی';
-            } else if (bmi >= 25 && bmi <= 29.9) {
-                status = 'اضافه وزن';
+            } else if (bmi >= 25 && bmi < 29.9) {
+                status = 'اضافه‌وزن';
             } else {
                 status = 'چاق';
             }
@@ -1459,91 +1290,80 @@
         // --- Personality Test Logic ---
         const personalityTraits = {
             'فروردین': {
-                'قوت': ['پرانرژی', 'پیشرو', 'شجاع', 'با اعتماد به نفس', 'مستقل'],
-                'ضعف': ['بی‌صبر', 'تکانشی', 'خودمحور', 'عجول', 'پرخاشگر'],
-                'توصیه': 'برای موفقیت بیشتر، سعی کنید در تصمیم‌گیری‌ها صبورتر باشید و به نظرات دیگران گوش فرا دهید.'
+                'قوت': ['پر انرژی', 'جسور', 'پیشرو', 'صادق'],
+                'ضعف': ['بی‌صبر', 'تکانشی', 'خودمحور', 'عجول']
             },
             'اردیبهشت': {
-                'قوت': ['قابل اعتماد', 'صبور', 'عملی', 'متعهد', 'مسئولیت‌پذیر'],
-                'ضعف': ['لجباز', 'مصالحه ناپذیر', 'مالکیت طلب', 'حسود', 'خشک'],
-                'توصیه': 'انعطاف‌پذیری بیشتر در برابر تغییرات و پذیرش دیدگاه‌های جدید، شما را در زندگی یاری می‌کند.'
+                'قوت': ['صبور', 'قابل اعتماد', 'پایدار', 'هدفمند'],
+                'ضعف': ['لجباز', 'حسود', 'خودشیفته', 'تنبلی']
             },
             'خرداد': {
-                'قوت': ['مستعد', 'عاطفی', 'وفادار', 'متقاعد کننده', 'دلسوز'],
-                'ضعف': ['ناپایدار', 'دمدمی مزاج', 'بدبین', 'شکاک', 'چسبنده'],
-                'توصیه': 'کنترل احساسات و ثبات در تصمیم‌گیری‌ها می‌تواند به شما در روابط و اهدافتان کمک کند.'
+                'قوت': ['هوشمند', 'تطبیق‌پذیر', 'اجتماعی', 'شوخ‌طبع'],
+                'ضعف': ['دوگانگی', 'دمدمی مزاج', 'غیرقابل اعتماد', 'کنجکاوی زیاد']
             },
             'تیر': {
-                'قوت': ['خلاق', 'سازگار', 'جذاب', 'انرژیک', 'اجتماعی'],
-                'ضعف': ['عصبی', 'ناپایدار', 'دمدمی مزاج', 'کنجکاو', 'سرد'],
-                'توصیه': 'تمرکز بر روی یک هدف و دوری از پراکندگی می‌تواند به شما در دستیابی به موفقیت‌های بزرگ کمک کند.'
+                'قوت': ['دلسوز', 'محافظه‌کار', 'وفادار', 'شهودی'],
+                'ضعف': ['حساس', 'بدخلق', 'وابسته', 'گوشه‌گیر']
             },
             'مرداد': {
-                'قوت': ['سخاوتمند', 'مهربان', 'مبتکر', 'با اعتماد به نفس', 'رهبر'],
-                'ضعف': ['خودبین', 'لجباز', 'بی‌طاقت', 'سلطه‌جو', 'عجول'],
-                'توصیه': 'فروتنی و درک دیگران، توانایی‌های رهبری شما را تقویت می‌کند.'
+                'قوت': ['با اعتماد به نفس', 'سخاوتمند', 'کاریزماتیک', 'وفادار'],
+                'ضعف': ['خودبین', 'مغرور', 'کنترل‌گر', 'دراماتیک']
             },
             'شهریور': {
-                'قوت': ['تحلیلگر', 'سخت کوش', 'عملگرا', 'وفادار', 'مهربان'],
-                'ضعف': ['خجالتی', 'نگران', 'سخت‌گیر', 'بیش از حد منتقد', 'وسواسی'],
-                'توصیه': 'بیشتر به خودتان اعتماد کنید و از کمال‌گرایی بیش از حد بپرهیزید تا از زندگی لذت ببرید.'
+                'قوت': ['تحلیل‌گر', 'کمال‌گرا', 'مسئولیت‌پذیر', 'مهربان'],
+                'ضعف': ['انتقادگر', 'وسواسی', 'بیش از حد نگران', 'ترسو']
             },
             'مهر': {
-                'قوت': ['اجتماعی', 'منصف', 'صلح‌جو', 'همکار', 'دیپلماتیک'],
-                'ضعف': ['تصمیم‌ناپذیر', 'از خود راضی', 'جنگنده', 'پایبند نبودن به برنامه', ' سطحی'],
-                'توصیه': 'افزایش قاطعیت و توانایی تصمیم‌گیری مستقل، شما را در روابط و اهدافتان پیش می‌برد.'
+                'قوت': ['عادلانه‌جو', 'هماهنگ', 'جذاب', 'دیپلماتیک'],
+                'ضعف': ['بی‌تصمیم', 'سطحی‌نگر', 'متأثر', 'دمدمی']
             },
             'آبان': {
-                'قوت': ['مصمم', 'شجاع', 'قدرتمند', 'پرشور', 'وفادار'],
-                'ضعف': ['حسود', 'پنهان‌کار', 'کینه‌جو', 'خودخواه', 'شکاک'],
-                'توصیه': 'اعتماد به دیگران و کنترل خشم، به شما در ایجاد روابط عمیق‌تر کمک می‌کند.'
+                'قوت': ['پرشور', 'قاطع', 'مراقب', 'باهوش'],
+                'ضعف': ['حسود', 'پنهان‌کار', 'کینه توز', 'کنترل‌گر']
             },
             'آذر': {
-                'قوت': ['سخاوتمند', 'شوخ‌طبع', 'ایده‌آل‌گرا', 'برونگرا', 'خوش‌بین'],
-                'ضعف': ['بی‌صبر', 'بی‌ملاحظه', 'بی‌قرار', 'نافرمان', 'لوس'],
-                'توصیه': 'توجه به جزئیات و مسئولیت‌پذیری بیشتر، به شما در دستیابی به اهدافتان کمک می‌کند.'
+                'قوت': ['خوش‌بین', 'ماجراجو', 'فلسفی', 'صادق'],
+                'ضعف': ['بی‌پروا', 'بی‌ملاحظه', 'بی‌قرار', 'سطحی']
             },
             'دی': {
-                'قوت': ['مسئولیت‌پذیر', 'منضبط', 'خویشتن‌دار', 'مدیر', 'با تدبیر'],
-                'ضعف': ['بدبین', 'متکبر', 'بی‌احساس', 'بدبین', 'یکدنده'],
-                'توصیه': 'پذیرش ریسک‌پذیری بیشتر و دوری از بدبینی، افق‌های جدیدی را در زندگی شما باز می‌کند.'
+                'قوت': ['منظم', 'مسئولیت‌پذیر', 'صبور', 'کاردان'],
+                'ضعف': ['بدبین', 'سرد', 'لجباز', 'محتاط بیش از حد']
             },
             'بهمن': {
-                'قوت': ['مستقل', 'اصیل', 'پیشرو', 'بشردوست', 'روشنفکر'],
-                'ضعف': ['غیرقابل پیش‌بینی', 'ناسازگار', 'دور از دسترس', 'غیرقابل نفوذ', 'تندخو'],
-                'توصیه': 'نزدیکی بیشتر به احساسات خود و دیگران، به شما در برقراری ارتباطات عمیق‌تر کمک می‌کند.'
+                'قوت': ['خلاق', 'مستقل', 'بشر دوست', 'منطقی'],
+                'ضعف': ['گریزان', 'غیرقابل پیش‌بینی', 'سرد', 'گوشه‌گیر']
             },
             'اسفند': {
-                'قوت': ['دلسوز', 'هنری', 'شهودی', 'مهربان', 'فداکار'],
-                'ضعف': ['زودباور', 'ترسو', 'واقعیت گریز', 'خود ویرانگر', 'تنبل'],
-                'توصیه': 'تمرکز بر روی اهداف و دوری از رویاپردازی بیش از حد، به شما در دستیابی به موفقیت‌های عملی کمک می‌کند.'
+                'قوت': ['دلسوز', 'خیال‌پرداز', 'همدل', 'مهربان'],
+                'ضعف': ['زودباور', 'گریزان از واقعیت', 'ترسو', 'ناامید']
             }
         };
 
-        function displayPersonalityTraits() {
+        function showPersonalityTraits() {
             const birthMonth = document.getElementById('birthMonth').value;
             const personalityTextDiv = document.getElementById('personalityText');
+            const personalityResultDiv = document.getElementById('personalityResultDiv');
 
             if (!birthMonth) {
                 alert('لطفاً ماه تولد خود را انتخاب کنید.');
-                personalityTextDiv.innerHTML = '';
-                document.getElementById('comparisonResultDiv').style.display = 'none';
                 return;
             }
 
             const traits = personalityTraits[birthMonth];
-            let html = `<h2>ویژگی‌های شخصیتی متولد ${birthMonth}</h2>`;
+            let html = `<h2>ویژگی‌های شخصیتی متولد ${birthMonth}:</h2>`;
             html += `<h3>نقاط قوت:</h3><ul>`;
-            traits['قوت'].forEach(p => { html += `<li><span class="positive-point">${p}</span></li>`; });
+            traits['قوت'].forEach(p => {
+                html += `<li><span class="positive-point">${p}</span></li>`;
+            });
             html += `</ul>`;
             html += `<h3>نقاط ضعف (نیاز به توجه):</h3><ul>`;
-            traits['ضعف'].forEach(n => { html += `<li><span class="negative-point">${n}</span></li>`; });
+            traits['ضعف'].forEach(n => {
+                html += `<li><span class="negative-point">${n}</span></li>`;
+            });
             html += `</ul>`;
-            html += `<p>${traits['توصیه']}</p>`;
+
             personalityTextDiv.innerHTML = html;
-            document.getElementById('personalityResultDiv').style.display = 'block';
-            document.getElementById('comparisonResultDiv').style.display = 'none'; // Hide comparison when displaying own traits
-            document.getElementById('compareMonth').value = ''; // Clear compare month selection
+            personalityResultDiv.style.display = 'block';
         }
 
         function comparePersonalities() {
@@ -1551,13 +1371,11 @@
             const compareMonth = document.getElementById('compareMonth').value;
 
             if (!userMonth || !compareMonth) {
-                alert('لطفاً هر دو ماه را برای مقایسه انتخاب کنید.');
-                document.getElementById('comparisonResultDiv').style.display = 'none';
+                alert('لطفاً هر دو ماه تولد را برای مقایسه انتخاب کنید.');
                 return;
             }
             if (userMonth === compareMonth) {
                 alert('لطفاً دو ماه متفاوت را برای مقایسه انتخاب کنید.');
-                document.getElementById('comparisonResultDiv').style.display = 'none';
                 return;
             }
 
@@ -1572,20 +1390,16 @@
             let html = `<h3>مقایسه شخصیت متولد ${userMonth} با متولد ${compareMonth}:</h3>`;
 
             html += `<p><strong>نقاط مشترک مثبت:</strong> ${commonP.length ? commonP.map(t => `<span class="positive-point">${t}</span>`).join('، ') : 'مورد قابل توجهی یافت نشد.'}</p>`;
-
             if (userUniqueP.length || compareUniqueP.length) {
                 html += `<p><strong>نقاط قوت متفاوت:</strong></p><ul>`;
                 userUniqueP.forEach(t => html += `<li>متولد ${userMonth}: ${t}</li>`);
                 compareUniqueP.forEach(t => html += `<li>متولد ${compareMonth}: ${t}</li>`);
                 html += `</ul>`;
             }
-
             html += `<p><strong>نقاط مشترک منفی (نیاز به توجه):</strong> ${commonN.length ? commonN.map(t => `<span class="negative-point">${t}</span>`).join('، ') : 'مورد قابل توجهی یافت نشد.'}</p>`;
 
             const compatibilityScore = commonP.length * 2 - commonN.length * 2;
-            let compatibilityStatement = compatibilityScore >= 3 ? "شما و متولد این ماه شباهت‌های مثبتی زیادی دارید و احتمالاً به خوبی با هم کنار می‌آیید. تفاهم کلی شما بالاست." :
-                                       compatibilityScore >= 0 ? "شما و متولد این ماه می‌توانید در بسیاری از زمینه‌ها تفاهم داشته باشید، با کمی درک متقابل و پذیرش تفاوت‌ها." :
-                                       "ممکن است در برخی زمینه‌ها چالش‌هایی در تفاهم با متولد این ماه داشته باشید. نیاز به درک بیشتر از تفاوت‌ها و تلاش برای سازگاری است.";
+            let compatibilityStatement = compatibilityScore >= 3 ? "شما و متولد این ماه شباهت‌های مثبتی زیادی دارید و احتمالاً به خوبی با هم کنار می‌آیید. تفاهم کلی شما بالاست." : compatibilityScore >= 0 ? "شما و متولد این ماه می‌توانید در بسیاری از زمینه‌ها تفاهم داشته باشید، با کمی درک متقابل و پذیرش تفاوت‌ها." : "ممکن است در برخی زمینه‌ها چالش‌هایی در تفاهم با متولد این ماه داشته باشید. نیاز به درک بیشتر از تفاوت‌ها و تلاش برای سازگاری است.";
             html += `<p><strong>نتیجه کلی تفاهم:</strong> ${compatibilityStatement}</p>`;
 
             document.getElementById('comparisonText').innerHTML = html;
@@ -1596,42 +1410,61 @@
         function showLoanDepositTab(tabId, clickedButton) {
             document.querySelectorAll('.loan-deposit-content').forEach(c => c.style.display = 'none');
             document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-
             document.getElementById(tabId + 'Content').style.display = 'block';
             clickedButton.classList.add('active');
-
-            // Reset results when switching tabs
             document.getElementById('depositResultDiv').style.display = 'none';
             document.getElementById('loanResultDiv').style.display = 'none';
-
-            // Optionally clear inputs
             if (tabId === 'deposit') {
                 document.getElementById('depositAmount').value = '';
                 document.getElementById('depositInterestRate').value = '';
-                document.getElementById('depositDurationDays').value = '365'; // Reset slider
+                document.getElementById('depositDurationDays').value = '';
                 document.getElementById('dailyInterestToggle').checked = false;
-                updateDepositDurationLabel(); // Update label to default
-            } else { // loan
+                updateDepositDurationLabel();
+            } else {
                 document.getElementById('loanAmount').value = '';
                 document.getElementById('loanInterestRate').value = '';
-                document.getElementById('loanDuration').value = '';
+                document.getElementById('loanDurationMonths').value = '';
             }
         }
 
-        function calculateLoan() {
-            const amount = parseFloat(document.getElementById('loanAmount').value);
-            const rate = parseFloat(document.getElementById('loanInterestRate').value);
-            const duration = parseInt(document.getElementById('loanDuration').value);
+        function updateDepositDurationLabel() {
+            document.getElementById('depositDurationLabel').innerText = document.getElementById('dailyInterestToggle').checked ? 'مدت زمان سپرده (روز):' : 'مدت زمان سپرده (ماه):';
+        }
 
-            if (isNaN(amount) || isNaN(rate) || isNaN(duration) || amount <= 0 || rate < 0 || duration <= 0) {
-                alert('لطفاً مقادیر صحیح وارد کنید.');
+        function calculateDepositInterest() {
+            const [amount, rate, durationInput] = ['depositAmount', 'depositInterestRate', 'depositDurationDays'].map(id => parseFloat(document.getElementById(id).value));
+            const isDaily = document.getElementById('dailyInterestToggle').checked;
+
+            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate < 0 || isNaN(durationInput) || durationInput <= 0) {
+                alert('لطفاً تمام فیلدها را با مقادیر صحیح وارد کنید.');
+                return;
+            }
+
+            let totalInterest, finalAmount;
+            if (isDaily) {
+                totalInterest = amount * (rate / 100) / 365 * durationInput;
+            } else {
+                totalInterest = amount * (rate / 100) / 12 * durationInput;
+            }
+            finalAmount = amount + totalInterest;
+
+            document.getElementById('totalDepositInterest').innerText = totalInterest.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            document.getElementById('finalDepositAmount').innerText = finalAmount.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            document.getElementById('depositResultDiv').style.display = 'block';
+        }
+
+        function calculateLoanInstallment() {
+            const [amount, rate, duration] = ['loanAmount', 'loanInterestRate', 'loanDurationMonths'].map(id => parseFloat(document.getElementById(id).value));
+
+            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate < 0 || isNaN(duration) || duration <= 0) {
+                alert('لطفاً تمام فیلدها را با مقادیر صحیح وارد کنید.');
                 return;
             }
 
             const monthlyRate = (rate / 100) / 12;
             let monthlyInstallment, totalInterest, totalPayment;
 
-            if (monthlyRate === 0) { // Simple interest for 0% rate
+            if (monthlyRate === 0) {
                 monthlyInstallment = amount / duration;
                 totalInterest = 0;
                 totalPayment = amount;
@@ -1647,481 +1480,274 @@
             document.getElementById('loanResultDiv').style.display = 'block';
         }
 
-        function updateDepositDurationLabel() {
-            const days = document.getElementById('depositDurationDays').value;
-            document.getElementById('depositDurationLabel').innerText = `${days} روز`;
-        }
-
-        function calculateDeposit() {
-            const amount = parseFloat(document.getElementById('depositAmount').value);
-            const annualRate = parseFloat(document.getElementById('depositInterestRate').value);
-            const durationDays = parseInt(document.getElementById('depositDurationDays').value);
-            const dailyInterest = document.getElementById('dailyInterestToggle').checked;
-
-            if (isNaN(amount) || isNaN(annualRate) || isNaN(durationDays) || amount <= 0 || annualRate < 0 || durationDays <= 0) {
-                alert('لطفاً مقادیر صحیح وارد کنید.');
-                return;
-            }
-
-            let interestEarned;
-            if (dailyInterest) {
-                // Daily calculation: (Amount * Annual Rate / 100 / 365) * Days
-                interestEarned = (amount * (annualRate / 100) / 365) * durationDays;
-            } else {
-                // Simple annual calculation (approximated for less than a year)
-                // For simplicity, we can still use a daily rate for accuracy over periods
-                interestEarned = (amount * (annualRate / 100) / 365) * durationDays;
-            }
-
-            const totalAmount = amount + interestEarned;
-
-            document.getElementById('depositInterestEarned').innerText = interestEarned.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-            document.getElementById('totalDepositAmount').innerText = totalAmount.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-            document.getElementById('depositResultDiv').style.display = 'block';
-        }
-
-        // --- Currency Converter Logic (Concise) ---
-        const currencies = [
-            { name: 'دلار آمریکا', code: 'USD', rateToToman: 50000 },
-            { name: 'یورو', code: 'EUR', rateToToman: 55000 },
-            { name: 'پوند بریتانیا', code: 'GBP', rateToToman: 63000 },
-            { name: 'درهم امارات', code: 'AED', rateToToman: 13600 },
-            { name: 'یوان چین', code: 'CNY', rateToToman: 7000 },
-            { name: 'لیر ترکیه', code: 'TRY', rateToToman: 1600 },
-            { name: 'ریال ایران', code: 'IRR', rateToToman: 1 } // Base for Toman conversions
-        ];
-
-        function populateCurrencySelects() {
-            const fromCurrencySelect = document.getElementById('fromCurrency');
-            const toCurrencySelect = document.getElementById('toCurrency');
-
-            fromCurrencySelect.innerHTML = '';
-            toCurrencySelect.innerHTML = '';
-
-            currencies.forEach(currency => {
-                const optionFrom = document.createElement('option');
-                optionFrom.value = currency.code;
-                optionFrom.innerText = `${currency.name} (${currency.code})`;
-                fromCurrencySelect.appendChild(optionFrom);
-
-                const optionTo = document.createElement('option');
-                optionTo.value = currency.code;
-                optionTo.innerText = `${currency.name} (${currency.code})`;
-                toCurrencySelect.appendChild(optionTo);
-            });
-
-            // Set default selections
-            fromCurrencySelect.value = 'USD';
-            toCurrencySelect.value = 'IRR';
-        }
-
+        // --- Currency Converter Logic ---
         function convertCurrency() {
             const amount = parseFloat(document.getElementById('amountToConvert').value);
-            const fromCurrencyCode = document.getElementById('fromCurrency').value;
-            const toCurrencyCode = document.getElementById('toCurrency').value;
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            const exchangeRate = parseFloat(document.getElementById('exchangeRate').value);
 
-            if (isNaN(amount) || amount <= 0) {
-                alert('لطفاً مبلغ معتبری وارد کنید.');
+            if (isNaN(amount) || amount <= 0 || isNaN(exchangeRate) || exchangeRate <= 0) {
+                alert('لطفاً مبلغ و نرخ تبدیل را با مقادیر صحیح وارد کنید.');
                 return;
             }
 
-            const fromCurrency = currencies.find(c => c.code === fromCurrencyCode);
-            const toCurrency = currencies.find(c => c.code === toCurrencyCode);
-
-            if (!fromCurrency || !toCurrency) {
-                alert('خطا در یافتن اطلاعات ارز. لطفاً دوباره تلاش کنید.');
+            let convertedAmount;
+            // Simple conversion logic based on user-provided rate
+            if (fromCurrency === 'IRR' && toCurrency === 'USD') {
+                convertedAmount = amount / exchangeRate;
+            } else if (fromCurrency === 'USD' && toCurrency === 'IRR') {
+                convertedAmount = amount * exchangeRate;
+            } else if (fromCurrency === 'IRR' && toCurrency === 'EUR') {
+                // Assuming exchangeRate is USD_to_IRR, need another rate for EUR
+                alert('برای تبدیل مستقیم تومان به یورو، نرخ تبدیل یورو به تومان را وارد کنید.');
+                return;
+            } else if (fromCurrency === 'EUR' && toCurrency === 'IRR') {
+                alert('برای تبدیل مستقیم یورو به تومان، نرخ تبدیل یورو به تومان را وارد کنید.');
+                return;
+            } else if (fromCurrency === 'USD' && toCurrency === 'EUR') {
+                // Simplified, needs actual cross-rate or go via IRR if exchangeRate is to IRR
+                convertedAmount = amount * (1 / 1.08); // Assuming 1 EUR = 1.08 USD
+            } else if (fromCurrency === 'EUR' && toCurrency === 'USD') {
+                convertedAmount = amount * 1.08; // Assuming 1 EUR = 1.08 USD
+            } else if (fromCurrency === toCurrency) {
+                convertedAmount = amount;
+            } else {
+                alert('تبدیل بین این ارزها با نرخ وارد شده پشتیبانی نمی‌شود. لطفاً نرخ مربوطه را وارد کنید.');
                 return;
             }
 
-            // Convert amount to Toman first, then to target currency
-            const amountInToman = amount * fromCurrency.rateToToman;
-            const convertedAmount = amountInToman / toCurrency.rateToToman;
-
-            document.getElementById('convertedAmount').innerText = convertedAmount.toLocaleString('fa-IR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ` ${toCurrency.code}`;
+            document.getElementById('convertedAmount').innerText = convertedAmount.toLocaleString('fa-IR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + toCurrency;
             document.getElementById('currencyResultDiv').style.display = 'block';
         }
 
-
         // --- Hypothetical Services Calculator Logic ---
-        function populateOccupations(selectId) {
-            const occupations = [
-                "انتخاب کنید", "کارمند", "معلم", "دانشجو", "آزادکار/فریلنسر", "پزشک/پرستار", "مهندس", "راننده", "فروشنده", "کارگر", "خانه‌دار", "بازنشسته", "کشاورز", "معمار", "برنامه‌نویس", "وکیل", "هنرمند", "مدیر", "سرباز/نظامی", "صنعتگر", "بیکار"
-            ];
-            const selectElement = document.getElementById(selectId);
-            selectElement.innerHTML = ''; // Clear existing options
-            occupations.forEach(occ => {
-                const option = document.createElement('option');
-                option.value = occ === "انتخاب کنید" ? "" : occ;
-                option.innerText = occ;
-                selectElement.appendChild(option);
-            });
-        }
+        const iranianServiceCostsUSD = {
+            'یک فنجان قهوه در کافه': { min: 2, max: 5, type: 'recreational' },
+            'بلیط سینما و یک نوشیدنی': { min: 4, max: 8, type: 'recreational' },
+            'یک وعده غذای فست فود': { min: 3, max: 7, type: 'recreational' },
+            'یک وعده غذای رستورانی (اقتصادی)': { min: 5, max: 12, type: 'essential' },
+            'یک وعده غذای رستورانی (متوسط)': { min: 10, max: 20, type: 'recreational' },
+            'یک وعده غذای رستورانی (لوکس)': { min: 20, max: 50, type: 'luxury' },
+            'هزینه اینترنت (ماهانه)': { min: 5, max: 15, type: 'essential' },
+            'شارژ تلفن همراه (ماهانه)': { min: 3, max: 10, type: 'essential' },
+            'حمل و نقل عمومی (ماهانه)': { min: 7, max: 20, type: 'essential' },
+            'تاکسی (یک بار)': { min: 1.5, max: 4, type: 'essential' },
+            'خرید یک لباس جدید (متوسط)': { min: 15, max: 50, type: 'discretionary' },
+            'آرایشگاه مردانه/زنانه': { min: 3, max: 15, type: 'discretionary' },
+            'لوازم بهداشتی و آرایشی (ماهانه)': { min: 10, max: 30, type: 'essential' },
+            'داروهای بدون نسخه (ماهانه)': { min: 2, max: 8, type: 'essential' },
+            'اشتراک پلتفرم فیلم/سریال': { min: 3, max: 8, type: 'recreational' },
+            'کنسرت/تئاتر (یک بار)': { min: 8, max: 25, type: 'luxury' },
+            'تفریح/بازی گروهی (یک بار)': { min: 2, max: 6, type: 'recreational' },
+            'شهریه باشگاه ورزشی (ماهانه)': { min: 6, max: 20, type: 'health' },
+            'یک بار استفاده از استخر': { min: 2, max: 4, type: 'health' },
+            'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)': { min: 2, max: 10, type: 'education' },
+            'خرید یک کتاب جدید': { min: 1.5, max: 4, type: 'education' },
+            'اشتراک ماهانه نرم‌افزار کاربردی': { min: 2, max: 10, type: 'education' },
+            'هزینه مسافرت (به ازای هر نفر در روز، اقتصادی)': { min: 15, max: 40, type: 'discretionary' },
+            'هزینه مسافرت (به ازای هر نفر در روز، رفاهی)': { min: 40, max: 100, type: 'luxury' },
+            'هزینه یک پاکت سیگار': { min: 0.5, max: 1, type: 'vice' },
+            'هزینه یک بطری مشروب (عرق سگی 1.5 لیتری)': { min: 10, max: 10, type: 'vice' },
+            'هزینه یک بطری ویسکی': { min: 50, max: 50, type: 'vice' }
+        };
 
-        document.getElementById('maritalStatus').addEventListener('change', function() {
-            document.getElementById('childrenCountGroup').style.display = this.value === 'متاهل' ? 'block' : 'none';
-        });
+        const categories = {
+            'نوشیدنی و خوراک': ['یک فنجان قهوه در کافه', 'یک وعده غذای فست فود', 'یک وعده غذای رستورانی (اقتصادی)', 'یک وعده غذای رستورانی (متوسط)', 'یک وعده غذای رستورانی (لوکس)'],
+            'سرگرمی و فرهنگ': ['بلیط سینما و یک نوشیدنی', 'اشتراک پلتفرم فیلم/سریال', 'کنسرت/تئاتر (یک بار)', 'تفریح/بازی گروهی (یک بار)'],
+            'سلامت و ورزش': ['شهریه باشگاه ورزشی (ماهانه)', 'یک بار استفاده از استخر', 'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)'],
+            'آموزش و توسعه فردی': ['خرید یک کتاب جدید', 'اشتراک ماهانه نرم‌افزار کاربردی'],
+            'خدمات و ارتباطات': ['هزینه اینترنت (ماهانه)', 'شارژ تلفن همراه (ماهانه)'],
+            'حمل و نقل': ['حمل و نقل عمومی (ماهانه)', 'تاکسی (یک بار)'],
+            'پوشاک و بهداشت': ['خرید یک لباس جدید (متوسط)', 'آرایشگاه مردانه/زنانه', 'لوازم بهداشتی و آرایشی (ماهانه)', 'داروهای بدون نسخه (ماهانه)'],
+            'سفر': ['هزینه مسافرت (به ازای هر نفر در روز، اقتصادی)', 'هزینه مسافرت (به ازای هر نفر در روز، رفاهی)'],
+            'سایر تفریحات': ['هزینه یک پاکت سیگار', 'هزینه یک بطری مشروب (عرق سگی 1.5 لیتری)', 'هزینه یک بطری ویسکی']
+        };
 
-        // Activity Selection Modal Functions
-        function showActivitySelectionModal() {
-            const modal = document.getElementById('activitySelectionModal');
+        function populateActivityOptions() {
             const activityOptionsDiv = document.getElementById('activityOptions');
-            activityOptionsDiv.innerHTML = ''; // Clear previous content
+            activityOptionsDiv.innerHTML = ''; // Clear previous options
 
-            for (const category in allActivities) {
-                const categoryDiv = document.createElement('div');
-                categoryDiv.innerHTML = `<h4 style="margin-top: 15px; margin-bottom: 10px; color: #FFD700; text-align: right;">${category}</h4>`;
+            for (const category in categories) {
+                const categoryTitle = document.createElement('h3');
+                categoryTitle.className = 'category-item';
+                categoryTitle.innerText = category;
+                activityOptionsDiv.appendChild(categoryTitle);
 
-                allActivities[category].forEach(activity => {
-                    const activityItem = document.createElement('div');
-                    activityItem.className = 'activity-item-option';
-                    activityItem.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; background-color: #2a2a2a; padding: 8px 12px; border-radius: 6px; border: 1px solid #444;';
-
-                    const checkboxContainer = document.createElement('div');
-                    checkboxContainer.style.cssText = 'display: flex; align-items: center;';
-
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.id = `activity-${activity.id}`;
-                    checkbox.value = activity.id;
-                    checkbox.checked = selectedCustomActivities.some(a => a.id === activity.id); // Check if previously selected
-                    checkbox.style.cssText = 'margin-left: 10px; width: 18px; height: 18px; accent-color: #FFA500;';
+                categories[category].forEach(activityName => {
+                    const activity = iranianServiceCostsUSD[activityName];
+                    const activityItemDiv = document.createElement('div');
+                    activityItemDiv.className = 'activity-item-option';
 
                     const label = document.createElement('label');
-                    label.htmlFor = `activity-${activity.id}`;
-                    label.innerText = activity.name;
-                    label.style.cssText = 'color: #e0e0e0; font-size: 0.95em; cursor: pointer;';
-
-                    checkboxContainer.appendChild(checkbox);
-                    checkboxContainer.appendChild(label);
+                    label.htmlFor = `activity-${activityName.replace(/\s/g, '-')}`;
+                    label.innerText = activityName;
 
                     const inputContainer = document.createElement('div');
-                    inputContainer.style.cssText = 'display: flex; align-items: center;';
+                    inputContainer.className = 'input-with-buttons';
 
-                    const quantityInput = document.createElement('input');
-                    quantityInput.type = 'number';
-                    quantityInput.placeholder = activity.unit;
-                    quantityInput.min = activity.type === 'free' ? 0 : 0; // Allow 0 for free/monthly/book items if unchecked
-                    quantityInput.step = 1;
-                    quantityInput.style.cssText = 'width: 60px; padding: 6px; border-radius: 5px; border: 1px solid #666; background-color: #3a3a3a; color: #f0f0f0; text-align: center; margin-left: 8px;';
+                    const decreaseButton = document.createElement('button');
+                    decreaseButton.innerText = '-';
+                    decreaseButton.type = 'button';
+                    decreaseButton.onclick = () => adjustActivityCount(`activity-${activityName.replace(/\s/g, '-')}`, -1);
 
-                    const existingSelection = selectedCustomActivities.find(a => a.id === activity.id);
-                    if (existingSelection) {
-                        quantityInput.value = existingSelection.count;
-                    } else {
-                        quantityInput.value = ''; // Default empty
-                    }
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.id = `activity-${activityName.replace(/\s/g, '-')}`;
+                    input.value = 0;
+                    input.min = 0;
+                    input.style.direction = 'ltr';
+                    input.style.textAlign = 'center';
+                    input.addEventListener('change', calculateHypotheticalServicesCost); // Recalculate on manual change
 
-                    if (!checkbox.checked) { // If not checked initially, disable
-                        quantityInput.disabled = true;
-                        quantityInput.style.backgroundColor = '#4a4a4a';
-                    }
+                    const increaseButton = document.createElement('button');
+                    increaseButton.innerText = '+';
+                    increaseButton.type = 'button';
+                    increaseButton.onclick = () => adjustActivityCount(`activity-${activityName.replace(/\s/g, '-')}`, 1);
 
-                    checkbox.addEventListener('change', () => {
-                        if (checkbox.checked) {
-                            quantityInput.disabled = false;
-                            quantityInput.style.backgroundColor = '#3a3a3a';
-                            if (activity.type === 'free' && !quantityInput.value) quantityInput.value = 1; // Default to 1 for free if checked
-                            if (quantityInput.value === '' && activity.type !== 'free') quantityInput.value = 1; // Default to 1 for non-free if checked and empty
-                        } else {
-                            quantityInput.disabled = true;
-                            quantityInput.value = '';
-                            quantityInput.style.backgroundColor = '#4a4a4a';
-                        }
-                    });
+                    inputContainer.appendChild(decreaseButton);
+                    inputContainer.appendChild(input);
+                    inputContainer.appendChild(increaseButton);
 
-                    inputContainer.appendChild(quantityInput);
-
-                    // Add plus/minus buttons for specific items
-                    const itemsWithPlusMinus = ['coffee', 'cinema', 'fastFood', 'cigarette', 'arak', 'whiskey'];
-                    if (itemsWithPlusMinus.includes(activity.id)) {
-                        const plusMinusDiv = document.createElement('div');
-                        plusMinusDiv.className = 'plus-minus-buttons';
-
-                        const minusButton = document.createElement('button');
-                        minusButton.innerHTML = '<i class="fas fa-minus"></i>';
-                        minusButton.addEventListener('click', () => {
-                            let val = parseInt(quantityInput.value) || 0;
-                            if (val > 0) quantityInput.value = val - 1;
-                            if (checkbox.checked && quantityInput.value == 0 && activity.type !== 'free' && activity.unit !== 'ماه' && activity.unit !== 'کتاب') {
-                                checkbox.checked = false; // Uncheck if quantity becomes 0
-                                quantityInput.disabled = true;
-                                quantityInput.style.backgroundColor = '#4a4a4a';
-                            }
-                        });
-
-                        const plusButton = document.createElement('button');
-                        plusButton.innerHTML = '<i class="fas fa-plus"></i>';
-                        plusButton.addEventListener('click', () => {
-                            let val = parseInt(quantityInput.value) || 0;
-                            quantityInput.value = val + 1;
-                            if (!checkbox.checked) {
-                                checkbox.checked = true; // Check if quantity increases from 0
-                                quantityInput.disabled = false;
-                                quantityInput.style.backgroundColor = '#3a3a3a';
-                            }
-                        });
-                        plusMinusDiv.appendChild(minusButton);
-                        plusMinusDiv.appendChild(plusButton);
-                        inputContainer.appendChild(plusMinusDiv);
-                    }
-
-
-                    activityItem.appendChild(checkboxContainer);
-                    activityItem.appendChild(inputContainer);
-                    categoryDiv.appendChild(activityItem);
+                    activityItemDiv.appendChild(label);
+                    activityItemDiv.appendChild(inputContainer);
+                    activityOptionsDiv.appendChild(activityItemDiv);
                 });
-                activityOptionsDiv.appendChild(categoryDiv);
             }
-            modal.style.display = 'block';
         }
 
-        function closeActivitySelectionModal() {
-            document.getElementById('activitySelectionModal').style.display = 'none';
+        function adjustActivityCount(inputId, change) {
+            const input = document.getElementById(inputId);
+            let currentValue = parseInt(input.value);
+            if (isNaN(currentValue)) currentValue = 0;
+            const newValue = Math.max(0, currentValue + change); // Ensure non-negative
+            input.value = newValue;
+            calculateHypotheticalServicesCost(); // Recalculate after adjustment
         }
 
-        function saveSelectedActivities() {
-            const tempSelected = [];
-            let allValid = true;
-            document.getElementById('activityOptions').querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                if (checkbox.checked) {
-                    const activityId = checkbox.value;
-                    let activityInfo = null;
-                    for (const category in allActivities) {
-                        activityInfo = allActivities[category].find(a => a.id === activityId);
-                        if (activityInfo) break;
-                    }
+        function calculateHypotheticalServicesCost() {
+            const dollarRate = parseFloat(document.getElementById('dollarExchangeRateHyp').value);
+            const monthlyIncome = parseFloat(document.getElementById('monthlyIncomeHyp').value);
 
-                    if (activityInfo) {
-                        const quantityInput = checkbox.closest('.activity-item-option').querySelector('input[type="number"]');
-                        let count = parseFloat(quantityInput.value);
+            if (isNaN(dollarRate) || dollarRate <= 0) {
+                alert('لطفاً نرخ دلار را با مقدار صحیح وارد کنید.');
+                return;
+            }
+            if (isNaN(monthlyIncome) || monthlyIncome < 0) {
+                alert('لطفاً درآمد ماهانه را با مقدار صحیح وارد کنید.');
+                return;
+            }
 
-                        // Allow 0 for 'free' type or 'ماه' (monthly) / 'کتاب' (book) units
-                        if (isNaN(count) || count < 0 || (count === 0 && activityInfo.type !== 'free' && activityInfo.unit !== 'ماه' && activityInfo.unit !== 'کتاب')) {
-                            alert(`لطفاً تعداد دفعات معتبری (بزرگتر از صفر یا صفر برای موارد خاص) برای "${activityInfo.name}" وارد کنید.`);
-                            allValid = false;
-                            return;
-                        }
-                        tempSelected.push({
-                            id: activityInfo.id,
-                            name: activityInfo.name,
+            let totalSuggestedActivityCostUSD = 0;
+            const activityTableBody = document.getElementById('activityTableBody');
+            activityTableBody.innerHTML = ''; // Clear previous results
+
+            let selectedActivities = [];
+
+            for (const category in categories) {
+                categories[category].forEach(activityName => {
+                    const inputId = `activity-${activityName.replace(/\s/g, '-')}`;
+                    const activityInput = document.getElementById(inputId);
+                    if (activityInput && parseInt(activityInput.value) > 0) {
+                        const count = parseInt(activityInput.value);
+                        const activity = iranianServiceCostsUSD[activityName];
+                        // Using average cost for calculation
+                        const costUSD = ((activity.min + activity.max) / 2) * count;
+                        totalSuggestedActivityCostUSD += costUSD;
+                        selectedActivities.push({
+                            name: activityName,
                             count: count,
-                            minCost: activityInfo.minCost,
-                            maxCost: activityInfo.maxCost,
-                            type: activityInfo.type,
-                            unit: activityInfo.unit
+                            costUSD: costUSD,
+                            type: activity.type
                         });
                     }
-                }
+                });
+            }
+
+            // Sort selected activities for display and suggestion purposes (e.g., recreational first)
+            selectedActivities.sort((a, b) => {
+                const typeOrder = { 'luxury': 1, 'recreational': 2, 'discretionary': 3, 'vice': 4, 'essential': 5, 'health': 6, 'education': 7 };
+                return typeOrder[a.type] - typeOrder[b.type];
             });
 
-            if (!allValid) return; // If any validation failed, stop here
 
-            selectedCustomActivities = tempSelected;
-            closeActivitySelectionModal();
-            alert('تفریحات دلخواه ذخیره شدند. اکنون می‌توانید بودجه لذت را محاسبه کنید.');
-        }
-
-
-        function calculateHypotheticalServices() {
-            const dollarRate = parseFloat(document.getElementById('dollarExchangeRateHypothetical').value);
-            const monthlyIncome = parseFloat(document.getElementById('hypotheticalBudget').value.replace(/,/g, ''));
-            const userAge = parseInt(document.getElementById('userAge').value);
-            const userOccupation = document.getElementById('userOccupation').value;
-            const maritalStatus = document.getElementById('maritalStatus').value;
-            const childrenCount = maritalStatus === 'متاهل' ? parseInt(document.getElementById('childrenCount').value) : 0;
-            const livingArea = document.getElementById('livingArea').value;
-            const houseOwnership = document.getElementById('houseOwnership').value;
-            const carOwnership = document.getElementById('carOwnership').value;
-
-            if (isNaN(dollarRate) || dollarRate <= 0 || isNaN(monthlyIncome) || monthlyIncome <= 0 || isNaN(userAge) || userAge <= 0 ||
-                !userOccupation || !maritalStatus || !livingArea || !houseOwnership || !carOwnership || (maritalStatus === 'متاهل' && isNaN(childrenCount))) {
-                alert('لطفاً تمام فیلدهای اطلاعات کاربر را به درستی پر کنید.');
-                return;
-            }
-
-            if (selectedCustomActivities.length === 0) {
-                alert('لطفاً حداقل یک تفریح یا خدمات دلخواه را انتخاب کنید.');
-                return;
-            }
-
-            let totalSelectedActivityCostUSD = 0;
-            const activityTableBody = document.getElementById('activityTableBody');
-            activityTableBody.innerHTML = ''; // Clear previous table content
-
-            selectedCustomActivities.forEach(activity => {
-                const avgCostUSD = (activity.minCost + activity.maxCost) / 2;
-                const activityTotalCostUSD = avgCostUSD * activity.count;
-                totalSelectedActivityCostUSD += activityTotalCostUSD;
-
+            selectedActivities.forEach(activity => {
                 const row = activityTableBody.insertRow();
                 const cell1 = row.insertCell(0);
                 const cell2 = row.insertCell(1);
                 const cell3 = row.insertCell(2);
-
+                const costToman = activity.costUSD * dollarRate;
                 cell1.innerText = activity.name;
-                cell2.innerText = `${activity.count} ${activity.unit}`;
-                cell3.innerText = (activityTotalCostUSD * dollarRate).toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
+                cell2.innerText = `${activity.count} بار`; // Display count with "بار"
+                cell3.innerText = costToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
             });
 
-            // Add estimated fixed costs
-            let estimatedFixedCostsUSD = 0;
-            if (livingArea === 'شهری' && houseOwnership === 'مستأجر') {
-                estimatedFixedCostsUSD += (iranianServiceCostsUSD['اجاره خانه شهری (ماهیانه)'].min + iranianServiceCostsUSD['اجاره خانه شهری (ماهیانه)'].max) / 2;
-            } else if (livingArea === 'روستایی' && houseOwnership === 'مستأجر') {
-                estimatedFixedCostsUSD += (iranianServiceCostsUSD['اجاره خانه روستایی (ماهیانه)'].min + iranianServiceCostsUSD['اجاره خانه روستایی (ماهیانه)'].max) / 2;
-            }
+            const totalActivityCostToman = totalSuggestedActivityCostUSD * dollarRate;
+            document.getElementById('totalActivityCostSpan').innerText = totalActivityCostToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
 
-            // Always add basic fixed costs
-            estimatedFixedCostsUSD += (iranianServiceCostsUSD['اینترنت ماهانه خانگی'].min + iranianServiceCostsUSD['اینترنت ماهانه خانگی'].max) / 2;
-            estimatedFixedCostsUSD += (iranianServiceCostsUSD['قبوض آب و برق و گاز (ماهانه)'].min + iranianServiceCostsUSD['قبوض آب و برق و گاز (ماهانه)'].max) / 2;
-            estimatedFixedCostsUSD += (iranianServiceCostsUSD['لوازم بهداشتی/شوینده (ماهانه)'].min + iranianServiceCostsUSD['لوازم بهداشتی/شوینده (ماهانه)'].max) / 2;
-            estimatedFixedCostsUSD += (iranianServiceCostsUSD['میوه و سبزیجات (ماهانه)'].min + iranianServiceCostsUSD['میوه و سبزیجات (ماهانه)'].max) / 2;
-            estimatedFixedCostsUSD += (iranianServiceCostsUSD['پروتئین (گوشت، مرغ، ماهی) (ماهانه)'].min + iranianServiceCostsUSD['پروتئین (گوشت، مرغ، ماهی) (ماهانه)'].max) / 2;
-            estimatedFixedCostsUSD += (iranianServiceCostsUSD['پوشاک (ماهانه، تقریبی)'].min + iranianServiceCostsUSD['پوشاک (ماهانه، تقریبی)'].max) / 2;
+            const remainingBalance = monthlyIncome - totalActivityCostToman;
+            const budgetSuggestionTitle = document.getElementById('budgetSuggestionTitle');
+            const budgetSuggestionText = document.getElementById('budgetSuggestionText');
+            const suggestionList = document.getElementById('suggestionList');
+            const totalCostRow = document.getElementById('totalCostRow');
 
-            if (carOwnership === 'دارم') {
-                estimatedFixedCostsUSD += (iranianServiceCostsUSD['تعمیر و نگهداری خودرو (ماهیانه، تقریبی)'].min + iranianServiceCostsUSD['تعمیر و نگهداری خودرو (ماهیانه، تقریبی)'].max) / 2;
-                estimatedFixedCostsUSD += (iranianServiceCostsUSD['بنزین/سوخت خودرو (ماهیانه, تقریبی)'].min + iranianServiceCostsUSD['بنزین/سوخت خودرو (ماهیانه, تقریبی)'].max) / 2;
-            }
+            suggestionList.innerHTML = ''; // Clear previous suggestions
+            suggestionList.style.display = 'none'; // Hide by default
 
-            const totalFixedCostsToman = estimatedFixedCostsUSD * dollarRate;
-            const totalActivityCostToman = totalSelectedActivityCostUSD * dollarRate;
-            const grandTotalExpensesToman = totalFixedCostsToman + totalActivityCostToman;
-            const remainingMoneyToman = monthlyIncome - grandTotalExpensesToman;
-
-            document.getElementById('displayMonthlyIncome').innerText = monthlyIncome.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
-            document.getElementById('totalActivityCost').innerText = grandTotalExpensesToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
-            document.getElementById('totalActivityCostFooter').innerText = totalActivityCostToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
-
-
-            let budgetAdviceHTML = '';
-            let overspendWarningDiv = document.getElementById('expenseCutSuggestions');
-            let cutSuggestionsList = document.getElementById('cutSuggestionsList');
-            cutSuggestionsList.innerHTML = ''; // Clear previous suggestions
-
-            if (remainingMoneyToman >= 0.2 * monthlyIncome) {
-                budgetAdviceHTML = `شما در وضعیت <span class="highlight">مالی بسیار خوبی</span> قرار دارید! می‌توانید با خیال راحت‌تری پس‌انداز کنید یا به سرمایه‌گذاری‌های بزرگ‌تر فکر کنید.`;
-                overspendWarningDiv.style.display = 'none';
-            } else if (remainingMoneyToman >= 0 && remainingMoneyToman < 0.2 * monthlyIncome) {
-                budgetAdviceHTML = `شما در وضعیت <span class="highlight">متعادلی</span> قرار دارید و می‌توانید هم از زندگی لذت ببرید و هم پس‌انداز کنید. تعادل بین خرج کردن و پس‌انداز کلید موفقیت شماست.`;
-                overspendWarningDiv.style.display = 'none';
+            if (remainingBalance >= 0) {
+                budgetSuggestionTitle.innerText = 'وضعیت بودجه شما: عالی!';
+                budgetSuggestionText.innerHTML = `تبریک! شما <span class="highlight">${remainingBalance.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان</span> مازاد بر نیاز دارید. می‌توانید این مبلغ را پس‌انداز یا سرمایه‌گذاری کنید.`;
+                totalCostRow.classList.remove('warning');
             } else {
-                budgetAdviceHTML = `شما این ماه <span class="highlight negative-point">${(-remainingMoneyToman).toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان</span> کسری بودجه دارید. برای تعادل دخل و خرج، نیاز به بازبینی هزینه‌هاست.`;
-                overspendWarningDiv.style.display = 'block';
+                budgetSuggestionTitle.innerText = 'هشدار بودجه: کسری هزینه!';
+                budgetSuggestionText.innerHTML = `<span class="warning-text">شما ${(-remainingBalance).toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان کسری بودجه دارید.</span> برای اینکه دخل و خرجتان به هم بخورد، باید برخی از هزینه‌ها را کاهش دهید. پیشنهاد می‌کنیم موارد زیر را تعدیل کنید:`;
+                totalCostRow.classList.add('warning');
+                suggestionList.style.display = 'block';
 
-                // Suggest cuts
-                const categoriesToCut = ['luxury', 'leisure', 'culture', 'food', 'travel', 'personal'];
-                const potentialCuts = [];
+                // Suggest items to cut, starting from luxury/recreational/vice
+                const itemsToSuggestForCutting = selectedActivities.filter(activity =>
+                    ['luxury', 'recreational', 'discretionary', 'vice'].includes(activity.type) && activity.count > 0
+                ).sort((a, b) => b.costUSD - a.costUSD); // Sort by highest cost first
 
-                // Sort selected activities by cost (descending) to suggest cutting more expensive ones first
-                const sortedActivities = [...selectedCustomActivities].sort((a, b) => {
-                    const costA = ((a.minCost + a.maxCost) / 2) * a.count;
-                    const costB = ((b.minCost + b.maxCost) / 2) * b.count;
-                    return costB - costA;
-                });
+                if (itemsToSuggestForCutting.length === 0) {
+                    budgetSuggestionText.innerHTML += "<br> شما هیچ هزینه تفریحی قابل حذفی انتخاب نکرده‌اید. باید در هزینه‌های ضروری خود بازنگری کنید.";
+                } else {
+                    let deficit = -remainingBalance;
+                    let suggestedCutAmount = 0;
+                    for (const activity of itemsToSuggestForCutting) {
+                        if (suggestedCutAmount < deficit) {
+                            const li = document.createElement('li');
+                            const costToman = activity.costUSD * dollarRate;
+                            let cutSuggestion = '';
 
-                let deficitToCover = -remainingMoneyToman;
-
-                for (const activity of sortedActivities) {
-                    if (categoriesToCut.includes(activity.type) && activity.count > 0) {
-                        const avgCostUSD = (activity.minCost + activity.maxCost) / 2;
-                        const activityCostToman = avgCostUSD * activity.count * dollarRate;
-
-                        if (deficitToCover > 0 && activityCostToman > 0) {
-                             if (activity.unit === 'بار' || activity.unit === 'پاکت' || activity.unit === 'بطری') {
-                                // Suggest reducing count for per-item expenses
-                                let reductionCount = 0;
-                                let remainingCount = activity.count;
-                                while (deficitToCover > 0 && remainingCount > 0) {
-                                    const costPerUnit = avgCostUSD * dollarRate;
-                                    if (deficitToCover >= costPerUnit) {
-                                        deficitToCover -= costPerUnit;
-                                        reductionCount++;
-                                        remainingCount--;
-                                    } else {
-                                        // If remaining deficit is less than one unit, suggest reducing that unit
-                                        potentialCuts.push(`کاهش ${activity.name} به میزان ${activity.count - remainingCount} ${activity.unit} (صرفه جویی حدود ${activityCostToman.toLocaleString('fa-IR')} تومان)`);
-                                        deficitToCover = 0;
-                                        break;
-                                    }
-                                }
-                                if (reductionCount > 0) {
-                                    potentialCuts.push(`کاهش ${activity.name} به میزان ${reductionCount} ${activity.unit} (صرفه جویی حدود ${(avgCostUSD * reductionCount * dollarRate).toLocaleString('fa-IR')} تومان)`);
-                                }
-                            } else if (activity.unit === 'ماه' || activity.unit === 'کتاب' || activity.unit === 'ساعت') {
-                                // Suggest eliminating for monthly/book/hourly or reducing
-                                if (activityCostToman >= deficitToCover) {
-                                    potentialCuts.push(`حذف کامل ${activity.name} (صرفه جویی حدود ${activityCostToman.toLocaleString('fa-IR')} تومان)`);
-                                    deficitToCover = 0;
-                                } else {
-                                    potentialCuts.push(`بررسی امکان کاهش ${activity.name} (هزینه حدود ${activityCostToman.toLocaleString('fa-IR')} تومان)`);
-                                    deficitToCover -= activityCostToman;
-                                }
+                            if (activity.type === 'vice' || activity.type === 'luxury' || activity.count > 1) {
+                                cutSuggestion = `کاهش ${activity.name} (${activity.count} بار, ${costToman.toLocaleString('fa-IR')} تومان)`;
+                                // Simple reduction logic: suggest removing one instance or more if significant cost
+                                const potentialSavings = (activity.costUSD / activity.count) * dollarRate;
+                                suggestedCutAmount += potentialSavings;
+                            } else {
+                                cutSuggestion = `کاهش ${activity.name} (${costToman.toLocaleString('fa-IR')} تومان)`;
+                                suggestedCutAmount += costToman;
                             }
+
+                            li.innerHTML = `<span class="negative-point">${cutSuggestion}</span>`;
+                            suggestionList.appendChild(li);
+                        } else {
+                            break;
                         }
                     }
+                    if (suggestedCutAmount < deficit) {
+                         budgetSuggestionText.innerHTML += "<br>با تعدیل موارد بالا هنوز هم کسری بودجه دارید. باید در سایر هزینه‌های خود نیز بازنگری کنید.";
+                    }
                 }
-
-                if (potentialCuts.length === 0 && deficitToCover > 0) {
-                    potentialCuts.push('بررسی دقیق‌تر تمامی هزینه‌ها برای یافتن موارد قابل کاهش.');
-                }
-
-                potentialCuts.forEach(suggestion => {
-                    const li = document.createElement('li');
-                    li.innerText = suggestion;
-                    cutSuggestionsList.appendChild(li);
-                });
             }
-
-            document.getElementById('budgetSuggestionText').innerHTML = budgetAdviceHTML;
-            document.getElementById('remainingOrDeficitAmount').innerText = Math.abs(remainingMoneyToman).toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
-            if (remainingMoneyToman < 0) {
-                document.getElementById('remainingOrDeficitAmount').classList.add('overspend-warning');
-            } else {
-                document.getElementById('remainingOrDeficitAmount').classList.remove('overspend-warning');
-            }
-
 
             document.getElementById('hypotheticalServicesResultDiv').style.display = 'block';
         }
 
+        // Initial population of activities when the page loads
+        populateActivityOptions();
 
-        // Initial setup: On page load, no section is active by default.
-        document.addEventListener('DOMContentLoaded', () => {
-            // Apply saved theme on load
-            const savedTheme = localStorage.getItem('theme') || 'dark'; // Default to dark
-            const body = document.body;
-            const themeToggleBtn = document.getElementById('themeToggle');
-            if (savedTheme === 'light') {
-                body.classList.add('light-theme');
-                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-            } else {
-                body.classList.remove('light-theme');
-                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-            }
-
-            // Populate occupations for the main input form
-            populateOccupations('userOccupation');
-
-            // Set up event listener for marital status in main form
-            document.getElementById('maritalStatus').addEventListener('change', function() {
-                document.getElementById('childrenCountGroup').style.display = this.value === 'متاهل' ? 'block' : 'none';
-            });
-            // Initial dispatch for main form marital status to set initial display
-            document.getElementById('maritalStatus').dispatchEvent(new Event('change'));
-
-            // Populate currency selects on load
-            populateCurrencySelects();
-
-            // Set default active tab for Loan/Deposit calculator
-            document.getElementById('loanContent').style.display = 'block';
-            document.querySelector('#loanDepositCalculator .tab-button:first-child').classList.add('active');
-
-            // Activate the default calculator (Gold Calculator)
-            document.getElementById('goldCalculator').style.display = 'block';
-            document.querySelector('.nav-button[data-target="goldCalculator"]').classList.add('active');
-            document.documentElement.style.setProperty('--button-color', document.querySelector('.nav-button.active').dataset.color);
-        });
     </script>
 </body>
 </html>
