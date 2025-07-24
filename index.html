@@ -50,6 +50,7 @@
             max-width: 190px;
             font-weight: 600;
             display: flex;
+            flex-direction: column; /* Stack icon and text */
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -90,8 +91,9 @@
             border-color: var(--button-color); /* Use CSS variable for active border */
         }
         .nav-button i {
-            margin-left: 10px;
-            font-size: 1.1em;
+            margin-bottom: 8px; /* Space between icon and text */
+            margin-left: 0; /* Remove left margin for stacking */
+            font-size: 1.3em;
             color: #bbb;
         }
         .nav-button.active i {
@@ -145,9 +147,6 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            background-repeat: no-repeat;
-            background-position: left 12px center;
-            background-size: 18px;
             padding-left: 45px;
         }
 
@@ -155,8 +154,6 @@
             width: calc(100% - 15px);
             padding-left: 15px; /* Adjust padding for select */
             direction: rtl; /* For Persian text in select */
-            background-position: left 12px center;
-            background-size: 18px;
             cursor: pointer;
         }
         .input-group select option {
@@ -175,10 +172,11 @@
         .input-group .icon {
             position: absolute;
             left: 12px;
-            top: 50%;
-            transform: translateY(calc(-50% + 12px));
+            top: 50%; /* Center vertically with label and input */
+            transform: translateY(calc(-50% + 12px)); /* Adjust for label height */
             color: #aaa;
             font-size: 1.1em;
+            pointer-events: none; /* Make icon not clickable */
         }
         .input-group small {
             display: block;
@@ -536,6 +534,37 @@
         .food-comparison-list strong {
             color: #eee;
         }
+        .suggestion-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #555;
+            text-align: right;
+        }
+        .suggestion-section h3 {
+            color: #FFA500; /* Orange for suggestion titles */
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .suggestion-section p {
+            font-size: 0.95em;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+        .suggestion-section ul {
+            list-style-type: disc;
+            padding-right: 25px;
+            margin-bottom: 15px;
+        }
+        .suggestion-section li {
+            margin-bottom: 8px;
+            color: #e0e0e0;
+        }
+        .suggestion-section .highlight {
+            color: #8aff8a;
+            font-weight: 700;
+        }
 
 
         /* Media Queries for Responsiveness */
@@ -600,12 +629,12 @@
     <h3 style="margin-bottom: 25px; color: #f0f0f0;">بسم الله الرحمن الرحیم</h3>
     
     <div class="navbar">
-        <button class="nav-button" data-color="gold" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> قیمت طلا</button>
-        <button class="nav-button" data-color="green" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i> شاخص وزن</button>
-        <button class="nav-button" data-color="orange" onclick="showSection('personalityTest', this)"><i class="fas fa-brain"></i> تست شخصیت</button>
-        <button class="nav-button" data-color="purple" onclick="showSection('loanDepositCalculator', this)"><i class="fas fa-university"></i> سود/وام</button>
-        <button class="nav-button" data-color="blue" onclick="showSection('currencyConverter', this)"><i class="fas fa-exchange-alt"></i> مبدل ارز</button>
-        <button class="nav-button" data-color="red" onclick="showSection('hypotheticalServicesCalculator', this)"><i class="fas fa-heart"></i> شاخص لذت</button>
+        <button class="nav-button" data-color="gold" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i><span>قیمت طلا</span></button>
+        <button class="nav-button" data-color="green" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i><span>شاخص وزن</span></button>
+        <button class="nav-button" data-color="orange" onclick="showSection('personalityTest', this)"><i class="fas fa-brain"></i><span>تست شخصیت</span></button>
+        <button class="nav-button" data-color="purple" onclick="showSection('loanDepositCalculator', this)"><i class="fas fa-university"></i><span>سود/وام</span></button>
+        <button class="nav-button" data-color="blue" onclick="showSection('currencyConverter', this)"><i class="fas fa-exchange-alt"></i><span>مبدل ارز</span></button>
+        <button class="nav-button" data-color="red" onclick="showSection('hypotheticalServicesCalculator', this)"><i class="fas fa-heart"></i><span>شاخص لذت</span></button>
     </div>
 
     
@@ -833,20 +862,90 @@
         </div>
 
         <div class="input-group">
-            <label for="hypotheticalBudget">بودجه ماهیانه شما (تومان):</label>
-            <input type="number" id="hypotheticalBudget" placeholder="مثال: 5,000,000" min="0">
+            <label for="hypotheticalBudget">درآمد ماهیانه شما (تومان):</label>
+            <input type="number" id="hypotheticalBudget" placeholder="مثال: 15,000,000" min="0">
             <i class="fas fa-coins icon"></i>
+        </div>
+
+        <div class="input-group">
+            <label for="userAge">سن شما:</label>
+            <input type="number" id="userAge" placeholder="مثال: 30" min="10" max="100">
+            <i class="fas fa-user icon"></i>
+        </div>
+
+        <div class="input-group">
+            <label for="userOccupation">شغل شما:</label>
+            <select id="userOccupation">
+                <option value="">انتخاب کنید</option>
+                <option value="کارمند">کارمند</option>
+                <option value="معلم">معلم</option>
+                <option value="دانشجو">دانشجو</option>
+                <option value="آزادکار/فریلنسر">آزادکار/فریلنسر</option>
+                <option value="پزشک/پرستار">پزشک/پرستار</option>
+                <option value="مهندس">مهندس</option>
+                <option value="راننده">راننده</option>
+                <option value="فروشنده">فروشنده</option>
+                <option value="کارگر">کارگر</option>
+                <option value="خانهدار">خانه‌دار</option>
+                <option value="بازنشسته">بازنشسته</option>
+                <option value="کشاورز">کشاورز</option>
+                <option value="معمار">معمار</option>
+                <option value="برنامهنویس">برنامه‌نویس</option>
+                <option value="وکیل">وکیل</option>
+                <option value="هنرمند">هنرمند</option>
+                <option value="مدیر">مدیر</option>
+                <option value="سرباز/نظامی">سرباز/نظامی</option>
+                <option value="صنعتگر">صنعتگر</option>
+                <option value="بیکار">بیکار</option>
+            </select>
+            <i class="fas fa-briefcase icon"></i>
+        </div>
+
+        <div class="input-group">
+            <label for="maritalStatus">وضعیت تأهل:</label>
+            <select id="maritalStatus">
+                <option value="">انتخاب کنید</option>
+                <option value="مجرد">مجرد</option>
+                <option value="متاهل">متأهل</option>
+            </select>
+            <i class="fas fa-ring icon"></i>
+        </div>
+
+        <div class="input-group" id="childrenCountGroup" style="display: none;">
+            <label for="childrenCount">تعداد فرزندان:</label>
+            <input type="number" id="childrenCount" placeholder="مثال: 1" min="0">
+            <i class="fas fa-child icon"></i>
+        </div>
+
+        <div class="input-group">
+            <label for="livingArea">محل زندگی:</label>
+            <select id="livingArea">
+                <option value="">انتخاب کنید</option>
+                <option value="شهری">شهری</option>
+                <option value="روستایی">روستایی</option>
+            </select>
+            <i class="fas fa-city icon"></i>
+        </div>
+
+        <div class="input-group">
+            <label for="houseOwnership">وضعیت سکونت:</label>
+            <select id="houseOwnership">
+                <option value="">انتخاب کنید</option>
+                <option value="مالک">صاحب‌خانه</option>
+                <option value="مستاجر">مستأجر</option>
+            </select>
+            <i class="fas fa-home icon"></i>
         </div>
         
         <button onclick="calculateHypotheticalServices()">تحلیل بودجه لذت</button>
         
         <div class="result" id="hypotheticalServicesResultDiv">
-            <div>با بودجه ماهیانه شما، می‌توانید از موارد زیر (بر اساس قیمت واقعی) بهره‌مند شوید:</div>
-            <ul id="affordableCategories"></ul>
-            
-            <div class="comparison-title">توصیه‌های هوشمند برای استفاده از بودجه:</div>
-            <ul id="foodComparison" class="food-comparison-list"></ul>
-            
+            <div class="suggestion-section" id="budgetSuggestion">
+                <h3></h3>
+                <p></p>
+                <ul></ul>
+            </div>
+
             <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #555;">
                 <p style="font-size: 0.9em; color: #aaa; text-align: center; line-height: 1.6;">
                     برای رسیدن به اهداف مالی بزرگ‌تر و تجربه‌ی لذت‌های پایدارتر در زندگی، می‌توانید بخشی از این بودجه را به **سرمایه‌گذاری یا پس‌انداز** اختصاص دهید. این مسیر به شما کمک می‌کند تا در بلندمدت، زندگی رضایت‌بخش‌تری را تجربه کنید.
@@ -995,6 +1094,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('dailyInterestToggle').addEventListener('change', updateDepositDurationLabel);
             updateDepositDurationLabel();
+            // Event listener for marital status to show/hide children count
+            document.getElementById('maritalStatus').addEventListener('change', function() {
+                document.getElementById('childrenCountGroup').style.display = this.value === 'متاهل' ? 'block' : 'none';
+            });
         });
 
         function updateDepositDurationLabel() {
@@ -1091,79 +1194,139 @@
             document.getElementById('currencyResultDiv').style.display = 'block';
         }
 
-        // --- Hypothetical Services Calculator Logic (Concise & Accurate) ---
-        const serviceCategories = [
-            { name: 'تفریح سبک (مثل یک ناهار با دوست)', minPriceUSD: 8, maxPriceUSD: 20 },
-            { name: 'رویداد فرهنگی (مثلاً بلیط سینما و یک نوشیدنی)', minPriceUSD: 15, maxPriceUSD: 35 },
-            { name: 'کلاس آموزشی آنلاین (ماهانه)', minPriceUSD: 20, maxPriceUSD: 60 },
-            { name: 'خرید یک کتاب جدید (مفید برای رشد)', minPriceUSD: 10, maxPriceUSD: 30 },
-            { name: 'یک وعده غذای خوب در رستوران (شیک)', minPriceUSD: 25, maxPriceUSD: 70 },
-            { name: 'اشتراک سالیانه نرم‌افزار مفید', minPriceUSD: 50, maxPriceUSD: 150 },
-            { name: 'لوازم ورزشی کوچک یا یک جلسه ورزشی', minPriceUSD: 30, maxPriceUSD: 80 }
-        ];
+        // --- Hypothetical Services Calculator Logic (Accurate & Smart) ---
+        const iranianServiceCostsUSD = {
+            'تفریح سبک (مثل یک ناهار با دوست)': { min: 1, max: 5 }, // e.g., small cafe, simple meal
+            'رویداد فرهنگی (مثلاً بلیط سینما و یک نوشیدنی)': { min: 1.5, max: 3 },
+            'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)': { min: 2, max: 10 },
+            'خرید یک کتاب جدید (مفید برای رشد)': { min: 1.5, max: 4 },
+            'یک وعده غذای فست فود': { min: 2, max: 6 },
+            'یک وعده غذای رستورانی (اقتصادی)': { min: 3, max: 6 },
+            'یک وعده غذای رستورانی (لوکس)': { min: 6, max: 15 },
+            'شهریه باشگاه ورزشی (ماهانه)': { min: 6, max: 20 },
+            'یک بار استفاده از استخر': { min: 2, max: 4 },
+            'اشتراک ماهانه نرم‌افزار کاربردی': { min: 2, max: 10 },
+            'هزینه حمل و نقل (ماهانه)': { min: 6, max: 25 },
+            'مسافرت (به ازای هر نفر در روز، اقتصادی)': { min: 20, max: 35 },
+            'مسافرت (به ازای هر نفر در روز، رفاهی)': { min: 50, max: 100 },
+            'هزینه بنزین (به ازای هر 3 لیتر)': { min: 0.1, max: 0.15 } // 10 to 15 cents
+        };
 
-        const actualFoodPrices = [ // Approximate real prices in Toman (example for context)
-            { name: 'یک پرس قرمه سبزی/قیمه', price: 150000 },
-            { name: 'یک پرس کباب کوبیده', price: 250000 },
-            { name: 'یک پرس جوجه کباب', price: 300000 },
-            { name: 'یک پرس چلوکباب برگ (متوسط)', price: 500000 },
-            { name: 'یک پرس شیشلیک/ماهیچه (لوکس)', price: 1000000 }
-        ];
+        const jobCategories = {
+            'کارمند': 'متوسط', 'معلم': 'متوسط', 'دانشجو': 'کم', 'آزادکار/فریلنسر': 'متغیر', 'پزشک/پرستار': 'بالا',
+            'مهندس': 'بالا', 'راننده': 'کم', 'فروشنده': 'متوسط', 'کارگر': 'کم', 'خانهدار': 'بدون درآمد',
+            'بازنشسته': 'متوسط', 'کشاورز': 'متغیر', 'معمار': 'بالا', 'برنامهنویس': 'بالا', 'وکیل': 'بالا',
+            'هنرمند': 'متغیر', 'مدیر': 'بالا', 'سرباز/نظامی': 'کم', 'صنعتگر': 'متوسط', 'بیکار': 'بدون درآمد'
+        };
 
         function calculateHypotheticalServices() {
             const dollarRate = parseFloat(document.getElementById('dollarExchangeRateHypothetical').value);
-            const budgetToman = parseFloat(document.getElementById('hypotheticalBudget').value);
+            const monthlyIncomeToman = parseFloat(document.getElementById('hypotheticalBudget').value);
+            const userAge = parseInt(document.getElementById('userAge').value);
+            const userOccupation = document.getElementById('userOccupation').value;
+            const maritalStatus = document.getElementById('maritalStatus').value;
+            const childrenCount = maritalStatus === 'متاهل' ? parseInt(document.getElementById('childrenCount').value) : 0;
+            const livingArea = document.getElementById('livingArea').value;
+            const houseOwnership = document.getElementById('houseOwnership').value;
 
-            if (isNaN(dollarRate) || dollarRate <= 0 || isNaN(budgetToman) || budgetToman <= 0) {
-                alert('لطفاً نرخ روز دلار و بودجه ماهیانه را به درستی وارد کنید.');
+            if (isNaN(dollarRate) || dollarRate <= 0 || isNaN(monthlyIncomeToman) || monthlyIncomeToman <= 0 ||
+                isNaN(userAge) || userAge <= 0 || !userOccupation || !maritalStatus || !livingArea || !houseOwnership ||
+                (maritalStatus === 'متاهل' && isNaN(childrenCount))) {
+                alert('لطفاً تمامی فیلدهای اطلاعات شخصی و مالی را به درستی وارد کنید.');
                 return;
             }
 
-            const affordable = [];
-            serviceCategories.forEach(category => {
-                const minPriceToman = category.minPriceUSD * dollarRate;
-                const maxPriceToman = category.maxPriceUSD * dollarRate;
-                if (budgetToman >= minPriceToman) {
-                    affordable.push({ ...category, minPriceToman, maxPriceToman });
+            const monthlyIncomeUSD = monthlyIncomeToman / dollarRate;
+            let totalFixedCostsUSD = 0; // Rent, essential living costs
+
+            // Housing Cost
+            let rentCostUSD = 0;
+            if (houseOwnership === 'مستاجر') {
+                if (livingArea === 'شهری') {
+                    rentCostUSD = Math.max(150, Math.min(500, monthlyIncomeUSD * 0.3)); // 30% of income, min 150, max 500
+                } else { // Rural
+                    rentCostUSD = Math.max(50, Math.min(100, monthlyIncomeUSD * 0.2)); // 20% of income, min 50, max 100
                 }
-            });
+            }
+            totalFixedCostsUSD += rentCostUSD;
 
-            const affordableList = document.getElementById('affordableCategories');
-            const foodComparisonList = document.getElementById('foodComparison');
+            // Basic food cost (simplified, as general cost)
+            // Assuming average basic food for 1 person is 50 USD/month, add 20 USD for spouse, 15 USD for each child
+            let basicFoodCostUSD = 50;
+            if (maritalStatus === 'متاهل') basicFoodCostUSD += 20;
+            basicFoodCostUSD += childrenCount * 15;
+            totalFixedCostsUSD += basicFoodCostUSD;
             
-            affordableList.innerHTML = '';
-            foodComparisonList.innerHTML = '';
+            // Transportation cost
+            let transportationCostUSD = iranianServiceCostsUSD['هزینه حمل و نقل (ماهانه)'].min;
+            if (maritalStatus === 'متاهل') transportationCostUSD = iranianServiceCostsUSD['هزینه حمل و نقل (ماهانه)'].max;
+            totalFixedCostsUSD += transportationCostUSD;
 
-            if (affordable.length > 0) {
-                affordable.forEach(category => {
-                    const li = document.createElement('li');
-                    li.classList.add('category-item');
-                    li.innerHTML = `${category.name} <span class="category-range">(محدوده: ${category.minPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تا ${category.maxPriceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان)</span>`;
-                    affordableList.appendChild(li);
-                });
-            } else {
-                affordableList.innerHTML = '<li>با این مبلغ، موارد تفریحی/فرهنگی در این دسته‌بندی‌ها ممکن است خارج از دسترس باشد.</li>';
+            const discretionaryIncomeUSD = monthlyIncomeUSD - totalFixedCostsUSD;
+            
+            const budgetSuggestionDiv = document.getElementById('budgetSuggestion');
+            const budgetSuggestionTitle = budgetSuggestionDiv.querySelector('h3');
+            const budgetSuggestionText = budgetSuggestionDiv.querySelector('p');
+            const budgetSuggestionList = budgetSuggestionDiv.querySelector('ul');
+            budgetSuggestionList.innerHTML = '';
+
+            let suggestedModel = '';
+
+            // Determine income level (simplified)
+            let incomeLevel = 'اقتصادی'; // Default
+            if (monthlyIncomeUSD >= 300) incomeLevel = 'متعادل';
+            if (monthlyIncomeUSD >= 600) incomeLevel = 'رفاهی';
+
+            // Adjust based on marital status and children
+            if (maritalStatus === 'متاهل' && childrenCount > 0) {
+                if (monthlyIncomeUSD < 500) incomeLevel = 'اقتصادی';
+                else if (monthlyIncomeUSD < 1000) incomeLevel = 'متعادل';
+                else incomeLevel = 'رفاهی';
+            } else if (maritalStatus === 'متاهل') {
+                if (monthlyIncomeUSD < 400) incomeLevel = 'اقتصادی';
+                else if (monthlyIncomeUSD < 800) incomeLevel = 'متعادل';
+                else incomeLevel = 'رفاهی';
             }
 
-            // Food comparison based on the average cost of services
-            serviceCategories.forEach(category => {
-                const avgPriceToman = (category.minPriceUSD + category.maxPriceUSD) / 2 * dollarRate;
-                let equivalentFood = '';
+            budgetSuggestionTitle.innerText = `تحلیل بودجه شما: پیشنهاد مدل ${incomeLevel}`;
+            let adviceHTML = '';
+            let recommendations = [];
 
-                if (avgPriceToman <= actualFoodPrices[0].price) {
-                    equivalentFood = `یک پرس **${actualFoodPrices[0].name}** (${actualFoodPrices[0].price.toLocaleString('fa-IR')} تومان)`;
-                } else if (avgPriceToman <= actualFoodPrices[1].price) {
-                    equivalentFood = `یک پرس **${actualFoodPrices[1].name}** (${actualFoodPrices[1].price.toLocaleString('fa-IR')} تومان)`;
-                } else if (avgPriceToman <= actualFoodPrices[2].price) {
-                    equivalentFood = `یک پرس **${actualFoodPrices[2].name}** (${actualFoodPrices[2].price.toLocaleString('fa-IR')} تومان)`;
-                } else if (avgPriceToman <= actualFoodPrices[3].price) {
-                    equivalentFood = `یک پرس **${actualFoodPrices[3].name}** (${actualFoodPrices[3].price.toLocaleString('fa-IR')} تومان)`;
-                } else {
-                    equivalentFood = `یک پرس **${actualFoodPrices[4].name}** (${actualFoodPrices[4].price.toLocaleString('fa-IR')} تومان)`;
-                }
-                 const li = document.createElement('li');
-                 li.innerHTML = `هزینه "${category.name}" معادل با ${equivalentFood}.`;
-                 foodComparisonList.appendChild(li);
+            switch (incomeLevel) {
+                case 'اقتصادی':
+                    adviceHTML = `با توجه به <span class="highlight">درآمد و وضعیت زندگی شما</span>، پیشنهاد ما یک مدل اقتصادی برای مدیریت بودجه است. تمرکز بر نیازهای اساسی و هوشمندانه خرج کردن، به شما کمک می‌کند تا بهترین استفاده را از منابع مالی خود داشته باشید.`;
+                    recommendations.push(`**پس‌انداز:** حداقل 5% تا 10% از درآمد خود را برای آینده پس‌انداز کنید. حتی مبالغ کوچک هم مهم است.`);
+                    recommendations.push(`**غذا:** بیشتر بر آشپزی در خانه و غذاهای مقرون‌به‌صرفه تأکید کنید. می‌توانید ماهیانه یک بار از فست‌فود یا رستوران اقتصادی استفاده کنید.`);
+                    recommendations.push(`**تفریح:** تفریحات کم‌هزینه مانند پیاده‌روی، پارک رفتن، مطالعه کتاب‌های رایگان یا گشت و گذار در طبیعت را در برنامه خود قرار دهید.`);
+                    recommendations.push(`**حمل و نقل:** از وسایل حمل و نقل عمومی یا دوچرخه استفاده کنید تا در هزینه‌های بنزین صرفه‌جویی شود.`);
+                    recommendations.push(`**آموزش:** از منابع آموزشی رایگان یا دوره‌های آنلاین با هزینه پایین بهره ببرید.`);
+                    if (discretionaryIncomeUSD < 0) {
+                        adviceHTML += `<br><br><span class="highlight">**توجه:**</span> مجموع هزینه‌های ثابت شما از درآمدتان بیشتر است. پیشنهاد می‌شود برای جبران کسری بودجه و جلوگیری از مشکلات مالی، به <span class="highlight">افزایش درآمد (شغل دوم، مهارت‌آموزی)</span> یا <span class="highlight">بازنگری جدی در هزینه‌های ثابت</span> خود بپردازید.`;
+                    }
+                    break;
+                case 'متعادل':
+                    adviceHTML = `شما در وضعیت <span class="highlight">متعادلی</span> قرار دارید و می‌توانید هم از زندگی لذت ببرید و هم پس‌انداز کنید. تعادل بین خرج کردن و پس‌انداز کلید موفقیت شماست.`;
+                    recommendations.push(`**پس‌انداز:** 15% تا 20% از درآمد خود را پس‌انداز کنید. این مبلغ می‌تواند برای اهداف بلندمدت شما بسیار مؤثر باشد.`);
+                    recommendations.push(`**غذا:** می‌توانید هفته‌ای یک بار یا دو بار از رستوران‌های اقتصادی یا فست‌فودهای مورد علاقه خود لذت ببرید.`);
+                    recommendations.push(`**تفریح:** علاوه بر تفریحات کم‌هزینه، می‌توانید ماهیانه یک بار به سینما یا استخر بروید. یک سفر کوتاه داخلی در سال نیز می‌تواند عالی باشد.`);
+                    recommendations.push(`**آموزش:** روی دوره‌های آموزشی مورد نیاز برای توسعه شغلی خود سرمایه‌گذاری کنید.`);
+                    recommendations.push(`**حمل و نقل:** ترکیبی از حمل و نقل عمومی و خودروی شخصی (با مدیریت مصرف بنزین) توصیه می‌شود.`);
+                    break;
+                case 'رفاهی':
+                    adviceHTML = `شما در وضعیت <span class="highlight">رفاهی مناسبی</span> قرار دارید. می‌توانید از امکانات بیشتری بهره‌مند شوید و در عین حال، به پس‌انداز و سرمایه‌گذاری‌های بزرگ‌تر فکر کنید.`;
+                    recommendations.push(`**پس‌انداز/سرمایه‌گذاری:** حداقل 20% تا 30% یا بیشتر از درآمد خود را به پس‌انداز و سرمایه‌گذاری‌های هوشمندانه اختصاص دهید.`);
+                    recommendations.push(`**غذا:** می‌توانید آزادانه‌تر از رستوران‌ها و کافه‌ها استفاده کنید، از جمله رستوران‌های لوکس‌تر.`);
+                    recommendations.push(`**تفریح:** تفریحات متنوع‌تر مانند سفرهای داخلی و خارجی، شرکت در رویدادهای فرهنگی و ورزشی و استفاده منظم از امکانات ورزشی را تجربه کنید.`);
+                    recommendations.push(`**آموزش:** در دوره‌های تخصصی و کارگاه‌های پیشرفته شرکت کنید تا مهارت‌هایتان را به روز نگه دارید.`);
+                    recommendations.push(`**حمل و نقل:** مدیریت هزینه بنزین همچنان مهم است، اما می‌توانید با آزادی عمل بیشتری از خودروی شخصی استفاده کنید.`);
+                    break;
+            }
+
+            budgetSuggestionText.innerHTML = adviceHTML;
+            recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.innerHTML = rec;
+                budgetSuggestionList.appendChild(li);
             });
 
             document.getElementById('hypotheticalServicesResultDiv').style.display = 'block';
