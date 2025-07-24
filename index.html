@@ -3,350 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحلیلگر سرنوشت مدرن</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>محاسبه‌گر قیمت طلا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #f4f7f9; /* خاکستری روشن */
-            --navy-blue: #2c3e50; /* آبی نیروی دریایی مدرن */
-            --amber-green: #2ecc71; /* سبز کهربایی/روشن */
-            --purple: #8e44ad; /* بنفش */
-            --text-color: #34495e;
-            --light-gray: #ecf0f1;
-        }
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.8;
+            background-color: #f0f2f5; /* رنگ پس‌زمینه روشن */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            color: #333;
         }
-        .container {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 30px 40px;
-            background-color: #ffffff;
+        .gold-calculator {
+            background-color: #fff;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
-        h1, h2 {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
             text-align: center;
-            color: var(--navy-blue);
+            border: 1px solid #e0e0e0;
+        }
+        h1 {
+            color: #b8860b; /* رنگ طلایی برای عنوان */
+            margin-bottom: 30px;
+            font-size: 2em;
             font-weight: 700;
         }
-        h2 {
-            border-bottom: 2px solid var(--amber-green);
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-        }
-        .warning {
-            background-color: rgba(142, 68, 173, 0.1);
-            color: var(--purple);
-            padding: 15px;
-            border-radius: 8px;
-            border-right: 5px solid var(--purple);
-            text-align: center;
-            margin: 25px 0;
-            font-weight: 400;
-        }
-        .form-group {
+        .input-group {
             margin-bottom: 20px;
+            text-align: right;
         }
-        label {
+        .input-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 700;
-            color: var(--navy-blue);
+            font-size: 1.1em;
+            color: #555;
         }
-        input[type="text"], input[type="date"], select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #bdc3c7;
+        .input-group input[type="number"],
+        .input-group input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            border: 1px solid #ccc;
             border-radius: 8px;
-            box-sizing: border-box;
-            background-color: #fff;
-            font-family: 'Vazirmatn', sans-serif;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            font-size: 1.1em;
+            direction: ltr; /* برای ورودی اعداد */
+            text-align: right;
+            transition: border-color 0.3s;
         }
-        input[type="text"]:focus, input[type="date"]:focus, select:focus {
+        .input-group input[type="number"]:focus,
+        .input-group input[type="text"]:focus {
+            border-color: #b8860b;
             outline: none;
-            border-color: var(--purple);
-            box-shadow: 0 0 5px rgba(142, 68, 173, 0.3);
         }
-        .question {
-            margin-bottom: 25px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: var(--light-gray);
-        }
-        .question p {
-            font-weight: 700;
-            margin-top: 0;
-        }
-        .options label {
+        .input-group small {
             display: block;
-            margin-bottom: 10px;
-            font-weight: 400;
-            color: var(--text-color);
-            cursor: pointer;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 6px;
-            transition: background-color 0.3s;
-        }
-        .options label:hover {
-            background-color: rgba(46, 204, 113, 0.1);
-        }
-        .options input {
-            margin-left: 12px;
-            accent-color: var(--purple);
+            margin-top: 5px;
+            color: #888;
+            font-size: 0.9em;
         }
         button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, var(--navy-blue), var(--purple));
+            background-color: #b8860b; /* رنگ طلایی برای دکمه */
             color: white;
+            padding: 15px 25px;
             border: none;
             border-radius: 8px;
-            font-size: 18px;
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 700;
+            font-size: 1.2em;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            font-weight: 700;
             margin-top: 20px;
         }
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3);
+            background-color: #a07a0a;
         }
-        #result {
+        .result {
             margin-top: 30px;
-            padding: 25px;
-            background-color: var(--light-gray);
-            border: 2px solid var(--navy-blue);
-            border-radius: 12px;
-            text-align: center;
-            font-size: 20px;
-            display: none;
-        }
-        #result .name {
-            font-weight: bold;
-            color: var(--purple);
-        }
-        #result .date-time {
-            font-family: monospace;
-            font-size: 24px;
-            direction: ltr;
-            color: var(--navy-blue);
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 6px;
-            margin: 15px 0;
-        }
-        #analysisSection {
-            display: none;
-            margin-top: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 8px;
             padding: 20px;
-            border-radius: 12px;
-            background-color: rgba(44, 62, 80, 0.05);
+            font-size: 1.4em;
+            color: #333;
+            font-weight: 700;
+            display: none; /* مخفی کردن اولیه نتیجه */
         }
-        #analysisSection h3 {
-            color: var(--navy-blue);
-            text-align: center;
-        }
-        #analysisList {
-            list-style-type: none;
-            padding: 0;
-            font-size: 14px;
-        }
-        #analysisList li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        #analysisList li:before {
-            content: "✔";
-            color: var(--amber-green);
-            margin-left: 10px;
-            font-weight: bold;
+        .result span {
+            color: #b8860b;
+            font-size: 1.1em;
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>تحلیلگر سرنوشت مدرن</h1>
-        <div class="warning">
-            <strong>توجه:</strong> این برنامه صرفاً برای سرگرمی و بر اساس الگوریتم‌های تخیلی ساخته شده است. لطفاً از زندگی لذت ببرید و نتایج را جدی نگیرید!
+    <div class="gold-calculator">
+        <h1>محاسبه‌گر هوشمند طلا</h1>
+        <div class="input-group">
+            <label for="goldPrice">قیمت روز طلا (تومان در گرم):</label>
+            <input type="number" id="goldPrice" placeholder="مثال: 3200000" min="0">
         </div>
-
-        <form id="lifeForm">
-            <h2>۱. مشخصات فردی</h2>
-            <div class="form-group">
-                <label for="name">نام کامل:</label>
-                <input type="text" id="name" required placeholder="مثلا: علی رضایی">
-            </div>
-            <div class="form-group">
-                <label for="birthdate">تاریخ تولد:</label>
-                <input type="date" id="birthdate" required>
-            </div>
-            <div class="form-group">
-                <label for="job">نزدیک‌ترین گزینه به شغل شما:</label>
-                <select id="job" required>
-                    <option value="6">ورزشکار / فعال در طبیعت</option>
-                    <option value="2">کارمند / معلم / مهندس</option>
-                    <option value="-4">جراح / مدیر پر استرس</option>
-                    <option value="-7">راننده / کارگر صنعتی</option>
-                </select>
-            </div>
-
-            <h2>۲. سوالات سبک زندگی</h2>
-
-                <div class="question">
-                    <p>۱. برنامه ورزشی شما چگونه است؟</p>
-                    <div class="options">
-                        <label><input type="radio" name="q1" value="7" required> ورزش منظم و بخشی از روتین زندگی</label>
-                        <label><input type="radio" name="q1" value="2"> گاهی اوقات پیاده‌روی یا ورزش سبک</label>
-                        <label><input type="radio" name="q1" value="-3"> بیشتر زندگی‌ام نشسته و بدون تحرک است</label>
-                        <label><input type="radio" name="q1" value="-6"> آخرین ورزشم، دویدن دنبال اتوبوس بود</label>
-                    </div>
-                </div>
-
-                <div class="question">
-                    <p>۲. عادت غذایی شما کدام است؟</p>
-                    <div class="options">
-                        <label><input type="radio" name="q2" value="8" required> عمدتاً غذای سالم، سبزیجات و پروتئین</label>
-                        <label><input type="radio" name="q2" value="1"> تعادل بین غذای خانگی و فست‌فود</label>
-                        <label><input type="radio" name="q2" value="-5"> رفیق صمیمی فست‌فود و غذاهای فرآوری شده</label>
-                        <label><input type="radio" name="q2" value="-9"> هرم غذایی من بر پایه پیتزا و نوشابه است</label>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <p>۳. وضعیت خواب شما چطور است؟</p>
-                     <div class="options">
-                        <label><input type="radio" name="q3" value="6" required> ۷-۸ ساعت خواب با کیفیت در شب</label>
-                        <label><input type="radio" name="q3" value="1"> خوابم بد نیست، ولی گاهی بی‌نظم است</label>
-                        <label><input type="radio" name="q3" value="-4"> کمتر از ۶ ساعت و معمولا خسته هستم</label>
-                        <label><input type="radio" name="q3" value="-8"> خواب یک مفهوم لوکس است که من ندارم</label>
-                    </div>
-                </div>
-
-                <div class="question">
-                    <p>۴. آیا دخانیات مصرف می‌کنید؟</p>
-                     <div class="options">
-                        <label><input type="radio" name="q4" value="2" required> هرگز، و از آن دوری می‌کنم</label>
-                        <label><input type="radio" name="q4" value="-4"> قبلا مصرف می‌کردم، اما ترک کرده‌ام</p>
-                        <label><input type="radio" name="q4" value="-9"> بله، به صورت تفریحی و گاه به گاه</label>
-                        <label><input type="radio" name="q4" value="-15"> بله، مصرف روزانه و مرتب دارم</label>
-                    </div>
-                </div>
-                
-                 <div class="question">
-                    <p>۵. دیدگاه کلی شما به زندگی چیست؟</p>
-                     <div class="options">
-                        <label><input type="radio" name="q5" value="7" required> خوش‌بین و پر از انرژی مثبت</label>
-                        <label><input type="radio" name="q5" value="2"> واقع‌بین، با پذیرش پستی و بلندی‌ها</label>
-                        <label><input type="radio" name="q5" value="-4"> کمی بدبین و اغلب نگران آینده</label>
-                        <label><input type="radio" name="q5" value="-8"> دنیا دیگر جای قشنگی برای زندگی نیست</label>
-                    </div>
-                </div>
-                <button type="button" onclick="predict()">سرنوشتت را تحلیل کن</button>
-        </form>
-
-        <div id="result">
-            <p><span id="resultName" class="name"></span> عزیز،</p>
-            <p>بر اساس تحلیل سبک زندگی شما، نقطه عطف بعدی سرنوشت شما در تاریخ زیر است:</p>
-            <div id="resultDateTime" class="date-time"></div>
+        <div class="input-group">
+            <label for="goldWeightGram">وزن طلا (گرم):</label>
+            <input type="number" id="goldWeightGram" placeholder="مثال: 5" min="0" step="any">
         </div>
-        
-        <div id="analysisSection">
-            <h3>۱۰ فرمان مینیمال برای آینده:</h3>
-            <ul id="analysisList"></ul>
+        <div class="input-group">
+            <label for="goldWeightSoot">وزن طلا (سوت):</label>
+            <input type="number" id="goldWeightSoot" placeholder="مثال: 750 (هر گرم 1000 سوت)" min="0" max="999" step="any">
+            <small>هر گرم برابر با ۱۰۰۰ سوت است.</small>
+        </div>
+        <div class="input-group">
+            <label for="wagePercent">درصد اجرت کار (اختیاری):</label>
+            <input type="number" id="wagePercent" placeholder="مثال: 20 (فقط عدد)" min="0" max="100">
+            <small>اگر اجرت ندارد، این فیلد را خالی بگذارید یا ۰ وارد کنید.</small>
+        </div>
+        <button onclick="calculatePrice()">محاسبه قیمت</button>
+        <div class="result" id="resultDiv">
+            <span>قیمت نهایی:</span> <span id="finalPrice"></span> تومان
         </div>
     </div>
 
     <script>
-        function predict() {
-            const form = document.getElementById('lifeForm');
-            if (!form.checkValidity()) {
-                alert("لطفاً تمام اطلاعات را وارد کرده و به همه سوالات پاسخ دهید.");
+        function calculatePrice() {
+            const goldPricePerGram = parseFloat(document.getElementById('goldPrice').value);
+            const goldWeightGram = parseFloat(document.getElementById('goldWeightGram').value || 0);
+            const goldWeightSoot = parseFloat(document.getElementById('goldWeightSoot').value || 0);
+            const wagePercent = parseFloat(document.getElementById('wagePercent').value || 0);
+
+            if (isNaN(goldPricePerGram) || goldPricePerGram <= 0) {
+                alert('لطفاً قیمت روز طلا را به درستی وارد کنید.');
                 return;
             }
 
-            const name = document.getElementById('name').value;
-            const birthdateStr = document.getElementById('birthdate').value;
-            const birthDate = new Date(birthdateStr);
-            const birthYear = birthDate.getFullYear();
+            const totalWeightGram = goldWeightGram + (goldWeightSoot / 1000);
 
-            // الگوریتم واقع‌گرایانه‌تر
-            let lifeScore = 78; // پایه امید به زندگی منطقی‌تر
+            if (totalWeightGram <= 0) {
+                 alert('لطفاً وزن طلا را وارد کنید.');
+                 return;
+            }
 
-            lifeScore += parseInt(document.getElementById('job').value);
-
-            let lifestyleScoreSum = 0;
-            const questions = ['q1', 'q2', 'q3', 'q4', 'q5']; // Add all 10 question names here
-            questions.forEach(q => {
-                const value = document.querySelector(`input[name="${q}"]:checked`).value;
-                lifestyleScoreSum += parseInt(value);
-            });
-            lifeScore += lifestyleScoreSum;
-
-            const deathYear = birthYear + Math.round(lifeScore);
-            const deathMonth = Math.abs(lifestyleScoreSum) % 12;
-            const deathDay = Math.abs(lifestyleScoreSum * 2) % 28 + 1;
-            const deathHour = Math.abs(lifestyleScoreSum * 3) % 24;
-            const deathMinute = Math.abs(lifestyleScoreSum * 4) % 60;
+            // محاسبه اجرت (بر اساس درصد وارد شده)
+            let wageAmount = (goldPricePerGram * (wagePercent / 100)) * totalWeightGram;
             
-            const finalDate = new Date(deathYear, deathMonth, deathDay, deathHour, deathMinute);
+            // 7 درصد سود
+            const profitAmount = (goldPricePerGram * 0.07) * totalWeightGram;
 
-            const daysOfWeek = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"];
-            const dayName = daysOfWeek[finalDate.getDay()];
-            
-            const formattedDate = finalDate.toLocaleDateString('fa-IR-u-nu-latn', { year: 'numeric', month: 'long', day: 'numeric' });
-            const formattedTime = finalDate.toLocaleTimeString('fa-IR-u-nu-latn', { hour: '2-digit', minute: '2-digit' });
+            // محاسبه مالیات (10 درصد از اجرت و سود)
+            const taxAmount = (wageAmount + profitAmount) * 0.10;
 
-            document.getElementById('resultName').innerText = name;
-            document.getElementById('resultDateTime').innerText = `${dayName}, ${formattedDate} - ${formattedTime}`;
-            
-            const resultDiv = document.getElementById('result');
-            resultDiv.style.display = 'block';
+            // فرمول محاسبه نهایی: قیمت روز طلا + اجرت + سود + مالیات (مالیات خودش شامل اجرت و سود هست)
+            // دقت کنید که فرمول شما یک ابهام کوچک دارد. "قیمت روز طلا + اجرت + سود ضربدر وزن طلا"
+            // اگر منظور این است که اجرت و سود مستقیماً به قیمت طلا اضافه شوند و سپس در وزن ضرب شوند:
+            // const totalPrice = (goldPricePerGram + (goldPricePerGram * (wagePercent / 100)) + (goldPricePerGram * 0.07)) * totalWeightGram;
+            // اما با توجه به توضیحات بعدی (مالیات از روی اجرت و سود)، منطقی‌تر است که اجرت و سود به عنوان مبالغ جداگانه محاسبه و اضافه شوند.
+            // بر اساس توضیحات شما و عرف بازار طلا، محاسبه زیر منطقی‌تر است:
+            // قیمت خام طلا + اجرت + سود + مالیات (که مالیات روی اجرت و سود اعمال شده است)
 
-            // نمایش تحلیل مینیمال
-            displayAnalysis();
+            const rawGoldPrice = goldPricePerGram * totalWeightGram;
+            const finalPrice = rawGoldPrice + wageAmount + profitAmount + taxAmount;
 
-            resultDiv.scrollIntoView({ behavior: 'smooth' });
-        }
 
-        function displayAnalysis() {
-            const analyses = [
-                "وصیت‌نامه: وقت آن است که از یک یادداشت ساده روی دستمال فراتر برود.",
-                "میراث دیجیتال: تاریخچه مرورگر نیاز به یک پاکسازی بهاری دارد.",
-                "پلی‌لیست نهایی: موسیقی متن خروج بزرگ خود را انتخاب کنید.",
-                "آخرین وعده غذایی: یک انتخاب بی‌نظیر و بدون حسرت داشته باشید.",
-                "سنگ قبر: «من که گفته بودم حالم خوب نیست» قبلاً استفاده شده، خلاق باشید.",
-                "کارهای ناتمام: آن کتابی که سال‌ها پیش قرض گرفتید را پس بدهید.",
-                "کلمات آخر: یک جمله به‌یادماندنی برای عزیزانتان آماده کنید.",
-                "مراسم یادبود: ترجیح می‌دهید یک مهمانی باشد یا یک مراسم آرام؟",
-                "ترجیحات تناسخ: یک گربه تنبل، یک عقاب تیزپرواز یا یک کاکتوس؟",
-                "و در آخر... از زمان باقی‌مانده لذت ببرید. این مهم‌ترین بخش ماجراست."
-            ];
-
-            const analysisList = document.getElementById('analysisList');
-            analysisList.innerHTML = ''; // Clear previous results
-            analyses.forEach(text => {
-                const li = document.createElement('li');
-                li.innerText = text;
-                analysisList.appendChild(li);
-            });
-
-            const analysisSection = document.getElementById('analysisSection');
-            analysisSection.style.display = 'block';
+            document.getElementById('finalPrice').innerText = finalPrice.toLocaleString('fa-IR'); // نمایش با جداکننده هزارگان
+            document.getElementById('resultDiv').style.display = 'block'; // نمایش نتیجه
         }
     </script>
-
 </body>
 </html>
