@@ -3,591 +3,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آزمون جامع روابط و سلامت جنسی</title>
+    <title>پیش‌بینی کننده سرنوشت</title>
     <style>
         body {
-            font-family: 'B Nazanin', 'Arial', sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
             color: #333;
-            direction: rtl; /* برای راست به چپ */
-            text-align: right; /* برای راست به چپ */
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
         }
         .container {
             max-width: 800px;
-            margin: 30px auto;
+            margin: 20px auto;
+            padding: 25px;
             background-color: #fff;
-            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         h1, h2 {
-            color: #4CAF50;
             text-align: center;
-            margin-bottom: 25px;
+            color: #1a237e;
+        }
+        .warning {
+            background-color: #ffcdd2;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: bold;
-            color: #555;
+            color: #3f51b5;
         }
-        input[type="text"],
-        input[type="number"],
-        textarea,
-        select {
-            width: calc(100% - 20px);
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+        input[type="text"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             box-sizing: border-box;
-            font-size: 1rem;
         }
-        input[type="radio"] {
-            margin-left: 10px;
-            margin-right: 3px;
+        fieldset {
+            border: 1px solid #c5cae9;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
         }
-        .radio-group label {
-            display: inline-block;
-            margin-left: 20px;
+        legend {
+            font-weight: bold;
+            color: #1a237e;
+            padding: 0 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 5px;
             font-weight: normal;
+            color: #333;
+            cursor: pointer;
+        }
+        .options input {
+            margin-left: 10px;
         }
         button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 25px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            width: auto;
             display: block;
-            margin: 25px auto 0;
-            transition: background-color 0.3s ease;
+            width: 100%;
+            padding: 15px;
+            background-color: #3f51b5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #303f9f;
         }
-        .hidden {
-            display: none;
-        }
-        .question-block {
-            margin-bottom: 25px;
-            padding: 15px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-        .question-block p {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        .question-block label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: normal;
-            cursor: pointer;
-            padding: 8px 0;
-        }
-        .question-block label:hover {
-            background-color: #eef;
-            border-radius: 4px;
-        }
-        .question-block input[type="radio"] {
-            margin-left: 8px;
-        }
-        .results-section {
-            margin-top: 40px;
-            padding: 25px;
-            border: 1px solid #ddd;
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8eaf6;
+            border: 2px dashed #3f51b5;
             border-radius: 10px;
-            background-color: #e8f5e9; /* Light green background for results */
+            text-align: center;
+            font-size: 22px;
+            display: none;
+            direction: ltr; /* For correct display of date and time */
         }
-        .results-section h2 {
-            color: #2e7d32;
+        #result .name {
+            font-weight: bold;
+            color: #c62828;
         }
-        .result-item {
-            background-color: #dcedc8; /* Slightly darker green */
-            border-left: 5px solid #66bb6a;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
+         #result .date-time {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 26px;
+            color: #1a237e;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>به آزمون جامع روابط و سلامت جنسی خوش آمدید</h1>
-        <p style="text-align: center; margin-bottom: 30px; font-size: 1.1em;">
-            لطفاً اطلاعات خود را وارد کرده و سپس آزمون را شروع کنید. این آزمون به شما کمک می‌کند تا شناخت بهتری از خود و نیازهایتان در حوزه روابط و سلامت جنسی پیدا کنید.
-            تمامی اطلاعات شما محرمانه خواهد ماند.
-        </p>
-
-        <form id="userInfoForm">
-            <div class="form-group">
-                <label for="name">نام:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="age">سن:</label>
-                <input type="number" id="age" name="age" min="18" max="99" required>
-            </div>
-
-            <div class="form-group">
-                <label for="maritalStatus">وضعیت تاهل:</label>
-                <select id="maritalStatus" name="maritalStatus" required>
-                    <option value="">انتخاب کنید...</option>
-                    <option value="single">مجرد</option>
-                    <option value="married">متاهل</option>
-                    <option value="inRelationship">در رابطه</option>
-                    <option value="divorced">مطلقه</option>
-                    <option value="widowed">همسر فوت شده</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>جنسیت:</label>
-                <div class="radio-group">
-                    <input type="radio" id="genderMale" name="gender" value="male" required>
-                    <label for="genderMale">مرد</label>
-                    <input type="radio" id="genderFemale" name="gender" value="female">
-                    <label for="genderFemale">زن</label>
-                    <input type="radio" id="genderOther" name="gender" value="other">
-                    <label for="genderOther">دیگر/ترجیح می‌دهم نگویم</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="education">تحصیلات:</label>
-                <select id="education" name="education">
-                    <option value="">انتخاب کنید...</option>
-                    <option value="diploma">دیپلم و پایین‌تر</option>
-                    <option value="associate">کاردانی/فوق دیپلم</option>
-                    <option value="bachelor">کارشناسی</option>
-                    <option value="master">کارشناسی ارشد</option>
-                    <option value="doctorate">دکترا و بالاتر</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="occupation">شغل:</label>
-                <input type="text" id="occupation" name="occupation">
-            </div>
-
-            <div class="form-group">
-                <label for="expectation">یک جمله در مورد انتظارتان از این آزمون:</label>
-                <textarea id="expectation" name="expectation" rows="3"></textarea>
-            </div>
-
-            <button type="submit">شروع آزمون</button>
-        </form>
-
-        <div id="quizSection" class="hidden">
-            <h2 style="margin-top: 40px;">آزمون سلامت جنسی</h2>
-            <form id="sexualHealthQuiz">
-                <div id="questionsContainer">
-                    </div>
-                <button type="submit">پایان آزمون و مشاهده تحلیل</button>
-            </form>
+        <h1>پیش‌بینی کننده سرنوشت</h1>
+        <div class="warning">
+            <strong>توجه:</strong> این برنامه صرفاً برای سرگرمی و شوخی طراحی شده است و نتایج آن هیچ پایه و اساس علمی ندارد. لطفاً نتایج را به هیچ عنوان جدی نگیرید!
         </div>
 
-        <div id="resultsSection" class="hidden results-section">
-            <h2>تحلیل آزمون شما</h2>
-            <div id="analysisResults">
+        <form id="lifeForm">
+            <h2>۱. مشخصات فردی</h2>
+            <div class="form-group">
+                <label for="name">نام کامل:</label>
+                <input type="text" id="name" required placeholder="نام خود را وارد کنید">
+            </div>
+            <div class="form-group">
+                <label for="birthdate">تاریخ تولد:</label>
+                <input type="date" id="birthdate" required>
+            </div>
+            <div class="form-group">
+                <label for="location">محل زندگی:</label>
+                <input type="text" id="location" required placeholder="مثلا: تهران، ایران">
+            </div>
+            <div class="form-group">
+                <label for="job">شغل:</label>
+                <select id="job" required>
+                    <option value="5">مربی ورزشی / کشاورز</option>
+                    <option value="2">کارمند دفتری / معلم</option>
+                    <option value="-2">پزشک / جراح</option>
+                    <option value="-5">کارگر معدن / آتش‌نشان</option>
+                    <option value="0">دانشجو / شغل آزاد</option>
+                    <option value="-3">راننده کامیون / تاکسی</option>
+                </select>
+            </div>
+
+            <fieldset>
+                <legend><h2>۲. سوالات سبک زندگی</h2></legend>
+
+                <div class="question">
+                    <p>۱. معمولا در طول روز چقدر فعالیت بدنی دارید؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="8" required> هر روز ورزش سنگین و منظم</label>
+                        <label><input type="radio" name="q1" value="5"> چند بار در هفته ورزش می‌کنم</label>
+                        <label><input type="radio" name="q1" value="2"> گاهی پیاده‌روی می‌کنم</label>
+                        <label><input type="radio" name="q1" value="0"> فقط در حد جابجا شدن از مبل تا آشپزخانه</label>
+                        <label><input type="radio" name="q1" value="-3"> ترجیح می‌دهم همیشه نشسته باشم</label>
+                        <label><input type="radio" name="q1" value="-5"> ورزش چیست؟</label>
+                    </div>
                 </div>
-            <p style="text-align: center; margin-top: 25px; font-style: italic;">
-                برای دریافت مشاوره تخصصی‌تر و بررسی عمیق‌تر نتایج، می‌توانید از طریق راه‌های ارتباطی با ما در تماس باشید.
-            </p>
+
+                <div class="question">
+                    <p>۲. رژیم غذایی شما بیشتر شبیه کدام است؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="8" required> سرشار از میوه، سبزیجات و پروتئین خالص</label>
+                        <label><input type="radio" name="q2" value="4"> غذای خانگی و نسبتا سالم</label>
+                        <label><input type="radio" name="q2" value="0"> هرچه پیش آید خوش آید!</label>
+                        <label><input type="radio" name="q2" value="-3"> بیشتر اوقات فست فود می‌خورم</label>
+                        <label><input type="radio" name="q2" value="-6"> من با پیتزا و نوشابه زندگی می‌کنم</label>
+                        <label><input type="radio" name="q2" value="-8"> سبزیجات دشمن من هستند</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>۳. میزان استرس روزانه خود را چگونه توصیف می‌کنید؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="5" required> آرام‌تر از یک راهب تبتی</label>
+                        <label><input type="radio" name="q3" value="2"> استرس دارم ولی مدیریتش می‌کنم</label>
+                        <label><input type="radio" name="q3" value="0"> گاهی اوقات استرس شدید دارم</label>
+                        <label><input type="radio" name="q3" value="-3"> اکثر اوقات تحت فشار و استرس هستم</label>
+                        <label><input type="radio" name="q3" value="-6"> زندگی من خود استرس است</label>
+                        <label><input type="radio" name="q3" value="-8"> در آستانه انفجار عصبی دائمی</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>۴. به طور متوسط چند ساعت در شبانه‌روز می‌خوابید؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q4" value="5" required> بین ۷ تا ۹ ساعت کامل</label>
+                        <label><input type="radio" name="q4" value="2"> حدود ۶ ساعت</label>
+                        <label><input type="radio" name="q4" value="0"> کمتر از ۵ ساعت</label>
+                        <label><input type="radio" name="q4" value="-3"> خواب منظمی ندارم</label>
+                        <label><input type="radio" name="q4" value="-5"> جغد هستم، شب‌ها بیدار و روزها خواب</label>
+                        <label><input type="radio" name="q4" value="-7"> خواب برای افراد ضعیف است!</label>
+                    </div>
+                </div>
+                
+                 <div class="question">
+                    <p>۵. отношение شما با دخانیات چگونه است؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q5" value="5" required> هرگز استفاده نکرده‌ام</label>
+                        <label><input type="radio" name="q5" value="-2"> قبلا استفاده می‌کردم ولی ترک کرده‌ام</label>
+                        <label><input type="radio" name="q5" value="-5"> گاهی در مهمانی‌ها</label>
+                        <label><input type="radio" name="q5" value="-8"> به صورت تفریحی استفاده می‌کنم</label>
+                        <label><input type="radio" name="q5" value="-12"> به طور مرتب استفاده می‌کنم</label>
+                        <label><input type="radio" name="q5" value="-15"> دودکش کارخانه از من کمتر دود می‌کند</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>۶. چقدر به ماجراجویی و کارهای پرخطر علاقه دارید؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q6" value="2" required> بسیار محتاط هستم</label>
+                        <label><input type="radio" name="q6" value="0"> ریسک‌های حساب شده می‌کنم</label>
+                        <label><input type="radio" name="q6" value="-3"> از هیجان و سرعت لذت می‌برم</label>
+                        <label><input type="radio" name="q6" value="-6"> عاشق بانجی جامپینگ و فعالیت‌های مشابه هستم</label>
+                        <label><input type="radio" name="q6" value="-9"> اول ایمنی، بعدا شاید کار!</label>
+                        <label><input type="radio" name="q6" value="-12"> زندگی بدون ریسک مرگ، زندگی نیست!</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>۷. دیدگاه شما نسبت به زندگی چیست؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q7" value="8" required> همیشه نیمه پر لیوان را می‌بینم</label>
+                        <label><input type="radio" name="q7" value="4"> واقع‌بین و منطقی هستم</label>
+                        <label><input type="radio" name="q7" value="0"> بستگی به روزش دارد</label>
+                        <label><input type="radio" name="q7" value="-4"> کمی بدبین هستم</label>
+                        <label><input type="radio" name="q7" value="-7"> نیمه خالی لیوان هم سوراخ است!</label>
+                        <label><input type="radio" name="q7" value="-10"> دنیا به آخر رسیده، خبر ندارید؟</label>
+                    </div>
+                </div>
+                
+                 <div class="question">
+                    <p>۸. روابط اجتماعی شما چگونه است؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q8" value="6" required> دایره وسیعی از دوستان صمیمی دارم</label>
+                        <label><input type="radio" name="q8" value="3"> چند دوست خوب و کافی دارم</label>
+                        <label><input type="radio" name="q8" value="0"> بیشتر با خانواده وقت می‌گذرانم</label>
+                        <label><input type="radio" name="q8" value="-3"> ترجیح می‌دهم تنها باشم</label>
+                        <label><input type="radio" name="q8" value="-5"> مردم اعصاب خرد کن هستند</label>
+                        <label><input type="radio" name="q8" value="-7"> من و غارم، شما همه!</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>۹. در اوقات فراغت معمولا چه می‌کنید؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q9" value="5" required> مطالعه، یادگیری یک مهارت جدید یا مدیتیشن</label>
+                        <label><input type="radio" name="q9" value="3"> ورزش یا فعالیت‌های خلاقانه</label>
+                        <label><input type="radio" name="q9" value="1"> تماشای فیلم و سریال</label>
+                        <label><input type="radio" name="q9" value="0"> چرخیدن بی‌هدف در شبکه‌های اجتماعی</label>
+                        <label><input type="radio" name="q9" value="-2"> هیچ کاری، فقط استراحت مطلق</label>
+                        <label><input type="radio" name="q9" value="-4"> اوقات فراغت چیست؟ من همیشه در حال کارم</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>۱۰. چقدر به چکاپ‌های پزشکی و سلامتی اهمیت می‌دهید؟</p>
+                    <div class="options">
+                        <label><input type="radio" name="q10" value="7" required> به طور منظم و سالانه چکاپ کامل انجام می‌دهم</label>
+                        <label><input type="radio" name="q10" value="3"> فقط وقتی حس کنم مشکلی وجود دارد به دکتر می‌روم</label>
+                        <label><input type="radio" name="q10" value="0"> به ندرت به دکتر مراجعه می‌کنم</label>
+                        <label><input type="radio" name="q10" value="-4"> از دکتر و بیمارستان فراری هستم</label>
+                        <label><input type="radio"
+                        name="q10" value="-7"> معتقدم بدن خودش را ترمیم می‌کند</label>
+                        <label><input type="radio" name="q10" value="-10"> آخرین باری که دکتر رفتم یادم نیست!</label>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <button type="button" onclick="predict()">سرنوشتت را پیش‌بینی کن!</button>
+
+        </form>
+
+        <div id="result">
+            <p><span id="resultName" class="name"></span> عزیز،</p>
+            <p>بر اساس سبک زندگی شما، سرنوشت شما در تاریخ زیر رقم خواهد خورد:</p>
+            <div id="resultDateTime" class="date-time"></div>
+            <p>ساکن در <span id="resultLocation"></span></p>
+            <div class="warning" style="margin-top: 20px;">
+                <strong>تکرار می‌کنیم:</strong> این فقط یک شوخی بر اساس محاسبات تخیلی است! از زندگی خود لذت ببرید و سالم باشید!
+            </div>
         </div>
     </div>
 
     <script>
-        document.getElementById('userInfoForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+        function predict() {
+            // Check for form validity
+            const form = document.getElementById('lifeForm');
+            if (!form.checkValidity()) {
+                alert("لطفاً به تمام سوالات پاسخ دهید و مشخصات خود را کامل کنید.");
+                return;
+            }
 
-            // Basic validation
+            // 1. Get User Info
             const name = document.getElementById('name').value;
-            const age = document.getElementById('age').value;
-            const maritalStatus = document.getElementById('maritalStatus').value;
-            const gender = document.querySelector('input[name="gender"]:checked');
+            const birthdateStr = document.getElementById('birthdate').value;
+            const location = document.getElementById('location').value;
 
-            if (!name || !age || !maritalStatus || !gender) {
-                alert('لطفاً تمام فیلدهای اجباری (نام، سن، وضعیت تاهل، جنسیت) را پر کنید.');
-                return;
-            }
+            const birthDate = new Date(birthdateStr);
+            const birthYear = birthDate.getFullYear();
 
-            // Hide user info form, show quiz section
-            document.getElementById('userInfoForm').classList.add('hidden');
-            document.getElementById('quizSection').classList.remove('hidden');
+            // 2. Calculate Base Score
+            let lifeScore = 85; // Base life expectancy
 
-            loadRandomQuestions();
-        });
+            // Add job modifier
+            lifeScore += parseInt(document.getElementById('job').value);
 
-        const allQuestions = [
-            // Your 50 questions here (from the prompt)
-            { id: 1, question: "تا حالا چند بار به شریک جنسیت دروغ گفتی که ارضا شدی؟", options: ["هرگز، همیشه صادق بودم", "یکی دو بار پیش اومده", "زیاد، چون نمی‌خواستم دلخور بشه", "تقریبا همیشه", "شریک ثابتی نداشتم", "کلاً هیچ وقت ارضا نشدم که راست یا دروغ بگم!"], scores: [1,2,3,4,5,6], categories: ['honesty', 'satisfaction'] },
-            { id: 2, question: "کدوم یکی از این فانتزی‌ها بیشتر برات تحریک‌کننده‌ست؟", options: ["رابطه در مکان‌های عمومی", "بازی نقش (مثل استاد/دانشجو یا رئیس/منشی)", "تسلط یا تسلیم (BDSM ملایم)", "چندنفره یا تماشای شریک با دیگری", "فتیش خاص (پا، لباس، بوی بدن و...)", "هیچکدوم از اینا برام جذاب نیست"], scores: [1,2,3,4,5,6], categories: ['fantasy', 'preference'] },
-            { id: 3, question: "معمولا چند بار در هفته خودارضایی می‌کنی؟", options: ["هر روز چند بار", "روزی یک‌بار", "۲–۳ بار در هفته", "یکی دو بار در ماه", "به ندرت", "هیچ‌وقت، اصلاً علاقه ندارم"], scores: [5,4,3,2,1,0], categories: ['masturbation', 'frequency'] },
-            { id: 4, question: "با کدوم جمله بیشتر هم‌ذات‌پنداری می‌کنی؟", options: ["سکس فقط با احساس عشقه", "سکس می‌تونه بی‌عشق هم جذاب باشه", "رابطه طولانی بهتر از تنوعه", "تنوع برام مهم‌تر از پایداریه", "تجربه مهم‌تر از تعهده", "هنوز خودم هم نمی‌دونم چی می‌خوام"], scores: [1,2,3,4,5,6], categories: ['values', 'relationship_style'] },
-            { id: 5, question: "گرایش جنسی‌ت رو چطور تعریف می‌کنی؟", options: ["فقط دگرجنس‌گرا (زن/مرد مخالف خودم)", "بیشتر دگرجنس‌گرا، ولی کمی کنجکاوم", "دوجنس‌گرا", "هم‌جنس‌گرا", "پان‌سکشوال / بی‌تمایز", "مطمئن نیستم / نمی‌خوام برچسب بزنم"], scores: [1,2,3,4,5,6], categories: ['sexual_orientation', 'identity'] },
-            { id: 6, question: "چقدر در رابطه‌هات احساس امنیت برای بیان نیازهای جنسی‌ت داری؟", options: ["کامل، بدون ترس می‌گم", "معمولاً راحت می‌گم", "بستگی داره به طرف مقابلم", "بیشتر وقت‌ها خجالت می‌کشم", "اصلاً نمی‌تونم بگم", "تا حالا رابطه جدی نداشتم"], scores: [1,2,3,4,5,6], categories: ['communication', 'security'] },
-            { id: 7, question: "وقتی به سکس فکر می‌کنی، بیشتر چه چیزی برات اولویت داره؟", options: ["لذت بدنی", "لذت روحی و عاطفی", "ارضای طرف مقابل", "تجربه‌های تازه", "قدرت‌نمایی یا تسلیم شدن", "فرار از استرس و واقعیت"], scores: [1,2,3,4,5,6], categories: ['priority', 'motivation'] },
-            { id: 8, question: "کدوم جمله بیشتر توصیف‌کننده حالت بعد از خودارضاییه؟", options: ["احساس آرامش می‌کنم", "احساس گناه دارم", "هیچ احساسی ندارم", "اغلب پشیمون می‌شم", "حس لذت، اما نه مثل سکس واقعی", "من خودارضایی نمی‌کنم"], scores: [1,2,3,4,5,6], categories: ['masturbation', 'feelings'] },
-            { id: 9, question: "تا حالا تجربه رابطه با جنس موافق داشتی؟", options: ["بله، و لذت‌بخش بود", "بله، ولی جذاب نبود", "فقط برای کنجکاوی", "فکرشو کردم ولی انجام ندادم", "اصلاً علاقه ندارم", "هنوز نمی‌دونم چه گرایشی دارم"], scores: [1,2,3,4,5,6], categories: ['experience', 'sexual_orientation'] },
-            { id: 10, question: "بیشتر تحریک جنسی‌ت از کدوم منبعه؟", options: ["تصاویر/ویدئو", "تخیلات شخصی", "لمس و تماس بدنی", "صحبت و صدا", "بوی بدن یا لباس", "چیزای غیرمعمول و خاص (فتیش)"], scores: [1,2,3,4,5,6], categories: ['arousal', 'stimulus'] },
-            { id: 11, question: "دوست داری تو رابطه جنسی کنترل دست تو باشه یا طرف مقابل؟", options: ["همیشه من کنترل‌کننده باشم", "ترجیح می‌دم من هدایت کنم", "مساوی باشه", "کمی سلطه‌پذیرم", "دوست دارم تسلیم مطلق باشم", "بستگی به حال و موقعیت داره"], scores: [1,2,3,4,5,6], categories: ['control', 'roles'] },
-            { id: 12, question: "تو رابطه جنسی، برات مهم‌تره که...؟", options: ["زود به اوج برسم", "طرف مقابلم زودتر ارضا شه", "هر دو همزمان ارضا بشیم", "بیشتر پیش‌نوازی کنیم", "طولانی باشه، حتی اگه دیر تموم بشه", "کیفیت مهم‌تر از کمیت باشه"], scores: [1,2,3,4,5,6], categories: ['satisfaction', 'focus'] },
-            { id: 13, question: "در مورد BDSM (بازی‌های سلطه و قدرت) چه نظری داری؟", options: ["علاقه زیادی دارم", "کمی امتحان کردم و خوشم اومد", "تجربه نکردم ولی کنجکاوم", "بهش فکر می‌کنم ولی می‌ترسم", "اصلاً نمی‌پسندم", "نمی‌دونم چی هست دقیقاً"], scores: [1,2,3,4,5,6], categories: ['BDSM', 'fantasy'] },
-            { id: 14, question: "چه چیزی باعث کاهش میل جنسیت می‌شه؟", options: ["استرس یا فشار روانی", "بی‌اعتمادی به شریک", "تکراری شدن رابطه", "مسائل جسمی/هورمونی", "مشکلات احساسی", "هیچ‌چیز، همیشه آماده‌ام!"], scores: [1,2,3,4,5,6], categories: ['libido', 'inhibitors'] },
-            { id: 15, question: "چقدر از بدن خودت در رابطه جنسی احساس رضایت داری؟", options: ["کاملاً راحت و راضی‌ام", "بیشتر اوقات راضیم", "معمولی‌ام، نه خیلی خوب نه بد", "گاهی خجالت می‌کشم", "احساس ناامنی زیادی دارم", "اصلاً از بدنم خوشم نمیاد"], scores: [1,2,3,4,5,6], categories: ['body_image', 'self_esteem'] },
-            { id: 16, question: "آیا فانتزی‌هایی داری که از گفتنشون خجالت بکشی؟", options: ["نه، همه چیزو می‌گم", "یکی دو مورد هست", "فانتزی‌هام خیلی خاصن و نمی‌گم", "خیلی خجالت می‌کشم", "هنوز فانتزی مشخصی ندارم", "فانتزی‌هامو حتی با خودم هم در میون نمی‌ذارم!"], scores: [1,2,3,4,5,6], categories: ['fantasy', 'shame'] },
-            { id: 17, question: "تا حالا شده از رابطه جنسی فقط برای به‌دست آوردن چیزی استفاده کنی؟", options: ["بله، چند بار", "یه‌بار", "وسوسه داشتم ولی نکردم", "نه، اصلاً چنین قصدی نداشتم", "حس می‌کنم دیگران ازم سوءاستفاده کردن", "نمی‌خوام جواب بدم"], scores: [1,2,3,4,5,6], categories: ['manipulation', 'ethics'] },
-            { id: 18, question: "در مورد رابطه جنسی دهانی چه نظری داری؟", options: ["علاقه زیادی دارم به دادن و گرفتن", "فقط دریافت‌کننده‌ام", "فقط در صورت عشق عمیق انجامش می‌دم", "برام معمولیه", "خوشم نمیاد", "تا حالا تجربه‌اش نکردم"], scores: [1,2,3,4,5,6], categories: ['oral_sex', 'preference'] },
-            { id: 19, question: "در حالت عادی، در طول رابطه جنسی چند بار می‌تونی ارضا بشی؟", options: ["یک‌بار کافیه", "معمولاً دوبار", "۳ بار یا بیشتر", "بستگی به موقعیت داره", "بعضی وقتا اصلاً ارضا نمی‌شم", "نمی‌دونم، تجربه کافی ندارم"], scores: [1,2,3,4,5,6], categories: ['orgasm', 'frequency'] },
-            { id: 20, question: "کدوم یکی از اینا تحریک بیشتری برات داره؟", options: ["لباس زیر خاص", "بوی بدن/بوی مو", "صدای نفس کشیدن یا ناله", "نگاه کردن", "حرف‌های کثیف یا شهوانی", "همه‌ی موارد بالا"], scores: [1,2,3,4,5,6], categories: ['arousal', 'sensory'] },
-            { id: 21, question: "وقتی به رابطه جنسی فکر می‌کنی، تصویر غالب ذهنی‌ات چیه؟", options: ["بدن طرف مقابل", "نوع لمس و تماس", "صداها و ناله‌ها", "حالت‌های سلطه یا تسلیم", "فانتزی‌های غیرمعمول", "هیچی خاص نیست، فقط حس کلیه"], scores: [1,2,3,4,5,6], categories: ['mindset', 'arousal'] },
-            { id: 22, question: "ترجیح می‌دی سکس چقدر طول بکشه؟", options: ["زیر ۵ دقیقه، سریع و پرشور", "۱۰ تا ۱۵ دقیقه", "حدود نیم ساعت", "هرچی بیشتر بهتر", "بستگی به حال من و طرف داره", "مهم نیست، کیفیت برام مهم‌تره"], scores: [1,2,3,4,5,6], categories: ['duration', 'preference'] },
-            { id: 23, question: "در مورد لوازم جنسی (Sex Toys) چه نظری داری؟", options: ["استفاده می‌کنم و خیلی راضیم", "گاهی استفاده کردم", "دوست دارم امتحان کنم", "کنجکاوم ولی می‌ترسم", "اصلاً علاقه ندارم", "نمی‌دونم از کجا شروع کنم"], scores: [1,2,3,4,5,6], categories: ['sex_toys', 'openness'] },
-            { id: 24, question: "بیشتر رابطه‌های جنسیت با چه کیفیتی بودن؟", options: ["عالی و رضایت‌بخش", "خوب، ولی می‌تونست بهتر باشه", "متوسط", "ضعیف و پر از نارضایتی", "بیشتر برای خوشحال کردن طرف مقابل بوده", "اصلاً تجربه ندارم"], scores: [1,2,3,4,5,6], categories: ['satisfaction', 'experience'] },
-            { id: 25, question: "تا حالا شده در حین رابطه جنسی به کس دیگه‌ای فکر کنی؟", options: ["نه، هیچ‌وقت", "یکی دو بار", "گاهی اتفاق می‌افته", "اغلب اوقات", "تقریباً همیشه", "چون معمولاً تخیلی ارضا می‌شم، بله"], scores: [1,2,3,4,5,6], categories: ['fantasy', 'distraction'] },
-            { id: 26, question: "چقدر با بدن شریک جنسی‌ت احساس کشش و لذت داری؟", options: ["زیاد، خیلی جذبشم", "جذبش هستم ولی جا برای بهتر شدن هست", "متوسط", "کششی حس نمی‌کنم", "فقط برای رابطه هستم، نه جذابیت", "هنوز رابطه‌ای نداشتم"], scores: [1,2,3,4,5,6], categories: ['attraction', 'partner_body'] },
-            { id: 27, question: "آیا در رابطه، تظاهر به لذت کرده‌ای؟", options: ["هرگز", "یکی دو بار", "گاهی", "خیلی زیاد", "همیشه، چون طرفم بلد نیست", "هنوز تجربه رابطه ندارم"], scores: [1,2,3,4,5,6], categories: ['faking_orgasm', 'satisfaction'] },
-            { id: 28, question: "چقدر از حرف زدن حین سکس خوشت میاد؟", options: ["خیلی، تحریک‌کننده‌ست", "معمولاً خوبه", "اگه طبیعی باشه، خوبه", "دوست ندارم کسی چیزی بگه", "خودم خجالت می‌کشم حرف بزنم", "اصلاً نمی‌دونم چی باید بگم!"], scores: [1,2,3,4,5,6], categories: ['communication', 'verbal'] },
-            { id: 29, question: "آیا فانتزی خشونت ملایم در سکس داری؟ (مثل کشیدن مو، گاز گرفتن، اسلیپ زدن)", options: ["بله، خیلی تحریک‌کننده‌ست", "کمی علاقه دارم", "تجربه کردم و خوشم نیومد", "هنوز امتحان نکردم", "نمی‌پسندم", "فکرشم آزارم می‌ده"], scores: [1,2,3,4,5,6], categories: ['BDSM', 'fantasy'] },
-            { id: 30, question: "در مورد پوزیشن‌های جنسی مختلف چقدر تجربه داری؟", options: ["خیلی زیاد", "چند مدل محدود", "یکی دو مدل ثابت", "فقط همون پوزیشن کلاسیک", "تجربه ندارم ولی کنجکاوم", "تا حالا تجربه نداشتم"], scores: [1,2,3,4,5,6], categories: ['positions', 'experience'] },
-            { id: 31, question: "وقتی خودارضایی می‌کنی، بیشتر چه فکری در ذهنت هست؟", options: ["کسی که می‌شناسم", "یک سلبریتی", "صحنه خاص یا فانتزی ذهنی", "موقعیتی سلطه‌آمیز یا تسلیم", "فقط تخلیه بدنی، بدون فکر خاص", "اصلاً خودارضایی نمی‌کنم"], scores: [1,2,3,4,5,6], categories: ['masturbation', 'fantasy'] },
-            { id: 32, question: "بیشتر اوقات سکس برات از کجا شروع می‌شه؟", options: ["با صحبت یا شوخی جنسی", "از لمس و نوازش", "با نگاه و فاصله نزدیک", "یه‌دفعه‌ای و بدون مقدمه", "با درددل و ارتباط عاطفی", "معمولاً از من شروع نمی‌شه!"], scores: [1,2,3,4,5,6], categories: ['initiation', 'arousal'] },
-            { id: 33, question: "آیا در کودکی یا نوجوانی تجربه جنسی ناخواسته داشتی؟", options: ["بله، و هنوز تأثیرش هست", "بله، ولی باهاش کنار اومدم", "نه، هیچ‌وقت", "نمی‌دونم چی حساب می‌شه", "ترجیح می‌دم جواب ندم", "خاطره‌ای مبهم دارم ولی مطمئن نیستم"], scores: [1,2,3,4,5,6], categories: ['trauma', 'past_experience'] },
-            { id: 34, question: "اگر طرفت بخواد فانتزی غیرعادی‌ای رو امتحان کنه، چی‌کار می‌کنی؟", options: ["مشتاقانه امتحان می‌کنم", "باهاش صحبت می‌کنم", "یک‌بار امتحان، ببینم چطوره", "با اکراه قبول می‌کنم", "رد می‌کنم", "خودم فانتزی‌های عجیب‌تر دارم!"], scores: [1,2,3,4,5,6], categories: ['openness', 'boundaries'] },
-            { id: 35, question: "بیشترین لذت جنسی رو کی تجربه کردی؟", options: ["با شریک فعلی", "با شریک قبلی", "توی خودارضایی", "توی تخیلاتم", "هنوز تجربه خوبی نداشتم", "اصلاً نمی‌تونم لذت رو تعریف کنم"], scores: [1,2,3,4,5,6], categories: ['satisfaction', 'peak_experience'] },
-            { id: 36, question: "به نظرت رابطه جنسی خوب باید چند وقت یک‌بار باشه؟", options: ["روزانه", "۳–۴ بار در هفته", "هفته‌ای یک‌بار", "بسته به میل دو طرف", "هر وقت حسش باشه", "فعلاً نیازی نمی‌بینم"], scores: [1,2,3,4,5,6], categories: ['frequency', 'expectations'] },
-            { id: 37, question: "چقدر حاضری نیازهای جنسی طرف مقابلت رو در اولویت بذاری؟", options: ["همیشه اول اون", "معمولاً توجه دارم", "نیمی‌نیم", "بیشتر به خودم فکر می‌کنم", "اگه من حال نداشته باشم، هیچ", "بستگی به اخلاقش داره"], scores: [1,2,3,4,5,6], categories: ['empathy', 'partner_needs'] },
-            { id: 38, question: "از چه چیزی در سکس می‌ترسی؟", options: ["قضاوت شدن", "عملکرد ضعیف", "درد", "دوست نداشتن بدنم", "وابسته شدن", "هیچ‌چیز، کاملاً راحتم"], scores: [1,2,3,4,5,6], categories: ['fears', 'vulnerability'] },
-            { id: 39, question: "اگه رابطه جنسی بدون عشق باشه...؟", options: ["اصلاً واردش نمی‌شم", "اگه حس باشه، خوبه", "سکس و عشق دو چیز جدا هستن", "تجربه می‌کنم ولی وابسته نمی‌شم", "ترجیح می‌دم فقط عشق باشه", "عشق اصلاً مهم نیست"], scores: [1,2,3,4,5,6], categories: ['love_vs_sex', 'values'] },
-            { id: 40, question: "تا حالا فانتزی 'تماشا شدن' یا 'تماشا کردن' حین رابطه داشتی؟", options: ["بله، خیلی تحریکم می‌کنه", "کنجکاوم ولی امتحان نکردم", "تو پورن دیدم ولی نمی‌خوام امتحان کنم", "اصلاً خوشم نمیاد", "دوست دارم امتحان کنم", "نمی‌فهمم چرا کسی بخواد اینو!"], scores: [1,2,3,4,5,6], categories: ['voyeurism', 'exhibitionism', 'fantasy'] },
-            { id: 41, question: "چقدر در مورد بهداشت جنسی اطلاعات داری؟", options: ["زیاد، مطالعه کردم", "متوسط", "در حد تجربه شخصی", "اطلاعاتم خیلی کمه", "فقط وقتی لازم باشه چیزی می‌خونم", "تقریباً هیچی نمی‌دونم"], scores: [1,2,3,4,5,6], categories: ['sexual_health', 'knowledge'] },
-            { id: 42, question: "در مورد استفاده از کاندوم چه نظری داری؟", options: ["همیشه استفاده می‌کنم", "فقط با افراد ناشناس", "بستگی به شرایط", "نمی‌پسندم ولی گاهی اجباره", "اصلاً استفاده نمی‌کنم", "تجربه رابطه واقعی نداشتم"], scores: [1,2,3,4,5,6], categories: ['contraception', 'safety'] },
-            { id: 43, question: "چه چیزی برات 'سکس ایده‌آل' رو می‌سازه؟", options: ["توجه و درک دو طرف", "فانتزی و تنوع", "شور و هیجان بدنی", "عاطفه و احساس", "نقش بازی کردن", "بدون محدودیت و مرز"], scores: [1,2,3,4,5,6], categories: ['ideal_sex', 'definition'] },
-            { id: 44, question: "تا حالا از پورن برای یاد گرفتن سکس استفاده کردی؟", options: ["بله، منبع اصلی‌م بوده", "گاهی کمک کرده", "نگاه می‌کنم ولی برای یادگیری نه", "نه، بیشتر گمراهم کرد", "اصلاً نمی‌بینم", "پورن واقعی نیست، تجربه مهمه"], scores: [1,2,3,4,5,6], categories: ['pornography', 'learning'] },
-            { id: 45, question: "آیا برای برقراری رابطه جنسی به الکل یا مواد متوسل شدی؟", options: ["بله، اغلب", "گاهی", "یکی دو بار", "فقط برای رهایی از خجالت", "نه، اصلاً", "اهل این چیزا نیستم"], scores: [1,2,3,4,5,6], categories: ['substance_use', 'coping'] },
-            { id: 46, question: "چقدر با خودت در مورد مرزهای جنسی‌ت شفاف هستی؟", options: ["کاملاً مشخصه چی می‌خوام و چی نمی‌خوام", "تقریباً می‌دونم", "هنوز دارم کشف می‌کنم", "مرز خاصی ندارم", "با هر کسی فرق داره", "اصلاً فکر نکردم تا حالا"], scores: [1,2,3,4,5,6], categories: ['boundaries', 'self_awareness'] },
-            { id: 47, question: "رابطه جنسی ایده‌آل باید چقدر عاطفه داشته باشه؟", options: ["زیاد، بیشتر از سکس", "ترکیب متعادل", "بسته به رابطه‌ست", "فقط لذت بدنی مهمه", "هیچ ربطی به عشق نداره", "بستگی به حال و روزمه"], scores: [1,2,3,4,5,6], categories: ['emotion', 'love_in_sex'] },
-            { id: 48, question: "تا حالا با کسی فقط برای سکس وارد رابطه شدی؟", options: ["بله، بارها", "یکی دو بار", "وسوسه داشتم", "نه، هیچ‌وقت", "فکر می‌کردم عشق باشه ولی نبود", "نمی‌خوام جواب بدم"], scores: [1,2,3,4,5,6], categories: ['casual_sex', 'relationship_type'] },
-            { id: 49, question: "در مورد نقش جنسی (اکتیو، پسیو، سوئیچ) چطور فکر می‌کنی؟", options: ["فقط اکتیو (فعال)", "بیشتر اکتیو، ولی گاهی تغییر می‌دم", "سوئیچ هستم (هر دو نقش)", "بیشتر پسیو", "فقط پسیو", "تجربه کافی ندارم برای نظر دادن"], scores: [1,2,3,4,5,6], categories: ['roles', 'preference'] },
-            { id: 50, question: "چه نوع مشاوره‌ای الان بیشتر از همه بهش نیاز داری؟", options: ["شناخت بهتر خودم و تمایلاتم", "تقویت رابطه با شریکم", "درمان اختلال یا نارضایتی جنسی", "خروج از تکرار و یکنواختی", "مدیریت فانتزی‌ها یا گرایش‌های خاص", "نمی‌دونم از کجا شروع کنم"], scores: [1,2,3,4,5,6], categories: ['consultation', 'needs'] },
-            // My 20 additional questions follow
-            { id: 51, question: "چقدر احساس می‌کنی در مورد مسائل جنسی در جامعه‌ات تابو وجود دارد؟", options: ["بسیار زیاد، صحبت کردنش خیلی سخته", "تا حدودی، مخصوصاً با بعضی افراد", "کم، اوضاع بهتر شده", "اصلاً تابو نیست، راحت صحبت میشه", "نمی‌دونم، تا حالا بهش فکر نکردم", "فقط برای من تابو هست، نه برای بقیه"], scores: [5,4,3,2,1,0], categories: ['social_norms', 'taboo'] },
-            { id: 52, question: "آیا تا به حال به خاطر گرایش جنسی یا فانتزی‌هایت احساس شرم کرده‌ای؟", options: ["بله، خیلی زیاد", "گاهی اوقات", "فقط وقتی با دیگران مقایسه می‌شدم", "نه، هیچ‌وقت", "هنوز مطمئن نیستم که این‌ها طبیعی هستند یا نه", "درباره‌اش با کسی صحبت نمی‌کنم"], scores: [5,4,3,2,1,0], categories: ['shame', 'identity'] },
-            { id: 53, question: "چقدر آمادگی داری در مورد مشکلات جنسی خود با یک متخصص صحبت کنی؟", options: ["کاملاً آماده‌ام و نیاز دارم", "اگر لازم باشه، صحبت می‌کنم", "فقط در صورتی که خیلی جدی بشه", "خجالت می‌کشم و نمی‌تونم", "ترجیح می‌دم خودم حلش کنم", "نمی‌دانم چه مشکلی دارم که صحبت کنم"], scores: [1,2,3,4,5,6], categories: ['seeking_help', 'openness'] },
-            { id: 54, question: "وقتی شریک جنسی‌ات به ارگاسم می‌رسد، چه حسی به تو دست می‌دهد؟", options: ["احساس رضایت و خوشحالی می‌کنم", "حس قدرت و تأثیرگذاری دارم", "برام مهم نیست، فقط ارضای خودم مهمه", "حس خوبی دارم اما خودم ارضا نشده‌ام", "بیشتر اوقات متوجه نمی‌شم", "هنوز این تجربه رو نداشتم"], scores: [1,2,3,4,5,6], categories: ['empathy', 'partner_satisfaction'] },
-            { id: 55, question: "چقدر برایت اهمیت دارد که شریک جنسی‌ات از نظر ظاهری جذاب باشد؟", options: ["خیلی زیاد، زیبایی ظاهری برایم اولویت است", "تا حدودی، ولی شخصیت مهم‌تر است", "متوسط، ظاهر خوب کمک‌کننده است", "اصلاً مهم نیست، مهم ارتباط عاطفی است", "برام تفاوت نمی‌کنه، فانتزی‌ها مهم‌ترند", "جذابیت جنسی برام تعریف متفاوتی دارد"], scores: [1,2,3,4,5,6], categories: ['attraction', 'aesthetics'] },
-            { id: 56, question: "آیا تا به حال در مورد رابطه جنسی از دوستانت مشورت گرفته‌ای؟", options: ["بله، زیاد و به آن‌ها اعتماد دارم", "گاهی اوقات، برای مسائل کلی", "نه، این مسائل شخصیه", "فقط با افراد خیلی نزدیک", "ترجیح می‌دهم از متخصص کمک بگیرم", "از خودم خجالت می‌کشم صحبت کنم"], scores: [1,2,3,4,5,6], categories: ['social_support', 'disclosure'] },
-            { id: 57, question: "اگر شریکت فانتزی‌ای داشته باشد که تو با آن راحت نیستی، چطور برخورد می‌کنی؟", options: ["با احترام رد می‌کنم و دلیلش را توضیح می‌دهم", "سعی می‌کنم در موردش گفتگو کنم و به توافق برسیم", "با اکراه قبول می‌کنم تا او ناراحت نشود", "فقط تظاهر می‌کنم که قبول کرده‌ام", "اصلاً قبول نمی‌کنم و بحث را تمام می‌کنم", "بستگی به شدت فانتزی و رابطه‌مان دارد"], scores: [1,2,3,4,5,6], categories: ['boundaries', 'negotiation'] },
-            { id: 58, question: "به نظرت، چه نقشی در سکس بیشتر لذت‌بخش است؟", options: ["دادن لذت به شریک", "دریافت لذت از شریک", "تجربه لذت متقابل و همزمان", "تجربه تسلط و قدرت", "تجربه تسلیم و فرمانبرداری", "لذت در کشف و آزمایش چیزهای جدید"], scores: [1,2,3,4,5,6], categories: ['pleasure_focus', 'roles'] },
-            { id: 59, question: "چقدر برایت مهم است که در رابطه جنسی از نظر عاطفی هم حس نزدیکی کنی؟", options: ["بسیار زیاد، بدون نزدیکی عاطفی لذت نمی‌برم", "خیلی زیاد، عشق و عاطفه مکمل سکس است", "تا حدودی، ولی می‌توانند جدا هم باشند", "کم، عاطفه برایم اهمیت ثانویه دارد", "اصلاً مهم نیست، سکس فقط بدنی است", "نمی‌دانم، هنوز تعریف کاملی ازش ندارم"], scores: [1,2,3,4,5,6], categories: ['emotional_connection', 'intimacy'] },
-            { id: 60, question: "آیا تا به حال احساس کرده‌ای که رابطه جنسی برایت بیشتر یک وظیفه است تا لذت؟", options: ["بله، اغلب اوقات این حس را دارم", "گاهی اوقات، مخصوصاً وقتی خسته‌ام", "نه، همیشه لذت‌بخش است", "فقط در روابطی که دوستشان نداشتم", "هنوز تجربه رابطه جدی نداشتم", "نمی‌دانم، تعریفم از وظیفه چیست"], scores: [1,2,3,4,5,6], categories: ['duty_vs_pleasure', 'satisfaction'] },
-            { id: 61, question: "چه چیزی بیشتر از همه در مورد شریک جنسی‌ات برایت جذاب است؟", options: ["ظاهر بدنی و فیزیک", "هوش و شوخ‌طبعی", "صدا و نحوه صحبت کردن", "اعتماد به نفس و جسارت", "مهربانی و همدلی", "رازآلود بودن و غیرقابل پیش‌بینی بودن"], scores: [1,2,3,4,5,6], categories: ['attraction', 'partner_traits'] },
-            { id: 62, question: "چقدر در ابراز فانتزی‌ها و نیازهایت با شریکت پیش‌قدم می‌شوی؟", options: ["همیشه، من پیش‌قدم هستم", "اغلب اوقات، وقتی حسش باشه", "گاهی، بستگی به طرف مقابل دارد", "به ندرت، معمولاً او پیش‌قدم می‌شود", "هرگز، خجالت می‌کشم", "هنوز شریکی ندارم"], scores: [1,2,3,4,5,6], categories: ['initiation', 'communication'] },
-            { id: 63, question: "آیا تا به حال به خاطر تجربه جنسی ناخوشایند، از سکس فاصله گرفته‌ای؟", options: ["بله، برای مدت طولانی", "بله، ولی کوتاه‌مدت بود", "نه، هیچ وقت تأثیر اینچنینی نداشته", "ترس از تجربه دوباره را دارم", "هنوز تجربه ناخوشایند جدی نداشتم", "ترجیح می‌دهم در این مورد صحبت نکنم"], scores: [1,2,3,4,5,6], categories: ['trauma', 'avoidance'] },
-            { id: 64, question: "در مورد نقش‌های جنسیتی سنتی در سکس (مرد فعال، زن پسیو) چه نظری داری؟", options: ["کاملاً با آن‌ها مخالفم، باید آزادانه انتخاب کرد", "به این نقش‌ها اعتقاد ندارم ولی در عمل گاهی رعایت می‌کنم", "تا حدودی با آن‌ها موافقم، در برخی موارد طبیعی‌اند", "این نقش‌ها را دوست دارم و ترجیح می‌دهم", "نمی‌دانم، برایم مهم نیست", "هنوز به این مسائل فکر نکرده‌ام"], scores: [1,2,3,4,5,6], categories: ['gender_roles', 'sexuality'] },
-            { id: 65, question: "بیشتر از همه چه چیزی تو را از برقراری رابطه جنسی باز می‌دارد؟", options: ["خستگی یا نداشتن انرژی", "مشکلات ارتباطی با شریک", "افکار منفی در مورد بدن خودم", "ترس از بیماری‌های مقاربتی", "عدم تمایل جنسی در آن لحظه", "مشغله فکری یا استرس زیاد"], scores: [1,2,3,4,5,6], categories: ['inhibitors', 'barriers'] },
-            { id: 66, question: "آیا معتقدی برای داشتن سکس خوب، حتماً باید عاشق طرف مقابلت باشی؟", options: ["بله، عشق شرط لازم است", "تقریباً بله، نزدیکی عاطفی کمک می‌کند", "نه، عشق و سکس دو مقوله جداگانه هستند", "فقط برای روابط بلندمدت عشق لازم است", "بستگی به تعریفم از عشق دارد", "اصلاً عشق برایم اولویت نیست"], scores: [1,2,3,4,5,6], categories: ['love_vs_sex', 'beliefs'] },
-            { id: 67, question: "چه قدر در مورد روش‌های جلوگیری از بارداری اطلاعات داری؟", options: ["زیاد و متنوع", "متوسط، در حد نیاز", "کم، فقط روش‌های رایج را می‌دانم", "هیچی، شریکم مسئول آن است", "به دلیل عدم نیاز، اطلاعاتی ندارم", "اطلاعات اشتباه زیاد دارم"], scores: [1,2,3,4,5,6], categories: ['contraception', 'knowledge'] },
-            { id: 68, question: "آیا تا به حال به درمان یا مشاوره‌ی جنسی فکر کرده‌ای؟", options: ["بله، و به آن نیاز دارم", "گاهی اوقات، ولی اقدامی نکرده‌ام", "نه، فکر نمی‌کنم مشکلی داشته باشم", "خجالت می‌کشم به این موضوع فکر کنم", "فقط برای اطلاعات بیشتر، نه درمان", "نمی‌دانم چه زمانی باید به مشاور مراجعه کرد"], scores: [1,2,3,4,5,6], categories: ['seeking_help', 'awareness'] },
-            { id: 69, question: "چه میزان به حس شهود خود در انتخاب شریک جنسی اعتماد می‌کنی؟", options: ["کاملاً، همیشه به حس ششمم گوش می‌دهم", "زیاد، معمولاً درست عمل می‌کند", "متوسط، هم حس و هم منطق را در نظر می‌گیرم", "کم، بیشتر به منطق و ظاهر اعتماد می‌کنم", "اصلاً، معمولاً اشتباه می‌کنم", "هنوز تجربه کافی برای قضاوت ندارم"], scores: [1,2,3,4,5,6], categories: ['intuition', 'partner_choice'] },
-            { id: 70, question: "اگر شریکت احساس کند میل جنسی‌ات کم شده، چطور برخورد می‌کنی؟", options: ["باز و صادقانه صحبت می‌کنم و دلیلش را توضیح می‌دهم", "سعی می‌کنم به خواسته‌اش احترام بگذارم و راهی پیدا کنم", "موضوع را عوض می‌کنم یا بحث نمی‌کنم", "عصبانی می‌شوم یا ناراحت می‌شوم", "به او اطمینان می‌دهم که مشکلی نیست", "بستگی به رفتار و واکنشش دارد"], scores: [1,2,3,4,5,6], categories: ['communication', 'libido_changes'] }
-        ];
-
-        let selectedQuestions = [];
-        let userAnswers = {}; // To store answers: {questionId: selectedOptionIndex}
-
-        function loadRandomQuestions() {
-            const numQuestionsToSelect = 10;
-            const shuffled = allQuestions.sort(() => 0.5 - Math.random()); // Shuffle array
-            selectedQuestions = shuffled.slice(0, numQuestionsToSelect); // Get 10 random questions
-
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = ''; // Clear previous questions
-
-            selectedQuestions.forEach(q => {
-                const questionBlock = document.createElement('div');
-                questionBlock.classList.add('question-block');
-                questionBlock.innerHTML = `<p>${q.id}. ${q.question}</p>`;
-
-                q.options.forEach((option, index) => {
-                    const inputId = `q${q.id}-opt${index}`;
-                    const radioInput = document.createElement('input');
-                    radioInput.type = 'radio';
-                    radioInput.id = inputId;
-                    radioInput.name = `question${q.id}`;
-                    radioInput.value = index; // Store index of the selected option
-                    radioInput.required = true;
-
-                    const label = document.createElement('label');
-                    label.htmlFor = inputId;
-                    label.textContent = option;
-
-                    questionBlock.appendChild(radioInput);
-                    questionBlock.appendChild(label);
-                    questionBlock.appendChild(document.createElement('br'));
-                });
-                container.appendChild(questionBlock);
+            // Add lifestyle questions modifiers
+            const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10'];
+            let lifestyleScoreSum = 0;
+            questions.forEach(q => {
+                const value = document.querySelector(`input[name="${q}"]:checked`).value;
+                lifestyleScoreSum += parseInt(value);
             });
-        }
+            
+            lifeScore += lifestyleScoreSum;
 
-        document.getElementById('sexualHealthQuiz').addEventListener('submit', function(event) {
-            event.preventDefault();
+            // 3. Calculate "Death" Date
+            const deathYear = birthYear + lifeScore;
 
-            userAnswers = {};
-            let allAnswered = true;
-            selectedQuestions.forEach(q => {
-                const selectedOption = document.querySelector(`input[name="question${q.id}"]:checked`);
-                if (selectedOption) {
-                    userAnswers[q.id] = parseInt(selectedOption.value);
-                } else {
-                    allAnswered = false;
-                }
-            });
+            // Generate a "random" month and day based on name length and lifestyle score
+            const deathMonth = (name.length + (lifestyleScoreSum % 5)) % 12; // 0-11
+            let deathDay = (birthDate.getDate() + lifestyleScoreSum) % 29 + 1; // 1-29 to be safe for all months
 
-            if (!allAnswered) {
-                alert('لطفاً به تمامی سوالات پاسخ دهید.');
-                return;
-            }
+            // Generate a "random" time
+            const deathHour = Math.abs(lifestyleScoreSum * 3) % 24;
+            const deathMinute = Math.abs(lifestyleScoreSum * 7) % 60;
+            
+            const finalDate = new Date(deathYear, deathMonth, deathDay, deathHour, deathMinute);
 
-            // Hide quiz, show results
-            document.getElementById('quizSection').classList.add('hidden');
-            document.getElementById('resultsSection').classList.remove('hidden');
+            // 4. Format and Display Result
+            const daysOfWeek = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"];
+            const dayName = daysOfWeek[finalDate.getDay()];
+            
+            const formattedDate = finalDate.toLocaleDateString('fa-IR-u-nu-latn', { year: 'numeric', month: 'long', day: 'numeric' });
+            const formattedTime = finalDate.toLocaleTimeString('fa-IR-u-nu-latn', { hour: '2-digit', minute: '2-digit' });
 
-            analyzeAnswers();
-        });
-
-        // Define a comprehensive set of potential analysis categories and their descriptions
-        const analysisCategories = {
-            'honesty': { title: 'صداقت در رابطه جنسی', description: 'این شاخص میزان صداقت شما را در بیان احساسات و تجربیات جنسی‌تان با شریک زندگی نشان می‌دهد.' },
-            'satisfaction': { title: 'رضایت جنسی کلی', description: 'این تحلیل سطح رضایت کلی شما را از تجربیات و کیفیت روابط جنسی‌تان ارزیابی می‌کند.' },
-            'fantasy': { title: 'اهمیت و تنوع فانتزی‌های جنسی', description: 'این بخش نشان‌دهنده گستردگی و اهمیت فانتزی‌های جنسی در زندگی شماست.' },
-            'masturbation': { title: 'الگوهای خودارضایی و احساسات مرتبط', description: 'این تحلیل به دفعات خودارضایی و احساسات (مثبت یا منفی) پس از آن می‌پردازد.' },
-            'values': { title: 'ارزش‌ها و باورهای جنسی', description: 'این بخش نگاه شما را به عشق، تعهد، تنوع و معنای سکس در زندگی‌تان بررسی می‌کند.' },
-            'sexual_orientation': { title: 'گرایش جنسی و میزان شناخت از خود', description: 'این شاخص به درک شما از گرایش جنسی‌تان و میزان کنجکاوی در این زمینه می‌پردازد.' },
-            'communication': { title: 'مهارت‌های ارتباطی در رابطه جنسی', description: 'این تحلیل میزان راحتی و توانایی شما را در بیان نیازها و خواسته‌های جنسی‌تان با شریک نشان می‌دهد.' },
-            'priority': { title: 'اولویت‌های اصلی در رابطه جنسی', description: 'این بخش نشان می‌دهد چه چیزهایی (لذت بدنی، عاطفی، ارضای شریک و...) برایتان در سکس اولویت دارند.' },
-            'experience': { title: 'تنوع و کیفیت تجربیات جنسی', description: 'این تحلیل میزان تجربه‌گرایی شما و کیفیت کلی روابط جنسی گذشته‌تان را ارزیابی می‌کند.' },
-            'arousal': { title: 'منابع تحریک جنسی', description: 'این بخش نشان می‌دهد چه محرک‌هایی (تصاویر، لمس، صدا، بو و...) بیشتر شما را تحریک می‌کنند.' },
-            'control': { title: 'ترجیحات در مورد کنترل در سکس', description: 'این شاخص تمایل شما را به کنترل‌گری یا تسلیم در رابطه جنسی بررسی می‌کند.' },
-            'BDSM': { title: 'تمایلات مرتبط با BDSM و بازی‌های قدرت', description: 'این تحلیل میزان علاقه یا کنجکاوی شما را نسبت به بازی‌های سلطه، قدرت و خشونت ملایم نشان می‌دهد.' },
-            'libido': { title: 'میل جنسی و عوامل تأثیرگذار بر آن', description: 'این بخش به میزان میل جنسی شما و عواملی که آن را کاهش یا افزایش می‌دهند، می‌پردازد.' },
-            'body_image': { title: 'تصویر بدنی و اعتماد به نفس جنسی', description: 'این تحلیل میزان رضایت شما از بدن خود و تأثیر آن بر اعتماد به نفس جنسی‌تان را می‌سنجد.' },
-            'shame': { title: 'احساس شرم یا گناه در مورد مسائل جنسی', description: 'این شاخص نشان‌دهنده وجود یا عدم وجود احساسات منفی مانند شرم و گناه در ارتباط با جنسیت شماست.' },
-            'manipulation': { title: 'سوءاستفاده یا استفاده ابزاری از رابطه جنسی', description: 'این تحلیل به احتمال استفاده شما از رابطه جنسی برای اهداف غیرجنسی یا تجربه سوءاستفاده شدن می‌پردازد.' },
-            'oral_sex': { title: 'نگرش و تجربه رابطه جنسی دهانی', description: 'این بخش به تمایلات و تجربیات شما در زمینه رابطه جنسی دهانی می‌پردازد.' },
-            'orgasm': { title: 'الگوهای ارگاسم و رضایت از آن', description: 'این تحلیل به دفعات و کیفیت ارگاسم شما در رابطه و خودارضایی می‌پردازد.' },
-            'duration': { title: 'اهمیت طول مدت رابطه جنسی', description: 'این شاخص نشان می‌دهد که آیا طول مدت سکس برای شما مهم است یا کیفیت آن.' },
-            'sex_toys': { title: 'نگرش به استفاده از لوازم جنسی', description: 'این تحلیل به میزان تمایل یا تجربه شما در استفاده از سکس‌تویز می‌پردازد.' },
-            'faking_orgasm': { title: 'تظاهر به ارگاسم و دلایل آن', description: 'این بخش میزان تظاهر شما به ارگاسم و عوامل پشت پرده آن را بررسی می‌کند.' },
-            'verbal': { title: 'ارتباط کلامی حین سکس (dirty talk)', description: 'این تحلیل علاقه شما به صحبت کردن یا شنیدن حرف‌های تحریک‌کننده در طول رابطه را نشان می‌دهد.' },
-            'positions': { title: 'تنوع در پوزیشن‌های جنسی', description: 'این شاخص میزان تجربه‌گرایی شما در پوزیشن‌های مختلف جنسی را بررسی می‌کند.' },
-            'initiation': { title: 'نحوه شروع رابطه جنسی', description: 'این بخش نشان می‌دهد که چه چیزهایی آغازگر میل جنسی شما و شروع رابطه هستند.' },
-            'trauma': { title: 'تأثیر تجربیات ناخواسته گذشته', description: 'این تحلیل به تأثیر تجربیات جنسی ناخواسته در گذشته بر سلامت جنسی فعلی شما می‌پردازد.' },
-            'openness': { title: 'میزان گشودگی به تجربه‌های جدید', description: 'این شاخص نشان‌دهنده آمادگی شما برای امتحان کردن فانتزی‌ها و تجربه‌های جدید جنسی است.' },
-            'peak_experience': { title: 'بهترین تجربه جنسی و عوامل آن', description: 'این تحلیل به شناخت شما از اوج لذت جنسی و شرایطی که آن را فراهم می‌کند، می‌پردازد.' },
-            'frequency': { title: 'انتظارات از دفعات رابطه جنسی', description: 'این بخش دیدگاه شما را در مورد دفعات ایده‌آل رابطه جنسی بررسی می‌کند.' },
-            'empathy': { title: 'اولویت‌دهی به نیازهای شریک', description: 'این شاخص میزان همدلی و توجه شما به ارضا و رضایت جنسی شریکتان را نشان می‌دهد.' },
-            'fears': { title: 'ترس‌ها و نگرانی‌های جنسی', description: 'این تحلیل به ترس‌های پنهان یا آشکار شما در مورد رابطه جنسی (قضاوت، عملکرد، درد و...) می‌پردازد.' },
-            'love_vs_sex': { title: 'رابطه عشق و سکس از دیدگاه شما', description: 'این بخش نشان می‌دهد چقدر عشق و عاطفه را برای داشتن رابطه جنسی مهم می‌دانید.' },
-            'voyeurism': { title: 'فانتزی‌های تماشاگری و نمایشگری', description: 'این تحلیل به تمایل یا کنجکاوی شما در مورد تماشا شدن یا تماشا کردن رابطه جنسی می‌پردازد.' },
-            'sexual_health': { title: 'دانش و آگاهی در مورد بهداشت جنسی', description: 'این شاخص میزان اطلاعات شما را در مورد جنبه‌های بهداشتی و سلامتی رابطه جنسی بررسی می‌کند.' },
-            'contraception': { title: 'نگرش به روش‌های جلوگیری از بارداری', description: 'این بخش به دیدگاه و میزان استفاده شما از روش‌های پیشگیری از بارداری می‌پردازد.' },
-            'ideal_sex': { title: 'عناصر سازنده سکس ایده‌آل', description: 'این تحلیل به تعریف شخصی شما از یک رابطه جنسی ایده‌آل می‌پردازد.' },
-            'pornography': { title: 'نقش پورنوگرافی در شناخت جنسی', description: 'این بخش به تأثیر پورنوگرافی بر درک و انتظارات شما از سکس می‌پردازد.' },
-            'substance_use': { title: 'نقش مواد مخدر/الکل در رابطه جنسی', description: 'این تحلیل به میزان اتکای شما به الکل یا مواد برای برقراری رابطه جنسی می‌پردازد.' },
-            'boundaries': { title: 'شفافیت و مرزهای جنسی شخصی', description: 'این شاخص میزان آگاهی شما از مرزهای شخصی‌تان و توانایی ابراز آن‌ها را می‌سنجد.' },
-            'consultation': { title: 'نیاز به مشاوره و کمک تخصصی', description: 'این بخش به نیاز فعلی شما برای دریافت مشاوره در حوزه جنسی می‌پردازد.' },
-            'social_norms': { title: 'تأثیر تابوهای اجتماعی بر جنسیت شما', description: 'این تحلیل نشان می‌دهد که چقدر هنجارها و تابوهای جامعه بر دیدگاه و تجربه جنسی شما تأثیرگذار بوده‌اند.' },
-            'seeking_help': { title: 'تمایل به کمک گرفتن از متخصص', description: 'این شاخص آمادگی شما برای مراجعه به مشاور یا درمانگر جنسی را بررسی می‌کند.' },
-            'partner_satisfaction': { title: 'رضایت از ارضای شریک', description: 'این بخش حس شما را در زمان ارگاسم شریک جنسی‌تان ارزیابی می‌کند.' },
-            'aesthetics': { title: 'اهمیت ظاهر شریک جنسی', description: 'این تحلیل نشان می‌دهد که جذابیت ظاهری چقدر در انتخاب و رضایت شما از شریک جنسی نقش دارد.' },
-            'social_support': { title: 'دریافت حمایت اجتماعی در مسائل جنسی', description: 'این شاخص بررسی می‌کند که آیا در مورد مسائل جنسی خود با دوستان یا نزدیکان مشورت می‌کنید.' },
-            'negotiation': { title: 'توانایی مذاکره در مورد فانتزی‌های متفاوت', description: 'این بخش مهارت شما را در برخورد با فانتزی‌های شریک که با آن‌ها راحت نیستید، می‌سنجد.' },
-            'pleasure_focus': { title: 'تمرکز بر لذت در رابطه جنسی', description: 'این تحلیل نشان می‌دهد که تمرکز اصلی شما در سکس بر دادن لذت، دریافت لذت یا لذت متقابل است.' },
-            'emotional_connection': { title: 'اهمیت پیوند عاطفی در سکس', description: 'این شاخص میزان اهمیتی را که به نزدیکی عاطفی در رابطه جنسی می‌دهید، بررسی می‌کند.' },
-            'duty_vs_pleasure': { title: 'رابطه جنسی به عنوان وظیفه یا لذت', description: 'این بخش ارزیابی می‌کند که آیا سکس را بیشتر وظیفه می‌بینید یا منبع لذت.' },
-            'partner_traits': { title: 'ویژگی‌های جذاب در شریک جنسی', description: 'این تحلیل به ویژگی‌هایی که برای شما در یک شریک جنسی (فیزیک، هوش، مهربانی و...) جذابیت دارند، می‌پردازد.' },
-            'gender_roles': { title: 'دیدگاه نسبت به نقش‌های جنسیتی در سکس', description: 'این شاخص نظر شما را در مورد نقش‌های جنسیتی سنتی در رابطه جنسی بررسی می‌کند.' },
-            'inhibitors': { title: 'عوامل بازدارنده رابطه جنسی', description: 'این بخش به عواملی (خستگی، استرس، مشکلات ارتباطی) که مانع از برقراری رابطه جنسی شما می‌شوند، می‌پردازد.' },
-            'beliefs': { title: 'باورها در مورد عشق و سکس', description: 'این تحلیل نشان می‌دهد که آیا عشق را شرط لازم برای سکس خوب می‌دانید یا خیر.' },
-            'awareness': { title: 'آگاهی از نیاز به مشاوره جنسی', description: 'این شاخص میزان آگاهی شما از نیاز به دریافت کمک تخصصی در حوزه جنسی را ارزیابی می‌کند.' },
-            'intuition': { title: 'اعتماد به شهود در انتخاب شریک', description: 'این تحلیل میزان اعتماد شما به حس ششم خود در انتخاب شریک جنسی را بررسی می‌کند.' },
-            'libido_changes': { title: 'برخورد با تغییرات میل جنسی', description: 'این بخش نحوه برخورد شما با تغییرات میل جنسی خود و واکنش به شریکتان در این مورد را می‌سنجد.' }
-        };
-
-
-        function analyzeAnswers() {
-            // A more sophisticated scoring and analysis would involve weighting answers,
-            // mapping scores to specific categories, and then generating text based on ranges.
-            // For this example, I'll demonstrate a simplified approach.
-
-            const scoresPerCategory = {};
-            const categoryCounts = {};
-
-            selectedQuestions.forEach(q => {
-                const answerIndex = userAnswers[q.id];
-                // Assuming each option has a corresponding score or value
-                // For simplicity, let's say a lower index (closer to option 1) indicates one end of a spectrum,
-                // and a higher index (closer to option 6) indicates the other.
-                // We'll use the answer index itself as a simple score.
-
-                q.categories.forEach(cat => {
-                    if (!scoresPerCategory[cat]) {
-                        scoresPerCategory[cat] = 0;
-                        categoryCounts[cat] = 0;
-                    }
-                    scoresPerCategory[cat] += answerIndex; // Simple scoring based on option index
-                    categoryCounts[cat]++;
-                });
-            });
-
-            const averageScores = {};
-            for (const cat in scoresPerCategory) {
-                averageScores[cat] = scoresPerCategory[cat] / categoryCounts[cat];
-            }
-
-            // Now, based on these average scores, derive relevant analyses
-            const relevantAnalyses = [];
-
-            // Example of how to add analyses based on average scores
-            // This part needs to be highly customized based on your psychological models
-            // and the meaning of each answer's score.
-
-            // Example: If average score for 'honesty' is high (meaning user often lies), provide an analysis
-            if (averageScores['honesty'] > 2.5) { // Assuming 0-5 index, so >2.5 is closer to lying
-                relevantAnalyses.push({
-                    title: analysisCategories['honesty'].title,
-                    description: "به نظر می‌رسد در برخی موارد برای جلوگیری از رنجش شریک زندگی‌تان، ترجیح می‌دهید احساسات یا تجربیات جنسی واقعی خود را ابراز نکنید. این می‌تواند نشانه‌ای از نگرانی بابت واکنش شریک، یا عدم امنیت کافی برای بیان صادقانه باشد. **کار بر روی ارتباط شفاف و اعتمادسازی بیشتر در رابطه می‌تواند به شما کمک کند تا احساس راحتی بیشتری داشته باشید.**"
-                });
-            } else if (averageScores['honesty'] <= 1.5) {
-                relevantAnalyses.push({
-                    title: analysisCategories['honesty'].title,
-                    description: "شما در بیان احساسات و تجربیات جنسی خود با شریک زندگی‌تان فردی **بسیار صادق** به نظر می‌رسید. این صداقت ستودنی است و پایه‌ای قوی برای یک رابطه جنسی سالم و رضایت‌بخش فراهم می‌کند."
-                });
-            }
-
-            if (averageScores['satisfaction'] > 3.5) {
-                relevantAnalyses.push({
-                    title: analysisCategories['satisfaction'].title,
-                    description: "میزان **رضایت کلی شما از روابط جنسی‌تان متوسط رو به پایین** است. ممکن است برخی از نیازها یا انتظارات شما در این حوزه برآورده نشده باشند. بررسی دقیق‌تر این نارضایتی‌ها می‌تواند مفید باشد."
-                });
-            } else if (averageScores['satisfaction'] <= 1.5) {
-                relevantAnalyses.push({
-                    title: analysisCategories['satisfaction'].title,
-                    description: "شما از **کیفیت و تجربه روابط جنسی خود بسیار راضی** هستید. این نشان‌دهنده هماهنگی خوب شما با شریک زندگی‌تان و یا شناخت کافی از نیازهای جنسی شخصی‌تان است."
-                });
-            }
-
-            if (averageScores['fantasy'] > 2.5) {
-                relevantAnalyses.push({
-                    title: analysisCategories['fantasy'].title,
-                    description: "شما دارای **فانتزی‌های جنسی متنوع و شاید خاصی** هستید که نقش مهمی در تحریک و لذت جنسی شما ایفا می‌کنند. بررسی و درک این فانتزی‌ها می‌تواند به غنی‌تر شدن زندگی جنسی شما کمک کند."
-                });
-            } else if (averageScores['fantasy'] <= 1.5) {
-                relevantAnalyses.push({
-                    title: analysisCategories['fantasy'].title,
-                    description: "به نظر می‌رسد فانتزی‌های جنسی نقش **پررنگی در زندگی جنسی شما ندارند** یا ترجیحات شما بیشتر به سمت جنبه‌های فیزیکی و عاطفی رابطه است."
-                });
-            }
-
-            if (averageScores['masturbation'] > 3.5) {
-                relevantAnalyses.push({
-                    title: analysisCategories['masturbation'].title,
-                    description: "الگوهای خودارضایی شما نشان‌دهنده **میل جنسی نسبتاً بالا یا نیاز به تخلیه منظم** است. اگر این موضوع با احساس گناه یا پشیمانی همراه است، می‌تواند نیاز به بررسی بیشتر داشته باشد."
-                });
-            } else if (averageScores['masturbation'] <= 1.5) {
-                 relevantAnalyses.push({
-                    title: analysisCategories['masturbation'].title,
-                    description: "به نظر می‌رسد خودارضایی **نقش پررنگی در زندگی جنسی شما ندارد** یا اصلاً آن را تجربه نمی‌کنید. اگر این عدم علاقه منجر به نارضایتی شده، شاید نیاز به بررسی علل آن باشد."
-                });
-            }
-
-            if (averageScores['communication'] > 3) {
-                relevantAnalyses.push({
-                    title: analysisCategories['communication'].title,
-                    description: "شما در **بیان نیازهای جنسی خود با شریکتان کمی محتاط یا خجالتی** عمل می‌کنید. یادگیری مهارت‌های ارتباطی مؤثرتر می‌تواند به شما در ساختن یک رابطه جنسی رضایت‌بخش‌تر کمک کند."
-                });
-            } else if (averageScores['communication'] <= 2) {
-                relevantAnalyses.push({
-                    title: analysisCategories['communication'].title,
-                    description: "شما دارای **مهارت‌های ارتباطی قوی در زمینه جنسی** هستید و به راحتی می‌توانید نیازها و خواسته‌های خود را با شریکتان مطرح کنید. این ویژگی به سلامت روابط شما کمک شایانی می‌کند."
-                });
-            }
-
-            if (averageScores['body_image'] > 3) {
-                relevantAnalyses.push({
-                    title: analysisCategories['body_image'].title,
-                    description: "ممکن است در مورد **تصویر بدنی خود در رابطه جنسی احساس راحتی کامل نداشته باشید**. پذیرش و دوست داشتن بدن خود، گام مهمی در تجربه لذت بیشتر است."
-                });
-            } else if (averageScores['body_image'] <= 2) {
-                relevantAnalyses.push({
-                    title: analysisCategories['body_image'].title,
-                    description: "شما از **بدن خود در رابطه جنسی احساس رضایت و راحتی بالایی** دارید. این اعتماد به نفس به شما کمک می‌کند تا تجربیات جنسی لذت‌بخش‌تری داشته باشید."
-                });
-            }
-
-             if (averageScores['love_vs_sex'] > 3) {
-                relevantAnalyses.push({
-                    title: analysisCategories['love_vs_sex'].title,
-                    description: "دیدگاه شما در مورد **رابطه عشق و سکس کمی منعطف** به نظر می‌رسد. شما معتقدید که سکس می‌تواند بدون عشق هم جذاب باشد یا لزوماً به آن گره خورده نیست. این نگاه می‌تواند به شما در تجربه روابط متنوع‌تر کمک کند."
-                });
-            } else if (averageScores['love_vs_sex'] <= 2) {
-                relevantAnalyses.push({
-                    title: analysisCategories['love_vs_sex'].title,
-                    description: "شما **اهمیت زیادی برای ارتباط عاطفی و عشق در رابطه جنسی** قائل هستید و به نظر می‌رسد بدون آن، لذت کامل را تجربه نمی‌کنید. این دیدگاه می‌تواند به عمق بخشیدن به روابط شما کمک کند."
-                });
-            }
-
-            if (relevantAnalyses.length < 3) {
-                // Add more generic or foundational analyses if not enough specific ones are found
-                relevantAnalyses.push({
-                    title: "شناخت کلی از تمایلات جنسی",
-                    description: "بر اساس پاسخ‌های شما، به نظر می‌رسد شما در حال کاوش و شناخت بیشتر از تمایلات و نیازهای جنسی خود هستید. این مسیر خودشناسی می‌تواند به شما در ایجاد روابطی سالم‌تر و رضایت‌بخش‌تر کمک کند."
-                });
-            }
-            if (relevantAnalyses.length < 3) { // Ensure at least 3
-                 relevantAnalyses.push({
-                    title: "اهمیت رضایت شریک و همدلی",
-                    description: "نتایج نشان می‌دهد که شما به رضایت و لذت شریک جنسی‌تان اهمیت می‌دهید و تا حدودی در جهت ارضای نیازهای او تلاش می‌کنید. این همدلی یکی از ارکان مهم یک رابطه سالم است."
-                });
-            }
-             if (relevantAnalyses.length < 3) { // Ensure at least 3
-                 relevantAnalyses.push({
-                    title: "پذیرش تنوع در تجربه جنسی",
-                    description: "پاسخ‌های شما نشان‌دهنده آمادگی نسبی برای پذیرش و تجربه جنبه‌های مختلف رابطه جنسی است، از جمله فانتزی‌ها یا رفتارهایی که ممکن است از نظر برخی غیرمعمول تلقی شوند. این گشودگی می‌تواند به غنی‌تر شدن زندگی جنسی شما کمک کند."
-                });
-            }
-
-            // Shuffle and pick 3-7 analyses
-            const finalAnalyses = relevantAnalyses.sort(() => 0.5 - Math.random()).slice(0, Math.floor(Math.random() * (7 - 3 + 1)) + 3);
-
-
-            const resultsDiv = document.getElementById('analysisResults');
-            resultsDiv.innerHTML = '';
-            if (finalAnalyses.length === 0) {
-                resultsDiv.innerHTML = '<p>متاسفانه بر اساس پاسخ‌های شما تحلیل خاصی قابل ارائه نیست. لطفاً با یک متخصص مشورت کنید.</p>';
-            } else {
-                finalAnalyses.forEach(analysis => {
-                    const analysisItem = document.createElement('div');
-                    analysisItem.classList.add('result-item');
-                    analysisItem.innerHTML = `<h3>${analysis.title}</h3><p>${analysis.description}</p>`;
-                    resultsDiv.appendChild(analysisItem);
-                });
-            }
+            document.getElementById('resultName').innerText = name;
+            document.getElementById('resultLocation').innerText = location;
+            document.getElementById('resultDateTime').innerText = `${dayName}, ${formattedDate} - ساعت ${formattedTime}`;
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
+
 </body>
 </html>
