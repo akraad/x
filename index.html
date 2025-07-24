@@ -488,6 +488,20 @@
         .self-pleasure-note strong {
             color: #333;
         }
+        .food-comparison-list {
+            list-style-type: none;
+            padding-right: 0;
+            margin-top: 10px;
+        }
+        .food-comparison-list li {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        .food-comparison-list strong {
+            color: #333;
+        }
 
 
         /* Media Queries for Responsiveness */
@@ -495,10 +509,13 @@
             .navbar {
                 padding: 8px;
                 max-width: 100%;
+                flex-direction: row; /* Keep row direction */
+                flex-wrap: wrap; /* Allow wrapping */
+                justify-content: center; /* Center items when wrapped */
             }
             .nav-button {
                 margin: 4px;
-                flex-basis: 45%; /* Two buttons per row */
+                flex-basis: calc(50% - 8px); /* Two buttons per row with gap */
                 min-width: unset;
                 font-size: 0.8em;
                 padding: 8px 12px;
@@ -533,7 +550,7 @@
 
         @media (max-width: 480px) {
             .nav-button {
-                flex-basis: 100%; /* One button per row on very small screens */
+                flex-basis: calc(100% - 8px); /* One button per row on very small screens */
             }
             .flex-inputs {
                 flex-direction: column;
@@ -546,6 +563,7 @@
     </style>
 </head>
 <body>
+    <h3 style="margin-bottom: 20px; color: #555;">بسم الله الرحمن الرحیم</h3>
     
 <div class="navbar">
         <button class="nav-button" data-color="gold" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> قیمت طلا</button>
@@ -600,7 +618,7 @@
         <div class="result" id="goldResultDiv">
             <div><span>قیمت نهایی:</span> <span id="finalPriceToman"></span> تومان</div>
             <div><span>قیمت نهایی:</span> <span id="finalPriceDollar"></span> دلار</div>
-            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
+            <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
@@ -626,7 +644,6 @@
         <div class="result" id="bmiResultDiv">
             <div><span>شاخص BMI شما:</span> <span id="bmiValue"></span></div>
             <div><span>وضعیت:</span> <span id="bmiStatus"></span></div>
-            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
@@ -663,7 +680,7 @@
                     <div id="comparisonText"></div>
                 </div>
             </div>
-            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
+            <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
@@ -707,7 +724,7 @@
             <div class="result" id="depositResultDiv">
                 <div><span>سود کل:</span> <span id="totalDepositInterest"></span> تومان</div>
                 <div><span>مبلغ نهایی با سود:</span> <span id="finalDepositAmount"></span> تومان</div>
-                <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
+                <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
             </div>
         </div>
 
@@ -733,7 +750,7 @@
                 <div><span>مبلغ هر قسط:</span> <span id="monthlyInstallment"></span> تومان</div>
                 <div><span>کل سود پرداختی:</span> <span id="totalLoanInterest"></span> تومان</div>
                 <div><span>مجموع پرداختی:</span> <span id="totalPayment"></span> تومان</div>
-                <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
+                <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
             </div>
         </div>
     </div>
@@ -771,7 +788,7 @@
         
         <div class="result" id="currencyResultDiv">
             <div><span>مبلغ تبدیل شده:</span> <span id="convertedAmount"></span></div>
-            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
+            <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
 
@@ -802,10 +819,14 @@
             <ul id="affordableCategories"></ul>
             <div><span>دسته‌بندی‌هایی که ممکن است خارج از محدوده باشند:</span></div>
             <ul id="unaffordableCategories"></ul>
+            
+            <p style="margin-top: 20px; font-weight: bold; color: #333;">مقایسه با قیمت غذا:</p>
+            <ul id="foodComparison" class="food-comparison-list"></ul>
+
             <p class="self-pleasure-note">
                 اگر از این هزینه‌ها صرف نظر کنید و به جای آن **خودارضایی** را انتخاب کنید، می‌توانید این مبلغ را پس‌انداز یا سرمایه‌گذاری کرده و به رشد مالی خود کمک کنید.
             </p>
-            <span class="small-text">قیمت‌ها حدودی می‌باشد.</span>
+            <span class="small-text" style="color: #888;">قیمت‌ها حدودی می‌باشد.</span>
         </div>
     </div>
     
@@ -943,7 +964,7 @@
             },
             'تیر': {
                 'نقاط قوت': ["عاطفی و مهربان", "خانوادهدوست و دلسوز", "خلاق و هنرمند", "وفادار و متعهد", "غریزهی قوی و شهودی", "عمیق و معنوی"],
-                'نقاط ضعف': ["حساس و زودرنج", "گاهی وابسته و نیازمند تایید دیگران", "کمالگرا و خودانتقادگر", "ممکن است احساساتتان شما را کنترل کند", "غیرتی و حساس به قضاوت دیگران", "گاهی درونگرا و منزوی"]
+                'نقاط ضعف': ["حساس و زودرنج", "گاهی وابسته و نیازمند تایید دیگران", "کمالگرا و خودانتقادگر", "ممکن است احساساتتان شما را کنترل کند", "غیرتی و حساس به قضاوه دیگران", "گاهی درونگرا و منزوی"]
             },
             'مرداد': {
                 'نقاط قوت': ["قوی و بااراده", "رهبر و تصمیمگیرنده", "صریح و رک", "متعهد و پایبند به قول", "قابل اعتماد و مسئولیتپذیر", "جاهطلب و مصمم"],
@@ -1348,6 +1369,15 @@
             { name: 'مدل‌های همراهی (رویداد خاص)', minPriceUSD: 500, maxPriceUSD: 2000 } // $500 - $2000 per event
         ];
 
+        // Hypothetical food prices in Toman (approximate, for comparison)
+        const foodPrices = [
+            { name: 'یک پرس قرمه سبزی یا قیمه (معمولی)', price: 150000 }, // ~2-3 USD
+            { name: 'یک پرس کباب کوبیده (معمولی)', price: 250000 }, // ~4-5 USD
+            { name: 'یک پرس جوجه کباب (معمولی)', price: 300000 }, // ~5 USD
+            { name: 'یک پرس چلوکباب برگ (متوسط)', price: 500000 }, // ~8-10 USD
+            { name: 'یک پرس شیشلیک یا ماهیچه (لاکچری)', price: 1000000 } // ~15-20 USD
+        ];
+
         function calculateHypotheticalServices() {
             const dollarRate = parseFloat(document.getElementById('dollarExchangeRateHypothetical').value);
             const budgetToman = parseFloat(document.getElementById('hypotheticalBudget').value);
@@ -1385,9 +1415,11 @@
 
             const affordableList = document.getElementById('affordableCategories');
             const unaffordableList = document.getElementById('unaffordableCategories');
+            const foodComparisonList = document.getElementById('foodComparison');
             
             affordableList.innerHTML = '';
             unaffordableList.innerHTML = '';
+            foodComparisonList.innerHTML = '';
 
             if (affordable.length > 0) {
                 affordable.forEach(category => {
@@ -1410,6 +1442,31 @@
             } else {
                 unaffordableList.innerHTML = '<li>تمام دسته‌بندی‌ها در دسترس هستند.</li>';
             }
+
+            // Food comparison
+            hypotheticalServiceCategories.forEach(category => {
+                const avgPriceToman = (category.minPriceUSD + category.maxPriceUSD) / 2 * dollarRate;
+                let equivalentFood = '';
+
+                if (avgPriceToman <= foodPrices[0].price) {
+                    equivalentFood = `تقریباً معادل **یک پرس قرمه سبزی یا قیمه** (${foodPrices[0].price.toLocaleString('fa-IR')} تومان)`;
+                } else if (avgPriceToman <= foodPrices[1].price) {
+                    equivalentFood = `تقریباً معادل **یک پرس کباب کوبیده** (${foodPrices[1].price.toLocaleString('fa-IR')} تومان)`;
+                } else if (avgPriceToman <= foodPrices[2].price) {
+                    equivalentFood = `تقریباً معادل **یک پرس جوجه کباب** (${foodPrices[2].price.toLocaleString('fa-IR')} تومان)`;
+                } else if (avgPriceToman <= foodPrices[3].price) {
+                    equivalentFood = `تقریباً معادل **یک پرس چلوکباب برگ** (${foodPrices[3].price.toLocaleString('fa-IR')} تومان)`;
+                } else {
+                    equivalentFood = `تقریباً معادل **یک پرس شیشلیک یا ماهیچه لاکچری** (${foodPrices[4].price.toLocaleString('fa-IR')} تومان)`;
+                    if (avgPriceToman > foodPrices[4].price * 2) {
+                         equivalentFood += ` (یا بیشتر!)`;
+                    }
+                }
+                 const li = document.createElement('li');
+                 li.innerHTML = `هزینه "${category.name}"  ${equivalentFood}.`;
+                 foodComparisonList.appendChild(li);
+            });
+
 
             document.getElementById('hypotheticalServicesResultDiv').style.display = 'block';
         }
