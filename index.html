@@ -601,6 +601,48 @@
         .total-cost-row td {
             color: #8aff8a !important; /* Green for total cost cells */
         }
+        .balance-summary {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #3a3a3a;
+            border-radius: 10px;
+            border: 1px solid #555;
+            font-size: 1em;
+            font-weight: 600;
+            text-align: center;
+            color: #f0f0f0;
+        }
+        .balance-summary .positive-balance {
+            color: #8aff8a; /* Green for surplus */
+        }
+        .balance-summary .negative-balance {
+            color: #ff8a8a; /* Red for deficit */
+        }
+        .balance-recommendation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #3a3a3a;
+            border-radius: 10px;
+            border: 1px dashed #555;
+            text-align: justify;
+            line-height: 1.7;
+            color: #e0e0e0;
+        }
+        .balance-recommendation h4 {
+            color: #FFA500;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .balance-recommendation ul {
+            list-style-type: disc;
+            padding-right: 25px;
+            margin-bottom: 15px;
+        }
+        .balance-recommendation li {
+            margin-bottom: 5px;
+            color: #e0e0e0;
+        }
 
 
         /* Media Queries for Responsiveness */
@@ -976,6 +1018,16 @@
             </select>
             <i class="fas fa-home icon"></i>
         </div>
+
+        <div class="input-group">
+            <label for="carOwnership">مالکیت خودرو:</label>
+            <select id="carOwnership">
+                <option value="">انتخاب کنید</option>
+                <option value="دارم">دارم</option>
+                <option value="ندارم">ندارم</option>
+            </select>
+            <i class="fas fa-car icon"></i>
+        </div>
         
         <button onclick="calculateHypotheticalServices()">تحلیل بودجه لذت</button>
         
@@ -1004,6 +1056,12 @@
                     *هزینه‌های فوق تقریبی بوده و ممکن است بر اساس منطقه جغرافیایی، کیفیت و نوسانات بازار متفاوت باشند.*
                 </p>
             </div>
+
+            <div class="balance-summary" id="balanceSummary">
+                </div>
+
+            <div class="balance-recommendation" id="balanceRecommendation">
+                </div>
 
             <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #555;">
                 <p style="font-size: 0.9em; color: #aaa; text-align: center; line-height: 1.6;">
@@ -1255,8 +1313,8 @@
 
         // --- Hypothetical Services Calculator Logic (Accurate & Smart) ---
         const iranianServiceCostsUSD = {
-            'تفریح سبک (مثلاً پیاده‌روی در پارک)': { min: 0, max: 0, type: 'free' },
-            'یک فنجان قهوه در کافه': { min: 1, max: 2, type: 'leisure' },
+            'آبمیوه طبیعی': { min: 0.5, max: 1.5, type: 'leisure' },
+            'یک فنجان قهوه در کافه': { min: 0.5, max: 1.5, type: 'leisure' },
             'بلیط سینما و یک نوشیدنی': { min: 1.5, max: 3, type: 'leisure' },
             'یک وعده غذای فست فود': { min: 2, max: 6, type: 'food' },
             'یک وعده غذای رستورانی (اقتصادی)': { min: 3, max: 6, type: 'food' },
@@ -1266,12 +1324,20 @@
             'شهریه باشگاه ورزشی (ماهانه)': { min: 6, max: 20, type: 'health' },
             'یک بار استفاده از استخر': { min: 2, max: 4, type: 'health' },
             'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)': { min: 2, max: 10, type: 'education' },
-            'مسافرت (به ازای هر نفر در روز، اقتصادی)': { min: 20, max: 35, type: 'travel' },
-            'مسافرت (به ازای هر نفر در روز، رفاهی)': { min: 50, max: 100, type: 'travel' },
-            'هزینه حمل و نقل شخصی (بنزین و...) ماهیانه': { min: 6, max: 25, type: 'transport' },
+            'مسافرت داخلی (اقتصادی، روزانه)': { min: 5, max: 10, type: 'travel' },
+            'مسافرت داخلی (متوسط، روزانه)': { min: 10, max: 15, type: 'travel' },
+            'مسافرت داخلی (رفاهی، روزانه)': { min: 15, max: 20, type: 'travel' },
             'هزینه حمل و نقل عمومی (ماهیانه)': { min: 3, max: 10, type: 'transport' },
+            'هزینه نگهداری خودرو (بنزین، استهلاک، بیمه - ماهیانه)': { min: 30, max: 100, type: 'transport' }, // More realistic car cost
             'اجاره خانه شهری (ماهیانه)': { min: 150, max: 500, type: 'fixed' },
-            'اجاره خانه روستایی (ماهیانه)': { min: 50, max: 100, type: 'fixed' }
+            'اجاره خانه روستایی (ماهیانه)': { min: 50, max: 100, type: 'fixed' },
+            'تخم مرغ (یک عدد)': { min: 0.07, max: 0.07, type: 'food_item' },
+            'موز (یک کیلوگرم)': { min: 1, max: 1.5, type: 'food_item' },
+            'ساندویچ معمولی ساده': { min: 1, max: 3, type: 'food_item' },
+            'سیگار (یک پاکت)': { min: 0.5, max: 1, type: 'leisure' },
+            'مشروب (عرق سگی، یک بطری)': { min: 10, max: 20, type: 'leisure' },
+            'ویسکی (یک بطری)': { min: 50, max: 150, type: 'leisure' },
+            'کرایه تاکسی درون شهری (یک سفر)': { min: 0.5, max: 1, type: 'transport' }
         };
 
         function calculateHypotheticalServices() {
@@ -1283,129 +1349,133 @@
             const childrenCount = maritalStatus === 'متاهل' ? parseInt(document.getElementById('childrenCount').value) : 0;
             const livingArea = document.getElementById('livingArea').value;
             const houseOwnership = document.getElementById('houseOwnership').value;
+            const carOwnership = document.getElementById('carOwnership').value;
 
             if (isNaN(dollarRate) || dollarRate <= 0 || isNaN(monthlyIncomeToman) || monthlyIncomeToman <= 0 ||
-                isNaN(userAge) || userAge <= 0 || !userOccupation || !maritalStatus || !livingArea || !houseOwnership ||
+                isNaN(userAge) || userAge <= 0 || !userOccupation || !maritalStatus || !livingArea || !houseOwnership || !carOwnership ||
                 (maritalStatus === 'متاهل' && isNaN(childrenCount))) {
                 alert('لطفاً تمامی فیلدهای اطلاعات شخصی و مالی را به درستی وارد کنید.');
                 return;
             }
 
             const monthlyIncomeUSD = monthlyIncomeToman / dollarRate;
-            let totalFixedCostsUSD = 0; // Rent, essential living costs
+            let totalFixedCostsUSD = 0;
+            let totalDiscretionaryCostsUSD = 0; // For recommended activities
 
-            // Housing Cost
-            let rentCostUSD = 0;
-            if (houseOwnership === 'مستاجر') {
-                if (livingArea === 'شهری') {
-                    rentCostUSD = Math.min(500, Math.max(150, monthlyIncomeUSD * 0.25)); // Cap at 500, min 150, default 25%
-                } else { // Rural
-                    rentCostUSD = Math.min(100, Math.max(50, monthlyIncomeUSD * 0.15)); // Cap at 100, min 50, default 15%
-                }
-            }
-            totalFixedCostsUSD += rentCostUSD;
-
-            // Basic food cost (simplified, as general cost)
-            // Assuming average basic food for 1 person is 50 USD/month, add 20 USD for spouse, 15 USD for each child
-            let basicFoodCostUSD = 50;
-            if (maritalStatus === 'متاهل') basicFoodCostUSD += 30; // 50 for primary + 30 for spouse
-            basicFoodCostUSD += childrenCount * 20; // 20 per child
-            totalFixedCostsUSD += basicFoodCostUSD;
-            
-            // Transportation cost (basic, public or minimal personal use)
-            let baseTransportCost = 0;
-            if (maritalStatus === 'مجرد') {
-                baseTransportCost = iranianServiceCostsUSD['هزینه حمل و نقل عمومی (ماهیانه)'].min + 2; // 조금 بالاتر از حداقل
-            } else { // متاهل
-                baseTransportCost = iranianServiceCostsUSD['هزینه حمل و نقل عمومی (ماهیانه)'].max; // بیشتر برای خانواده
-            }
-            totalFixedCostsUSD += baseTransportCost;
-
-            const discretionaryIncomeUSD = monthlyIncomeUSD - totalFixedCostsUSD;
-            
             const budgetSuggestionDiv = document.getElementById('budgetSuggestion');
             const budgetSuggestionTitle = budgetSuggestionDiv.querySelector('h3');
             const budgetSuggestionText = budgetSuggestionDiv.querySelector('p');
             const activityTableBody = document.querySelector('#activityTable tbody');
             const totalActivityCostSpan = document.getElementById('totalActivityCost');
+            const balanceSummaryDiv = document.getElementById('balanceSummary');
+            const balanceRecommendationDiv = document.getElementById('balanceRecommendation');
             
             activityTableBody.innerHTML = ''; // Clear previous activities
-            let totalSuggestedActivityCostUSD = 0;
+            balanceSummaryDiv.innerHTML = ''; // Clear previous balance
+            balanceRecommendationDiv.innerHTML = ''; // Clear previous recommendations
 
-            let suggestedModel = '';
+            let suggestedActivities = []; // { name: "", count: "", costUSD: "" }
 
-            // Determine income level based on discretionary income
-            if (discretionaryIncomeUSD < 100) incomeLevel = 'اقتصادی';
-            else if (discretionaryIncomeUSD < 350) incomeLevel = 'متعادل';
+            // 1. Fixed Costs / Essential Living Expenses
+            // Housing Cost
+            let rentCostUSD = 0;
+            if (houseOwnership === 'مستاجر') {
+                if (livingArea === 'شهری') {
+                    rentCostUSD = Math.min(iranianServiceCostsUSD['اجاره خانه شهری (ماهیانه)'].max, Math.max(iranianServiceCostsUSD['اجاره خانه شهری (ماهیانه)'].min, monthlyIncomeUSD * 0.25));
+                } else { // Rural
+                    rentCostUSD = Math.min(iranianServiceCostsUSD['اجاره خانه روستایی (ماهیانه)'].max, Math.max(iranianServiceCostsUSD['اجاره خانه روستایی (ماهیانه)'].min, monthlyIncomeUSD * 0.15));
+                }
+                suggestedActivities.push({ name: 'اجاره خانه (ماهیانه)', count: '۱ بار', costUSD: rentCostUSD, category: 'fixed' });
+                totalFixedCostsUSD += rentCostUSD;
+            }
+
+            // Basic food cost
+            let basicFoodCostUSD = 0;
+            if (maritalStatus === 'مجرد') {
+                basicFoodCostUSD = 80; // Estimated basic food for one person
+            } else {
+                basicFoodCostUSD = 120 + (childrenCount * 40); // Estimated basic food for couple + kids
+            }
+            suggestedActivities.push({ name: 'هزینه خوراک و مایحتاج اولیه (ماهیانه)', count: '۱ بار', costUSD: basicFoodCostUSD, category: 'fixed' });
+            totalFixedCostsUSD += basicFoodCostUSD;
+            
+            // Transportation Cost
+            let transportCostUSD = 0;
+            if (carOwnership === 'دارم') {
+                transportCostUSD = Math.max(iranianServiceCostsUSD['هزینه نگهداری خودرو (بنزین، استهلاک، بیمه - ماهیانه)'].min, monthlyIncomeUSD * 0.08); // 8% of income if car owner
+                suggestedActivities.push({ name: 'هزینه نگهداری خودرو (ماهیانه)', count: '۱ بار', costUSD: transportCostUSD, category: 'fixed' });
+            } else {
+                transportCostUSD = iranianServiceCostsUSD['هزینه حمل و نقل عمومی (ماهیانه)'].max; // Use max public transport if no car
+                suggestedActivities.push({ name: 'هزینه حمل و نقل عمومی (ماهیانه)', count: '۱ بار', costUSD: transportCostUSD, category: 'fixed' });
+            }
+            totalFixedCostsUSD += transportCostUSD;
+
+
+            // 2. Discretionary Income & Recommendations for Leisure/Pleasure
+            const remainingIncomeUSD = monthlyIncomeUSD - totalFixedCostsUSD;
+            let incomeLevel = '';
+            if (remainingIncomeUSD < 0) incomeLevel = 'بسیار محدود';
+            else if (remainingIncomeUSD < 50) incomeLevel = 'محدود';
+            else if (remainingIncomeUSD < 200) incomeLevel = 'اقتصادی';
+            else if (remainingIncomeUSD < 500) incomeLevel = 'متعادل';
             else incomeLevel = 'رفاهی';
 
             budgetSuggestionTitle.innerText = `تحلیل بودجه شما: پیشنهاد مدل ${incomeLevel}`;
             let adviceHTML = '';
-            let suggestedActivities = []; // { name: "", count: "", costUSD: "" }
 
             switch (incomeLevel) {
+                case 'بسیار محدود':
+                    adviceHTML = `با توجه به <span class="highlight">کسری بودجه</span>، مدیریت مالی شما نیاز به بازنگری جدی دارد. تمرکز اصلی بر کاهش هزینه‌های ضروری و یافتن راه‌هایی برای **افزایش درآمد** باشد.`;
+                    suggestedActivities.push({ name: 'تفریح سبک و رایگان (مثل پیاده‌روی)', count: '۴ بار', costUSD: 0, category: 'leisure' });
+                    break;
+                case 'محدود':
+                    adviceHTML = `بودجه شما <span class="highlight">محدود</span> است. اولویت با تامین نیازهای اساسی است. در صورت امکان، با برنامه‌ریزی دقیق می‌توانید از تفریحات کم‌هزینه بهره‌مند شوید.`;
+                    suggestedActivities.push({ name: 'تفریح سبک و رایگان (مثل پیاده‌روی)', count: '۲ بار', costUSD: 0, category: 'leisure' });
+                    suggestedActivities.push({ name: 'یک فنجان قهوه/آبمیوه (فصلی)', count: '۱ بار', costUSD: iranianServiceCostsUSD['یک فنجان قهوه در کافه'].min, category: 'leisure' });
+                    break;
                 case 'اقتصادی':
-                    adviceHTML = `با توجه به <span class="highlight">درآمد و وضعیت زندگی شما</span>، پیشنهاد ما یک مدل **اقتصادی** برای مدیریت بودجه است. تمرکز بر نیازهای اساسی و هوشمندانه خرج کردن، به شما کمک می‌کند تا بهترین استفاده را از منابع مالی خود داشته باشید.`;
-                    
-                    // Add fixed costs to suggested activities for transparency
-                    if (rentCostUSD > 0) suggestedActivities.push({ name: 'اجاره خانه (ماهیانه)', count: '۱ بار', costUSD: rentCostUSD });
-                    suggestedActivities.push({ name: 'هزینه خوراک و مایحتاج اولیه (ماهیانه)', count: '۱ بار', costUSD: basicFoodCostUSD });
-                    suggestedActivities.push({ name: 'هزینه حمل و نقل عمومی (ماهیانه)', count: '۱ بار', costUSD: baseTransportCost });
-
-                    // Economic Leisure and Activities
-                    suggestedActivities.push({ name: 'تفریح سبک (مثل پیاده‌روی در پارک)', count: '4 بار', costUSD: iranianServiceCostsUSD['تفریح سبک (مثلاً پیاده‌روی در پارک)'].min * 4 });
-                    suggestedActivities.push({ name: 'یک فنجان قهوه در کافه', count: '1 بار', costUSD: iranianServiceCostsUSD['یک فنجان قهوه در کافه'].min });
-                    suggestedActivities.push({ name: 'یک وعده غذای فست فود', count: '1 بار', costUSD: iranianServiceCostsUSD['یک وعده غذای فست فود'].min });
-                    suggestedActivities.push({ name: 'خرید یک کتاب جدید', count: '0.5 بار (هر دو ماه یکبار)', costUSD: iranianServiceCostsUSD['خرید یک کتاب جدید'].min * 0.5 });
-                    // No regular club/pool or paid software unless discretionary is higher
-                    
-                    if (discretionaryIncomeUSD < 0) {
-                        adviceHTML += `<br><br><span class="highlight">**توجه:**</span> مجموع هزینه‌های ثابت شما از درآمدتان بیشتر است. پیشنهاد می‌شود برای جبران کسری بودجه و جلوگیری از مشکلات مالی، به <span class="highlight">افزایش درآمد (شغل دوم، مهارت‌آموزی)</span> یا <span class="highlight">بازنگری جدی در هزینه‌های ثابت</span> خود بپردازید.`;
-                    }
+                    adviceHTML = `با توجه به <span class="highlight">درآمد و وضعیت زندگی شما</span>، پیشنهاد ما یک مدل **اقتصادی** برای مدیریت بودجه تفریح است. تمرکز بر انتخاب‌های هوشمندانه و لذت‌بردن از فعالیت‌های کم‌هزینه.`;
+                    suggestedActivities.push({ name: 'آبمیوه طبیعی/قهوه در کافه', count: '۲ بار', costUSD: (iranianServiceCostsUSD['آبمیوه طبیعی'].min + iranianServiceCostsUSD['یک فنجان قهوه در کافه'].min) / 2 * 2, category: 'leisure' });
+                    suggestedActivities.push({ name: 'یک وعده غذای فست فود', count: '۱ بار', costUSD: iranianServiceCostsUSD['یک وعده غذای فست فود'].min, category: 'food' });
+                    suggestedActivities.push({ name: 'بلیط سینما یا استفاده از استخر', count: '۱ بار', costUSD: (iranianServiceCostsUSD['بلیط سینما و یک نوشیدنی'].min + iranianServiceCostsUSD['یک بار استفاده از استخر'].min) / 2, category: 'leisure' });
+                    suggestedActivities.push({ name: 'خرید یک کتاب جدید (هر دو ماه)', count: '۰.۵ بار', costUSD: iranianServiceCostsUSD['خرید یک کتاب جدید'].min * 0.5, category: 'education' });
                     break;
 
                 case 'متعادل':
                     adviceHTML = `شما در وضعیت <span class="highlight">متعادلی</span> قرار دارید و می‌توانید هم از زندگی لذت ببرید و هم پس‌انداز کنید. تعادل بین خرج کردن و پس‌انداز کلید موفقیت شماست.`;
-                    
-                    if (rentCostUSD > 0) suggestedActivities.push({ name: 'اجاره خانه (ماهیانه)', count: '۱ بار', costUSD: rentCostUSD });
-                    suggestedActivities.push({ name: 'هزینه خوراک و مایحتاج اولیه (ماهیانه)', count: '۱ بار', costUSD: basicFoodCostUSD });
-                    suggestedActivities.push({ name: 'هزینه حمل و نقل (ماهیانه)', count: '۱ بار', costUSD: iranianServiceCostsUSD['هزینه حمل و نقل شخصی (بنزین و...) ماهیانه'].min + 5 }); // Mix of personal and public
-
-                    // Balanced Leisure and Activities
-                    suggestedActivities.push({ name: 'یک فنجان قهوه در کافه', count: '2 بار', costUSD: iranianServiceCostsUSD['یک فنجان قهوه در کافه'].max * 2 });
-                    suggestedActivities.push({ name: 'بلیط سینما و یک نوشیدنی', count: '1 بار', costUSD: iranianServiceCostsUSD['بلیط سینما و یک نوشیدنی'].min });
-                    suggestedActivities.push({ name: 'یک وعده غذای فست فود', count: '2 بار', costUSD: iranianServiceCostsUSD['یک وعده غذای فست فود'].max * 2 });
-                    suggestedActivities.push({ name: 'یک وعده غذای رستورانی (اقتصادی)', count: '1 بار', costUSD: iranianServiceCostsUSD['یک وعده غذای رستورانی (اقتصادی)'].min });
-                    suggestedActivities.push({ name: 'خرید یک کتاب جدید', count: '1 بار', costUSD: iranianServiceCostsUSD['خرید یک کتاب جدید'].max });
-                    suggestedActivities.push({ name: 'شهریه باشگاه ورزشی (ماهانه)', count: '۱ بار', costUSD: iranianServiceCostsUSD['شهریه باشگاه ورزشی (ماهانه)'].min + 5 });
-                    suggestedActivities.push({ name: 'اشتراک ماهانه نرم‌افزار کاربردی', count: '۱ بار', costUSD: iranianServiceCostsUSD['اشتراک ماهانه نرم‌افزار کاربردی'].min + 3 });
-                    // Consider a short domestic trip annually - daily cost will be spread over months. For monthly view, keep it low or exclude.
-                    // For simplicity, we keep it monthly here.
-                    // if (maritalStatus === 'مجرد') {
-                    //     suggestedActivities.push({ name: 'هزینه مسافرت کوتاه داخلی (تقسیم بر ماه)', count: '1 روز (هر 3 ماه)', costUSD: iranianServiceCostsUSD['مسافرت (به ازای هر نفر در روز، اقتصادی)'].min / 3 });
-                    // }
+                    suggestedActivities.push({ name: 'آبمیوه طبیعی/قهوه در کافه', count: '۴ بار', costUSD: (iranianServiceCostsUSD['آبمیوه طبیعی'].max + iranianServiceCostsUSD['یک فنجان قهوه در کافه'].max) / 2 * 4, category: 'leisure' });
+                    suggestedActivities.push({ name: 'بلیط سینما و یک نوشیدنی', count: '۱ بار', costUSD: iranianServiceCostsUSD['بلیط سینما و یک نوشیدنی'].max, category: 'leisure' });
+                    suggestedActivities.push({ name: 'یک وعده غذای رستورانی (اقتصادی)', count: '۱ بار', costUSD: iranianServiceCostsUSD['یک وعده غذای رستورانی (اقتصادی)'].max, category: 'food' });
+                    suggestedActivities.push({ name: 'شهریه باشگاه ورزشی (ماهانه)', count: '۱ بار', costUSD: iranianServiceCostsUSD['شهریه باشگاه ورزشی (ماهانه)'].min + 5, category: 'health' });
+                    suggestedActivities.push({ name: 'خرید یک کتاب جدید', count: '۱ بار', costUSD: iranianServiceCostsUSD['خرید یک کتاب جدید'].max, category: 'education' });
+                    suggestedActivities.push({ name: 'اشتراک ماهانه نرم‌افزار کاربردی', count: '۱ بار', costUSD: iranianServiceCostsUSD['اشتراک ماهانه نرم‌افزار کاربردی'].min + 3, category: 'education' });
+                    suggestedActivities.push({ name: 'مسافرت داخلی (اقتصادی) - (تقسیم بر ۳ ماه)', count: '۱ روز', costUSD: iranianServiceCostsUSD['مسافرت داخلی (اقتصادی، روزانه)'].min / 3, category: 'travel' });
                     break;
 
                 case 'رفاهی':
                     adviceHTML = `شما در وضعیت <span class="highlight">رفاهی مناسبی</span> قرار دارید. می‌توانید از امکانات بیشتری بهره‌مند شوید و در عین حال، به پس‌انداز و سرمایه‌گذاری‌های بزرگ‌تر فکر کنید.`;
+                    suggestedActivities.push({ name: 'آبمیوه طبیعی/قهوه در کافه', count: '۶ بار', costUSD: (iranianServiceCostsUSD['آبمیوه طبیعی'].max + iranianServiceCostsUSD['یک فنجان قهوه در کافه'].max) / 2 * 6, category: 'leisure' });
+                    suggestedActivities.push({ name: 'بلیط سینما و یک نوشیدنی', count: '۲ بار', costUSD: iranianServiceCostsUSD['بلیط سینما و یک نوشیدنی'].max * 2, category: 'leisure' });
+                    suggestedActivities.push({ name: 'یک وعده غذای رستورانی (لوکس)', count: '۱ بار', costUSD: iranianServiceCostsUSD['یک وعده غذای رستورانی (لوکس)'].min, category: 'food' });
+                    suggestedActivities.push({ name: 'شهریه باشگاه ورزشی (ماهانه) / استخر', count: '۱ بار', costUSD: iranianServiceCostsUSD['شهریه باشگاه ورزشی (ماهانه)'].max, category: 'health' });
+                    suggestedActivities.push({ name: 'کلاس آموزشی/تفریحی (ماهانه)', count: '۱ بار', costUSD: iranianServiceCostsUSD['کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)'].max, category: 'education' });
+                    suggestedActivities.push({ name: 'خرید کتاب/اشتراک نرم‌افزار', count: '۱ بار', costUSD: iranianServiceCostsUSD['خرید یک کتاب جدید'].max + iranianServiceCostsUSD['اشتراک ماهانه نرم‌افزار کاربردی'].max, category: 'education' });
+                    suggestedActivities.push({ name: 'مسافرت داخلی (متوسط/رفاهی) - (تقسیم بر ماه)', count: '۲ روز', costUSD: (iranianServiceCostsUSD['مسافرت داخلی (متوسط، روزانه)'].max + iranianServiceCostsUSD['مسافرت داخلی (رفاهی، روزانه)'].min) / 2 * 2, category: 'travel' });
                     
-                    if (rentCostUSD > 0) suggestedActivities.push({ name: 'اجاره خانه (ماهیانه)', count: '۱ بار', costUSD: rentCostUSD });
-                    suggestedActivities.push({ name: 'هزینه خوراک و مایحتاج اولیه (ماهیانه)', count: '۱ بار', costUSD: basicFoodCostUSD });
-                    suggestedActivities.push({ name: 'هزینه حمل و نقل شخصی (بنزین و...) ماهیانه', count: '۱ بار', costUSD: iranianServiceCostsUSD['هزینه حمل و نقل شخصی (بنزین و...) ماهیانه'].max });
-
-                    // Luxury Leisure and Activities
-                    suggestedActivities.push({ name: 'یک فنجان قهوه در کافه', count: '3 بار', costUSD: iranianServiceCostsUSD['یک فنجان قهوه در کافه'].max * 3 });
-                    suggestedActivities.push({ name: 'بلیط سینما و یک نوشیدنی', count: '2 بار', costUSD: iranianServiceCostsUSD['بلیط سینما و یک نوشیدنی'].max * 2 });
-                    suggestedActivities.push({ name: 'یک وعده غذای فست فود', count: '2 بار', costUSD: iranianServiceCostsUSD['یک وعده غذای فست فود'].max * 2 });
-                    suggestedActivities.push({ name: 'یک وعده غذای رستورانی (لوکس)', count: '1 بار', costUSD: iranianServiceCostsUSD['یک وعده غذای رستورانی (لوکس)'].min });
-                    suggestedActivities.push({ name: 'شهریه باشگاه ورزشی (ماهانه)', count: '۱ بار', costUSD: iranianServiceCostsUSD['شهریه باشگاه ورزشی (ماهانه)'].max });
-                    suggestedActivities.push({ name: 'یک بار استفاده از استخر', count: '2 بار', costUSD: iranianServiceCostsUSD['یک بار استفاده از استخر'].max * 2 });
-                    suggestedActivities.push({ name: 'اشتراک ماهانه نرم‌افزار کاربردی', count: '۱ بار', costUSD: iranianServiceCostsUSD['اشتراک ماهانه نرم‌افزار کاربردی'].max });
-                    suggestedActivities.push({ name: 'کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)', count: '۱ بار', costUSD: iranianServiceCostsUSD['کلاس آموزشی آنلاین/ورزش‌های انفرادی (ماهانه)'].max });
-                    if (maritalStatus === 'مجرد') {
-                        suggestedActivities.push({ name: 'هزینه مسافرت داخلی/خارجی (تقسیم بر ماه)', count: '2 روز (هر ماه)', costUSD: (iranianServiceCostsUSD['مسافرت (به ازای هر نفر در روز، رفاهی)'].min + 10) * 2 }); // Assume 2 days per month average for travel
-                    } else { // متاهل
-                        suggestedActivities.push({ name: 'هزینه مسافرت داخلی/خارجی (تقسیم بر ماه)', count: '1 روز (هر ماه)', costUSD: (iranianServiceCostsUSD['مسافرت (به ازای هر نفر در روز، رفاهی)'].min + 10) * (1 + (childrenCount * 0.5)) }); // Adjust for family
+                    // Add items for specific inputs based on user profile, e.g., if "Other" for gender/marital status, or if age implies certain activities.
+                    // For instance, if userAge is young, suggest more active leisure, if older, more relaxed.
+                    // This is a simplification; a full system would use weighted scores.
+                    if (userAge < 30) {
+                        suggestedActivities.push({ name: 'استفاده از تاکسی برای تردد (چند سفر)', count: '۲-۳ بار', costUSD: iranianServiceCostsUSD['کرایه تاکسی درون شهری (یک سفر)'].max * 2.5, category: 'transport' });
+                    }
+                    if (userOccupation === 'دانشجو' || userOccupation === 'آزادکار/فریلنسر' || userOccupation === 'هنرمند') {
+                        suggestedActivities.push({ name: 'فعالیت‌های فرهنگی و هنری', count: '۱ بار', costUSD: 5, category: 'leisure' }); // Placeholder cost
+                    }
+                    if (Math.random() > 0.7) { // Random chance to suggest these items based on "pleasure index"
+                        suggestedActivities.push({ name: 'سیگار (چند پاکت ماهیانه)', count: '۱۰ پاکت', costUSD: iranianServiceCostsUSD['سیگار (یک پاکت)'].max * 10, category: 'leisure' });
+                    }
+                    if (Math.random() > 0.85 && userAge > 25) { // Higher chance and age appropriate
+                        suggestedActivities.push({ name: 'مشروب (عرق سگی، یک بطری)', count: '۰.۵ بطری', costUSD: iranianServiceCostsUSD['مشروب (عرق سگی، یک بطری)'].min * 0.5, category: 'leisure' });
                     }
                     break;
             }
@@ -1420,14 +1490,62 @@
                 const cell3 = row.insertCell(2);
 
                 const costToman = activity.costUSD * dollarRate;
-                totalSuggestedActivityCostUSD += activity.costUSD;
+                totalDiscretionaryCostsUSD += activity.costUSD;
 
                 cell1.innerText = activity.name;
                 cell2.innerText = activity.count;
                 cell3.innerText = costToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
             });
 
-            totalActivityCostSpan.innerText = (totalSuggestedActivityCostUSD * dollarRate).toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
+            const totalProjectedExpensesUSD = totalFixedCostsUSD + totalDiscretionaryCostsUSD;
+            const finalBalanceUSD = monthlyIncomeUSD - totalProjectedExpensesUSD;
+            const finalBalanceToman = finalBalanceUSD * dollarRate;
+
+            totalActivityCostSpan.innerText = (totalDiscretionaryCostsUSD * dollarRate).toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' تومان';
+
+            let balanceSummaryHtml = '';
+            if (finalBalanceToman >= 0) {
+                balanceSummaryHtml = `<span class="positive-balance">مازاد بودجه ماهیانه شما: ${finalBalanceToman.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان</span>`;
+            } else {
+                balanceSummaryHtml = `<span class="negative-balance">کسری بودجه ماهیانه شما: ${Math.abs(finalBalanceToman).toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} تومان</span>`;
+            }
+            balanceSummaryDiv.innerHTML = balanceSummaryHtml;
+
+            // Recommendations based on balance
+            let recommendationHtml = '';
+            if (finalBalanceUSD > 50) { // Significant surplus
+                recommendationHtml = `<h4>پیشنهادات برای مازاد بودجه:</h4>
+                    <ul>
+                        <li><span class="highlight">پس‌انداز هدفمند:</span> بخشی از مازاد را برای اهداف بزرگتر (خرید خانه، خودرو، ازدواج، تحصیل فرزندان) پس‌انداز کنید.</li>
+                        <li><span class="highlight">سرمایه‌گذاری:</span> با مشورت متخصص، مازاد بودجه را در بازار سهام، صندوق‌های سرمایه‌گذاری یا طلا سرمایه‌گذاری کنید.</li>
+                        <li><span class="highlight">آموزش و توسعه فردی:</span> برای دوره‌های آموزشی، یادگیری مهارت جدید یا سفر مطالعاتی هزینه کنید.</li>
+                        <li><span class="highlight">افزایش رفاه:</span> می‌توانید با برنامه‌ریزی، هزینه‌های تفریحی یا رفاهی خود را در ماه افزایش دهید.</li>
+                    </ul>`;
+            } else if (finalBalanceUSD >= 0 && finalBalanceUSD <= 50) { // Small surplus or balanced
+                recommendationHtml = `<h4>پیشنهادات برای تعادل بودجه:</h4>
+                    <ul>
+                        <li><span class="highlight">پس‌انداز اضطراری:</span> حتی مقادیر کم را برای ایجاد یک صندوق اضطراری کنار بگذارید.</li>
+                        <li><span class="highlight">برنامه‌ریزی دقیق‌تر:</span> برای خریدهای غیرضروری، لیست تهیه کنید و از خریدهای impulsivity بپرهیزید.</li>
+                        <li><span class="highlight">سلامت و ورزش:</span> بخشی از بودجه را به فعالیت‌های ورزشی و تغذیه سالم اختصاص دهید.</li>
+                    </ul>`;
+            } else if (finalBalanceUSD < 0 && finalBalanceUSD > -100) { // Moderate deficit
+                recommendationHtml = `<h4>راهکارهایی برای جبران کسری بودجه:</h4>
+                    <ul>
+                        <li><span class="highlight">بررسی هزینه‌ها:</span> ریزبینانه تمام خرج‌های ماهانه را بررسی و موارد غیرضروری را حذف کنید.</li>
+                        <li><span class="highlight">کاهش تفریحات پرهزینه:</span> تفریحات ارزان‌تر یا رایگان را جایگزین کنید (مثلاً پارک، دورهمی خانگی).</li>
+                        <li><span class="highlight">افزایش درآمد:</span> به دنبال فرصت‌های کسب درآمد جانبی، کار پاره‌وقت یا توسعه مهارت‌های شغلی باشید.</li>
+                        <li><span class="highlight">مدیریت بدهی:</span> در صورت داشتن وام یا بدهی، برای بازپرداخت آن برنامه‌ریزی کنید.</li>
+                    </ul>`;
+            } else { // Large deficit
+                recommendationHtml = `<h4>راهکارهای فوری برای مدیریت کسری بودجه شدید:</h4>
+                    <ul>
+                        <li><span class="highlight">کاهش شدید هزینه‌ها:</span> فقط روی نیازهای اساسی متمرکز شوید و تمام خرج‌های غیرضروری را قطع کنید.</li>
+                        <li><span class="highlight">درآمدزایی اضطراری:</span> هر نوع کار پاره‌وقت یا موقت که می‌تواند درآمد ایجاد کند را دنبال کنید.</li>
+                        <li><span class="highlight">مشاوره مالی:</span> در صورت لزوم، از یک مشاور مالی برای برنامه‌ریزی دقیق کمک بگیرید.</li>
+                        <li><span class="highlight">بازنگری در سبک زندگی:</span> تغییرات اساسی در هزینه‌های ثابت (مانند مسکن یا حمل و نقل) را بررسی کنید.</li>
+                    </ul>`;
+            }
+            balanceRecommendationDiv.innerHTML = recommendationHtml;
 
 
             document.getElementById('hypotheticalServicesResultDiv').style.display = 'block';
