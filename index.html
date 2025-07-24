@@ -23,46 +23,51 @@
             box-sizing: border-box;
         }
 
-        /* --- Navigation Bar Styles (Minimal & Blue) --- */
+        /* --- Modern Navbar Styles (Teal/Cyan) --- */
         .navbar {
             display: flex;
             justify-content: center;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-            padding: 8px 12px;
-            margin-bottom: 20px;
+            background-color: #20B2AA; /* Teal/Light Sea Green */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            padding: 10px 15px;
+            margin-bottom: 25px;
             width: 100%;
-            max-width: 500px;
+            max-width: 900px; /* Increased max-width for more buttons */
             flex-wrap: wrap;
+            gap: 8px; /* Spacing between buttons */
         }
         .nav-button {
-            background-color: #007bff; /* Blue */
-            color: white; /* White text */
-            padding: 7px 14px;
+            background-color: #008080; /* Darker Teal */
+            color: white;
+            padding: 10px 18px;
             border: none;
-            border-radius: 5px;
-            font-size: 0.85em;
+            border-radius: 8px;
+            font-size: 0.9em;
             cursor: pointer;
-            transition: all 0.2s ease;
-            margin: 3px;
+            transition: all 0.3s ease;
             flex-grow: 1;
-            max-width: 150px;
-            font-weight: 500;
+            min-width: 120px;
+            max-width: 180px; /* Adjusted max-width */
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .nav-button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #006666; /* Even darker Teal on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
         .nav-button.active {
-            background-color: #0056b3; /* Darker blue when active */
-            box-shadow: 0 1px 6px rgba(0, 123, 255, 0.4); /* Blue shadow */
+            background-color: #004d4d; /* Active state, very dark Teal */
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25), inset 0 0 10px rgba(255, 255, 255, 0.2);
+            transform: translateY(0);
         }
         .nav-button i {
-            margin-left: 5px;
-            font-size: 0.9em;
+            margin-left: 8px;
+            font-size: 1em;
         }
 
         /* --- Common Form Styles (Minimal & Classic) --- */
@@ -72,7 +77,7 @@
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
             padding: 25px;
             width: 100%;
-            max-width: 380px;
+            max-width: 420px; /* Slightly wider for new tools */
             text-align: center;
             border: 1px solid #e0e0e0;
             display: none; /* Initially hidden */
@@ -99,7 +104,7 @@
         .input-group input[type="text"],
         .input-group select {
             width: calc(100% - 35px);
-            padding: 9px 9px 9px 30px;
+            padding: 10px 10px 10px 30px;
             border: 1px solid #bbb;
             border-radius: 5px;
             font-size: 0.9em;
@@ -147,15 +152,19 @@
             margin-top: 3px;
             color: #888;
             font-size: 0.75em;
+            text-align: right;
         }
-        .weight-inputs, .personality-inputs { /* Changed to .personality-inputs */
+        .flex-inputs { /* General class for flexboxed input groups */
             display: flex;
             gap: 8px;
+            align-items: flex-end; /* Aligns items to the bottom */
         }
-        .weight-inputs .input-group, 
-        .personality-inputs .input-group {
+        .flex-inputs .input-group {
             flex: 1;
             margin-bottom: 0;
+        }
+        .flex-inputs .input-group label {
+            white-space: nowrap; /* Prevents label from wrapping */
         }
         .app-container button {
             color: white;
@@ -193,7 +202,7 @@
             margin-right: 5px;
             font-weight: 700;
         }
-        .personality-text { /* New class for personality text */
+        .personality-text {
             font-size: 1.05em;
             font-weight: normal;
             margin-top: 15px;
@@ -204,7 +213,7 @@
             border-radius: 8px;
             color: #444;
         }
-        .comparison-section { /* New section for comparison */
+        .comparison-section {
             margin-top: 25px;
             padding-top: 15px;
             border-top: 1px dashed #eee;
@@ -230,7 +239,7 @@
         }
         .comparison-section button {
             margin-top: 10px;
-            background-color: #007bff; /* Blue for comparison button */
+            background-color: #007bff;
         }
         .comparison-result {
             margin-top: 15px;
@@ -253,16 +262,44 @@
             margin-bottom: 8px;
         }
         .positive-point {
-            color: #28a745; /* Green for positive points */
+            color: #28a745;
             font-weight: 600;
             margin-bottom: 5px;
         }
         .negative-point {
-            color: #dc3545; /* Red for negative points */
+            color: #dc3545;
             font-weight: 600;
             margin-bottom: 5px;
         }
 
+        /* --- Loan/Deposit Calculator Specific Styles --- */
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .tab-button {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 0.9em;
+            border-radius: 5px 5px 0 0;
+            margin: 0 2px;
+            transition: all 0.2s ease;
+            color: #555;
+        }
+        .tab-button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .loan-deposit-content {
+            display: none;
+        }
 
         /* --- Specific Form Colors --- */
 
@@ -289,18 +326,37 @@
         #personalityTest .result span { color: #d68910; }
         #personalityTest .comparison-section button { background-color: #007bff; }
 
+        /* Loan/Deposit Calculator */
+        #loanDepositCalculator { border-color: #d8bfd8; }
+        #loanDepositCalculator h1 { color: #800080; } /* Purple */
+        #loanDepositCalculator .input-group input:focus,
+        #loanDepositCalculator .input-group select:focus { border-color: #800080; }
+        #loanDepositCalculator button { background-color: #800080; }
+        #loanDepositCalculator .result span { color: #800080; }
+        #loanDepositCalculator .tab-button.active { background-color: #800080; border-color: #800080; }
+
+
+        /* Currency Converter */
+        #currencyConverter { border-color: #cfe2f3; }
+        #currencyConverter h1 { color: #1e90ff; } /* Dodger Blue */
+        #currencyConverter .input-group input:focus,
+        #currencyConverter .input-group select:focus { border-color: #1e90ff; }
+        #currencyConverter button { background-color: #1e90ff; }
+        #currencyConverter .result span { color: #1e90ff; }
+
 
         /* Media Queries for Responsiveness */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .navbar {
-                flex-direction: column;
                 padding: 8px;
+                max-width: 100%;
             }
             .nav-button {
-                margin: 4px 0;
-                max-width: none;
+                margin: 4px;
+                flex-basis: 45%; /* Two buttons per row */
+                min-width: unset;
                 font-size: 0.8em;
-                padding: 6px 10px;
+                padding: 8px 12px;
             }
             .app-container {
                 padding: 18px;
@@ -324,6 +380,23 @@
                 font-size: 0.95em;
                 padding: 12px;
             }
+            .tab-button {
+                font-size: 0.85em;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-button {
+                flex-basis: 100%; /* One button per row on very small screens */
+            }
+            .flex-inputs {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .flex-inputs .input-group {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -332,6 +405,8 @@
         <button class="nav-button" onclick="showSection('goldCalculator', this)"><i class="fas fa-gem"></i> قیمت طلا</button>
         <button class="nav-button" onclick="showSection('bmiCalculator', this)"><i class="fas fa-calculator"></i> شاخص وزن</button>
         <button class="nav-button" onclick="showSection('personalityTest', this)"><i class="fas fa-brain"></i> تست شخصیت</button>
+        <button class="nav-button" onclick="showSection('loanDepositCalculator', this)"><i class="fas fa-university"></i> سود/وام</button>
+        <button class="nav-button" onclick="showSection('currencyConverter', this)"><i class="fas fa-exchange-alt"></i> مبدل ارز</button>
     </div>
 
     <div id="goldCalculator" class="app-container">
@@ -352,7 +427,7 @@
 
         <div class="input-group">
             <label>وزن طلا:</label>
-            <div class="weight-inputs">
+            <div class="flex-inputs">
                 <div class="input-group">
                     <input type="number" id="goldWeightGram" placeholder="گرم" min="0" step="any">
                     <i class="fas fa-weight-hanging icon"></i>
@@ -438,6 +513,91 @@
             </div>
         </div>
     </div>
+
+    <div id="loanDepositCalculator" class="app-container">
+        <h1><i class="fas fa-university" style="margin-left: 10px;"></i>محاسبه‌گر بانکی</h1>
+        
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="showLoanDepositTab('deposit', this)">سود سپرده</button>
+            <button class="tab-button" onclick="showLoanDepositTab('loan', this)">اقساط وام</button>
+        </div>
+
+        <div id="depositContent" class="loan-deposit-content" style="display: block;">
+            <div class="input-group">
+                <label for="depositAmount">مبلغ سپرده (تومان):</label>
+                <input type="number" id="depositAmount" placeholder="مثال: 100,000,000" min="0">
+                <i class="fas fa-money-bill-wave icon"></i>
+            </div>
+            <div class="input-group">
+                <label for="depositInterestRate">نرخ سود سالانه (درصد):</label>
+                <input type="number" id="depositInterestRate" placeholder="مثال: 18" min="0" max="100" step="0.1">
+                <i class="fas fa-percent icon"></i>
+            </div>
+            <div class="input-group">
+                <label for="depositDurationMonths">مدت زمان سپرده (ماه):</label>
+                <input type="number" id="depositDurationMonths" placeholder="مثال: 12" min="1">
+                <i class="fas fa-calendar-alt icon"></i>
+            </div>
+            <button onclick="calculateDepositInterest()">محاسبه سود سپرده</button>
+            <div class="result" id="depositResultDiv">
+                <div><span>سود کل:</span> <span id="totalDepositInterest"></span> تومان</div>
+                <div><span>مبلغ نهایی با سود:</span> <span id="finalDepositAmount"></span> تومان</div>
+            </div>
+        </div>
+
+        <div id="loanContent" class="loan-deposit-content">
+            <div class="input-group">
+                <label for="loanAmount">مبلغ وام (تومان):</label>
+                <input type="number" id="loanAmount" placeholder="مثال: 50,000,000" min="0">
+                <i class="fas fa-money-check-alt icon"></i>
+            </div>
+            <div class="input-group">
+                <label for="loanInterestRate">نرخ سود سالانه (درصد):</label>
+                <input type="number" id="loanInterestRate" placeholder="مثال: 23" min="0" max="100" step="0.1">
+                <i class="fas fa-percent icon"></i>
+            </div>
+            <div class="input-group">
+                <label for="loanDurationMonths">مدت بازپرداخت (ماه):</label>
+                <input type="number" id="loanDurationMonths" placeholder="مثال: 60" min="1">
+                <i class="fas fa-calendar-check icon"></i>
+            </div>
+            <button onclick="calculateLoanInstallment()">محاسبه اقساط وام</button>
+            <div class="result" id="loanResultDiv">
+                <div><span>مبلغ هر قسط:</span> <span id="monthlyInstallment"></span> تومان</div>
+                <div><span>کل سود پرداختی:</span> <span id="totalLoanInterest"></span> تومان</div>
+                <div><span>مجموع پرداختی:</span> <span id="totalPayment"></span> تومان</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="currencyConverter" class="app-container">
+        <h1><i class="fas fa-exchange-alt" style="margin-left: 10px;"></i>مبدل ارز</h1>
+        
+        <div class="input-group">
+            <label for="amountToConvert">مبلغ:</label>
+            <input type="number" id="amountToConvert" placeholder="مثال: 100" min="0">
+            <i class="fas fa-money-bill-wave icon"></i>
+        </div>
+        
+        <div class="flex-inputs">
+            <div class="input-group">
+                <label for="fromCurrency">از واحد:</label>
+                <select id="fromCurrency"></select>
+                <i class="fas fa-chevron-circle-down icon"></i>
+            </div>
+            <div class="input-group">
+                <label for="toCurrency">به واحد:</label>
+                <select id="toCurrency"></select>
+                <i class="fas fa-chevron-circle-down icon"></i>
+            </div>
+        </div>
+        
+        <button onclick="convertCurrency()">تبدیل ارز</button>
+        
+        <div class="result" id="currencyResultDiv">
+            <div><span>مبلغ تبدیل شده:</span> <span id="convertedAmount"></span></div>
+        </div>
+    </div>
     
     <script>
         // --- Navigation Logic ---
@@ -460,13 +620,18 @@
             document.querySelectorAll('.result').forEach(resultDiv => {
                 resultDiv.style.display = 'none';
             });
+            // Specific reset for comparison section in personality test
             document.getElementById('comparisonResultDiv').style.display = 'none';
 
-
-            // If switching to personality test, ensure months are populated
+            // Special handling for specific sections on display
             if (sectionId === 'personalityTest') {
                 populatePersonalityMonths();
                 populateCompareMonths();
+            } else if (sectionId === 'loanDepositCalculator') {
+                // Ensure default tab (deposit) is active and shown
+                showLoanDepositTab('deposit', document.querySelector('#loanDepositCalculator .tab-buttons .tab-button:first-child'));
+            } else if (sectionId === 'currencyConverter') {
+                populateCurrencies();
             }
         }
 
@@ -629,9 +794,7 @@
         }
 
         function populateCompareMonths() {
-            // This function is now redundant as populatePersonalityMonths handles both
-            // Kept for clarity but could be removed.
-            populatePersonalityMonths(); 
+            populatePersonalityMonths(); // Re-use the same function for now
         }
 
         function analyzePersonality() {
@@ -718,6 +881,7 @@
             if (commonNegatives.length > 0) {
                 comparisonHtml += `<p><strong>نقاط مشترک منفی (احتمال عدم تفاهم):</strong></p><ul>`;
                 commonNegatives.forEach(trait => comparisonHtml += `<li class="negative-point">${trait}</li>`);
+                commonNegatives.forEach(trait => comparisonHtml += `<li>هر دو ممکن است در مورد <strong>${trait}</strong> با چالش روبرو شوند.</li>`);
                 comparisonHtml += `</ul>`;
             } else {
                 comparisonHtml += `<p><strong>نقاط مشترک منفی:</strong> مورد قابل توجهی یافت نشد.</p>`;
@@ -733,14 +897,14 @@
 
             // General compatibility statement
             let compatibilityStatement = "";
-            let compatibilityScore = commonPositives.length - commonNegatives.length;
+            let compatibilityScore = commonPositives.length * 2 - commonNegatives.length * 2; // Give more weight to shared traits
 
             if (compatibilityScore >= 3) {
-                compatibilityStatement = "شما و متولد این ماه شباهت‌های مثبتی زیادی دارید و احتمالاً به خوبی با هم کنار می‌آیید.";
+                compatibilityStatement = "شما و متولد این ماه شباهت‌های مثبتی زیادی دارید و احتمالاً به خوبی با هم کنار می‌آیید. تفاهم کلی شما بالاست.";
             } else if (compatibilityScore >= 0) {
-                compatibilityStatement = "شما و متولد این ماه می‌توانید در بسیاری از زمینه‌ها تفاهم داشته باشید، با کمی درک متقابل.";
+                compatibilityStatement = "شما و متولد این ماه می‌توانید در بسیاری از زمینه‌ها تفاهم داشته باشید، با کمی درک متقابل و پذیرش تفاوت‌ها.";
             } else {
-                compatibilityStatement = "ممکن است در برخی زمینه‌ها چالش‌هایی در تفاهم با متولد این ماه داشته باشید. نیاز به درک بیشتر از تفاوت‌هاست.";
+                compatibilityStatement = "ممکن است در برخی زمینه‌ها چالش‌هایی در تفاهم با متولد این ماه داشته باشید. نیاز به درک بیشتر از تفاوت‌ها و تلاش برای سازگاری است.";
             }
             comparisonHtml += `<p><strong>نتیجه کلی تفاهم:</strong> ${compatibilityStatement}</p>`;
 
@@ -748,6 +912,157 @@
             document.getElementById('comparisonText').innerHTML = comparisonHtml;
             document.getElementById('comparisonResultDiv').style.display = 'block';
         }
+
+        // --- Loan/Deposit Calculator Logic ---
+        function showLoanDepositTab(tabId, clickedButton) {
+            // Hide all tab contents
+            document.querySelectorAll('.loan-deposit-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            // Deactivate all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show the selected tab content
+            document.getElementById(tabId + 'Content').style.display = 'block';
+            // Activate the clicked button
+            clickedButton.classList.add('active');
+
+            // Hide results when switching tabs
+            document.getElementById('depositResultDiv').style.display = 'none';
+            document.getElementById('loanResultDiv').style.display = 'none';
+        }
+
+        function calculateDepositInterest() {
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            const rate = parseFloat(document.getElementById('depositInterestRate').value);
+            const duration = parseFloat(document.getElementById('depositDurationMonths').value);
+
+            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate <= 0 || isNaN(duration) || duration <= 0) {
+                alert('لطفاً تمام فیلدها را با مقادیر صحیح وارد کنید.');
+                return;
+            }
+
+            const monthlyRate = (rate / 100) / 12;
+            const totalInterest = amount * monthlyRate * duration;
+            const finalAmount = amount + totalInterest;
+
+            document.getElementById('totalDepositInterest').innerText = totalInterest.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            document.getElementById('finalDepositAmount').innerText = finalAmount.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            document.getElementById('depositResultDiv').style.display = 'block';
+        }
+
+        function calculateLoanInstallment() {
+            const amount = parseFloat(document.getElementById('loanAmount').value);
+            const rate = parseFloat(document.getElementById('loanInterestRate').value);
+            const duration = parseFloat(document.getElementById('loanDurationMonths').value);
+
+            if (isNaN(amount) || amount <= 0 || isNaN(rate) || rate < 0 || isNaN(duration) || duration <= 0) {
+                alert('لطفاً تمام فیلدها را با مقادیر صحیح وارد کنید.');
+                return;
+            }
+
+            const monthlyRate = (rate / 100) / 12;
+            let monthlyInstallment;
+            let totalInterest;
+            let totalPayment;
+
+            if (monthlyRate === 0) { // Simple interest if rate is 0
+                monthlyInstallment = amount / duration;
+                totalInterest = 0;
+                totalPayment = amount;
+            } else {
+                // Formula for EMI (Equated Monthly Installment)
+                monthlyInstallment = amount * monthlyRate * Math.pow(1 + monthlyRate, duration) / (Math.pow(1 + monthlyRate, duration) - 1);
+                totalPayment = monthlyInstallment * duration;
+                totalInterest = totalPayment - amount;
+            }
+            
+            document.getElementById('monthlyInstallment').innerText = monthlyInstallment.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            document.getElementById('totalLoanInterest').innerText = totalInterest.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            document.getElementById('totalPayment').innerText = totalPayment.toLocaleString('fa-IR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            document.getElementById('loanResultDiv').style.display = 'block';
+        }
+
+        // --- Currency Converter Logic ---
+        const currencies = {
+            'ریال ایران': { symbol: 'IRR', rate: 1, base: true }, // Base currency
+            'دلار آمریکا': { symbol: 'USD', rate: 600000, toToman: true }, // Example rate to IRR (1 USD = 600,000 IRR)
+            'یورو': { symbol: 'EUR', rate: 650000, toToman: true }, // Example rate to IRR
+            'پوند بریتانیا': { symbol: 'GBP', rate: 750000, toToman: true }, // Example rate to IRR
+            'درهم امارات': { symbol: 'AED', rate: 165000, toToman: true }, // Example rate to IRR
+            'لیر ترکیه': { symbol: 'TRY', rate: 19000, toToman: true } // Example rate to IRR
+        };
+
+        function populateCurrencies() {
+            const fromCurrencySelect = document.getElementById('fromCurrency');
+            const toCurrencySelect = document.getElementById('toCurrency');
+
+            fromCurrencySelect.innerHTML = '';
+            toCurrencySelect.innerHTML = '';
+
+            for (const currencyName in currencies) {
+                const optionFrom = document.createElement('option');
+                optionFrom.value = currencyName;
+                optionFrom.innerText = `${currencyName} (${currencies[currencyName].symbol})`;
+                fromCurrencySelect.appendChild(optionFrom);
+
+                const optionTo = document.createElement('option');
+                optionTo.value = currencyName;
+                optionTo.innerText = `${currencyName} (${currencies[currencyName].symbol})`;
+                toCurrencySelect.appendChild(optionTo);
+            }
+            // Set default selections
+            fromCurrencySelect.value = 'ریال ایران';
+            toCurrencySelect.value = 'دلار آمریکا';
+        }
+
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amountToConvert').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            if (isNaN(amount) || amount <= 0) {
+                alert('لطفاً مبلغ را به درستی وارد کنید.');
+                return;
+            }
+            if (!fromCurrency || !toCurrency) {
+                alert('لطفاً واحدهای ارزی مبدأ و مقصد را انتخاب کنید.');
+                return;
+            }
+            if (fromCurrency === toCurrency) {
+                alert('لطفاً واحدهای ارزی متفاوت را برای تبدیل انتخاب کنید.');
+                document.getElementById('convertedAmount').innerText = amount.toLocaleString('fa-IR') + ' ' + currencies[toCurrency].symbol;
+                document.getElementById('currencyResultDiv').style.display = 'block';
+                return;
+            }
+
+            let amountInIRR;
+
+            // Convert 'from' currency to IRR (if it's not IRR)
+            if (currencies[fromCurrency].base) {
+                amountInIRR = amount;
+            } else {
+                amountInIRR = amount * currencies[fromCurrency].rate;
+            }
+
+            let convertedValue;
+            let convertedSymbol;
+
+            // Convert from IRR to 'to' currency
+            if (currencies[toCurrency].base) {
+                convertedValue = amountInIRR;
+                convertedSymbol = currencies[toCurrency].symbol;
+            } else {
+                convertedValue = amountInIRR / currencies[toCurrency].rate;
+                convertedSymbol = currencies[toCurrency].symbol;
+            }
+            
+            document.getElementById('convertedAmount').innerText = convertedValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + convertedSymbol;
+            document.getElementById('currencyResultDiv').style.display = 'block';
+        }
+
 
         // Initial setup: On page load, only show the navbar.
         document.addEventListener('DOMContentLoaded', (event) => {
