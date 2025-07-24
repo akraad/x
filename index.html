@@ -28,27 +28,27 @@
             display: flex;
             justify-content: center;
             background-color: #fff;
-            border-radius: 8px; /* گوشه‌های گردتر و کوچک‌تر */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06); /* سایه ملایم‌تر */
-            padding: 10px 15px; /* پدینگ کمتر */
-            margin-bottom: 25px; /* فاصله کمتر */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            padding: 10px 15px;
+            margin-bottom: 25px;
             width: 100%;
-            max-width: 500px; /* عرض کمتر */
+            max-width: 500px;
             flex-wrap: wrap;
         }
         .nav-button {
-            background-color: #f5f5f5; /* رنگ کمی روشن‌تر */
-            color: #666; /* متن تیره‌تر */
-            padding: 8px 15px; /* پدینگ کمتر */
+            background-color: #f5f5f5;
+            color: #666;
+            padding: 8px 15px;
             border: none;
-            border-radius: 6px; /* گوشه‌های گردتر */
-            font-size: 0.9em; /* سایز فونت کوچکتر */
+            border-radius: 6px;
+            font-size: 0.9em;
             cursor: pointer;
-            transition: all 0.2s ease; /* انیمیشن سریع‌تر */
-            margin: 4px; /* فاصله کمتر */
+            transition: all 0.2s ease;
+            margin: 4px;
             flex-grow: 1;
-            max-width: 150px; /* حداکثر عرض برای هر دکمه */
-            font-weight: 500; /* وزن فونت کمتر */
+            max-width: 150px;
+            font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -60,11 +60,11 @@
         .nav-button.active {
             background-color: #b8860b;
             color: white;
-            box-shadow: 0 1px 6px rgba(184, 134, 11, 0.3); /* سایه فعال کوچکتر */
+            box-shadow: 0 1px 6px rgba(184, 134, 11, 0.3);
         }
         .nav-button i {
-            margin-left: 6px; /* فاصله آیکون از متن */
-            font-size: 1em; /* سایز آیکون متناسب */
+            margin-left: 6px;
+            font-size: 1em;
         }
 
         /* --- Common Form Styles --- */
@@ -97,29 +97,29 @@
         }
         .input-group input[type="number"],
         .input-group input[type="text"],
-        .input-group select { /* استایل برای select ها */
+        .input-group select {
             width: calc(100% - 40px);
             padding: 10px 10px 10px 35px;
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 1em;
-            direction: ltr; /* برای اعداد و برخی select ها */
+            direction: ltr;
             text-align: right;
             transition: border-color 0.3s;
-            -webkit-appearance: none; /* حذف استایل پیش‌فرض مرورگر برای select */
+            -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>'); /* آیکون دراپ‌داون */
+            background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
             background-repeat: no-repeat;
             background-position: left 10px center;
             background-size: 16px;
-            padding-left: 40px; /* فضای بیشتر برای آیکون دراپ‌داون */
+            padding-left: 40px;
         }
 
         .input-group select {
-            width: calc(100% - 20px); /* عرض کامل برای select */
-            padding-left: 10px; /* حذف پدینگ اضافی از چپ */
-            direction: rtl; /* برای نمایش متن فارسی راست به چپ */
+            width: calc(100% - 20px);
+            padding-left: 10px;
+            direction: rtl;
             background-position: left 10px center;
             background-size: 16px;
         }
@@ -143,7 +143,7 @@
             color: #888;
             font-size: 0.8em;
         }
-        .weight-inputs, .date-inputs { /* اضافه کردن date-inputs */
+        .weight-inputs, .date-inputs {
             display: flex;
             gap: 10px;
         }
@@ -206,7 +206,7 @@
         #dateConverter { border-color: #cce5ff; }
         #dateConverter h1 { color: #007bff; }
         #dateConverter .input-group input:focus,
-        #dateConverter .input-group select:focus { border-color: #007bff; } /* برای select هم */
+        #dateConverter .input-group select:focus { border-color: #007bff; }
         #dateConverter button { background-color: #007bff; }
         #dateConverter .result span { color: #007bff; }
 
@@ -234,7 +234,7 @@
                 font-size: 1em;
             }
             .input-group select {
-                padding-left: 8px; /* پدینگ برای select در موبایل */
+                padding-left: 8px;
             }
         }
     </style>
@@ -380,6 +380,11 @@
             document.querySelectorAll('.result').forEach(resultDiv => {
                 resultDiv.style.display = 'none';
             });
+
+            // If switching to date converter, ensure dropdowns are populated
+            if (sectionId === 'dateConverter') {
+                initializeDatePickers();
+            }
         }
 
         // --- Gold Calculator Logic ---
@@ -480,7 +485,7 @@
             for (let year = startYear; year >= endYear; year--) {
                 const option = document.createElement('option');
                 option.value = year;
-                option.innerText = isPersian ? new persianDate().formatPersian({ number: year }) : year; // نمایش اعداد فارسی برای شمسی
+                option.innerText = isPersian ? new persianDate().formatPersian({ number: year }) : year;
                 select.appendChild(option);
             }
         }
@@ -507,31 +512,36 @@
             }
         }
 
-        // Initialize date dropdowns on page load or section show
         function initializeDatePickers() {
             const currentGregYear = new Date().getFullYear();
             const currentSolarYear = new persianDate().year();
 
-            // Populate Gregorian years (current year to 100 years ago)
+            // Populate Gregorian years
             populateYears('gregorianYear', currentGregYear, currentGregYear - 100, false);
             populateMonths('gregorianMonth', gregMonths);
-            populateDays('gregorianDay', 31); // Default max days
+            populateDays('gregorianDay', 31);
 
-            // Populate Solar years (current year to 100 years ago)
+            // Populate Solar years
             populateYears('solarYear', currentSolarYear, currentSolarYear - 100, true);
             populateMonths('solarMonth', solarMonths);
-            populateDays('solarDay', 31); // Default max days
+            populateDays('solarDay', 31);
 
-            // Add event listeners for month/year changes to update days (Gregorian)
-            document.getElementById('gregorianYear').addEventListener('change', updateGregorianDays);
-            document.getElementById('gregorianMonth').addEventListener('change', updateGregorianDays);
-            document.getElementById('gregorianDay').addEventListener('change', () => document.getElementById('dateResultDiv').style.display = 'none');
+            // Add event listeners for Gregorian date changes
+            document.getElementById('gregorianYear').addEventListener('change', () => { updateGregorianDays(); convertGregorianToSolar(); });
+            document.getElementById('gregorianMonth').addEventListener('change', () => { updateGregorianDays(); convertGregorianToSolar(); });
+            document.getElementById('gregorianDay').addEventListener('change', convertGregorianToSolar);
 
+            // Add event listeners for Solar date changes
+            document.getElementById('solarYear').addEventListener('change', () => { updateSolarDays(); convertSolarToGregorian(); });
+            document.getElementById('solarMonth').addEventListener('change', () => { updateSolarDays(); convertSolarToGregorian(); });
+            document.getElementById('solarDay').addEventListener('change', convertSolarToGregorian);
 
-            // Add event listeners for month/year changes to update days (Solar)
-            document.getElementById('solarYear').addEventListener('change', updateSolarDays);
-            document.getElementById('solarMonth').addEventListener('change', updateSolarDays);
-            document.getElementById('solarDay').addEventListener('change', () => document.getElementById('dateResultDiv').style.display = 'none');
+            // Clear date results when changing values
+            document.querySelectorAll('#gregorianYear, #gregorianMonth, #gregorianDay, #solarYear, #solarMonth, #solarDay').forEach(select => {
+                select.addEventListener('change', () => {
+                    document.getElementById('dateResultDiv').style.display = 'none';
+                });
+            });
         }
 
         function updateGregorianDays() {
@@ -539,13 +549,12 @@
             const month = parseInt(document.getElementById('gregorianMonth').value);
             
             if (year && month) {
-                const date = new Date(year, month - 1, 1); // Month is 0-indexed
+                const date = new Date(year, month - 1, 1);
                 const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
                 populateDays('gregorianDay', lastDay);
             } else {
-                populateDays('gregorianDay', 31); // Reset to default
+                populateDays('gregorianDay', 31);
             }
-            document.getElementById('dateResultDiv').style.display = 'none';
         }
 
         function updateSolarDays() {
@@ -554,20 +563,22 @@
             
             if (year && month) {
                 let maxDays;
-                if (month <= 6) { // First 6 months have 31 days
+                if (month <= 6) {
                     maxDays = 31;
-                } else if (month <= 11) { // Next 5 months have 30 days
+                } else if (month <= 11) {
                     maxDays = 30;
                 } else { // Esfand (12th month)
-                    // Check for leap year in Persian calendar
-                    const isLeap = new persianDate([year, 1, 1]).isLeapYear();
-                    maxDays = isLeap ? 30 : 29;
+                    // Check for leap year in Persian calendar using persianDate library
+                    // A simple check if the 12th month has 30 days.
+                    // persianDate().isLeapYear() determines if the current persian year is leap.
+                    // To check for a specific year, we create a persianDate object for that year.
+                    const pDateForLeapCheck = new persianDate([year, 1, 1]);
+                    maxDays = pDateForLeapCheck.isLeapYear() ? 30 : 29;
                 }
                 populateDays('solarDay', maxDays);
             } else {
-                populateDays('solarDay', 31); // Reset to default
+                populateDays('solarDay', 31);
             }
-            document.getElementById('dateResultDiv').style.display = 'none';
         }
 
         function convertGregorianToSolar() {
@@ -576,15 +587,21 @@
             const day = parseInt(document.getElementById('gregorianDay').value);
 
             if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                alert('لطفاً یک تاریخ میلادی کامل و صحیح را انتخاب کنید.');
+                // alert('لطفاً یک تاریخ میلادی کامل و صحیح را انتخاب کنید.');
+                document.getElementById('dateResultDiv').style.display = 'none';
                 return;
             }
             
             try {
-                // persianDate expects Gregorian date directly for conversion
                 const pDate = new persianDate([year, month, day]);
                 document.getElementById('convertedDate').innerText = pDate.format('YYYY/MM/DD');
                 document.getElementById('dateResultDiv').style.display = 'block';
+
+                // Clear Solar date inputs to avoid confusion
+                document.getElementById('solarYear').value = '';
+                document.getElementById('solarMonth').value = '';
+                document.getElementById('solarDay').value = '';
+
             } catch (error) {
                 alert('مشکلی در تبدیل تاریخ میلادی رخ داد. لطفاً تاریخ را بررسی کنید.');
                 console.error(error);
@@ -597,20 +614,26 @@
             const day = parseInt(document.getElementById('solarDay').value);
 
             if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                alert('لطفاً یک تاریخ شمسی کامل و صحیح را انتخاب کنید.');
+                // alert('لطفاً یک تاریخ شمسی کامل و صحیح را انتخاب کنید.');
+                document.getElementById('dateResultDiv').style.display = 'none';
                 return;
             }
             
             try {
-                // persianDate constructor directly accepts Persian date components
                 const pDate = new persianDate([year, month, day]);
                 const gregorianDate = pDate.toCalendar('gregorian');
                 const gYear = gregorianDate.year();
-                const gMonth = (gregorianDate.month() + 1).toString().padStart(2, '0'); // Month is 0-indexed in native Date
+                const gMonth = (gregorianDate.month() + 1).toString().padStart(2, '0');
                 const gDay = gregorianDate.date().toString().padStart(2, '0');
                 
                 document.getElementById('convertedDate').innerText = `${gYear}-${gMonth}-${gDay}`;
                 document.getElementById('dateResultDiv').style.display = 'block';
+
+                // Clear Gregorian date inputs to avoid confusion
+                document.getElementById('gregorianYear').value = '';
+                document.getElementById('gregorianMonth').value = '';
+                document.getElementById('gregorianDay').value = '';
+
             } catch (error) {
                 alert('مشکلی در تبدیل تاریخ شمسی رخ داد. لطفاً تاریخ را بررسی کنید.');
                 console.error(error);
